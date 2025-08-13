@@ -4,9 +4,9 @@ import { api, HydrateClient } from "@/trpc/server";
 import { RepetitionsClient } from "./client-repetitions";
 
 const RepetitionsPage = async () => {
-  const session = await auth();
+  const authResult = await auth();
 
-  if (session?.user) {
+  if (authResult?.user) {
     void api.studyItem.getAll.prefetch({ limit: 10 });
   }
 
