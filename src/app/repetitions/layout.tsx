@@ -1,12 +1,13 @@
 import { type Metadata } from "next";
+import type { PropsWithChildren } from "react";
 
 export const metadata: Metadata = {
   title: "Repetitions",
   description: "Focu Repetitions page",
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{ children: React.ReactNode }>) {
+const RepetitionsLayout = async ({ children }: PropsWithChildren) => {
   return <>{children}</>;
-}
+};
+
+export default RepetitionsLayout;

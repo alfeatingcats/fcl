@@ -4,19 +4,19 @@ import * as React from "react";
 import {
   BookOpenCheck,
   CalendarClock,
-  Frame,
+  // Frame,
   LayoutDashboard,
   LifeBuoy,
   Route,
   Send,
   Settings2,
-  Square,
+  // Square,
   SquareKanban,
   WaypointsIcon,
 } from "lucide-react";
 
 import { NavMain } from "@/components/nav-main";
-import { NavProjects } from "@/components/nav-projects";
+// import { NavProjects } from "@/components/nav-projects";
 import { NavSecondary } from "@/components/nav-secondary";
 import { NavUser } from "@/components/nav-user";
 import {
@@ -39,7 +39,7 @@ const data = {
   navMain: [
     {
       title: "Dashboard",
-      url: "#",
+      url: "/dashboard",
       icon: LayoutDashboard,
       isActive: true,
       items: [
@@ -50,7 +50,7 @@ const data = {
         },
         {
           title: "Kanban",
-          url: "#",
+          url: "/test",
           icon: SquareKanban,
         },
       ],

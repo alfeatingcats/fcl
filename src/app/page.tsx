@@ -1,20 +1,16 @@
 import { auth } from "@/server/auth";
-import { HydrateClient } from "@/trpc/server";
+import { api, HydrateClient } from "@/trpc/server";
 
-export default async function Home() {
-  await auth();
+const HomePage = async () => {
+  const authResult = await auth();
 
-  // if (session?.user) {
-  //   void api.post.getLatest.prefetch();
-  // }
+  if (authResult?.user) {
+    void api.studyItem.getAll.prefetch({ limit: 10 });
+  }
 
   return (
     <HydrateClient>
       <main>
-        {/* <Button asChild>
-            <Link href="/repetitions">2121</Link>
-          </Button> */}
-
         <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
           <div className="grid auto-rows-min gap-4 md:grid-cols-3">
             <div className="bg-muted/50 aspect-video rounded-xl" />
@@ -26,4 +22,6 @@ export default async function Home() {
       </main>
     </HydrateClient>
   );
-}
+};
+
+export default HomePage;

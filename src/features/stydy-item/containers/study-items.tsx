@@ -21,7 +21,6 @@ export const StudyItem = () => {
   );
 
   const utils = api.useUtils();
-  console.log(studyItems);
 
   return (
     <div className="h-full w-full">
