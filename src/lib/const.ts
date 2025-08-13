@@ -14,3 +14,22 @@ export const SIDEBAR_WIDTH = "16rem";
 export const SIDEBAR_WIDTH_MOBILE = "18rem";
 export const SIDEBAR_WIDTH_ICON = "3rem";
 export const SIDEBAR_KEYBOARD_SHORTCUT = "b";
+
+export const protectedPaths = {
+  dashboard: "/dashboard",
+  profile: "/profile",
+  settings: "/settings",
+  repetitions: "/repetitions",
+};
+
+export const protectedPathsArray = Object.values(protectedPaths);
+
+export const publicPaths = {
+  home: "/",
+  about: "/about",
+  contact: "/contact",
+  login: "/login",
+  signup: "/signup",
+};
+
+export const publicPathsArray = Object.values(publicPaths);
