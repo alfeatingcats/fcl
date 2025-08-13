@@ -1,29 +1,87 @@
-# Create T3 App
+# FCL TRPC
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+A modern web application for spaced repetition learning, built with Next.js, tRPC, Prisma, and Shadcn UI.
 
-## What's next? How do I make an app with this?
+## Features
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+- 🚀 **Next.js App Router** for fast, scalable routing
+- 🔒 **Authentication** with NextAuth
+- 🗄️ **Prisma ORM** for database management
+- ⚡ **tRPC** for typesafe API calls
+- 🎨 **Shadcn UI** for beautiful, customizable components
+- 🧠 **Spaced Repetition System** for effective learning
+- 🌗 **Theme Support** (light/dark/system)
+- 🧩 Modular structure for easy feature development
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+## Getting Started
 
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [Drizzle](https://orm.drizzle.team)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
+### Prerequisites
 
-## Learn More
+- Node.js (v18+ recommended)
+- [pnpm](https://pnpm.io/) package manager
+- PostgreSQL (or your preferred database)
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
+### Installation
 
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
+```sh
+pnpm install
+```
 
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
+### Database Setup
 
-## How do I deploy this?
+1. Configure your database in `prisma/schema.prisma`.
+2. Run migrations:
 
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+```sh
+pnpm prisma migrate dev
+```
+
+### Development
+
+```sh
+pnpm dev
+```
+
+### Build
+
+```sh
+pnpm build
+```
+
+## Project Structure
+
+```
+src/
+  app/                # Next.js app routes & pages
+  components/         # UI components (Shadcn UI)
+  features/           # Feature modules
+  hooks/              # Custom React hooks
+  lib/                # Utilities and constants
+  providers/          # Context providers
+  schema/             # Zod schemas
+  server/             # Server-side logic (tRPC, DB)
+  trpc/               # tRPC client/server setup
+  types/              # Type definitions
+  widgets/            # Widget components
+prisma/               # Prisma schema & migrations
+public/               # Static assets
+```
+
+## Scripts
+
+- `pnpm dev` — Start development server
+- `pnpm build` — Build for production
+- `pnpm prisma migrate dev` — Run database migrations
+
+## Contributing
+
+Pull requests and issues are welcome!  
+Please follow the [Conventional Commits](https://www.conventionalcommits.org/) style.
+
+## License
+
+MIT
+
+---
+
+Made with ❤️ by [afl](https://github.com/alfeatingcats)
