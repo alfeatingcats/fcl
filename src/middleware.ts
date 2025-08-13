@@ -1,4 +1,4 @@
-import { protectedPathsArray } from "./lib/const";
+import { protectedPathsArray, publicPaths } from "./lib/const";
 import { auth } from "./server/auth";
 
 export const middleware = auth((req) => {
@@ -8,7 +8,7 @@ export const middleware = auth((req) => {
   );
 
   if (isProtectedRoute && !req.auth) {
-    const newUrl = new URL("/login", req.nextUrl.origin);
+    const newUrl = new URL(publicPaths.signIn, req.nextUrl.origin);
     return Response.redirect(newUrl);
   }
 });

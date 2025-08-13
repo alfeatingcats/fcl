@@ -1,3 +1,5 @@
+import type { signIn } from "@/server/auth";
+
 export const EBBINGHAUS_INTERVALS = [
   20, // 1st repetition: after 20 minutes
   180, // 2nd repetition: after 3 hours
@@ -28,8 +30,8 @@ export const publicPaths = {
   home: "/",
   about: "/about",
   contact: "/contact",
-  login: "/login",
-  signup: "/signup",
+  signIn: "/signin",
+  signUp: "/signup",
 };
 
 export const publicPathsArray = Object.values(publicPaths);
