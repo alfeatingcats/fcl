@@ -1,16 +1,18 @@
 "use client";
 
-import { SidebarProvider } from "@/components/ui/sidebar";
-import { AppSidebar } from "@/components/app-sidebar";
 import { Header } from "@/widgets/header";
+import type { CFC, BasicUserInfo, StrictBasicUserInfo } from "@/types";
+import { AppSidebar } from "@/components/app-sidebar";
 import { SidebarInset } from "@/components/ui/sidebar";
-import type { CFC } from "@/types";
+import { SidebarProvider } from "@/components/ui/sidebar";
 
 type ClientLayoutProps = {
+  user: StrictBasicUserInfo;
   sidebarValue: boolean;
 };
 
 export const ClientLayout: CFC<ClientLayoutProps> = ({
+  user,
   children,
   sidebarValue,
 }) => {
@@ -23,7 +25,7 @@ export const ClientLayout: CFC<ClientLayoutProps> = ({
         } as React.CSSProperties
       }
     >
-      <AppSidebar />
+      <AppSidebar user={user} />
 
       <SidebarInset>
         <Header />
