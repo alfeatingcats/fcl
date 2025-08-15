@@ -1,8 +1,8 @@
 "use client";
 
+import type { CFC } from "@/types";
 import { TRPCReactProvider } from "@/trpc/react";
 import { ThemeProvider } from "@/providers/theme-provider";
-import type { CFC } from "@/types";
 
 export const ClientLayout: CFC = ({ children }) => {
   return (

@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 import type { PropsWithChildren } from "react";
 
 import { auth } from "@/server/auth";
-import type { BasicUserInfo, StrictBasicUserInfo } from "@/types/models.types";
+import type { StrictBasicUserInfo } from "@/types";
 import { publicPaths, SIDEBAR_COOKIE_NAME } from "@/lib/const";
 
 import { ClientLayout } from "./client-layout";

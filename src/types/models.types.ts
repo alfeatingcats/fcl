@@ -1,7 +1,6 @@
 import type { User } from "@prisma/client";
+import { type SetNonNullable } from "type-fest";
 
 export type BasicUserInfo = Pick<User, "name" | "email" | "image">;
 
-export type StrictBasicUserInfo = {
-  [K in keyof BasicUserInfo]: NonNullable<BasicUserInfo[K]>;
-};
+export type StrictBasicUserInfo = SetNonNullable<BasicUserInfo>;

@@ -1,9 +1,9 @@
 "use client";
 
 import { Header } from "@/widgets/header";
-import type { CFC, BasicUserInfo, StrictBasicUserInfo } from "@/types";
 import { AppSidebar } from "@/components/app-sidebar";
 import { SidebarInset } from "@/components/ui/sidebar";
+import type { CFC, StrictBasicUserInfo } from "@/types";
 import { SidebarProvider } from "@/components/ui/sidebar";
 
 type ClientLayoutProps = {
