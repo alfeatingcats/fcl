@@ -1,5 +1,6 @@
-import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";
+import { isNil } from "es-toolkit";
 import { TRPCError } from "@trpc/server";
+import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";
 
 import { EBBINGHAUS_INTERVALS } from "@/lib/const";
 
@@ -191,7 +192,6 @@ export const studyItemsRouter = createTRPCRouter({
       });
     }),
 
-  // Get today's repetitions
   getTodayRepetitions: protectedProcedure.query(async ({ ctx }) => {
     const today = new Date();
     const tomorrow = new Date(today);
@@ -237,10 +237,9 @@ export const studyItemsRouter = createTRPCRouter({
       }
 
       const updateData: Record<string, unknown> = {};
-      if (input.title !== undefined) updateData.title = input.title;
-      if (input.description !== undefined)
-        updateData.description = input.description;
-      if (input.status !== undefined) {
+      if (!isNil(input.title)) updateData.title = input.title;
+      if (!isNil(input.description)) updateData.description = input.description;
+      if (!isNil(input.status)) {
         updateData.status = input.status;
         if (input.status === "COMPLETED") {
           updateData.completedAt = new Date();
