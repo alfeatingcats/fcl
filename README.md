@@ -43,9 +43,7 @@ public/               Static assets (icons, images)
 messages/             Internationalization message files
 ```
 
-## Contribution & License
-
-Contributions are welcome! Please use the Conventional Commits style for pull requests and issues.
+## License
 
 Licensed under the MIT License.
 
