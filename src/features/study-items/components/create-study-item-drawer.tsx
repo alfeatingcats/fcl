@@ -136,7 +136,7 @@ export const CreateStudyItemDrawer: CFC<CreateStudyItemDrawerProps> = ({
                       <FormLabel>Tags</FormLabel>
                       <FormControl>
                         <TagsSelector
-                          values={value}
+                          value={value}
                           onChange={onChange}
                           fetchTags={isDrawerOpen}
                         />

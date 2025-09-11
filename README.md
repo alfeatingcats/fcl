@@ -1,87 +1,54 @@
 # FCL TRPC
 
-A modern web application for spaced repetition learning, built with Next.js, tRPC, Prisma, and Shadcn UI.
+FCL TRPC is a modern web application designed to help users master knowledge through a spaced repetition system. The app leverages advanced technologies to provide an efficient, customizable, and user-friendly learning experience.
 
-## Features
+## Overview
 
-- 🚀 **Next.js App Router** for fast, scalable routing
-- 🔒 **Authentication** with NextAuth
-- 🗄️ **Prisma ORM** for database management
-- ⚡ **tRPC** for typesafe API calls
-- 🎨 **Shadcn UI** for beautiful, customizable components
-- 🧠 **Spaced Repetition System** for effective learning
-- 🌗 **Theme Support** (light/dark/system)
-- 🧩 Modular structure for easy feature development
+This project is built with:
 
-## Getting Started
+- 🚀 **Next.js (App Router):** Delivers fast, scalable routing and server-side rendering for optimal performance.
+- ⚡ **tRPC:** Enables typesafe, end-to-end API communication between client and server.
+- 🗄️ **Prisma ORM:** Manages database access and migrations with a robust, type-safe interface.
+- 🎨 **Shadcn UI:** Provides a set of beautiful, accessible, and customizable UI components.
+- 🔒 **NextAuth:** Handles secure authentication and user sessions.
 
-### Prerequisites
+## Key Features
 
-- Node.js (v18+ recommended)
-- [pnpm](https://pnpm.io/) package manager
-- PostgreSQL (or your preferred database)
-
-### Installation
-
-```sh
-pnpm install
-```
-
-### Database Setup
-
-1. Configure your database in `prisma/schema.prisma`.
-2. Run migrations:
-
-```sh
-pnpm prisma migrate dev
-```
-
-### Development
-
-```sh
-pnpm dev
-```
-
-### Build
-
-```sh
-pnpm build
-```
+- 🧠 **Spaced Repetition System:** Implements proven algorithms to optimize learning and memory retention.
+- 🧩 **Modular Architecture:** Features are organized for scalability and maintainability, allowing easy extension and customization.
+- 🔗 **Typesafe Data Flow:** Ensures reliability and safety in API and database interactions.
+- 🌗 **Theme Support:** Users can switch between light, dark, or system themes for a personalized experience.
+- 🌍 **Internationalization:** Supports multiple languages for global accessibility.
+- 🖥️ **Modern UI:** Clean, responsive design using Shadcn UI components.
 
 ## Project Structure
 
+The codebase is organized for clarity and modularity:
+
 ```
 src/
-  app/                # Next.js app routes & pages
-  components/         # UI components (Shadcn UI)
-  features/           # Feature modules
-  hooks/              # Custom React hooks
-  lib/                # Utilities and constants
-  providers/          # Context providers
-  schema/             # Zod schemas
-  server/             # Server-side logic (tRPC, DB)
-  trpc/               # tRPC client/server setup
-  types/              # Type definitions
-  widgets/            # Widget components
-prisma/               # Prisma schema & migrations
-public/               # Static assets
+  app/                Next.js routes and pages (protected/public)
+  components/         Shadcn UI components and custom widgets
+  features/           Domain features, each with its own logic and UI
+  hooks/              Custom React hooks
+  lib/                Utilities and constants
+  providers/          Context providers (e.g., theme)
+  schema/             Zod schemas for validation
+  server/             API routers, authentication, and database access
+  trpc/               tRPC client/server setup
+  types/              Shared type definitions
+  widgets/            Reusable widget components
+prisma/               Prisma schema and migrations
+public/               Static assets (icons, images)
+messages/             Internationalization message files
 ```
 
-## Scripts
+## Contribution & License
 
-- `pnpm dev` — Start development server
-- `pnpm build` — Build for production
-- `pnpm prisma migrate dev` — Run database migrations
+Contributions are welcome! Please use the Conventional Commits style for pull requests and issues.
 
-## Contributing
-
-Pull requests and issues are welcome!  
-Please follow the [Conventional Commits](https://www.conventionalcommits.org/) style.
-
-## License
-
-MIT
+Licensed under the MIT License.
 
 ---
 
-Made with ❤️ by [afl](https://github.com/alfeatingcats)
+Created by [afl](https://github.com/alfeatingcats)

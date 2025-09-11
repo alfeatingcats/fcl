@@ -1,6 +1,5 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
 import {
   Tags,
   TagsContent,
@@ -26,16 +25,19 @@ const tags = [
 ];
 type TagsSelector = {
   onChange: (values: string[] | undefined) => void;
-  values: string[] | undefined;
+  value: string[] | undefined;
   fetchTags?: boolean;
+  ref?: React.Ref<HTMLInputElement>;
+  onBlur?: () => void;
 };
 
 export const TagsSelector: CFC<TagsSelector> = ({
   onChange,
-  values,
+  value,
   fetchTags = false,
+  ref,
 }) => {
-  const [selected, setSelected] = useState<string[]>(values ?? []);
+  const [selected, setSelected] = useState<string[]>(value ?? []);
 
   const utils = api.useUtils();
   const { data: studyItems } = api.tags.getAll.useQuery(
@@ -91,7 +93,7 @@ export const TagsSelector: CFC<TagsSelector> = ({
           ))}
         </TagsTrigger>
         <TagsContent>
-          <TagsInput placeholder="Search tag..." />
+          <TagsInput placeholder="Search tag..." ref={ref} />
           <TagsList>
             <TagsEmpty />
             <TagsGroup>
