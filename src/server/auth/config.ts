@@ -31,6 +31,9 @@ declare module "next-auth" {
  * @see https://next-auth.js.org/configuration/options
  */
 export const authConfig = {
+  // TODO: change to your site URL, e.g. https://example.com
+  // site: process.env.NEXTAUTH_URL,
+  trustHost: true,
   providers: [
     DiscordProvider,
     /**
