@@ -2,7 +2,7 @@ import { protectedPathsArray, publicPaths } from "./lib/const";
 import { auth } from "./server/auth";
 
 export const middleware = auth((req) => {
-  console.log({ auth: req.auth, path: req.nextUrl.pathname });
+  // console.log({ auth: req.auth, path: req.nextUrl.pathname });
   const isProtectedRoute = protectedPathsArray.some((path) =>
     req.nextUrl.pathname.startsWith(path),
   );

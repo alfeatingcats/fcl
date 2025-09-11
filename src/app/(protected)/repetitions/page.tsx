@@ -1,7 +1,9 @@
+import { ErrorBoundary, Suspense } from "@suspensive/react";
+
 import { auth } from "@/server/auth";
 import { api, HydrateClient } from "@/trpc/server";
 
-import { RepetitionsClient } from "./client-repetitions";
+import { StudyItems } from "@/features/study-items";
 
 const RepetitionsPage = async () => {
   const authResult = await auth();
@@ -12,7 +14,11 @@ const RepetitionsPage = async () => {
 
   return (
     <HydrateClient>
-      <RepetitionsClient />
+      <ErrorBoundary fallback="Error">
+        <Suspense fallback="Loading...">
+          <StudyItems />
+        </Suspense>
+      </ErrorBoundary>
     </HydrateClient>
   );
 };

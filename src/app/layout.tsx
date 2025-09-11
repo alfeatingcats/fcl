@@ -3,6 +3,7 @@ import "@/styles/globals.css";
 import { type Metadata } from "next";
 import { Geist } from "next/font/google";
 import type { PropsWithChildren } from "react";
+import { NextIntlClientProvider } from "next-intl";
 
 import { ClientLayout } from "./client-layout";
 
@@ -23,7 +24,9 @@ const RootLayout = async ({ children }: PropsWithChildren) => {
   return (
     <html lang="en" className={`${geist.variable}`} suppressHydrationWarning>
       <body>
+        {/* <NextIntlClientProvider> */}
         <ClientLayout>{children}</ClientLayout>
+        {/* </NextIntlClientProvider> */}
       </body>
     </html>
   );
