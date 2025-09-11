@@ -1,12 +1,6 @@
 import { type z } from "zod";
 import { useBoolean } from "ahooks";
-import {
-  ChartSpline,
-  Expand,
-  FilterIcon,
-  PlusIcon,
-  WaypointsIcon,
-} from "lucide-react";
+import { Expand, FilterIcon, PlusIcon } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -22,10 +16,8 @@ import {
 } from "@/components/ui/drawer";
 import {
   Card,
-  CardAction,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -43,7 +35,6 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { CreateStudyItemSchema } from "@/schema/study-item.schema";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ProgressStepper } from "./progress-stepper";
 
 type CreateStudyItemDrawerProps = {
