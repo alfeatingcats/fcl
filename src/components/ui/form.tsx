@@ -137,12 +137,9 @@ function FormDescription({ className, ...props }: React.ComponentProps<"p">) {
 
 function FormMessage({ className, ...props }: React.ComponentProps<"p">) {
   const { error, formMessageId } = useFormField();
-  let messages: React.ReactNode[] = [];
-
-  const extractMessage = (e: GlobalError): string => {
+  const extractMessage = React.useCallback((e: GlobalError): string => {
     if (typeof e === "string" || typeof e === "number") return String(e);
     if (typeof e === "object" && e !== null) {
-      // Try to get .message safely
       if (Object.prototype.hasOwnProperty.call(e, "message")) {
         const msg = e.message;
         if (typeof msg === "string" || typeof msg === "number")
@@ -151,19 +148,22 @@ function FormMessage({ className, ...props }: React.ComponentProps<"p">) {
       return JSON.stringify(e);
     }
     return "";
-  };
+  }, []);
 
-  if (error) {
-    messages = Array.isArray(error)
-      ? error.map(extractMessage)
-      : [extractMessage(error)];
-  } else if (props.children) {
-    messages = [props.children];
-  }
+  const messages = React.useMemo(() => {
+    let result: React.ReactNode[] = [];
+    if (error) {
+      result = Array.isArray(error)
+        ? error.map(extractMessage)
+        : [extractMessage(error)];
+    } else if (props.children) {
+      result = [props.children];
+    }
+    return result.filter((msg) =>
+      typeof msg === "string" ? msg.trim() !== "" : !!msg,
+    );
+  }, [error, props.children, extractMessage]);
 
-  messages = messages.filter((msg) =>
-    typeof msg === "string" ? msg.trim() !== "" : !!msg,
-  );
   if (messages.length === 0) return null;
 
   return (
