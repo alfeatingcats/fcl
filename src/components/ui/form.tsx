@@ -9,6 +9,7 @@ import {
   type ControllerProps,
   type FieldPath,
   type FieldValues,
+  type GlobalError,
 } from "react-hook-form";
 
 import { cn } from "@/lib/utils";
@@ -136,21 +137,49 @@ function FormDescription({ className, ...props }: React.ComponentProps<"p">) {
 
 function FormMessage({ className, ...props }: React.ComponentProps<"p">) {
   const { error, formMessageId } = useFormField();
-  const body = error ? String(error?.message ?? "") : props.children;
+  let messages: React.ReactNode[] = [];
 
-  if (!body) {
-    return null;
+  const extractMessage = (e: GlobalError): string => {
+    if (typeof e === "string" || typeof e === "number") return String(e);
+    if (typeof e === "object" && e !== null) {
+      // Try to get .message safely
+      if (Object.prototype.hasOwnProperty.call(e, "message")) {
+        const msg = e.message;
+        if (typeof msg === "string" || typeof msg === "number")
+          return String(msg);
+      }
+      return JSON.stringify(e);
+    }
+    return "";
+  };
+
+  if (error) {
+    messages = Array.isArray(error)
+      ? error.map(extractMessage)
+      : [extractMessage(error)];
+  } else if (props.children) {
+    messages = [props.children];
   }
 
+  messages = messages.filter((msg) =>
+    typeof msg === "string" ? msg.trim() !== "" : !!msg,
+  );
+  if (messages.length === 0) return null;
+
   return (
-    <p
-      data-slot="form-message"
-      id={formMessageId}
-      className={cn("text-destructive text-sm", className)}
-      {...props}
-    >
-      {body}
-    </p>
+    <>
+      {messages.map((msg, idx) => (
+        <p
+          key={idx}
+          data-slot="form-message"
+          id={idx === 0 ? formMessageId : undefined}
+          className={cn("text-destructive text-sm", className)}
+          {...props}
+        >
+          {msg}
+        </p>
+      ))}
+    </>
   );
 }
 

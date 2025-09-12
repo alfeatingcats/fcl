@@ -54,6 +54,7 @@ export const CreateStudyItemDrawer: CFC<CreateStudyItemDrawerProps> = ({
       tagIds: [],
     },
   });
+
   function onSubmit(values: z.input<typeof CreateStudyItemSchema>) {
     console.log(values);
   }
@@ -127,18 +128,16 @@ export const CreateStudyItemDrawer: CFC<CreateStudyItemDrawerProps> = ({
               <FormField
                 control={form.control}
                 name="tagIds"
-                render={({ field: { onChange, value } }) => {
-                  const a = () => {
-                    onChange([1, 2, 3]);
-                  };
+                render={({ field: { value, ref } }) => {
                   return (
                     <FormItem>
                       <FormLabel>Tags</FormLabel>
                       <FormControl>
                         <TagsSelector
                           value={value}
-                          onChange={onChange}
+                          onChange={(v) => form.setValue("tagIds", v)}
                           fetchTags={isDrawerOpen}
+                          ref={ref}
                         />
                       </FormControl>
 

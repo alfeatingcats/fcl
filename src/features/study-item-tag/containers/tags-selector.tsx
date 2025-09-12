@@ -14,14 +14,15 @@ import {
 import { PRESET_COLORS } from "@/lib/const";
 import { api } from "@/trpc/react";
 import type { CFC } from "@/types";
+import type { Tag } from "@prisma/client";
 import { CheckIcon } from "lucide-react";
-import { useCallback, useState } from "react";
+import { useCallback, useState, useEffect } from "react";
 
-const tags = [
-  { id: "react", label: "React" },
-  { id: "typescript", label: "TypeScript" },
-  { id: "javascript", label: "JavaScript" },
-  { id: "nextjs", label: "Next.js" },
+const tags: Pick<Tag, "id" | "name" | "color">[] = [
+  { id: "react", name: "React", color: "blue" },
+  { id: "typescript", name: "TypeScript", color: "blue" },
+  { id: "javascript", name: "JavaScript", color: "yellow" },
+  { id: "nextjs", name: "Next.js", color: "black" },
 ];
 type TagsSelector = {
   onChange: (values: string[] | undefined) => void;
@@ -39,6 +40,10 @@ export const TagsSelector: CFC<TagsSelector> = ({
 }) => {
   const [selected, setSelected] = useState<string[]>(value ?? []);
 
+  useEffect(() => {
+    setSelected(value ?? []);
+  }, [value]);
+
   const utils = api.useUtils();
   const { data: studyItems } = api.tags.getAll.useQuery(
     {},
@@ -54,26 +59,25 @@ export const TagsSelector: CFC<TagsSelector> = ({
     [createTag],
   );
 
-  const handleRemove = (value: string) => {
-    if (!selected.includes(value)) {
-      return;
-    }
-
-    console.log(`removed: ${value}`);
-    setSelected((prev) => prev.filter((v) => v !== value));
+  const handleRemove = (tagId: string) => {
+    if (!selected.includes(tagId)) return;
+    const newSelected = selected.filter((v) => v !== tagId);
+    setSelected(newSelected);
+    onChange(newSelected.length ? newSelected : undefined);
   };
 
-  const handleSelect = (value: string) => {
-    if (selected.includes(value)) {
-      handleRemove(value);
-      return;
+  const handleSelect = (tagId: string) => {
+    let newSelected;
+    if (selected.includes(tagId)) {
+      newSelected = selected.filter((v) => v !== tagId);
+    } else {
+      newSelected = [...selected, tagId];
     }
-
-    console.log(`selected: ${value}`);
-    setSelected((prev) => [...prev, value]);
+    setSelected(newSelected);
+    onChange(newSelected.length ? newSelected : []);
   };
 
-  console.log({ studyItems, isPendingCreate: createTag.isPending });
+  console.log({ studyItems, isPendingCreate: createTag.isPending, selected });
 
   return (
     <>
@@ -88,7 +92,7 @@ export const TagsSelector: CFC<TagsSelector> = ({
         <TagsTrigger>
           {selected.map((tag) => (
             <TagsValue key={tag} onRemove={() => handleRemove(tag)}>
-              {tags.find((t) => t.id === tag)?.label}
+              {tags.find((t) => t.id === tag)?.name}
             </TagsValue>
           ))}
         </TagsTrigger>
@@ -99,7 +103,7 @@ export const TagsSelector: CFC<TagsSelector> = ({
             <TagsGroup>
               {tags.map((tag) => (
                 <TagsItem key={tag.id} onSelect={handleSelect} value={tag.id}>
-                  {tag.label}
+                  {tag.name}
                   {selected.includes(tag.id) && (
                     <CheckIcon className="text-muted-foreground" size={14} />
                   )}
