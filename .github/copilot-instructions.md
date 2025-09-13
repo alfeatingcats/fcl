@@ -39,6 +39,7 @@ This is a modern spaced repetition web app built with Next.js (App Router), tRPC
 - **Prisma:** For DB, see `prisma/` and `src/server/db.ts`.
 - **tRPC:** For API, see `src/server/api/` and `src/trpc/`.
 - **Shadcn UI:** For UI, see `src/components/ui/`.
+- **i18n translations:** The i18n translation dictionary is located in the `messages/` folder.
 
 ## Examples
 
