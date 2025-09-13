@@ -19,12 +19,27 @@ export const formatDiff = (prev: Date | null, next: Date): string => {
   return `in ${weeks} weeks`;
 };
 
-export const steps: Array<{ step: number; date: string; diff: string }> =
-  generateRepetitionSchedule().map((rep, idx, arr) => {
+export const formatStepDate = (date: Date): string =>
+  format(date, "HH:mm dd MMM yyyy");
+
+export const formatStepDateTooltip = (date: Date): string =>
+  format(date, "EEEE, dd MMMM yyyy, HH:mm:ss");
+
+export type StepInfo = {
+  step: number;
+  date: string;
+  diff: string;
+  tooltip: string;
+};
+
+export const steps: StepInfo[] = generateRepetitionSchedule().map(
+  (rep, idx, arr) => {
     const prev = idx > 0 ? arr[idx - 1]!.scheduledAt : null;
     return {
       step: rep.repetitionNumber,
-      date: `${format(rep.scheduledAt, "HH:mm dd MMM yyyy")} `,
+      date: formatStepDate(rep.scheduledAt),
       diff: prev ? formatDiff(prev, rep.scheduledAt) : "",
+      tooltip: formatStepDateTooltip(rep.scheduledAt),
     };
-  });
+  },
+);

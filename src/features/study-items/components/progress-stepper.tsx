@@ -1,3 +1,6 @@
+import { type FC } from "react";
+import { PartyPopper } from "lucide-react";
+
 import {
   Stepper,
   StepperIndicator,
@@ -6,23 +9,22 @@ import {
   StepperTitle,
   StepperTrigger,
 } from "@/components/ui/stepper";
+import { Badge } from "@/components/ui/badge";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 import { steps } from "../lib";
-import { Badge } from "@/components/ui/badge";
-import { PartyPopper, Play } from "lucide-react";
-import { type FC } from "react";
 
 type BadgeContentProps = {
   diff: string | null;
   isLast: boolean;
 };
+
 const BadgeContent: FC<BadgeContentProps> = ({ diff, isLast }) => {
-  if (!diff)
-    return (
-      <>
-        <Play /> Start
-      </>
-    );
+  if (!diff) return <>Start</>;
   if (isLast)
     return (
       <>
@@ -34,19 +36,22 @@ const BadgeContent: FC<BadgeContentProps> = ({ diff, isLast }) => {
 
 export const ProgressStepper = () => {
   return (
-    <div className="space-y-8 text-start">
-      <Stepper defaultValue={1} orientation="vertical">
-        {steps.map(({ step, date, diff }, index, _steps) => (
+    <div className="!w-full space-y-8 text-start">
+      <Stepper defaultValue={1} orientation="vertical" className="!w-full">
+        {steps.map(({ step, date, diff, tooltip }, index, _steps) => (
           <StepperItem
             key={step}
             step={step}
-            className="relative items-start not-last:flex-1"
+            className="relative !w-full items-start not-last:flex-1"
           >
-            <StepperTrigger className="items-start rounded pb-6 last:pb-0">
+            <StepperTrigger className="!w-full items-start rounded pb-6 last:pb-0">
               <StepperIndicator />
-              <div className="mt-0.5 px-2 text-left">
-                <StepperTitle className="flex items-center gap-2">
-                  {date}
+              <div className="mt-0.5 w-full px-2 text-left">
+                <StepperTitle className="flex items-center justify-between gap-2">
+                  <Tooltip>
+                    <TooltipTrigger>{date}</TooltipTrigger>
+                    <TooltipContent>{tooltip}</TooltipContent>
+                  </Tooltip>
                   <Badge className="flex items-center gap-2">
                     <BadgeContent
                       diff={diff}

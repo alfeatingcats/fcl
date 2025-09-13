@@ -149,15 +149,15 @@ export const CreateStudyItemDrawer: CFC<CreateStudyItemDrawerProps> = ({
             </form>
           </Form>
           <div className="!w-full pr-4 pl-4">
-            <Card>
-              <CardHeader>
+            <Card className="dark:bg-input/30 mt-[1.6rem] bg-transparent py-4.5">
+              <CardHeader className="px-4.5">
                 <CardTitle>Progression of repetitions</CardTitle>
-                <CardDescription>
+                <CardDescription className="-mb-2.5">
                   Track the stages and status of repetitions for effective
                   memorization.
                 </CardDescription>
               </CardHeader>
-              <CardContent>
+              <CardContent className="px-4.5">
                 <ProgressStepper />
               </CardContent>
             </Card>
