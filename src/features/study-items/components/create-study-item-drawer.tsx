@@ -1,8 +1,9 @@
 import { type z } from "zod";
 import { useBoolean } from "ahooks";
-import { Expand, FilterIcon, PlusIcon } from "lucide-react";
+import { useCallback } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Expand, FilterIcon, PlusIcon } from "lucide-react";
 
 import {
   Drawer,
@@ -35,6 +36,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { CreateStudyItemSchema } from "@/schema/study-item.schema";
+
 import { ProgressStepper } from "./progress-stepper";
 
 type CreateStudyItemDrawerProps = {
@@ -55,11 +57,29 @@ export const CreateStudyItemDrawer: CFC<CreateStudyItemDrawerProps> = ({
     },
   });
 
-  function onSubmit(values: z.input<typeof CreateStudyItemSchema>) {
-    console.log(values);
-  }
+  const onSubmit = useCallback(
+    (data: z.input<typeof CreateStudyItemSchema>) => {
+      console.log(data);
+    },
+    [],
+  );
+
+  const handleDrawerChange = useCallback(
+    (open: boolean) => {
+      if (!open) {
+        form.reset();
+      }
+      toggleDrawer();
+    },
+    [form, toggleDrawer],
+  );
+
   return (
-    <Drawer direction="right" open={isDrawerOpen} onOpenChange={toggleDrawer}>
+    <Drawer
+      direction="right"
+      open={isDrawerOpen}
+      onOpenChange={handleDrawerChange}
+    >
       <div className="flex items-center justify-between gap-2 px-2">
         <Button variant="outline" size="sm">
           <FilterIcon />
