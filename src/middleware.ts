@@ -1,4 +1,4 @@
-import { protectedPathsArray, publicPaths } from "./lib/const";
+import { protectedPathsArray, publicPaths } from "./shared/lib/const";
 import { auth } from "./server/auth";
 
 export const middleware = auth((req) => {

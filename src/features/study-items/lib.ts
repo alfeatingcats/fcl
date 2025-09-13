@@ -5,7 +5,7 @@ import {
   differenceInWeeks,
 } from "date-fns";
 
-import { generateRepetitionSchedule } from "@/lib/utils";
+import { generateRepetitionSchedule } from "@/shared/lib/utils";
 
 export const formatDiff = (prev: Date | null, next: Date): string => {
   if (!prev) return "";

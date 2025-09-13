@@ -1,9 +1,10 @@
 "use client";
 
-import { XIcon } from "lucide-react";
+import { SearchX, XIcon } from "lucide-react";
 import {
   type ComponentProps,
   createContext,
+  type HTMLAttributes,
   type MouseEventHandler,
   type ReactNode,
   useContext,
@@ -26,7 +27,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { cn } from "@/lib/utils";
+import { cn } from "@/shared/lib/utils";
 
 type TagsContextType = {
   value?: string;
@@ -162,11 +163,16 @@ export const TagsValue = ({
   );
 };
 
-export type TagsContentProps = ComponentProps<typeof PopoverContent>;
+export type TagsContentProps = ComponentProps<typeof PopoverContent> & {
+  footer?: ReactNode;
+  commandCN?: HTMLAttributes<HTMLDivElement>["className"];
+};
 
 export const TagsContent = ({
-  className,
   children,
+  className,
+  footer = null,
+  commandCN = "",
   ...props
 }: TagsContentProps) => {
   const { width } = useTagsContext();
@@ -177,7 +183,10 @@ export const TagsContent = ({
       style={{ width }}
       {...props}
     >
-      <Command>{children}</Command>
+      <Command className={cn("relative", commandCN)}>
+        {children}
+        {footer}
+      </Command>
     </PopoverContent>
   );
 };
@@ -201,8 +210,12 @@ export const TagsEmpty = ({
   className,
   ...props
 }: TagsEmptyProps) => (
-  <CommandEmpty className={cn(className)} {...props}>
-    {children ?? "No tags found."}
+  <CommandEmpty className={cn(className, "p-4 text-center")} {...props}>
+    {children ?? (
+      <div className="text-muted-foreground flex items-center justify-center gap-2 text-sm">
+        <SearchX /> No tags found.
+      </div>
+    )}
   </CommandEmpty>
 );
 

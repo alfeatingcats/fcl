@@ -12,7 +12,7 @@ import { capitalize } from "es-toolkit";
 import { replace } from "es-toolkit/compat";
 
 import type { StudyItem } from "@prisma/client";
-import { cn } from "@/lib/utils";
+import { cn } from "@/shared/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";

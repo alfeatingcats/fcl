@@ -2,33 +2,7 @@
 import { z } from "zod";
 import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";
 import { TRPCError } from "@trpc/server";
-import { PRESET_COLORS } from "@/lib/const";
-
-const CreateTagSchema = z.object({
-  name: z
-    .string()
-    .min(1, "Tag name cannot be empty")
-    .max(50, "Tag name is too long")
-    .regex(/^[a-zA-Zа-яёА-ЯЁ0-9\s\-_]+$/, "Invalid characters in tag name"),
-  color: z
-    .string()
-    .regex(/^#[0-9A-F]{6}$/i, "Invalid color format")
-    .optional()
-    .default("#3B82F6"), // Blue by default
-});
-
-const UpdateTagSchema = z.object({
-  id: z.string().cuid(),
-  name: z
-    .string()
-    .min(1, "Tag name cannot be empty")
-    .max(50, "Tag name is too long")
-    .optional(),
-  color: z
-    .string()
-    .regex(/^#[0-9A-F]{6}$/i, "Invalid color format")
-    .optional(),
-});
+import { CreateTagSchema, UpdateTagSchema } from "@/entities/tag";
 
 export const tagsRouter = createTRPCRouter({
   /**
@@ -350,17 +324,6 @@ export const tagsRouter = createTRPCRouter({
         };
       });
     }),
-
-  /**
-   * Get preset colors
-   */
-  getPresetColors: protectedProcedure.query(() => {
-    return PRESET_COLORS.map((color, index) => ({
-      id: `preset-${index}`,
-      color,
-      name: getColorName(color),
-    }));
-  }),
 
   /**
    * Get user tag statistics

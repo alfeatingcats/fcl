@@ -1,6 +1,6 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import type { CFC } from "@/types";
+import type { CFC } from "@/shared/types";
 import { PlusIcon } from "lucide-react";
 import { CreateStudyItemDrawer } from "./create-study-item-drawer";
 

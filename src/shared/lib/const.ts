@@ -34,16 +34,16 @@ export const publicPaths = {
 
 export const publicPathsArray = Object.values(publicPaths);
 
-// Preset colors for tags
-export const PRESET_COLORS = [
-  "#EF4444", // Red
-  "#F97316", // Orange
-  "#EAB308", // Yellow
-  "#22C55E", // Green
-  "#06B6D4", // Cyan
-  "#3B82F6", // Blue
-  "#8B5CF6", // Violet
-  "#EC4899", // Pink
-  "#6B7280", // Gray
-  "#1F2937", // Dark Gray
+// Preset Tailwind classes for tags: light bg, dark text, medium border
+export const PRESET_COLOR_CLASSES = [
+  "bg-red-100 text-red-700 border border-red-300",
+  "bg-green-100 text-green-700 border border-green-300",
+  "bg-amber-100 text-amber-700 border border-amber-300",
+  "bg-pink-100 text-pink-700 border border-pink-300",
+  "bg-violet-100 text-violet-700 border border-violet-300",
+  "bg-rose-100 text-rose-700 border border-rose-300",
+  "bg-orange-100 text-orange-700 border border-orange-300",
+  "bg-blue-100 text-blue-700 border border-blue-300",
+  "bg-gray-100 text-gray-700 border border-gray-300",
+  "bg-slate-100 text-slate-700 border border-slate-300",
 ];

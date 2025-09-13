@@ -29,7 +29,7 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import Link from "next/link";
-import type { StrictBasicUserInfo } from "@/types";
+import type { StrictBasicUserInfo } from "@/shared/types";
 
 const data = {
   navMain: [

@@ -30,14 +30,14 @@ import {
   FormMessage,
   FormControl,
 } from "@/components/ui/form";
-import type { CFC } from "@/types";
-import { TagsSelector } from "@/features";
+import type { CFC } from "@/shared/types";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { CreateStudyItemSchema } from "@/schema/study-item.schema";
 
 import { ProgressStepper } from "./progress-stepper";
+import { CreateStudyItemSchema } from "@/entities/study-item";
+import { TagsSelector } from "@/features/tag-selector";
 
 type CreateStudyItemDrawerProps = {
   onCreate: () => void;

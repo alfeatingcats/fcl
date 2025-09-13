@@ -4,7 +4,7 @@
 import { useCallback } from "react";
 
 import { api } from "@/trpc/react";
-import type { CFC } from "@/types";
+import type { CFC } from "@/shared/types";
 import { StudyItemsTable } from "../components";
 import { StudyItemsHeader } from "../components/study-items-header";
 

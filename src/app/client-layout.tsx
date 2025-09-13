@@ -1,6 +1,6 @@
 "use client";
 
-import type { CFC } from "@/types";
+import type { CFC } from "@/shared/types";
 import { TRPCReactProvider } from "@/trpc/react";
 import { ThemeProvider } from "@/providers/theme-provider";
 

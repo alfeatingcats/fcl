@@ -44,21 +44,26 @@ export const ProgressStepper = () => {
             step={step}
             className="relative !w-full items-start not-last:flex-1"
           >
-            <StepperTrigger className="!w-full items-start rounded pb-6 last:pb-0">
-              <StepperIndicator />
-              <div className="mt-0.5 w-full px-2 text-left">
-                <StepperTitle className="flex items-center justify-between gap-2">
-                  <Tooltip>
-                    <TooltipTrigger>{date}</TooltipTrigger>
-                    <TooltipContent>{tooltip}</TooltipContent>
-                  </Tooltip>
-                  <Badge className="flex items-center gap-2">
-                    <BadgeContent
-                      diff={diff}
-                      isLast={_steps.length === index + 1}
-                    />
-                  </Badge>
-                </StepperTitle>
+            <StepperTrigger
+              asChild
+              className="!w-full items-start rounded pb-6 last:pb-0"
+            >
+              <div className="flex w-full items-start gap-2">
+                <StepperIndicator />
+                <div className="mt-0.5 w-full px-2 text-left">
+                  <StepperTitle className="flex items-center justify-between gap-2">
+                    <Tooltip>
+                      <TooltipTrigger>{date}</TooltipTrigger>
+                      <TooltipContent>{tooltip}</TooltipContent>
+                    </Tooltip>
+                    <Badge className="flex items-center gap-2">
+                      <BadgeContent
+                        diff={diff}
+                        isLast={_steps.length === index + 1}
+                      />
+                    </Badge>
+                  </StepperTitle>
+                </div>
               </div>
             </StepperTrigger>
             {step < steps.length && (

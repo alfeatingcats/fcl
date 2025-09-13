@@ -3,7 +3,7 @@
 import { Header } from "@/widgets/header";
 import { AppSidebar } from "@/components/app-sidebar";
 import { SidebarInset } from "@/components/ui/sidebar";
-import type { CFC, StrictBasicUserInfo } from "@/types";
+import type { CFC, StrictBasicUserInfo } from "@/shared/types";
 import { SidebarProvider } from "@/components/ui/sidebar";
 
 type ClientLayoutProps = {

@@ -2,15 +2,13 @@ import { isNil } from "es-toolkit";
 import { TRPCError } from "@trpc/server";
 import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";
 
-import { EBBINGHAUS_INTERVALS } from "@/lib/const";
-
+import { EBBINGHAUS_INTERVALS } from "@/shared/lib/const";
 import {
   CreateStudyItemSchema,
   ReadStudyItemsSchema,
   UpdateStudyItemSchema,
-} from "@/schema/study-item.schema";
-
-import { CompleteRepetitionSchema } from "@/schema/study-repetition.schema";
+} from "@/entities/study-item";
+import { CompleteRepetitionSchema } from "@/entities/repetitions";
 
 export const studyItemsRouter = createTRPCRouter({
   create: protectedProcedure

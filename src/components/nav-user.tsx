@@ -25,7 +25,7 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
-import type { StrictBasicUserInfo } from "@/types";
+import type { StrictBasicUserInfo } from "@/shared/types";
 
 export function NavUser({ user }: { user: StrictBasicUserInfo }) {
   const { isMobile } = useSidebar();
