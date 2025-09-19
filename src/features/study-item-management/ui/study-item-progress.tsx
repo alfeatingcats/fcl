@@ -15,8 +15,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-
-import { steps } from "../lib";
+import { steps } from "../model/utils";
 
 type BadgeContentProps = {
   diff: string | null;

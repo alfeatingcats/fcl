@@ -31,3 +31,5 @@ export const ReadStudyItemsSchema = z.object({
   limit: z.number().min(1).max(100).default(50),
   cursor: z.string().cuid().optional(),
 });
+
+export type CreateStudyItemInput = z.input<typeof CreateStudyItemSchema>;

@@ -3,12 +3,13 @@ import { TRPCError } from "@trpc/server";
 import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";
 
 import { EBBINGHAUS_INTERVALS } from "@/shared/lib/const";
+
+import { CompleteRepetitionSchema } from "@/entities/repetitions";
 import {
   CreateStudyItemSchema,
   ReadStudyItemsSchema,
   UpdateStudyItemSchema,
-} from "@/entities/study-item";
-import { CompleteRepetitionSchema } from "@/entities/repetitions";
+} from "@/shared/api/schemas";
 
 export const studyItemsRouter = createTRPCRouter({
   create: protectedProcedure
