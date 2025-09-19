@@ -24,9 +24,9 @@ const RootLayout = async ({ children }: PropsWithChildren) => {
   return (
     <html lang="en" className={`${geist.variable}`} suppressHydrationWarning>
       <body>
-        {/* <NextIntlClientProvider> */}
-        <ClientLayout>{children}</ClientLayout>
-        {/* </NextIntlClientProvider> */}
+        <NextIntlClientProvider>
+          <ClientLayout>{children}</ClientLayout>
+        </NextIntlClientProvider>
       </body>
     </html>
   );
