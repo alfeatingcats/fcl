@@ -3,7 +3,7 @@ import { ErrorBoundary, Suspense } from "@suspensive/react";
 import { auth } from "@/server/auth";
 import { api, HydrateClient } from "@/trpc/server";
 
-import { StudyItemsPage } from "@/widgets/study-items-page/ui/study-items-page";
+import { StudyItemsPage } from "@/widgets/study-items-page";
 
 const RepetitionsPage = async () => {
   const authResult = await auth();
