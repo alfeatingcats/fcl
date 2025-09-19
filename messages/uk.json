@@ -1,0 +1,42 @@
+{
+  "HomePage": {
+    "title": "Привіт, світ!"
+  },
+  "StudyItemDrawer": {
+    "createButton": "Створити елемент для навчання",
+    "title": "Створити елемент для навчання",
+    "description": "Заповніть деталі, щоб створити новий елемент для навчання. Додайте назву, опис і виберіть відповідні теги для організації.",
+    "progressTitle": "Прогрес повторень",
+    "progressDescription": "Відстежуйте етапи та статус повторень для ефективного запам'ятовування.",
+    "submit": "Зберегти",
+    "cancel": "Скасувати"
+  },
+  "StudyItemForm": {
+    "titleLabel": "Назва",
+    "titlePlaceholder": "Назва...",
+    "descriptionLabel": "Опис",
+    "descriptionPlaceholder": "Опис...",
+    "tagsLabel": "Теги"
+  },
+  "ProgressStepper": {
+    "start": "Старт"
+  },
+  "TagsSelector": {
+    "createTag": "Створити тег",
+    "searchPlaceholder": "Пошук тегу..."
+  },
+  "StudyItemTable": {
+    "filter": "Фільтр",
+    "noResults": "Немає результатів.",
+    "title": "Назва",
+    "description": "Опис",
+    "created": "Створено",
+    "status": "Статус",
+    "tags": "Теги",
+    "collapseDetails": "Згорнути деталі для {title}",
+    "expandDetails": "Розгорнути деталі для {title}",
+    "selectAll": "Вибрати все",
+    "selectRow": "Вибрати рядок",
+    "tagsPlaceholder": "теги..."
+  }
+}

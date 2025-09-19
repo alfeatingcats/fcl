@@ -1,5 +1,42 @@
 {
   "HomePage": {
     "title": "Hello world!"
+  },
+  "StudyItemDrawer": {
+    "createButton": "Create study item",
+    "title": "Create Study Item",
+    "description": "Fill in the details to create a new study item. Add a title, description, and select relevant tags to organize your item.",
+    "progressTitle": "Progression of repetitions",
+    "progressDescription": "Track the stages and status of repetitions for effective memorization.",
+    "submit": "Submit",
+    "cancel": "Cancel"
+  },
+  "StudyItemForm": {
+    "titleLabel": "Title",
+    "titlePlaceholder": "Title...",
+    "descriptionLabel": "Description",
+    "descriptionPlaceholder": "Description...",
+    "tagsLabel": "Tags"
+  },
+  "ProgressStepper": {
+    "start": "Start"
+  },
+  "TagsSelector": {
+    "createTag": "Create Tag",
+    "searchPlaceholder": "Search tag..."
+  },
+  "StudyItemTable": {
+    "filter": "Filter",
+    "noResults": "No results.",
+    "title": "Title",
+    "description": "Description",
+    "created": "Created",
+    "status": "Status",
+    "tags": "Tags",
+    "collapseDetails": "Collapse details for {title}",
+    "expandDetails": "Expand details for {title}",
+    "selectAll": "Select all",
+    "selectRow": "Select row",
+    "tagsPlaceholder": "tags..."
   }
 }

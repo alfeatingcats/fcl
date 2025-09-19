@@ -4,9 +4,12 @@ import { ChevronDownIcon, ChevronUpIcon } from "lucide-react";
 import type { StudyItem } from "@prisma/client";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
+
+import { useTranslations } from "next-intl";
 import { CreatedCell, StatusCell, TitleCell } from "@/entities/study-item/ui";
 
-export const createStudyItemColumns = () => {
+export const useStudyItemColumns = () => {
+  const t = useTranslations("StudyItemTable");
   const columns: ColumnDef<StudyItem>[] = [
     {
       id: "expander",
@@ -19,8 +22,8 @@ export const createStudyItemColumns = () => {
               onClick: row.getToggleExpandedHandler(),
               "aria-expanded": row.getIsExpanded(),
               "aria-label": row.getIsExpanded()
-                ? `Collapse details for ${row.original.title}`
-                : `Expand details for ${row.original.title}`,
+                ? t("collapseDetails", { title: row.original.title })
+                : t("expandDetails", { title: row.original.title }),
               size: "icon",
               variant: "ghost",
             }}
@@ -51,44 +54,44 @@ export const createStudyItemColumns = () => {
             (table.getIsSomePageRowsSelected() && "indeterminate")
           }
           onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-          aria-label="Select all"
+          aria-label={t("selectAll")}
         />
       ),
       cell: ({ row }) => (
         <Checkbox
           checked={row.getIsSelected()}
           onCheckedChange={(value) => row.toggleSelected(!!value)}
-          aria-label="Select row"
+          aria-label={t("selectRow")}
         />
       ),
     },
     {
-      header: "Title",
+      header: t("title"),
       accessorKey: "title",
       cell: ({ row }) => <TitleCell title={row.getValue("title")} />,
     },
     {
-      header: "Description",
+      header: t("description"),
       accessorKey: "description",
       cell: ({ row }) => (
         <div className="font-medium">{row.getValue("description") ?? ""}</div>
       ),
     },
     {
-      header: "Created",
+      header: t("created"),
       accessorKey: "createdAt",
       cell: ({ row }) => <CreatedCell createdAt={row.getValue("createdAt")} />,
     },
     {
-      header: "Status",
+      header: t("status"),
       accessorKey: "status",
       cell: ({ row }) => <StatusCell status={row.getValue("status")} />,
     },
     {
-      header: () => <div>Tags</div>,
+      header: () => <div>{t("tags")}</div>,
       accessorKey: "itemTags",
-      cell: ({ row }) => {
-        return <>tags...</>;
+      cell: () => {
+        return <>{t("tagsPlaceholder")}</>;
       },
     },
   ];

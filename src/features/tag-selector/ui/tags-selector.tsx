@@ -17,9 +17,9 @@ import { tags } from "@/shared/api/mock";
 import type { CFC } from "@/shared/types";
 import { Button } from "@/components/ui/button";
 import { PRESET_COLOR_CLASSES } from "@/shared/lib/const";
-
 import type { TagsSelectorProps } from "../model/types";
 import { useTagSelector } from "../model/use-tag-selector";
+import { useTranslations } from "next-intl";
 
 export const TagsSelector: CFC<TagsSelectorProps> = ({
   ref,
@@ -32,6 +32,7 @@ export const TagsSelector: CFC<TagsSelectorProps> = ({
     onChange,
     value,
   );
+  const t = useTranslations("TagsSelector");
 
   return (
     <>
@@ -52,12 +53,12 @@ export const TagsSelector: CFC<TagsSelectorProps> = ({
           footer={
             <div className="absolute right-0 -bottom-1 left-0 h-12 w-full bg-transparent pr-2 pl-2">
               <Button className="w-full">
-                <PlusIcon /> Create Tag
+                <PlusIcon /> {t("createTag")}
               </Button>
             </div>
           }
         >
-          <TagsInput placeholder="Search tag..." ref={ref} />
+          <TagsInput placeholder={t("searchPlaceholder")} ref={ref} />
           <TagsList>
             <TagsEmpty />
             <TagsGroup>

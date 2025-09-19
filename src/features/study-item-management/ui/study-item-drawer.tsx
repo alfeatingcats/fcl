@@ -1,5 +1,6 @@
 "use client";
 import { Expand, PlusIcon } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 import {
   Drawer,
@@ -38,6 +39,7 @@ export const StudyItemDrawer: CFC<StudyItemDrawerProps> = ({
   isPending = false,
   handleDrawerChange,
 }) => {
+  const t = useTranslations("StudyItemDrawer");
   return (
     <Drawer
       direction="right"
@@ -46,14 +48,9 @@ export const StudyItemDrawer: CFC<StudyItemDrawerProps> = ({
     >
       <div className="flex items-center justify-between gap-2 px-2">
         <DrawerTrigger asChild>
-          <Button
-            variant="outline"
-            size="sm"
-            // onClick={onCreate}
-            disabled={isPending}
-          >
+          <Button variant="outline" size="sm" disabled={isPending}>
             <PlusIcon />
-            Create study item
+            {t("createButton")}
           </Button>
         </DrawerTrigger>
       </div>
@@ -62,15 +59,12 @@ export const StudyItemDrawer: CFC<StudyItemDrawerProps> = ({
         <div className="space-y-4 overflow-y-auto pb-0.5">
           <DrawerHeader className="-mb-1">
             <DrawerTitle className="flex items-center justify-between">
-              Create Study Item
+              {t("title")}
               <Button type="button" variant="ghost" size="sm">
                 <Expand />
               </Button>
             </DrawerTitle>
-            <DrawerDescription>
-              Fill in the details to create a new study item. Add a title,
-              description, and select relevant tags to organize your item.
-            </DrawerDescription>
+            <DrawerDescription>{t("description")}</DrawerDescription>
           </DrawerHeader>
 
           {children}
@@ -78,10 +72,9 @@ export const StudyItemDrawer: CFC<StudyItemDrawerProps> = ({
           <div className="!w-full pr-4 pl-4">
             <Card className="dark:bg-input/30 mt-[1.6rem] bg-transparent py-4.5">
               <CardHeader className="px-4.5">
-                <CardTitle>Progression of repetitions</CardTitle>
+                <CardTitle>{t("progressTitle")}</CardTitle>
                 <CardDescription className="-mb-2.5">
-                  Track the stages and status of repetitions for effective
-                  memorization.
+                  {t("progressDescription")}
                 </CardDescription>
               </CardHeader>
               <CardContent className="px-4.5">
@@ -92,10 +85,10 @@ export const StudyItemDrawer: CFC<StudyItemDrawerProps> = ({
         </div>
         <DrawerFooter>
           <Button onClick={onCreate} disabled={isPending}>
-            Submit
+            {t("submit")}
           </Button>
           <DrawerClose asChild>
-            <Button variant="outline">Cancel</Button>
+            <Button variant="outline">{t("cancel")}</Button>
           </DrawerClose>
         </DrawerFooter>
       </DrawerContent>

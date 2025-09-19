@@ -11,14 +11,16 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { useStudyItemTable } from "../model/use-table";
+import { useTranslations } from "next-intl";
 
 interface StudyItemTableProps {
   studyItems: Array<StudyItem>;
 }
-
 export const StudyItemTable: FC<StudyItemTableProps> = ({
   studyItems = [],
 }) => {
+  const t = useTranslations("StudyItemTable");
+
   const { table } = useStudyItemTable(studyItems);
 
   return (
@@ -85,7 +87,7 @@ export const StudyItemTable: FC<StudyItemTableProps> = ({
                 colSpan={table.getAllColumns().length}
                 className="h-24 text-center"
               >
-                No results.
+                {t("noResults")}
               </TableCell>
             </TableRow>
           )}

@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/form";
 import type { CFC } from "@/shared/types";
 import { Input } from "@/components/ui/input";
+import { useTranslations } from "next-intl";
 
 import { Textarea } from "@/components/ui/textarea";
 
@@ -19,7 +20,9 @@ type StudyItemFormProps = {
   isPending?: boolean;
   form: UseFormReturn<CreateStudyItemInput>;
 };
+
 export const StudyItemForm: CFC<StudyItemFormProps> = ({ form }) => {
+  const t = useTranslations("StudyItemForm");
   return (
     <Form {...form}>
       <form className="space-y-4 pr-4 pl-4">
@@ -28,11 +31,10 @@ export const StudyItemForm: CFC<StudyItemFormProps> = ({ form }) => {
           name="title"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Title</FormLabel>
+              <FormLabel>{t("titleLabel")}</FormLabel>
               <FormControl>
-                <Input placeholder="Title..." {...field} />
+                <Input placeholder={t("titlePlaceholder")} {...field} />
               </FormControl>
-
               <FormMessage />
             </FormItem>
           )}
@@ -43,11 +45,13 @@ export const StudyItemForm: CFC<StudyItemFormProps> = ({ form }) => {
           name="description"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Description</FormLabel>
+              <FormLabel>{t("descriptionLabel")}</FormLabel>
               <FormControl>
-                <Textarea placeholder="Description..." {...field} />
+                <Textarea
+                  placeholder={t("descriptionPlaceholder")}
+                  {...field}
+                />
               </FormControl>
-
               <FormMessage />
             </FormItem>
           )}
@@ -59,16 +63,14 @@ export const StudyItemForm: CFC<StudyItemFormProps> = ({ form }) => {
           render={({ field: { value, ref } }) => {
             return (
               <FormItem>
-                <FormLabel>Tags</FormLabel>
+                <FormLabel>{t("tagsLabel")}</FormLabel>
                 <FormControl>
                   <TagsSelector
                     value={value}
                     onChange={(v) => form.setValue("tagIds", v)}
-                    // fetchTags={isDrawerOpen}
                     ref={ref}
                   />
                 </FormControl>
-
                 <FormMessage />
               </FormItem>
             );

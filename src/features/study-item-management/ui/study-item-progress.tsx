@@ -22,8 +22,11 @@ type BadgeContentProps = {
   isLast: boolean;
 };
 
+import { useTranslations } from "next-intl";
+
 const BadgeContent: FC<BadgeContentProps> = ({ diff, isLast }) => {
-  if (!diff) return <>Start</>;
+  const t = useTranslations("ProgressStepper");
+  if (!diff) return <>{t("start")}</>;
   if (isLast)
     return (
       <>

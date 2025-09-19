@@ -5,10 +5,10 @@ import {
   getExpandedRowModel,
 } from "@tanstack/react-table";
 
-import { createStudyItemColumns } from "./columns";
+import { useStudyItemColumns } from "./use-study-item-columns";
 
 export const useStudyItemTable = (studyItems: Array<StudyItem>) => {
-  const columns = createStudyItemColumns();
+  const columns = useStudyItemColumns();
 
   const table = useReactTable({
     data: studyItems,

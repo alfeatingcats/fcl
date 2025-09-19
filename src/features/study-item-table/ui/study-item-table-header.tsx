@@ -11,13 +11,13 @@ type StudyItemTableHeaderProps = {
 export const StudyItemTableHeader = ({
   renderCreateButton,
 }: StudyItemTableHeaderProps) => {
-  const t = useTranslations("HomePage");
+  const t = useTranslations("StudyItemTable");
   return (
     <div className="flex items-center justify-between gap-2 px-2">
       {t("title")}
       <Button variant="outline" size="sm">
         <FilterIcon />
-        Filter
+        {t("filter")}
       </Button>
       {renderCreateButton}
     </div>
