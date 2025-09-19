@@ -29,7 +29,9 @@ The codebase is organized for clarity and modularity:
 src/
   app/                Next.js routes and pages (protected/public)
   components/         Shadcn UI components and custom widgets
-  features/           Domain features, each with its own logic and UI
+  features/           Domain features, grouped by domain, with subfolders: model/, ui/
+  entities/           Domain entities, same structure as features (model/, ui/)
+  widgets/            Reusable widget components, same structure as features/entities (model/, ui/)
   hooks/              Custom React hooks
   lib/                Utilities and constants
   providers/          Context providers (e.g., theme)
@@ -37,11 +39,12 @@ src/
   server/             API routers, authentication, and database access
   trpc/               tRPC client/server setup
   types/              Shared type definitions
-  widgets/            Reusable widget components
 prisma/               Prisma schema and migrations
 public/               Static assets (icons, images)
 messages/             Internationalization message files
 ```
+
+> In the features, entities, and widgets folders, the structure is unified: each contains subfolders model/ and ui/. All logic related to a specific domain or entity is grouped within its respective folder.
 
 ## License
 
