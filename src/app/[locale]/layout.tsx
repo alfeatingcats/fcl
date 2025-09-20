@@ -1,9 +1,11 @@
 import "@/styles/globals.css";
 
 import { type Metadata } from "next";
+import { notFound } from "next/navigation";
+import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { Geist } from "next/font/google";
 import type { PropsWithChildren } from "react";
-import { NextIntlClientProvider } from "next-intl";
+import { routing } from "@/i18n/routing";
 
 import { ClientLayout } from "./client-layout";
 
@@ -20,7 +22,14 @@ const geist = Geist({
   variable: "--font-geist-sans",
 });
 
-const RootLayout = async ({ children }: PropsWithChildren) => {
+const RootLayout = async ({
+  children,
+  params,
+}: PropsWithChildren<{ params: Promise<{ locale: string }> }>) => {
+  const { locale } = await params;
+  if (!hasLocale(routing.locales, locale)) {
+    notFound();
+  }
   return (
     <html lang="en" className={`${geist.variable}`} suppressHydrationWarning>
       <body>
