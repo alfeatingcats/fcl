@@ -21,30 +21,48 @@ This project is built with:
 - 🌍 **Internationalization:** Supports multiple languages for global accessibility.
 - 🖥️ **Modern UI:** Clean, responsive design using Shadcn UI components.
 
-## Project Structure
+## 📦 Project Structure
 
-The codebase is organized for clarity and modularity:
+The codebase is organized for clarity, scalability, and modularity:
 
 ```
 src/
-  app/                Next.js routes and pages (protected/public)
-  components/         Shadcn UI components and custom widgets
-  features/           Domain features, grouped by domain, with subfolders: model/, ui/
-  entities/           Domain entities, same structure as features (model/, ui/)
-  widgets/            Reusable widget components, same structure as features/entities (model/, ui/)
-  hooks/              Custom React hooks
-  lib/                Utilities and constants
-  providers/          Context providers (e.g., theme)
-  schema/             Zod schemas for validation
-  server/             API routers, authentication, and database access
-  trpc/               tRPC client/server setup
-  types/              Shared type definitions
-prisma/               Prisma schema and migrations
-public/               Static assets (icons, images)
-messages/             Internationalization message files
+  app/                🌐 Next.js routes & pages
+    [locale]/          🌍 Internationalized routing
+      (protected)/     🔒 Protected routes (auth required)
+      (public)/        🌱 Public routes
+    api/               🔗 API endpoints (auth, trpc)
+  components/          🎨 Shadcn UI components & custom widgets
+    ui/                🧩 UI primitives (buttons, dialogs, etc.)
+  features/            🚀 Feature modules (study-item, tag, etc.)
+    [feature]/         📚 Each feature with:
+      model/           🧠 Business logic & data
+      ui/              🖼️ Feature-specific UI
+  entities/            🏷️ Domain entities (study-item, tag, repetitions)
+    [entity]/          🗂️ Each entity with:
+      model/           🧠 Entity logic & types
+      ui/              🖼️ Entity UI components
+  widgets/             🧱 Reusable widgets (header, study-items-page)
+    [widget]/          🗂️ Each widget with:
+      model/           🧠 Widget logic
+      ui/              🖼️ Widget UI
+  i18n/                🌏 Internationalization helpers
+  providers/           🛠️ Context providers (theme, etc.)
+  shared/              🔄 Shared code (api, hooks, lib, types)
+  styles/              🎨 Global styles
+  trpc/                🔗 tRPC client/server setup
+prisma/                 🗄️ Prisma schema & migrations
+public/                 🖼️ Static assets (images, avatars)
+messages/               💬 i18n translation files
 ```
 
-> In the features, entities, and widgets folders, the structure is unified: each contains subfolders model/ and ui/. All logic related to a specific domain or entity is grouped within its respective folder.
+**Folder Highlights:**
+
+- `features/`, `entities/`, and `widgets/` all use a unified structure: each contains `model/` (logic, types) and `ui/` (UI components) for clear separation and easy scaling.
+- `app/` uses Next.js App Router conventions, with `(protected)` and `(public)` folders for route access control.
+- `components/ui/` contains Shadcn UI primitives for consistent design.
+- `messages/` holds translation dictionaries for i18n.
+- `prisma/` manages database schema and migrations.
 
 ## License
 
