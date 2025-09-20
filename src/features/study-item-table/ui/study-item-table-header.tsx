@@ -14,7 +14,6 @@ export const StudyItemTableHeader = ({
   const t = useTranslations("StudyItemTable");
   return (
     <div className="flex items-center justify-between gap-2 px-2">
-      {t("title")}
       <Button variant="outline" size="sm">
         <FilterIcon />
         {t("filter")}

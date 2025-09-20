@@ -1,5 +1,5 @@
 "use client";
-import { Expand, PlusIcon } from "lucide-react";
+import { Expand, Info, PlusIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 import {
@@ -15,9 +15,11 @@ import {
 import {
   Card,
   CardContent,
-  CardDescription,
+  CardFooter,
   CardHeader,
+  CardHeading,
   CardTitle,
+  CardToolbar,
 } from "@/components/ui/card";
 import type { CFC } from "@/shared/types";
 import { Button } from "@/components/ui/button";
@@ -32,6 +34,7 @@ type StudyItemDrawerProps = {
   isDrawerOpen: boolean;
   handleDrawerChange: (open: boolean) => void;
 };
+
 export const StudyItemDrawer: CFC<StudyItemDrawerProps> = ({
   onCreate,
   children,
@@ -55,12 +58,12 @@ export const StudyItemDrawer: CFC<StudyItemDrawerProps> = ({
         </DrawerTrigger>
       </div>
 
-      <DrawerContent>
+      <DrawerContent className="!max-w-[25rem]">
         <div className="space-y-4 overflow-y-auto pb-0.5">
           <DrawerHeader className="-mb-1">
             <DrawerTitle className="flex items-center justify-between">
               {t("title")}
-              <Button type="button" variant="ghost" size="sm">
+              <Button mode="icon" variant="outline" size="sm">
                 <Expand />
               </Button>
             </DrawerTitle>
@@ -70,16 +73,23 @@ export const StudyItemDrawer: CFC<StudyItemDrawerProps> = ({
           {children}
 
           <div className="!w-full pr-4 pl-4">
-            <Card className="dark:bg-input/30 mt-[1.6rem] bg-transparent py-4.5">
-              <CardHeader className="px-4.5">
-                <CardTitle>{t("progressTitle")}</CardTitle>
-                <CardDescription className="-mb-2.5">
-                  {t("progressDescription")}
-                </CardDescription>
+            <Card variant="accent">
+              <CardHeader>
+                <CardHeading>
+                  <CardTitle>{t("progressTitle")}</CardTitle>
+                </CardHeading>
+                <CardToolbar>
+                  <Button mode="icon" variant="outline" size="sm">
+                    <Info />
+                  </Button>
+                </CardToolbar>
               </CardHeader>
-              <CardContent className="px-4.5">
+              <CardContent>
                 <ProgressStepper />
               </CardContent>
+              <CardFooter className="text-sm leading-none font-medium">
+                {t("progressDescription")}
+              </CardFooter>
             </Card>
           </div>
         </div>
