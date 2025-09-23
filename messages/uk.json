@@ -10,9 +10,9 @@
   },
   "StudyItemForm": {
     "titleLabel": "Назва",
-    "titlePlaceholder": "Назва...",
+    "titlePlaceholder": "Наприклад, 'Теорема Піфагора'",
     "descriptionLabel": "Опис",
-    "descriptionPlaceholder": "Опис...",
+    "descriptionPlaceholder": "Наприклад, 'Формула для знаходження гіпотенузи'",
     "tagsLabel": "Теги"
   },
   "ProgressStepper": {

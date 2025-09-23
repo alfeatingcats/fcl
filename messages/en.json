@@ -10,9 +10,9 @@
   },
   "StudyItemForm": {
     "titleLabel": "Title",
-    "titlePlaceholder": "Title...",
+    "titlePlaceholder": "For example, 'Pythagorean Theorem'",
     "descriptionLabel": "Description",
-    "descriptionPlaceholder": "Description...",
+    "descriptionPlaceholder": "For example, 'Formula for finding the hypotenuse'",
     "tagsLabel": "Tags"
   },
   "ProgressStepper": {

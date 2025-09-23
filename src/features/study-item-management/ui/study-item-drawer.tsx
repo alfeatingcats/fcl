@@ -59,7 +59,7 @@ export const StudyItemDrawer: CFC<StudyItemDrawerProps> = ({
         </DrawerTrigger>
       </div>
 
-      <DrawerContent className="!max-w-[25rem]">
+      <DrawerContent className="!max-w-[28rem]">
         <div className="space-y-4 overflow-y-auto pb-0.5">
           <DrawerHeader className="-mb-1">
             <DrawerTitle className="flex items-center justify-between">
