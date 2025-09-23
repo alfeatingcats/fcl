@@ -1,11 +1,8 @@
+import { formatDiff } from "@/entities/study-item/model/utils";
 import { type CreateStudyItemInput } from "@/shared/api/schemas";
 import { generateRepetitionSchedule } from "@/shared/lib/utils";
-import { format, differenceInMinutes } from "date-fns";
-import {
-  differenceInHours,
-  differenceInDays,
-  differenceInWeeks,
-} from "date-fns";
+// import { format } from "date-fns";
+import type { createFormatter } from "node_modules/next-intl/dist/types/react-client";
 
 export const defaultStudyItemFormValues: Partial<CreateStudyItemInput> = {
   title: "",
@@ -13,26 +10,32 @@ export const defaultStudyItemFormValues: Partial<CreateStudyItemInput> = {
   tagIds: [],
 };
 
-export const formatStepDate = (date: Date): string =>
-  format(date, "HH:mm dd MMM yyyy");
+export function generateStepsServer(
+  format: ReturnType<typeof createFormatter>,
+) {
+  const formatStepDate = (date: Date): string => {
+    return format.dateTime(date, {
+      hour: "2-digit",
+      minute: "2-digit",
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
+    });
+  };
 
-export const formatStepDateTooltip = (date: Date): string =>
-  format(date, "EEEE, dd MMMM yyyy, HH:mm:ss");
+  const formatStepDateTooltip = (date: Date): string => {
+    return format.dateTime(date, {
+      weekday: "long",
+      day: "2-digit",
+      month: "long",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+    });
+  };
 
-export const formatDiff = (prev: Date | null, next: Date): string => {
-  if (!prev) return "";
-  const min = differenceInMinutes(next, prev);
-  if (min < 60) return `in ${min} mins`;
-  const hours = differenceInHours(next, prev);
-  if (hours < 24) return `in ${hours} hrs`;
-  const days = differenceInDays(next, prev);
-  if (days < 7) return `in ${days} days`;
-  const weeks = differenceInWeeks(next, prev);
-  return `in ${weeks} weeks`;
-};
-
-export const steps: StepInfo[] = generateRepetitionSchedule().map(
-  (rep, idx, arr) => {
+  return generateRepetitionSchedule().map((rep, idx, arr) => {
     const prev = idx > 0 ? arr[idx - 1]!.scheduledAt : null;
     return {
       step: rep.repetitionNumber,
@@ -40,8 +43,8 @@ export const steps: StepInfo[] = generateRepetitionSchedule().map(
       diff: prev ? formatDiff(prev, rep.scheduledAt) : "",
       tooltip: formatStepDateTooltip(rep.scheduledAt),
     };
-  },
-);
+  });
+}
 
 export type StepInfo = {
   step: number;

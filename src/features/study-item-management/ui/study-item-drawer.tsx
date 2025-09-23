@@ -26,11 +26,12 @@ import { Button } from "@/components/ui/button";
 
 import { ProgressStepper } from "./study-item-progress";
 import type { CreateStudyItemInput } from "@/shared/api/schemas";
-import type { UseFormReturn } from "react-hook-form";
+
+import type { FormHandleSubmit } from "@/shared/types";
 
 type StudyItemDrawerProps = {
   isPending?: boolean;
-  onCreate: ReturnType<UseFormReturn<CreateStudyItemInput>["handleSubmit"]>;
+  onCreate: FormHandleSubmit<CreateStudyItemInput>;
   isDrawerOpen: boolean;
   handleDrawerChange: (open: boolean) => void;
 };

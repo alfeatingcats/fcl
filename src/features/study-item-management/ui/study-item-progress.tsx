@@ -1,5 +1,6 @@
 import { type FC } from "react";
 import { PartyPopper } from "lucide-react";
+import { useFormatter, useTranslations } from "next-intl";
 
 import {
   Stepper,
@@ -15,14 +16,13 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { steps } from "../model/utils";
+
+import { generateStepsServer } from "../model/utils";
 
 type BadgeContentProps = {
   diff: string | null;
   isLast: boolean;
 };
-
-import { useTranslations } from "next-intl";
 
 const BadgeContent: FC<BadgeContentProps> = ({ diff, isLast }) => {
   const t = useTranslations("ProgressStepper");
@@ -37,6 +37,8 @@ const BadgeContent: FC<BadgeContentProps> = ({ diff, isLast }) => {
 };
 
 export const ProgressStepper = () => {
+  const format = useFormatter();
+  const steps = generateStepsServer(format);
   return (
     <div className="!w-full space-y-8 text-start">
       <Stepper defaultValue={1} orientation="vertical" className="!w-full">

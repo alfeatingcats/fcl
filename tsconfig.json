@@ -37,7 +37,8 @@
     "**/*.tsx",
     "**/*.cjs",
     "**/*.js",
-    ".next/types/**/*.ts"
+    ".next/types/**/*.ts",
+    "src/entities/study-item/model/index.tsx"
   ],
   "exclude": ["node_modules"]
 }

@@ -1,15 +1,16 @@
 import { type ColumnDef } from "@tanstack/react-table";
+import { useFormatter, useTranslations } from "next-intl";
 import { ChevronDownIcon, ChevronUpIcon } from "lucide-react";
 
 import type { StudyItem } from "@prisma/client";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 
-import { useTranslations } from "next-intl";
 import { CreatedCell, StatusCell, TitleCell } from "@/entities/study-item/ui";
 
 export const useStudyItemColumns = () => {
   const t = useTranslations("StudyItemTable");
+  const format = useFormatter();
   const columns: ColumnDef<StudyItem>[] = [
     {
       id: "expander",
@@ -80,7 +81,9 @@ export const useStudyItemColumns = () => {
     {
       header: t("created"),
       accessorKey: "createdAt",
-      cell: ({ row }) => <CreatedCell createdAt={row.getValue("createdAt")} />,
+      cell: ({ row }) => (
+        <CreatedCell format={format} createdAt={row.getValue("createdAt")} />
+      ),
     },
     {
       header: t("status"),

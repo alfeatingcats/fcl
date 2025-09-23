@@ -1,7 +1,4 @@
 {
-  "HomePage": {
-    "title": "Hello world!"
-  },
   "StudyItemDrawer": {
     "createButton": "Create study item",
     "title": "Create Study Item",
@@ -38,5 +35,21 @@
     "selectAll": "Select all",
     "selectRow": "Select row",
     "tagsPlaceholder": "tags..."
+  },
+  "Time": {
+    "inMinutes": "in {count} mins",
+    "inHours": "in {count} hrs",
+    "inDays": "in {count} days",
+    "inWeeks": "in {count} weeks",
+    "ago": "ago",
+    "now": "now"
+  },
+  "Study": {
+    "repetition": "Repetition",
+    "scheduled": "Scheduled",
+    "completed": "Completed",
+    "pending": "Pending",
+    "today": "Today",
+    "tomorrow": "Tomorrow"
   }
 }

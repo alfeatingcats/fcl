@@ -10,6 +10,7 @@ import {
   ReadStudyItemsSchema,
   UpdateStudyItemSchema,
 } from "@/shared/api/schemas";
+import { getTodayRange } from "@/shared/lib/i18n/date";
 
 export const studyItemsRouter = createTRPCRouter({
   create: protectedProcedure
@@ -192,16 +193,13 @@ export const studyItemsRouter = createTRPCRouter({
     }),
 
   getTodayRepetitions: protectedProcedure.query(async ({ ctx }) => {
-    const today = new Date();
-    const tomorrow = new Date(today);
-    tomorrow.setDate(tomorrow.getDate() + 1);
-    tomorrow.setHours(0, 0, 0, 0);
+    const { start, end } = getTodayRange(ctx.timeZone);
 
     return await ctx.db.studyRepetition.findMany({
       where: {
-        studyItem: { createdById: ctx.session.user.id },
+        scheduledAt: { gte: new Date(start), lt: new Date(end) },
         status: "PENDING",
-        scheduledAt: { lt: tomorrow }, // Before the end of the day
+        studyItem: { createdById: ctx.session.user.id },
       },
       include: {
         studyItem: {
