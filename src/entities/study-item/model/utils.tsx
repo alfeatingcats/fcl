@@ -2,6 +2,7 @@ import { capitalize } from "es-toolkit";
 import { replace } from "es-toolkit/compat";
 import type { StudyItem } from "@prisma/client";
 import type { createFormatter } from "next-intl";
+import type { TimeTranslations } from "@/shared/types";
 
 export const formatStudyItemStatus = (status: string) =>
   replace(capitalize(status), "_", " ");
@@ -10,19 +11,29 @@ export const canRowExpand = (item: StudyItem) => Boolean(item.description);
 
 export type Locale = string | undefined;
 
-export function formatDiff(prev: Date | null, next: Date): string {
+/**
+ * Formats the difference between two dates.
+ * @param t — translation function useTranslations("Time")
+ * @param prev — start date
+ * @param next — end date
+ */
+export function formatDiff(
+  t: TimeTranslations,
+  prev: Date | null,
+  next: Date,
+): string {
   if (!prev) return "";
 
   const diffMs = next.getTime() - prev.getTime();
   const diffMinutes = Math.floor(diffMs / 60000);
 
-  if (diffMinutes < 60) return `in ${diffMinutes} mins`;
+  if (diffMinutes < 60) return t("inMinutes", { count: diffMinutes });
   const diffHours = Math.floor(diffMinutes / 60);
-  if (diffHours < 24) return `in ${diffHours} hrs`;
+  if (diffHours < 24) return t("inHours", { count: diffHours });
   const diffDays = Math.floor(diffHours / 24);
-  if (diffDays < 7) return `in ${diffDays} days`;
+  if (diffDays < 7) return t("inDays", { count: diffDays });
   const diffWeeks = Math.floor(diffDays / 7);
-  return `in ${diffWeeks} weeks`;
+  return t("inWeeks", { count: diffWeeks });
 }
 
 export function formatCreatedDate(

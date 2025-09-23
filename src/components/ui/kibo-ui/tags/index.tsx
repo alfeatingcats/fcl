@@ -110,11 +110,14 @@ export const Tags = ({
   );
 };
 
-export type TagsTriggerProps = ComponentProps<typeof Button>;
+export type TagsTriggerProps = ComponentProps<typeof Button> & {
+  tagsInputHint?: string;
+};
 
 export const TagsTrigger = ({
   className,
   children,
+  tagsInputHint,
   ...props
 }: TagsTriggerProps) => (
   <PopoverTrigger asChild>
@@ -127,7 +130,7 @@ export const TagsTrigger = ({
       <div className="flex flex-wrap items-center gap-1">
         {children}
         <span className="text-muted-foreground px-2 py-px">
-          Select a tag...
+          {tagsInputHint}
         </span>
       </div>
     </Button>

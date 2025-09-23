@@ -37,7 +37,7 @@ export const TagsSelector: CFC<TagsSelectorProps> = ({
   return (
     <>
       <Tags>
-        <TagsTrigger>
+        <TagsTrigger tagsInputHint={t("searchPlaceholder")}>
           {selected.map((tag) => (
             <TagsValue
               key={tag}

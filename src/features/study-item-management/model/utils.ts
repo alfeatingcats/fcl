@@ -1,8 +1,7 @@
 import { formatDiff } from "@/entities/study-item/model/utils";
 import { type CreateStudyItemInput } from "@/shared/api/schemas";
 import { generateRepetitionSchedule } from "@/shared/lib/utils";
-// import { format } from "date-fns";
-import type { createFormatter } from "node_modules/next-intl/dist/types/react-client";
+import type { IntlFormatter, TimeTranslations } from "@/shared/types";
 
 export const defaultStudyItemFormValues: Partial<CreateStudyItemInput> = {
   title: "",
@@ -11,7 +10,8 @@ export const defaultStudyItemFormValues: Partial<CreateStudyItemInput> = {
 };
 
 export function generateStepsServer(
-  format: ReturnType<typeof createFormatter>,
+  format: IntlFormatter,
+  t: TimeTranslations,
 ) {
   const formatStepDate = (date: Date): string => {
     return format.dateTime(date, {
@@ -40,7 +40,7 @@ export function generateStepsServer(
     return {
       step: rep.repetitionNumber,
       date: formatStepDate(rep.scheduledAt),
-      diff: prev ? formatDiff(prev, rep.scheduledAt) : "",
+      diff: prev ? formatDiff(t, prev, rep.scheduledAt) : "",
       tooltip: formatStepDateTooltip(rep.scheduledAt),
     };
   });

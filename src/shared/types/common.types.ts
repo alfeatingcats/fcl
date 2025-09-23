@@ -2,7 +2,7 @@
 
 import type { StorageValue } from "zustand/middleware/persist";
 import type { UserStoreState } from "@/shared/stores/timezone-store";
-import type { createFormatter } from "next-intl";
+import type { createFormatter, useTranslations } from "next-intl";
 import type { UseFormReturn } from "react-hook-form";
 import type { UseEmblaCarouselType } from "embla-carousel-react";
 import type useEmblaCarousel from "embla-carousel-react";
@@ -12,6 +12,7 @@ export type PersistedUserStoreState = StorageValue<Partial<UserStoreState>>;
 
 // Formatter type for next-intl
 export type IntlFormatter = ReturnType<typeof createFormatter>;
+export type TimeTranslations = ReturnType<typeof useTranslations<"Time">>;
 
 // Embla Carousel types
 export type EmblaCarouselApi = UseEmblaCarouselType[1];

@@ -37,10 +37,10 @@
     "tagsPlaceholder": "tags..."
   },
   "Time": {
-    "inMinutes": "in {count} mins",
-    "inHours": "in {count} hrs",
-    "inDays": "in {count} days",
-    "inWeeks": "in {count} weeks",
+    "inMinutes": "in {count, plural, one {# min} other {# mins}}",
+    "inHours": "in {count, plural, one {# hr} other {# hrs}}",
+    "inDays": "in {count, plural, one {# day} other {# days}}",
+    "inWeeks": "in {count, plural, one {# week} other {# weeks}}",
     "ago": "ago",
     "now": "now"
   },

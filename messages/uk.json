@@ -37,10 +37,10 @@
     "tagsPlaceholder": "теги..."
   },
   "Time": {
-    "inMinutes": "через {count} хв",
-    "inHours": "через {count} год",
-    "inDays": "через {count} днів",
-    "inWeeks": "через {count} тижнів",
+    "inMinutes": "через {count, plural, one {# хв} few {# хв} many {# хв} other {# хв}}",
+    "inHours": "через {count, plural, one {# год} few {# год} many {# год} other {# год}}",
+    "inDays": "через {count, plural, one {# день} few {# дні} many {# днів} other {# дня}}",
+    "inWeeks": "через {count, plural, one {# тиждень} few {# тижні} many {# тижнів} other {# тижня}}",
     "ago": "тому",
     "now": "зараз"
   },
