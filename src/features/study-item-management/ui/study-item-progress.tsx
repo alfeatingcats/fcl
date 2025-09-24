@@ -61,7 +61,10 @@ export const ProgressStepper = () => {
                       <TooltipTrigger>{date}</TooltipTrigger>
                       <TooltipContent>{tooltip}</TooltipContent>
                     </Tooltip>
-                    <Badge className="flex items-center gap-2">
+                    <Badge
+                      variant="secondary"
+                      className="flex items-center gap-2"
+                    >
                       <BadgeContent
                         diff={diff}
                         isLast={_steps.length === index + 1}
