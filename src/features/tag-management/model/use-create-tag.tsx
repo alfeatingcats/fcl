@@ -1,6 +1,7 @@
-import type { CreateTagInput } from "@/shared/api/schemas";
 import { api } from "@/trpc/react";
 import { useCallback } from "react";
+
+import type { CreateTagInput } from "@/shared/api/schemas";
 
 export const useCreateTag = ({
   onError,
@@ -17,7 +18,6 @@ export const useCreateTag = ({
       onSuccess(name);
     },
     onError: (_, { name }) => {
-      console.error("Error creating tag:", name);
       onError(name);
     },
   });
