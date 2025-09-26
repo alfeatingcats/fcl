@@ -1,5 +1,5 @@
 "use client";
-import { Expand, Info, PlusIcon } from "lucide-react";
+import { Expand, Info } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 import {
@@ -8,7 +8,6 @@ import {
   DrawerClose,
   DrawerFooter,
   DrawerHeader,
-  DrawerTrigger,
   DrawerContent,
   DrawerDescription,
 } from "@/components/ui/drawer";
