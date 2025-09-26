@@ -1,5 +1,5 @@
-import { Expand, LoaderCircleIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { Expand, LoaderCircleIcon } from "lucide-react";
 
 import {
   DrawerClose,
