@@ -11,5 +11,6 @@ export const useAllTags: useFetchAllTags = (fetchTags) => {
     {},
     { enabled: fetchTags },
   );
+
   return { tagsList };
 };

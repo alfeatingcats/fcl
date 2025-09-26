@@ -6,22 +6,29 @@ import {
   FormMessage,
   FormControl,
 } from "@/components/ui/form";
+import type { ReactNode } from "react";
 import type { CFC } from "@/shared/types";
-import { Input } from "@/components/ui/input";
 import { useTranslations } from "next-intl";
+import { Input } from "@/components/ui/input";
+import type { UseFormReturn } from "react-hook-form";
 
 import { Textarea } from "@/components/ui/textarea";
 
 import { TagsSelector } from "@/features/tag-selector";
 import type { CreateStudyItemInput } from "@/shared/api/schemas";
-import type { UseFormReturn } from "react-hook-form";
 
 type StudyItemFormProps = {
   isPending?: boolean;
   form: UseFormReturn<CreateStudyItemInput>;
+  shouldFetchTags: boolean;
+  renderCreateTagButton: ReactNode;
 };
 
-export const StudyItemForm: CFC<StudyItemFormProps> = ({ form }) => {
+export const StudyItemForm: CFC<StudyItemFormProps> = ({
+  form,
+  shouldFetchTags,
+  renderCreateTagButton,
+}) => {
   const t = useTranslations("StudyItemForm");
   return (
     <Form {...form}>
@@ -69,6 +76,8 @@ export const StudyItemForm: CFC<StudyItemFormProps> = ({ form }) => {
                     value={value}
                     onChange={(v) => form.setValue("tagIds", v)}
                     ref={ref}
+                    fetchTags={shouldFetchTags}
+                    renderCreateTagButton={renderCreateTagButton}
                   />
                 </FormControl>
                 <FormMessage />

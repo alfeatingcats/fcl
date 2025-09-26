@@ -1,3 +1,4 @@
+import type { CreateTagInput } from "@/shared/api/schemas";
 import { api } from "@/trpc/react";
 import { useCallback } from "react";
 
@@ -11,7 +12,7 @@ export const useCreateTag = () => {
   });
 
   const handleCreateTag = useCallback(
-    (name: string, color: string) => createTag.mutate({ name, color }),
+    (data: CreateTagInput) => createTag.mutate(data),
     [createTag],
   );
 

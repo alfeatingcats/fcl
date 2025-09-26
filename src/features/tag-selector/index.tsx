@@ -1,1 +1,1 @@
-export { TagsSelector } from "./ui/tags-selector";
+export { TagsSelector, CreateTagButton } from "./ui";

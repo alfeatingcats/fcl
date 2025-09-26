@@ -23,20 +23,11 @@ import {
 } from "@/components/ui/card";
 import type { CFC } from "@/shared/types";
 import { Button } from "@/components/ui/button";
+import type { DrawerFormProps } from "@/shared/types";
 
 import { ProgressStepper } from "./study-item-progress";
-import type { CreateStudyItemInput } from "@/shared/api/schemas";
 
-import type { FormHandleSubmit } from "@/shared/types";
-
-type StudyItemDrawerProps = {
-  isPending?: boolean;
-  onCreate: FormHandleSubmit<CreateStudyItemInput>;
-  isDrawerOpen: boolean;
-  handleDrawerChange: (open: boolean) => void;
-};
-
-export const StudyItemDrawer: CFC<StudyItemDrawerProps> = ({
+export const StudyItemDrawer: CFC<DrawerFormProps> = ({
   onCreate,
   children,
   isDrawerOpen,
@@ -44,21 +35,13 @@ export const StudyItemDrawer: CFC<StudyItemDrawerProps> = ({
   handleDrawerChange,
 }) => {
   const t = useTranslations("StudyItemDrawer");
+  const ta = useTranslations("UiActions");
   return (
     <Drawer
       direction="right"
       open={isDrawerOpen}
       onOpenChange={handleDrawerChange}
     >
-      <div className="flex items-center justify-between gap-2 px-2">
-        <DrawerTrigger asChild>
-          <Button variant="outline" size="sm" disabled={isPending}>
-            <PlusIcon />
-            {t("createButton")}
-          </Button>
-        </DrawerTrigger>
-      </div>
-
       <DrawerContent className="!max-w-[28rem]">
         <div className="space-y-4 overflow-y-auto pb-0.5">
           <DrawerHeader className="-mb-1">
@@ -96,10 +79,10 @@ export const StudyItemDrawer: CFC<StudyItemDrawerProps> = ({
         </div>
         <DrawerFooter>
           <Button onClick={onCreate} disabled={isPending}>
-            {t("submit")}
+            {ta("submit")}
           </Button>
           <DrawerClose asChild>
-            <Button variant="outline">{t("cancel")}</Button>
+            <Button variant="outline">{ta("cancel")}</Button>
           </DrawerClose>
         </DrawerFooter>
       </DrawerContent>

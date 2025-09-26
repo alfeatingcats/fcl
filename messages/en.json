@@ -1,12 +1,20 @@
 {
+  "UiActions": {
+    "create": "Create",
+    "submit": "Submit",
+    "cancel": "Cancel"
+  },
   "StudyItemDrawer": {
     "createButton": "Create study item",
     "title": "Create Study Item",
     "description": "Fill in the details to create a new study item. Add a title, description, and select relevant tags to organize your item.",
     "progressTitle": "Progression of repetitions",
-    "progressDescription": "Track the stages and status of repetitions for effective memorization.",
-    "submit": "Submit",
-    "cancel": "Cancel"
+    "progressDescription": "Track the stages and status of repetitions for effective memorization."
+  },
+  "TagDrawer": {
+    "createButton": "Create tag",
+    "title": "Create new tag",
+    "description": "Enter a name and description for the new tag to organize your study items."
   },
   "StudyItemForm": {
     "titleLabel": "Title",
@@ -14,6 +22,12 @@
     "descriptionLabel": "Description",
     "descriptionPlaceholder": "For example, 'Formula for finding the hypotenuse'",
     "tagsLabel": "Tags"
+  },
+  "TagForm": {
+    "titleLabel": "Tag name",
+    "titlePlaceholder": "For example, 'Mathematics'",
+    "colorLabel": "Color",
+    "colorPlaceholder": "Choose a color for the tag"
   },
   "ProgressStepper": {
     "start": "Start"
@@ -51,5 +65,17 @@
     "pending": "Pending",
     "today": "Today",
     "tomorrow": "Tomorrow"
+  },
+  "TagColors": {
+    "red": "Red",
+    "green": "Green",
+    "amber": "Amber",
+    "pink": "Pink",
+    "violet": "Violet",
+    "rose": "Rose",
+    "orange": "Orange",
+    "blue": "Blue",
+    "gray": "Gray",
+    "slate": "Slate"
   }
 }

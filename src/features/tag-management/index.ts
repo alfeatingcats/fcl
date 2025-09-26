@@ -1,1 +1,2 @@
-export { useCreateTag } from "./model/use-create-tag";
+export { useCreateTag, useDeleteTag, useTagForm } from "./model";
+export { TagForm } from "./ui";

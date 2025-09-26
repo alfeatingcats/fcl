@@ -21,3 +21,5 @@ export const UpdateTagSchema = z.object({
     .optional(),
   color: z.string().optional(),
 });
+
+export type CreateTagInput = z.input<typeof CreateTagSchema>;

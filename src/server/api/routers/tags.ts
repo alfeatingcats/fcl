@@ -2,7 +2,7 @@
 import { z } from "zod";
 import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";
 import { TRPCError } from "@trpc/server";
-import { CreateTagSchema, UpdateTagSchema } from "@/entities/tag";
+import { CreateTagSchema, UpdateTagSchema } from "@/shared/api/schemas";
 
 export const tagsRouter = createTRPCRouter({
   /**
@@ -405,23 +405,3 @@ export const tagsRouter = createTRPCRouter({
     };
   }),
 });
-
-/**
- * Return color name by hex code
- */
-function getColorName(hex: string): string {
-  const colorNames: Record<string, string> = {
-    "#EF4444": "Red",
-    "#F97316": "Orange",
-    "#EAB308": "Yellow",
-    "#22C55E": "Green",
-    "#06B6D4": "Cyan",
-    "#3B82F6": "Blue",
-    "#8B5CF6": "Violet",
-    "#EC4899": "Pink",
-    "#6B7280": "Gray",
-    "#1F2937": "Dark Gray",
-  };
-
-  return colorNames[hex.toUpperCase()] ?? "Custom";
-}

@@ -1,6 +1,6 @@
 "use client";
 
-import { CheckIcon, PlusIcon } from "lucide-react";
+import { CheckIcon } from "lucide-react";
 
 import {
   Tags,
@@ -15,7 +15,6 @@ import {
 } from "@/components/ui/kibo-ui/tags";
 import { tags } from "@/shared/api/mock";
 import type { CFC } from "@/shared/types";
-import { Button } from "@/components/ui/button";
 import { PRESET_COLOR_CLASSES } from "@/shared/lib/const";
 import type { TagsSelectorProps } from "../model/types";
 import { useTagSelector } from "../model/use-tag-selector";
@@ -25,7 +24,8 @@ export const TagsSelector: CFC<TagsSelectorProps> = ({
   ref,
   value,
   onChange,
-  fetchTags = false,
+  fetchTags,
+  renderCreateTagButton,
 }) => {
   const { handleSelect, handleRemove, selected } = useTagSelector(
     fetchTags,
@@ -49,13 +49,11 @@ export const TagsSelector: CFC<TagsSelectorProps> = ({
           ))}
         </TagsTrigger>
         <TagsContent
-          commandCN="pb-12"
+          commandCN="relative"
           footer={
-            <div className="absolute right-0 -bottom-1 left-0 h-12 w-full bg-transparent pr-2 pl-2">
-              <Button className="w-full">
-                <PlusIcon /> {t("createTag")}
-              </Button>
-            </div>
+            <section className="flex justify-end border-t p-2">
+              {renderCreateTagButton}
+            </section>
           }
         >
           <TagsInput placeholder={t("searchPlaceholder")} ref={ref} />
