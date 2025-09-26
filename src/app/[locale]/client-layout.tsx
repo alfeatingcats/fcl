@@ -1,6 +1,6 @@
 "use client";
-
 import type { CFC } from "@/shared/types";
+import { Toaster } from "@/components/ui/sonner";
 import { TRPCReactProvider } from "@/trpc/react";
 import { ThemeProvider } from "@/providers/theme-provider";
 
@@ -15,6 +15,7 @@ export const ClientLayout: CFC = ({ children }) => {
       >
         {children}
       </ThemeProvider>
+      <Toaster position="top-center" />
     </TRPCReactProvider>
   );
 };

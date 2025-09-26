@@ -1,4 +1,4 @@
-import { Expand } from "lucide-react";
+import { Expand, LoaderCircleIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 import {
@@ -46,6 +46,9 @@ export const TagCreateDrawer: CFC<TagCreateDrawerProps> = ({
         </div>
         <DrawerFooter>
           <Button onClick={onCreate} disabled={isPending}>
+            {isPending ? (
+              <LoaderCircleIcon className="size-4 animate-spin" />
+            ) : null}
             {ta("submit")}
           </Button>
           <DrawerClose asChild>

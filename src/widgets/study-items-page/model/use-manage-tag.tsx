@@ -1,4 +1,5 @@
 'use client"';
+import { toast } from "sonner";
 import { useBoolean } from "ahooks";
 import { useCallback } from "react";
 
@@ -7,18 +8,27 @@ import { useCreateTag } from "@/features/tag-management";
 import type { CreateTagInput } from "@/shared/api/schemas";
 
 import type { UseManageStudyItemReturn } from "./types";
+import { useTranslations } from "next-intl";
 
 export const useManageTag = (): UseManageStudyItemReturn<CreateTagInput> => {
+  const t = useTranslations("TagMessages");
+
   const [isCreateTagDrawerOpen, { toggle: toggleCreateTagDrawer }] =
     useBoolean(false);
-  const { handleCreateTag, isLoading } = useCreateTag();
-  const { form } = useTagForm({
-    onCreate: handleCreateTag,
+
+  const { handleCreateTag, isLoading } = useCreateTag({
+    onSuccess: (name) => {
+      toast.success(t("createSuccess", { name }));
+      toggleCreateTagDrawer();
+    },
+    onError: (name) => {
+      toast.error(t("createError", { name }));
+    },
   });
 
-  const onSubmit = useCallback((data: CreateTagInput) => {
-    console.log(data);
-  }, []);
+  const { form, onSubmit } = useTagForm({
+    onCreate: handleCreateTag,
+  });
 
   const handleDrawerChange = useCallback(
     (open: boolean) => {
