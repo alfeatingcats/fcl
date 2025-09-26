@@ -1,2 +1,2 @@
 export { useCreateTag, useDeleteTag, useTagForm } from "./model";
-export { TagForm } from "./ui";
+export { TagForm, TagCreateDrawer, CreateStudyItemButton } from "./ui";

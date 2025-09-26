@@ -9,12 +9,14 @@ import {
   StudyItemDrawer,
   StudyItemForm,
 } from "@/features/study-item-management/ui";
+import {
+  TagCreateDrawer,
+  TagForm,
+  CreateStudyItemButton,
+} from "@/features/tag-management";
 import { CreateTagButton } from "@/features/tag-selector";
 
-import { TagCreateDrawer } from "./tag-create-drawer";
 import { useManageStudyItem, useManageTag } from "../model";
-import { CreateStudyItemButton } from "./create-study-item-button";
-import { TagForm } from "@/features/tag-management";
 
 export const StudyItemsPage = () => {
   const [studyItems] = api.studyItem.getAll.useSuspenseQuery({ limit: 10 });
