@@ -1,14 +1,14 @@
 import { useId, useMemo } from "react";
 import { useTranslations } from "next-intl";
 
+import type { CFC } from "@/shared/types";
 import { Badge } from "@/components/ui/badge";
 import { Label } from "@/components/ui/label";
 import { PRESET_COLOR_CLASSES } from "@/shared/lib/const";
+import { FormControl, FormItem } from "@/components/ui/form";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
 import type messages from "../../../../messages/en.json";
-import { FormControl, FormItem } from "@/components/ui/form";
-import type { CFC } from "@/shared/types";
 
 type TagColorKeys = keyof typeof messages.TagColors;
 
