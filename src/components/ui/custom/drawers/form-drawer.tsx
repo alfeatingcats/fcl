@@ -52,8 +52,8 @@ export const FormDrawer: CFC<FormDrawerProps> = ({
       open={isDrawerOpen}
       onOpenChange={handleDrawerChange}
     >
-      <DrawerContent className={cn("!max-w-[28rem] p-6", contentCN)}>
-        <div className="space-y-4 overflow-y-auto pb-0.5">
+      <DrawerContent className={cn("!max-w-[28rem] py-6", contentCN)}>
+        <div className="space-y-4 overflow-y-auto px-6 pb-0.5">
           <DrawerHeader className="mb-5 p-0">
             <DrawerTitle className="flex items-center justify-between">
               {title}
@@ -67,7 +67,7 @@ export const FormDrawer: CFC<FormDrawerProps> = ({
           {children}
         </div>
 
-        <DrawerFooter className="px-0 pb-0">
+        <DrawerFooter className="px-6 pb-0">
           <Button disabled={isPending} {...restSubmitProps}>
             {isPending ? (
               <LoaderCircleIcon className="size-4 animate-spin" />
