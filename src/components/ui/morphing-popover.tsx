@@ -192,6 +192,7 @@ function MorphingPopoverContent({
 
     document.addEventListener("keydown", handleKeyDown);
     return () => document.removeEventListener("keydown", handleKeyDown);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [context.isOpen, context.close]);
 
   return (

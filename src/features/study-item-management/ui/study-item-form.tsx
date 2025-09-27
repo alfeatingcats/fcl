@@ -1,3 +1,7 @@
+import type { ReactNode } from "react";
+import { useTranslations } from "next-intl";
+import type { UseFormReturn } from "react-hook-form";
+
 import {
   Form,
   FormItem,
@@ -6,33 +10,33 @@ import {
   FormMessage,
   FormControl,
 } from "@/components/ui/form";
-import type { ReactNode } from "react";
 import type { CFC } from "@/shared/types";
-import { useTranslations } from "next-intl";
 import { Input } from "@/components/ui/input";
-import type { UseFormReturn } from "react-hook-form";
-
 import { Textarea } from "@/components/ui/textarea";
-
-import { TagsSelector } from "@/features/tag-selector";
+import {
+  TagsSelector,
+  type RequiredCreateTagInput,
+} from "@/features/tag-selector";
 import type { CreateStudyItemInput } from "@/shared/api/schemas";
 
 type StudyItemFormProps = {
-  isPending?: boolean;
-  form: UseFormReturn<CreateStudyItemInput>;
-  shouldFetchTags: boolean;
+  isLoading?: boolean;
   renderCreateTagButton: ReactNode;
+  defaultTags?: RequiredCreateTagInput[];
+  form: UseFormReturn<CreateStudyItemInput>;
 };
 
 export const StudyItemForm: CFC<StudyItemFormProps> = ({
   form,
-  shouldFetchTags,
+  defaultTags,
+  isLoading = false,
   renderCreateTagButton,
 }) => {
   const t = useTranslations("StudyItemForm");
+
   return (
     <Form {...form}>
-      <form className="space-y-4 pr-4 pl-4">
+      <form className="space-y-4">
         <FormField
           control={form.control}
           name="title"
@@ -40,7 +44,11 @@ export const StudyItemForm: CFC<StudyItemFormProps> = ({
             <FormItem>
               <FormLabel>{t("titleLabel")}</FormLabel>
               <FormControl>
-                <Input placeholder={t("titlePlaceholder")} {...field} />
+                <Input
+                  placeholder={t("titlePlaceholder")}
+                  disabled={isLoading}
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -56,6 +64,7 @@ export const StudyItemForm: CFC<StudyItemFormProps> = ({
               <FormControl>
                 <Textarea
                   placeholder={t("descriptionPlaceholder")}
+                  disabled={isLoading}
                   {...field}
                 />
               </FormControl>
@@ -67,23 +76,26 @@ export const StudyItemForm: CFC<StudyItemFormProps> = ({
         <FormField
           control={form.control}
           name="tagIds"
-          render={({ field: { value, ref } }) => {
-            return (
-              <FormItem>
-                <FormLabel>{t("tagsLabel")}</FormLabel>
-                <FormControl>
-                  <TagsSelector
-                    value={value}
-                    onChange={(v) => form.setValue("tagIds", v)}
-                    ref={ref}
-                    fetchTags={shouldFetchTags}
-                    renderCreateTagButton={renderCreateTagButton}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            );
-          }}
+          render={({ field: { ref, onBlur } }) => (
+            <FormItem>
+              <FormLabel>{t("tagsLabel")}</FormLabel>
+              <FormControl>
+                <TagsSelector
+                  defaultTags={defaultTags}
+                  onChange={(_, selectedTagIds) => {
+                    form.setValue(
+                      "tagIds",
+                      selectedTagIds.length > 0 ? selectedTagIds : undefined,
+                    );
+                  }}
+                  ref={ref}
+                  onBlur={onBlur}
+                  renderCreateTagButton={renderCreateTagButton}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
         />
       </form>
     </Form>

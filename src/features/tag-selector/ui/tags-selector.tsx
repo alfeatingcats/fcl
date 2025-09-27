@@ -1,77 +1,118 @@
-"use client";
-
-import { CheckIcon } from "lucide-react";
+import {
+  useCallback,
+  useState,
+  useMemo,
+  type Ref,
+  type ReactNode,
+} from "react";
+import { useDebounce } from "ahooks";
+import { useTranslations } from "next-intl";
 
 import {
   Tags,
-  TagsList,
-  TagsItem,
-  TagsEmpty,
-  TagsGroup,
   TagsInput,
   TagsValue,
   TagsTrigger,
   TagsContent,
 } from "@/components/ui/kibo-ui/tags";
-import { tags } from "@/shared/api/mock";
 import type { CFC } from "@/shared/types";
-import { PRESET_COLOR_CLASSES } from "@/shared/lib/const";
-import type { TagsSelectorProps } from "../model/types";
+
+import { TagsListContent } from "./tags-list-content";
 import { useTagSelector } from "../model/use-tag-selector";
-import { useTranslations } from "next-intl";
+import type { RequiredCreateTagInput } from "../model/types";
+
+export type TagsSelectorProps = {
+  onBlur?: () => void;
+  ref?: Ref<HTMLInputElement>;
+  renderCreateTagButton?: ReactNode;
+  defaultTags?: RequiredCreateTagInput[];
+  onChange: (
+    selectedTags: RequiredCreateTagInput[],
+    selectedTagIds: string[],
+  ) => void;
+};
 
 export const TagsSelector: CFC<TagsSelectorProps> = ({
   ref,
-  value,
+  onBlur,
   onChange,
-  fetchTags,
+  defaultTags,
   renderCreateTagButton,
 }) => {
-  const { handleSelect, handleRemove, selected } = useTagSelector(
-    fetchTags,
-    onChange,
-    value,
-  );
+  const [query, setQuery] = useState("");
+  const delayedQuery = useDebounce(query, { wait: 500 });
+
   const t = useTranslations("TagsSelector");
 
+  const {
+    handleSelect,
+    handleRemove,
+    selectedTags,
+    availableTags,
+    selectedTagIds,
+    autocompleteTags,
+    isAllTagsPending,
+    isAutocompleteTagsPending,
+  } = useTagSelector({
+    onChange,
+    defaultTags,
+    query: delayedQuery.trim(),
+  });
+
+  const handleClearInput = useCallback(() => {
+    setQuery("");
+  }, []);
+
+  const displayTags: RequiredCreateTagInput[] | undefined = useMemo(
+    () => (delayedQuery.trim() ? autocompleteTags : availableTags),
+    [delayedQuery, autocompleteTags, availableTags],
+  );
+
+  const isPending = useMemo(
+    () => (delayedQuery.trim() ? isAutocompleteTagsPending : isAllTagsPending),
+    [delayedQuery, isAutocompleteTagsPending, isAllTagsPending],
+  );
+
   return (
-    <>
-      <Tags>
-        <TagsTrigger tagsInputHint={t("searchPlaceholder")}>
-          {selected.map((tag) => (
-            <TagsValue
-              key={tag}
-              onRemove={() => handleRemove(tag)}
-              className={PRESET_COLOR_CLASSES[7]}
-            >
-              {tags.find((t) => t.id === tag)?.name}
-            </TagsValue>
-          ))}
-        </TagsTrigger>
-        <TagsContent
-          commandCN="relative"
-          footer={
+    <Tags>
+      <TagsTrigger tagsInputHint={t("searchPlaceholder")}>
+        {selectedTags.map((tag) => (
+          <TagsValue
+            key={tag.id}
+            onRemove={() => handleRemove(tag.id)}
+            className={tag.color}
+          >
+            {tag.name}
+          </TagsValue>
+        ))}
+      </TagsTrigger>
+
+      <TagsContent
+        commandCN="relative"
+        footer={
+          renderCreateTagButton ? (
             <section className="flex justify-end border-t p-2">
               {renderCreateTagButton}
             </section>
-          }
-        >
-          <TagsInput placeholder={t("searchPlaceholder")} ref={ref} />
-          <TagsList>
-            <TagsEmpty />
-            <TagsGroup>
-              {tags.map((tag) => (
-                <TagsItem key={tag.id} onSelect={handleSelect} value={tag.id}>
-                  {tag.name}
-                  {selected.includes(tag.id) && (
-                    <CheckIcon className="text-muted-foreground" size={14} />
-                  )}
-                </TagsItem>
-              ))}
-            </TagsGroup>
-          </TagsList>
-        </TagsContent>
-      </Tags>
-    </>
+          ) : null
+        }
+      >
+        <TagsInput
+          ref={ref}
+          value={query}
+          onValueChange={setQuery}
+          onClearInput={handleClearInput}
+          onBlur={onBlur}
+          placeholder={t("searchPlaceholder")}
+        />
+
+        <TagsListContent
+          isPending={isPending}
+          displayTags={displayTags}
+          selectedTagIds={selectedTagIds}
+          handleSelect={handleSelect}
+        />
+      </TagsContent>
+    </Tags>
   );
 };

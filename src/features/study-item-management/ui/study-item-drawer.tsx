@@ -41,9 +41,9 @@ export const StudyItemDrawer: CFC<DrawerFormProps> = ({
       open={isDrawerOpen}
       onOpenChange={handleDrawerChange}
     >
-      <DrawerContent className="!max-w-[28rem]">
+      <DrawerContent className="!max-w-[28rem] p-6">
         <div className="space-y-4 overflow-y-auto pb-0.5">
-          <DrawerHeader className="-mb-1">
+          <DrawerHeader className="mb-5 p-0">
             <DrawerTitle className="flex items-center justify-between">
               {t("title")}
               <Button mode="icon" variant="outline" size="sm">
@@ -55,7 +55,7 @@ export const StudyItemDrawer: CFC<DrawerFormProps> = ({
 
           {children}
 
-          <div className="!w-full pr-4 pl-4">
+          <div className="!w-full">
             <Card variant="accent">
               <CardHeader>
                 <CardHeading>
@@ -76,7 +76,7 @@ export const StudyItemDrawer: CFC<DrawerFormProps> = ({
             </Card>
           </div>
         </div>
-        <DrawerFooter>
+        <DrawerFooter className="px-0 pb-0">
           <Button onClick={onCreate} disabled={isPending}>
             {ta("submit")}
           </Button>

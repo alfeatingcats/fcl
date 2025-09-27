@@ -1,10 +1,11 @@
 export {
   useGetAllTags,
-  useTagAutocomplete,
-  type TagItem,
-  type TagsListType,
   type UseGetAllTagsResult,
   type UseGetAllTagsParams,
+} from "./use-get-all-tags";
+export {
+  useTagAutocomplete,
   type UseTagAutocompleteResult,
   type UseTagAutocompleteParams,
-} from "./model";
+} from "./use-tag-autocomplete";
+export type { TagsListType, TagItem } from "./types";

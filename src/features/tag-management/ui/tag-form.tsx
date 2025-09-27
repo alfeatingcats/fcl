@@ -23,7 +23,7 @@ export const TagForm: CFC<TagFormProps> = ({ form }) => {
   const t = useTranslations("TagForm");
   return (
     <Form {...form}>
-      <form className="space-y-4 pr-4 pl-4">
+      <form className="space-y-5">
         <FormField
           control={form.control}
           name="name"

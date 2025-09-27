@@ -1,56 +1,101 @@
-import { useEffect, useState, useCallback } from "react";
+import { isNil } from "es-toolkit";
+import { isEmpty } from "es-toolkit/compat";
+import { useEffect, useState, useCallback, useMemo } from "react";
 
-import { useAllTags, type TagsListType } from "@/entities/tag";
+import { useTagManagement } from "./use-manage-tags";
+import type { RequiredCreateTagInput, UseTagSelector } from "./types";
 
-type UseTagSelectorProps = (
-  enableBackground: boolean,
-  onChange: (tags?: string[]) => void,
-  defaultTagIds?: string[],
-) => {
-  selected: string[];
-  tagsList: TagsListType | undefined;
-  handleRemove: (tagId: string) => void;
-  handleSelect: (tagId: string) => void;
-};
-
-export const useTagSelector: UseTagSelectorProps = (
-  enabled,
+export const useTagSelector: UseTagSelector = ({
+  query,
   onChange,
-  defaultTagIds,
-) => {
-  const [selected, setSelected] = useState<string[]>(defaultTagIds ?? []);
+  defaultTags,
+}) => {
+  const [selectedTags, updateSelectedTags] = useState<RequiredCreateTagInput[]>(
+    defaultTags ?? [],
+  );
+
+  const selectedTagIds = useMemo(() => {
+    return selectedTags.map((tag) => tag.id);
+  }, [selectedTags]);
+
+  const {
+    allTags,
+    autocompleteTags,
+    isAllTagsPending,
+    isAutocompleteTagsPending,
+  } = useTagManagement({
+    query,
+    tagIds: selectedTagIds,
+  });
+
+  const availableTags = useMemo(() => {
+    return allTags?.map((tag) => ({
+      id: tag.id,
+      name: tag.name,
+      color: tag.color ?? "",
+    }));
+  }, [allTags]);
+
+  const transformedAutocompleteTags = useMemo(() => {
+    return autocompleteTags?.map((tag) => ({
+      id: tag.id,
+      name: tag.name,
+      color: tag.color ?? "",
+    }));
+  }, [autocompleteTags]);
 
   useEffect(() => {
-    setSelected(defaultTagIds ?? []);
-  }, [defaultTagIds]);
-
-  const { tagsList } = useAllTags(enabled) as {
-    tagsList: TagsListType | undefined;
-  };
+    updateSelectedTags(defaultTags ?? []);
+    if (!isNil(defaultTags) && !isEmpty(defaultTags)) {
+      const defaultTagIds = defaultTags.map((tag) => tag.id);
+      onChange(defaultTags, defaultTagIds);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [defaultTags]);
 
   const handleRemove = useCallback(
     (tagId: string) => {
-      if (!selected.includes(tagId)) return;
-      const newSelected = selected.filter((v) => v !== tagId);
-      setSelected(newSelected);
-      onChange(newSelected.length ? newSelected : undefined);
+      const newSelectedTags = selectedTags.filter((tag) => tag.id !== tagId);
+      updateSelectedTags(newSelectedTags);
+
+      const newSelectedTagIds = newSelectedTags.map((tag) => tag.id);
+      onChange(newSelectedTags, newSelectedTagIds);
     },
-    [selected, onChange],
+    [selectedTags, onChange],
   );
 
   const handleSelect = useCallback(
     (tagId: string) => {
-      let newSelected;
-      if (selected.includes(tagId)) {
-        newSelected = selected.filter((v) => v !== tagId);
+      const tagExists = selectedTags.some((tag) => tag.id === tagId);
+      let newSelectedTags: RequiredCreateTagInput[];
+
+      if (tagExists) {
+        newSelectedTags = selectedTags.filter((tag) => tag.id !== tagId);
       } else {
-        newSelected = [...selected, tagId];
+        const tagToAdd =
+          availableTags?.find((tag) => tag.id === tagId) ??
+          transformedAutocompleteTags?.find((tag) => tag.id === tagId);
+
+        if (!tagToAdd) return;
+        newSelectedTags = [...selectedTags, tagToAdd];
       }
-      setSelected(newSelected);
-      onChange(newSelected.length ? newSelected : []);
+
+      updateSelectedTags(newSelectedTags);
+
+      const newSelectedTagIds = newSelectedTags.map((tag) => tag.id);
+      onChange(newSelectedTags, newSelectedTagIds);
     },
-    [selected, onChange],
+    [selectedTags, availableTags, transformedAutocompleteTags, onChange],
   );
 
-  return { handleSelect, handleRemove, tagsList, selected };
+  return {
+    selectedTags,
+    selectedTagIds,
+    availableTags,
+    autocompleteTags: transformedAutocompleteTags,
+    isAllTagsPending,
+    isAutocompleteTagsPending,
+    handleSelect,
+    handleRemove,
+  };
 };

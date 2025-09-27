@@ -34,7 +34,9 @@
   },
   "TagsSelector": {
     "createTag": "Створити тег",
-    "searchPlaceholder": "Пошук тегу..."
+    "searchPlaceholder": "Пошук тегу...",
+    "noTagsFound": "Теги не знайдено",
+    "tryDifferentSearch": "Спробуйте інший пошук або створіть новий тег."
   },
   "StudyItemTable": {
     "filter": "Фільтр",
@@ -81,5 +83,9 @@
   "TagMessages": {
     "createSuccess": "Тег \"{name}\" успішно створено",
     "createError": "Не вдалося створити тег \"{name}\""
+  },
+  "StudyItemMessages": {
+    "createSuccess": "Елемент для навчання \"{name}\" успішно створено",
+    "createError": "Не вдалося створити елемент для навчання \"{name}\""
   }
 }

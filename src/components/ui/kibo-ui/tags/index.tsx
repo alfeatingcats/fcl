@@ -1,19 +1,25 @@
 "use client";
 
-import { SearchX, XIcon } from "lucide-react";
 import {
-  type ComponentProps,
-  createContext,
-  type HTMLAttributes,
-  type MouseEventHandler,
-  type ReactNode,
-  useContext,
-  useEffect,
   useRef,
   useState,
+  useEffect,
+  useContext,
+  type ReactNode,
+  createContext,
+  type HTMLAttributes,
+  type ComponentProps,
+  type MouseEventHandler,
 } from "react";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import { isNil } from "es-toolkit";
+import { motion } from "motion/react";
+import { CircleXIcon, LoaderCircleIcon, SearchX, XIcon } from "lucide-react";
+
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import {
   Command,
   CommandEmpty,
@@ -22,12 +28,10 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
 import { cn } from "@/shared/lib/utils";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { useTranslations } from "next-intl";
 
 type TagsContextType = {
   value?: string;
@@ -194,10 +198,34 @@ export const TagsContent = ({
   );
 };
 
-export type TagsInputProps = ComponentProps<typeof CommandInput>;
+export type TagsInputProps = ComponentProps<typeof CommandInput> & {
+  onClearInput?: () => void;
+  isLoading?: boolean;
+};
 
-export const TagsInput = ({ className, ...props }: TagsInputProps) => (
-  <CommandInput className={cn("h-9", className)} {...props} />
+export const TagsInput = ({
+  className,
+  isLoading,
+  onClearInput,
+  ...props
+}: TagsInputProps) => (
+  <div className="relative">
+    <CommandInput className={cn("h-9", className)} {...props} />
+    {props.value && !isNil(onClearInput) && (
+      <button
+        className="text-muted-foreground/80 hover:text-foreground focus-visible:border-ring focus-visible:ring-ring/50 absolute inset-y-0 end-0 flex h-full w-9 items-center justify-center rounded-e-md transition-[color,box-shadow] outline-none focus:z-10 focus-visible:ring-[3px] disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50"
+        aria-label="Clear input"
+        onClick={onClearInput}
+        disabled={isLoading}
+      >
+        {isLoading ? (
+          <LoaderCircleIcon className="size-4 animate-spin" />
+        ) : (
+          <CircleXIcon size={16} aria-hidden="true" />
+        )}
+      </button>
+    )}
+  </div>
 );
 
 export type TagsListProps = ComponentProps<typeof CommandList>;
@@ -212,15 +240,48 @@ export const TagsEmpty = ({
   children,
   className,
   ...props
-}: TagsEmptyProps) => (
-  <CommandEmpty className={cn(className, "p-4 text-center")} {...props}>
-    {children ?? (
-      <div className="text-muted-foreground flex items-center justify-center gap-2 text-sm">
-        <SearchX /> No tags found.
-      </div>
-    )}
-  </CommandEmpty>
-);
+}: TagsEmptyProps) => {
+  const t = useTranslations("TagsSelector");
+  return (
+    <CommandEmpty
+      className={cn(
+        "relative flex flex-col items-center justify-center gap-3 p-6 text-center",
+        className,
+      )}
+      {...props}
+    >
+      {children ?? (
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 0.9 }}
+          transition={{ type: "spring", stiffness: 200, damping: 20 }}
+          className="text-muted-foreground flex flex-col items-center gap-2"
+        >
+          <motion.div
+            animate={{
+              scale: [1, 1.1, 1],
+              rotate: [0, -5, 5, 0],
+            }}
+            transition={{
+              duration: 0.6,
+              repeat: 0,
+              ease: "easeInOut",
+            }}
+            className="bg-muted rounded-full p-3 shadow-sm"
+          >
+            <SearchX className="h-5 w-5" />
+          </motion.div>
+
+          <span className="text-sm font-medium">{t("noTagsFound")}</span>
+          <p className="text-muted-foreground text-xs">
+            {t("tryDifferentSearch")}
+          </p>
+        </motion.div>
+      )}
+    </CommandEmpty>
+  );
+};
 
 export type TagsGroupProps = ComponentProps<typeof CommandGroup>;
 

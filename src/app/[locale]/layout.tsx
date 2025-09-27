@@ -2,7 +2,7 @@ import "@/styles/globals.css";
 
 import { type Metadata } from "next";
 import { notFound } from "next/navigation";
-import { hasLocale, type Locale } from "next-intl";
+import { hasLocale } from "next-intl";
 import { Geist } from "next/font/google";
 import type { ReactNode } from "react";
 import { getMessages } from "next-intl/server";

@@ -1,5 +1,4 @@
 import { type FC } from "react";
-import { PartyPopper } from "lucide-react";
 import { useFormatter, useTranslations } from "next-intl";
 
 import {
@@ -21,18 +20,11 @@ import { generateStepsServer } from "../model/utils";
 
 type BadgeContentProps = {
   diff: string | null;
-  isLast: boolean;
 };
 
-const BadgeContent: FC<BadgeContentProps> = ({ diff, isLast }) => {
+const BadgeContent: FC<BadgeContentProps> = ({ diff }) => {
   const t = useTranslations("ProgressStepper");
   if (!diff) return <>{t("start")}</>;
-  if (isLast)
-    return (
-      <>
-        <PartyPopper /> {diff}
-      </>
-    );
   return <>{diff}</>;
 };
 
@@ -43,7 +35,7 @@ export const ProgressStepper = () => {
   return (
     <div className="!w-full space-y-8 text-start">
       <Stepper defaultValue={1} orientation="vertical" className="!w-full">
-        {steps.map(({ step, date, diff, tooltip }, index, _steps) => (
+        {steps.map(({ step, date, diff, tooltip }, _, _steps) => (
           <StepperItem
             key={step}
             step={step}
@@ -65,10 +57,7 @@ export const ProgressStepper = () => {
                       variant="secondary"
                       className="flex items-center gap-2"
                     >
-                      <BadgeContent
-                        diff={diff}
-                        isLast={_steps.length === index + 1}
-                      />
+                      <BadgeContent diff={diff} />
                     </Badge>
                   </StepperTitle>
                 </div>

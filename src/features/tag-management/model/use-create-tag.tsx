@@ -15,6 +15,7 @@ export const useCreateTag = ({
   const createTag = api.tags.create.useMutation({
     onSuccess: async ({ name }) => {
       await utils.tags.invalidate();
+      await utils.studyItem.invalidate();
       onSuccess(name);
     },
     onError: (_, { name }) => {

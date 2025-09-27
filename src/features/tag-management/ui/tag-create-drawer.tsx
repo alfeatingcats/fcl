@@ -31,9 +31,9 @@ export const TagCreateDrawer: CFC<TagCreateDrawerProps> = ({
       open={isDrawerOpen}
       onOpenChange={handleDrawerChange}
     >
-      <DrawerContent>
-        <div className="space-y-4 pb-0.5">
-          <DrawerHeader className="-mb-1">
+      <DrawerContent className="p-6">
+        <div className="pb-0.5">
+          <DrawerHeader className="mb-5 p-0">
             <DrawerTitle className="flex items-center justify-between">
               {t("title")}
               <Button mode="icon" variant="outline" size="sm">

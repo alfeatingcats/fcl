@@ -34,7 +34,9 @@
   },
   "TagsSelector": {
     "createTag": "Create Tag",
-    "searchPlaceholder": "Search tag..."
+    "searchPlaceholder": "Search tag...",
+    "noTagsFound": "No tags found",
+    "tryDifferentSearch": "Try a different search or create a new tag."
   },
   "StudyItemTable": {
     "filter": "Filter",
@@ -81,5 +83,9 @@
   "TagMessages": {
     "createSuccess": "Tag \"{name}\" created successfully",
     "createError": "Failed to create tag \"{name}\""
+  },
+  "StudyItemMessages": {
+    "createSuccess": "Study item \"{name}\" created successfully",
+    "createError": "Failed to create study item \"{name}\""
   }
 }

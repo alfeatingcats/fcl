@@ -15,7 +15,7 @@ export const ClientLayout: CFC = ({ children }) => {
       >
         {children}
       </ThemeProvider>
-      <Toaster position="top-center" />
+      <Toaster position="bottom-center" />
     </TRPCReactProvider>
   );
 };

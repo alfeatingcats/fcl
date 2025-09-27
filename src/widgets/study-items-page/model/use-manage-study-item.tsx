@@ -6,21 +6,30 @@ import {
   useCreateStudyItem,
   useStudyItemForm,
 } from "@/features/study-item-management";
-import type { CreateStudyItemInput } from "@/shared/api/schemas";
 
 import type { UseManageStudyItemReturn } from "./types";
+import { toast } from "sonner";
+import { useTranslations } from "next-intl";
 
 export const useManageStudyItem = (): UseManageStudyItemReturn => {
+  const t = useTranslations("StudyItemMessages");
+
   const [isStudyItemCreationOpen, { toggle: toggleStudyItemCreation }] =
     useBoolean(false);
-  const { handleCreateStudyItem, isCreating } = useCreateStudyItem();
-  const { form } = useStudyItemForm({
-    onCreate: handleCreateStudyItem,
+
+  const { handleCreateStudyItem, isCreating } = useCreateStudyItem({
+    onSuccess: (name) => {
+      toast.success(t("createSuccess", { name }));
+      handleDrawerChange(false);
+    },
+    onError: (name) => {
+      toast.error(t("createError", { name }));
+    },
   });
 
-  const onSubmit = useCallback((data: CreateStudyItemInput) => {
-    console.log(data);
-  }, []);
+  const { form, onSubmit } = useStudyItemForm({
+    onCreate: handleCreateStudyItem,
+  });
 
   const handleDrawerChange = useCallback(
     (open: boolean) => {

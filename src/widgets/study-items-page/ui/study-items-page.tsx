@@ -59,7 +59,6 @@ export const StudyItemsPage = () => {
       >
         <StudyItemForm
           form={form}
-          shouldFetchTags={isStudyItemCreationOpen}
           renderCreateTagButton={
             <CreateTagButton onClick={toggleCreateTagDrawer} />
           }
