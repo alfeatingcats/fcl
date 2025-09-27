@@ -2,6 +2,11 @@
 
 import { api } from "@/trpc/react";
 import {
+  TagCreateDrawer,
+  TagForm,
+  CreateStudyItemButton,
+} from "@/features/tag-management";
+import {
   StudyItemTable,
   StudyItemTableHeader,
 } from "@/features/study-item-table";
@@ -9,11 +14,6 @@ import {
   StudyItemDrawer,
   StudyItemForm,
 } from "@/features/study-item-management/ui";
-import {
-  TagCreateDrawer,
-  TagForm,
-  CreateStudyItemButton,
-} from "@/features/tag-management";
 import { CreateTagButton } from "@/features/tag-selector";
 
 import { useManageStudyItem, useManageTag } from "../model";

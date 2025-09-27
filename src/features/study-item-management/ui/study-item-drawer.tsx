@@ -3,10 +3,10 @@
 import { useTranslations } from "next-intl";
 
 import type { CFC } from "@/shared/types";
+import { FormDrawer } from "@/components/ui/custom";
 import type { DrawerFormProps } from "@/shared/types";
 
 import { StudyItemProgressCard } from "./study-item-progress-card";
-import { FormDrawer } from "@/components/ui/custom";
 
 export const StudyItemDrawer: CFC<DrawerFormProps> = ({
   onCreate,

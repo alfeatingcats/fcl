@@ -10,13 +10,13 @@ import {
   FormMessage,
   FormControl,
 } from "@/components/ui/form";
-import type { CFC } from "@/shared/types";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import {
   TagsSelector,
   type RequiredCreateTagInput,
 } from "@/features/tag-selector";
+import type { CFC } from "@/shared/types";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import type { CreateStudyItemInput } from "@/shared/api/schemas";
 
 type StudyItemFormProps = {
