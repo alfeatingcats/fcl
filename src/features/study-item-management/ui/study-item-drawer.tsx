@@ -1,30 +1,12 @@
 "use client";
-import { Expand, Info } from "lucide-react";
+
 import { useTranslations } from "next-intl";
 
-import {
-  Drawer,
-  DrawerTitle,
-  DrawerClose,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerContent,
-  DrawerDescription,
-} from "@/components/ui/drawer";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardHeading,
-  CardTitle,
-  CardToolbar,
-} from "@/components/ui/card";
 import type { CFC } from "@/shared/types";
-import { Button } from "@/components/ui/button";
 import type { DrawerFormProps } from "@/shared/types";
 
-import { ProgressStepper } from "./study-item-progress";
+import { StudyItemProgressCard } from "./study-item-progress-card";
+import { FormDrawer } from "@/components/ui/custom";
 
 export const StudyItemDrawer: CFC<DrawerFormProps> = ({
   onCreate,
@@ -34,57 +16,21 @@ export const StudyItemDrawer: CFC<DrawerFormProps> = ({
   handleDrawerChange,
 }) => {
   const t = useTranslations("StudyItemDrawer");
-  const ta = useTranslations("UiActions");
   return (
-    <Drawer
-      direction="right"
-      open={isDrawerOpen}
-      onOpenChange={handleDrawerChange}
+    <FormDrawer
+      title={t("title")}
+      isDrawerOpen={isDrawerOpen}
+      description={t("description")}
+      submitButtonProps={{
+        onClick: () => void onCreate(),
+        disabled: isPending,
+      }}
+      handleDrawerChange={handleDrawerChange}
     >
-      <DrawerContent className="!max-w-[28rem] p-6">
-        <div className="space-y-4 overflow-y-auto pb-0.5">
-          <DrawerHeader className="mb-5 p-0">
-            <DrawerTitle className="flex items-center justify-between">
-              {t("title")}
-              <Button mode="icon" variant="outline" size="sm">
-                <Expand />
-              </Button>
-            </DrawerTitle>
-            <DrawerDescription>{t("description")}</DrawerDescription>
-          </DrawerHeader>
-
-          {children}
-
-          <div className="!w-full">
-            <Card variant="accent">
-              <CardHeader>
-                <CardHeading>
-                  <CardTitle>{t("progressTitle")}</CardTitle>
-                </CardHeading>
-                <CardToolbar>
-                  <Button mode="icon" variant="outline" size="sm">
-                    <Info />
-                  </Button>
-                </CardToolbar>
-              </CardHeader>
-              <CardContent>
-                <ProgressStepper />
-              </CardContent>
-              <CardFooter className="text-sm leading-none font-medium">
-                {t("progressDescription")}
-              </CardFooter>
-            </Card>
-          </div>
-        </div>
-        <DrawerFooter className="px-0 pb-0">
-          <Button onClick={onCreate} disabled={isPending}>
-            {ta("submit")}
-          </Button>
-          <DrawerClose asChild>
-            <Button variant="outline">{ta("cancel")}</Button>
-          </DrawerClose>
-        </DrawerFooter>
-      </DrawerContent>
-    </Drawer>
+      <>
+        {children}
+        <StudyItemProgressCard />
+      </>
+    </FormDrawer>
   );
 };
