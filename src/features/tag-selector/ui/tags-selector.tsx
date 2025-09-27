@@ -5,8 +5,8 @@ import {
   type Ref,
   type ReactNode,
 } from "react";
-import { useDebounce } from "ahooks";
 import { useTranslations } from "next-intl";
+import { useDebounce, useToggle } from "ahooks";
 
 import {
   Tags,
@@ -24,7 +24,7 @@ import type { RequiredCreateTagInput } from "../model/types";
 export type TagsSelectorProps = {
   onBlur?: () => void;
   ref?: Ref<HTMLInputElement>;
-  renderCreateTagButton?: ReactNode;
+  renderCreateTagButton: ReactNode;
   defaultTags?: RequiredCreateTagInput[];
   onChange: (
     selectedTags: RequiredCreateTagInput[],
@@ -41,6 +41,7 @@ export const TagsSelector: CFC<TagsSelectorProps> = ({
 }) => {
   const [query, setQuery] = useState("");
   const delayedQuery = useDebounce(query, { wait: 500 });
+  const [isTagsDropdownOpen, { set, setLeft }] = useToggle(false, true);
 
   const t = useTranslations("TagsSelector");
 
@@ -74,7 +75,7 @@ export const TagsSelector: CFC<TagsSelectorProps> = ({
   );
 
   return (
-    <Tags>
+    <Tags onOpenChange={set} open={isTagsDropdownOpen}>
       <TagsTrigger tagsInputHint={t("searchPlaceholder")}>
         {selectedTags.map((tag) => (
           <TagsValue
@@ -90,11 +91,9 @@ export const TagsSelector: CFC<TagsSelectorProps> = ({
       <TagsContent
         commandCN="relative"
         footer={
-          renderCreateTagButton ? (
-            <section className="flex justify-end border-t p-2">
-              {renderCreateTagButton}
-            </section>
-          ) : null
+          <section onClick={setLeft} className="flex justify-end border-t p-2">
+            {renderCreateTagButton}
+          </section>
         }
       >
         <TagsInput

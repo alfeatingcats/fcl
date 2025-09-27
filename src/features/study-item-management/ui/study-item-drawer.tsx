@@ -19,11 +19,11 @@ export const StudyItemDrawer: CFC<DrawerFormProps> = ({
   return (
     <FormDrawer
       title={t("title")}
+      isPending={isPending}
       isDrawerOpen={isDrawerOpen}
       description={t("description")}
       submitButtonProps={{
         onClick: () => void onCreate(),
-        disabled: isPending,
       }}
       handleDrawerChange={handleDrawerChange}
     >

@@ -1,5 +1,5 @@
 "use client";
-import { Expand } from "lucide-react";
+import { Expand, LoaderCircleIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useMemo, type ComponentProps } from "react";
 
@@ -16,6 +16,7 @@ import {
 import type { CFC } from "@/shared/types";
 import { Button } from "@/components/ui/button";
 import type { DrawerFormProps } from "@/shared/types";
+import { cn } from "@/shared/lib/utils";
 
 type FormDrawerProps = {
   title: string;
@@ -24,13 +25,16 @@ type FormDrawerProps = {
   isNestedDrawer?: boolean;
   submitButtonProps?: ComponentProps<typeof Button>;
   cancelButtonProps?: ComponentProps<typeof Button>;
-} & Omit<DrawerFormProps, "onCreate" | "isPending">;
+  contentCN?: string;
+} & Omit<DrawerFormProps, "onCreate">;
 
 export const FormDrawer: CFC<FormDrawerProps> = ({
   title,
   children,
+  contentCN,
   description,
   isDrawerOpen,
+  isPending = false,
   isNestedDrawer = false,
   submitButtonProps: { children: submitButtonText, ...restSubmitProps } = {},
   cancelButtonProps: { children: cancelButtonText, ...restCancelProps } = {},
@@ -48,7 +52,7 @@ export const FormDrawer: CFC<FormDrawerProps> = ({
       open={isDrawerOpen}
       onOpenChange={handleDrawerChange}
     >
-      <DrawerContent className="!max-w-[28rem] p-6">
+      <DrawerContent className={cn("!max-w-[28rem] p-6", contentCN)}>
         <div className="space-y-4 overflow-y-auto pb-0.5">
           <DrawerHeader className="mb-5 p-0">
             <DrawerTitle className="flex items-center justify-between">
@@ -64,7 +68,10 @@ export const FormDrawer: CFC<FormDrawerProps> = ({
         </div>
 
         <DrawerFooter className="px-0 pb-0">
-          <Button {...restSubmitProps}>
+          <Button disabled={isPending} {...restSubmitProps}>
+            {isPending ? (
+              <LoaderCircleIcon className="size-4 animate-spin" />
+            ) : null}
             {submitButtonText ?? t("submit")}
           </Button>
           <DrawerClose asChild>
