@@ -9,6 +9,7 @@ import { FormControl, FormItem } from "@/components/ui/form";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
 import type messages from "../../../../messages/en.json";
+import { cn } from "@/shared/lib/utils";
 
 type TagColorKeys = keyof typeof messages.TagColors;
 
@@ -47,7 +48,7 @@ export const TagColorRadioGroup: CFC<TagColorRadioGroupProps> = ({
       {colors.map(({ label, value }) => (
         <div
           key={`${id}-${value}`}
-          className="border-input has-data-[state=checked]:border-primary/50 has-data-[state=checked]:bg-accent relative flex flex-col gap-4 border p-2 outline-none first:rounded-t-md last:rounded-b-md has-data-[state=checked]:z-10"
+          className="border-input has-data-[state=checked]:border-primary/50 has-data-[state=checked]:bg-accent relative flex flex-col gap-4 border p-2 px-3 outline-none first:rounded-t-md last:rounded-b-md has-data-[state=checked]:z-10"
         >
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
@@ -68,12 +69,12 @@ export const TagColorRadioGroup: CFC<TagColorRadioGroupProps> = ({
                 {label}
               </Label>
             </div>
-            <div
+            <Badge
               id={`${`${id}-${value}`}-color`}
-              className="text-muted-foreground text-xs leading-[inherit]"
+              className={cn(value, "text-xs")}
             >
-              <Badge className={value}>{tt("titleLabel")}</Badge>
-            </div>
+              {tt("titleLabel")}
+            </Badge>
           </div>
         </div>
       ))}
