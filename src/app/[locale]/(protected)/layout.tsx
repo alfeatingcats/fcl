@@ -1,19 +1,32 @@
 import { pick } from "es-toolkit";
 import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
 import type { PropsWithChildren } from "react";
 
 import { auth } from "@/server/auth";
+import { redirect, type routing } from "@/i18n/routing";
 import type { StrictBasicUserInfo } from "@/shared/types";
 import { publicPaths, SIDEBAR_COOKIE_NAME } from "@/shared/lib/const";
 
 import { ClientLayout } from "./client-layout";
 
-const RootLayout = async ({ children }: PropsWithChildren) => {
+type ProtectedRootLayoutProps = {
+  params: Promise<{ locale: string }>;
+};
+
+const ProtectedRootLayout = async ({
+  children,
+  params,
+}: PropsWithChildren<ProtectedRootLayoutProps>) => {
+  const { locale } = await params;
+
   const userSession = await auth();
   const cookieStore = await cookies();
+
   if (!userSession?.user) {
-    redirect(publicPaths.signIn);
+    redirect({
+      href: publicPaths.signIn,
+      locale: locale as unknown as (typeof routing.locales)[number],
+    });
   }
 
   const sidebarState = cookieStore.get(SIDEBAR_COOKIE_NAME);
@@ -22,7 +35,7 @@ const RootLayout = async ({ children }: PropsWithChildren) => {
   return (
     <ClientLayout
       user={
-        pick(userSession.user, [
+        pick(userSession!.user, [
           "name",
           "email",
           "image",
@@ -35,4 +48,4 @@ const RootLayout = async ({ children }: PropsWithChildren) => {
   );
 };
 
-export default RootLayout;
+export default ProtectedRootLayout;

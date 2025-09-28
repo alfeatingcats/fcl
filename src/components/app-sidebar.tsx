@@ -1,108 +1,31 @@
 "use client";
 
-import * as React from "react";
-import {
-  BookOpenCheck,
-  CalendarClock,
-  // Frame,
-  LayoutDashboard,
-  LifeBuoy,
-  Route,
-  Send,
-  Settings2,
-  // Square,
-  SquareKanban,
-  WaypointsIcon,
-} from "lucide-react";
+import { useTranslations } from "next-intl";
+import type { ComponentProps } from "react";
+import { WaypointsIcon } from "lucide-react";
 
+import { Link } from "@/i18n/routing";
 import { NavMain } from "@/components/nav-main";
-// import { NavProjects } from "@/components/nav-projects";
-import { NavSecondary } from "@/components/nav-secondary";
 import { NavUser } from "@/components/nav-user";
 import {
   Sidebar,
-  SidebarContent,
+  SidebarMenu,
   SidebarFooter,
   SidebarHeader,
-  SidebarMenu,
-  SidebarMenuButton,
+  SidebarContent,
   SidebarMenuItem,
+  SidebarMenuButton,
 } from "@/components/ui/sidebar";
-import Link from "next/link";
 import type { StrictBasicUserInfo } from "@/shared/types";
+import { useSidebarData } from "@/shared/hooks/use-sidebar-data";
 
-const data = {
-  navMain: [
-    {
-      title: "Dashboard",
-      url: "/dashboard",
-      icon: LayoutDashboard,
-      isActive: true,
-      items: [
-        {
-          title: "Calendar",
-          url: "#",
-          icon: CalendarClock,
-        },
-        {
-          title: "Kanban",
-          url: "/test",
-          icon: SquareKanban,
-        },
-      ],
-    },
-    {
-      title: "Study items",
-      url: "#",
-      icon: BookOpenCheck,
-      isActive: true,
-      items: [
-        {
-          title: "Repetitions",
-          url: "/repetitions",
-          icon: Route,
-        },
-      ],
-    },
-    {
-      title: "Settings",
-      url: "#",
-      icon: Settings2,
-      items: [
-        {
-          title: "General",
-          url: "#",
-          icon: LayoutDashboard,
-        },
-      ],
-    },
-  ],
-  navSecondary: [
-    {
-      title: "Support",
-      url: "#",
-      icon: LifeBuoy,
-    },
-    {
-      title: "Feedback",
-      url: "#",
-      icon: Send,
-    },
-  ],
-  // projects: [
-  //   {
-  //     name: "Design Engineering",
-  //     url: "#",
-  //     icon: Frame,
-  //   },
-  // ],
-};
-
-type AppSidebarProps = React.ComponentProps<typeof Sidebar> & {
+type AppSidebarProps = ComponentProps<typeof Sidebar> & {
   user: StrictBasicUserInfo;
 };
 
-export function AppSidebar({ user, ...props }: AppSidebarProps) {
+export const AppSidebar = ({ user, ...props }: AppSidebarProps) => {
+  const sidebarData = useSidebarData();
+  const t = useTranslations("StudyPage");
   return (
     <Sidebar variant="inset" {...props}>
       <SidebarHeader>
@@ -114,10 +37,8 @@ export function AppSidebar({ user, ...props }: AppSidebarProps) {
                   <WaypointsIcon className="size-4" />
                 </div>
                 <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-medium">Focu</span>
-                  <span className="truncate text-xs">
-                    Study items with repetitions
-                  </span>
+                  <span className="truncate font-bold">Focu</span>
+                  <span className="truncate text-xs">{t("subtitleShort")}</span>
                 </div>
               </Link>
             </SidebarMenuButton>
@@ -125,13 +46,11 @@ export function AppSidebar({ user, ...props }: AppSidebarProps) {
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
-        <NavMain items={data.navMain} />
-        {/* <NavProjects projects={data.projects} /> */}
-        <NavSecondary items={data.navSecondary} className="mt-auto" />
+        <NavMain items={sidebarData} />
       </SidebarContent>
       <SidebarFooter>
         <NavUser user={user} />
       </SidebarFooter>
     </Sidebar>
   );
-}
+};

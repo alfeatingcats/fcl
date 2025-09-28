@@ -88,5 +88,18 @@
   "StudyItemMessages": {
     "createSuccess": "Skill \"{name}\" created successfully",
     "createError": "Failed to create skill \"{name}\""
+  },
+  "StudyPage": {
+    "title": "My Skills",
+    "subtitle": "Master your skills with review cycles",
+    "subtitleShort": "Master through repetition"
+  },
+  "Sidebar": {
+    "dashboard": "Dashboard",
+    "mySkills": "My Skills",
+    "reviewCycle": "Review Cycle",
+    "settings": "Settings",
+    "support": "Support",
+    "home": "Home"
   }
 }

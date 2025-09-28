@@ -22,7 +22,7 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 
 export function NavProjects({
   projects,

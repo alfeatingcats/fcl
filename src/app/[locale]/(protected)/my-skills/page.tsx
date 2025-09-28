@@ -4,7 +4,7 @@ import { auth } from "@/server/auth";
 import { api, HydrateClient } from "@/trpc/server";
 import { StudyItemsPage } from "@/widgets/study-items-page";
 
-const RepetitionsPage = async () => {
+const MySkillsPage = async () => {
   const authResult = await auth();
 
   if (authResult?.user) {
@@ -22,4 +22,4 @@ const RepetitionsPage = async () => {
   );
 };
 
-export default RepetitionsPage;
+export default MySkillsPage;

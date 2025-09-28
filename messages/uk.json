@@ -88,5 +88,18 @@
   "StudyItemMessages": {
     "createSuccess": "Навичка \"{name}\" успішно створена",
     "createError": "Не вдалося створити навичку \"{name}\""
+  },
+  "StudyPage": {
+    "title": "Мої навички",
+    "subtitle": "Опановуй свої навички через цикл повторень",
+    "subtitleShort": "Опановуй через повторення"
+  },
+  "Sidebar": {
+    "dashboard": "Панель",
+    "mySkills": "Мої навички",
+    "reviewCycle": "Цикл повторень",
+    "settings": "Налаштування",
+    "support": "Підтримка",
+    "home": "Головна"
   }
 }
