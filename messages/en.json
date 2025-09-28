@@ -1,20 +1,20 @@
 {
   "UiActions": {
     "create": "Create",
-    "submit": "Submit",
+    "submit": "Save",
     "cancel": "Cancel"
   },
   "StudyItemDrawer": {
-    "createButton": "Create study item",
-    "title": "Create Study Item",
-    "description": "Fill in the details to create a new study item. Add a title, description, and select relevant tags to organize your item.",
-    "progressTitle": "Progression of repetitions",
-    "progressDescription": "Track the stages and status of repetitions for effective memorization."
+    "createButton": "Create Skill",
+    "title": "Create Skill",
+    "description": "Fill in the details to add a new skill. Add a title, description, and select relevant tags to organize your skills.",
+    "progressTitle": "Review Cycle Progress",
+    "progressDescription": "Track the stages and status of your review cycles for effective skill retention."
   },
   "TagDrawer": {
-    "createButton": "Create tag",
-    "title": "Create new tag",
-    "description": "Enter a name and description for the new tag to organize your study items."
+    "createButton": "Create Tag",
+    "title": "Create New Tag",
+    "description": "Enter a name and description for the new tag to organize your skills."
   },
   "StudyItemForm": {
     "titleLabel": "Title",
@@ -24,7 +24,7 @@
     "tagsLabel": "Tags"
   },
   "TagForm": {
-    "titleLabel": "Tag name",
+    "titleLabel": "Tag Name",
     "titlePlaceholder": "For example, 'Mathematics'",
     "colorLabel": "Color",
     "colorPlaceholder": "Choose a color for the tag"
@@ -48,8 +48,8 @@
     "tags": "Tags",
     "collapseDetails": "Collapse details for {title}",
     "expandDetails": "Expand details for {title}",
-    "selectAll": "Select all",
-    "selectRow": "Select row",
+    "selectAll": "Select All",
+    "selectRow": "Select Row",
     "tagsPlaceholder": "tags...",
     "searchPlaceholder": "Search..."
   },
@@ -62,7 +62,7 @@
     "now": "now"
   },
   "Study": {
-    "repetition": "Repetition",
+    "repetition": "Review Cycle",
     "scheduled": "Scheduled",
     "completed": "Completed",
     "pending": "Pending",
@@ -86,7 +86,7 @@
     "createError": "Failed to create tag \"{name}\""
   },
   "StudyItemMessages": {
-    "createSuccess": "Study item \"{name}\" created successfully",
-    "createError": "Failed to create study item \"{name}\""
+    "createSuccess": "Skill \"{name}\" created successfully",
+    "createError": "Failed to create skill \"{name}\""
   }
 }
