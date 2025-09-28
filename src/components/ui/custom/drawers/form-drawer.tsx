@@ -18,6 +18,8 @@ import type { CFC } from "@/shared/types";
 import { Button } from "@/components/ui/button";
 import type { DrawerFormProps } from "@/shared/types";
 
+import { ScrollArea } from "../../scroll-area";
+
 type FormDrawerProps = {
   title: string;
   description: string;
@@ -53,19 +55,21 @@ export const FormDrawer: CFC<FormDrawerProps> = ({
       onOpenChange={handleDrawerChange}
     >
       <DrawerContent className={cn("!max-w-[28rem] py-6", contentCN)}>
-        <div className="space-y-4 overflow-y-auto px-6 pb-0.5">
-          <DrawerHeader className="mb-5 p-0">
-            <DrawerTitle className="flex items-center justify-between">
-              {title}
-              <Button mode="icon" variant="outline" size="sm">
-                <Expand />
-              </Button>
-            </DrawerTitle>
-            <DrawerDescription>{description}</DrawerDescription>
-          </DrawerHeader>
+        <ScrollArea type="auto" className="h-screen overflow-y-hidden px-6">
+          <div className="space-y-4 pb-0.5">
+            <DrawerHeader className="mb-5 p-0">
+              <DrawerTitle className="flex items-center justify-between">
+                {title}
+                <Button mode="icon" variant="outline" size="sm">
+                  <Expand />
+                </Button>
+              </DrawerTitle>
+              <DrawerDescription>{description}</DrawerDescription>
+            </DrawerHeader>
 
-          {children}
-        </div>
+            {children}
+          </div>
+        </ScrollArea>
 
         <DrawerFooter className="px-6 pb-0">
           <Button disabled={isPending} {...restSubmitProps}>

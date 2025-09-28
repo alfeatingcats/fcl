@@ -1,6 +1,7 @@
 import { useId, useMemo } from "react";
 import { useTranslations } from "next-intl";
 
+import { cn } from "@/shared/lib/utils";
 import type { CFC } from "@/shared/types";
 import { Badge } from "@/components/ui/badge";
 import { Label } from "@/components/ui/label";
@@ -9,7 +10,6 @@ import { FormControl, FormItem } from "@/components/ui/form";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
 import type messages from "../../../../messages/en.json";
-import { cn } from "@/shared/lib/utils";
 
 type TagColorKeys = keyof typeof messages.TagColors;
 
