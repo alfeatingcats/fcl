@@ -55,12 +55,12 @@ export const FormDrawer: CFC<FormDrawerProps> = ({
       onOpenChange={handleDrawerChange}
     >
       <DrawerContent className={cn("!max-w-[28rem] py-6", contentCN)}>
-        <ScrollArea type="auto" className="h-screen overflow-y-hidden px-6">
-          <div className="space-y-4 pb-0.5">
+        <ScrollArea type="auto" className="h-screen overflow-y-hidden">
+          <div className="space-y-4 px-6 pb-0.5">
             <DrawerHeader className="mb-5 p-0">
               <DrawerTitle className="flex items-center justify-between">
                 {title}
-                <Button mode="icon" variant="outline" size="sm">
+                <Button variant="ghost" size="sm">
                   <Expand />
                 </Button>
               </DrawerTitle>

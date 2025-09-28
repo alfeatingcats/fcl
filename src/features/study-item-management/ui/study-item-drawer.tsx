@@ -16,6 +16,7 @@ export const StudyItemDrawer: CFC<DrawerFormProps> = ({
   handleDrawerChange,
 }) => {
   const t = useTranslations("StudyItemDrawer");
+  const ta = useTranslations("UiActions");
   return (
     <FormDrawer
       title={t("title")}
@@ -24,6 +25,7 @@ export const StudyItemDrawer: CFC<DrawerFormProps> = ({
       description={t("description")}
       submitButtonProps={{
         onClick: () => void onCreate(),
+        children: ta("create"),
       }}
       handleDrawerChange={handleDrawerChange}
     >

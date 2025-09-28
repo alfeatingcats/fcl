@@ -14,6 +14,7 @@ export const TagCreateDrawer: CFC<TagCreateDrawerProps> = ({
   handleDrawerChange,
 }) => {
   const t = useTranslations("TagDrawer");
+  const ta = useTranslations("UiActions");
 
   return (
     <FormDrawer
@@ -25,6 +26,7 @@ export const TagCreateDrawer: CFC<TagCreateDrawerProps> = ({
       submitButtonProps={{
         onClick: () => void onCreate(),
         disabled: isPending,
+        children: ta("create"),
       }}
       handleDrawerChange={handleDrawerChange}
     >

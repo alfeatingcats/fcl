@@ -23,7 +23,11 @@ export const StudyItemProgressCard: CFC = () => {
             <CardTitle>{t("progressTitle")}</CardTitle>
           </CardHeading>
           <CardToolbar>
-            <Button mode="icon" variant="outline" size="sm">
+            <Button
+              size="icon"
+              variant="outline"
+              className="scale-90 bg-transparent"
+            >
               <Info />
             </Button>
           </CardToolbar>
