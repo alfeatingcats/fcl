@@ -1,9 +1,7 @@
 import { type ColumnDef } from "@tanstack/react-table";
 import { useFormatter, useTranslations } from "next-intl";
-import { ChevronDownIcon, ChevronUpIcon } from "lucide-react";
 
 import type { StudyItem } from "@prisma/client";
-import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 
 import { CreatedCell, StatusCell, TitleCell } from "@/entities/study-item/ui";
@@ -12,40 +10,6 @@ export const useStudyItemColumns = () => {
   const t = useTranslations("StudyItemTable");
   const format = useFormatter();
   const columns: ColumnDef<StudyItem>[] = [
-    {
-      id: "expander",
-      header: () => null,
-      cell: ({ row }) => {
-        return row.getCanExpand() ? (
-          <Button
-            {...{
-              className: "size-7 shadow-none text-muted-foreground",
-              onClick: row.getToggleExpandedHandler(),
-              "aria-expanded": row.getIsExpanded(),
-              "aria-label": row.getIsExpanded()
-                ? t("collapseDetails", { title: row.original.title })
-                : t("expandDetails", { title: row.original.title }),
-              size: "icon",
-              variant: "ghost",
-            }}
-          >
-            {row.getIsExpanded() ? (
-              <ChevronUpIcon
-                className="opacity-60"
-                size={16}
-                aria-hidden="true"
-              />
-            ) : (
-              <ChevronDownIcon
-                className="opacity-60"
-                size={16}
-                aria-hidden="true"
-              />
-            )}
-          </Button>
-        ) : undefined;
-      },
-    },
     {
       id: "select",
       header: ({ table }) => (
@@ -56,6 +20,7 @@ export const useStudyItemColumns = () => {
           }
           onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
           aria-label={t("selectAll")}
+          className="!ml-1.5"
         />
       ),
       cell: ({ row }) => (
@@ -63,6 +28,7 @@ export const useStudyItemColumns = () => {
           checked={row.getIsSelected()}
           onCheckedChange={(value) => row.toggleSelected(!!value)}
           aria-label={t("selectRow")}
+          className="!ml-1.5"
         />
       ),
     },

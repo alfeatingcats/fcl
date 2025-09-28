@@ -50,7 +50,8 @@
     "expandDetails": "Розгорнути деталі для {title}",
     "selectAll": "Вибрати все",
     "selectRow": "Вибрати рядок",
-    "tagsPlaceholder": "теги..."
+    "tagsPlaceholder": "теги...",
+    "searchPlaceholder": "Пошук..."
   },
   "Time": {
     "inMinutes": "через {count, plural, one {# хв} few {# хв} many {# хв} other {# хв}}",

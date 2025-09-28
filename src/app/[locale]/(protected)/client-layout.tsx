@@ -17,20 +17,27 @@ export const ClientLayout: CFC<ClientLayoutProps> = ({
   sidebarValue,
 }) => {
   return (
-    <SidebarProvider
-      defaultOpen={sidebarValue}
-      style={
-        {
-          "--sidebar-width": "18rem",
-        } as React.CSSProperties
-      }
-    >
-      <AppSidebar user={user} />
+    <div className="flex h-screen w-screen overflow-hidden">
+      <SidebarProvider
+        defaultOpen={sidebarValue}
+        style={
+          {
+            "--sidebar-width": "18rem",
+          } as React.CSSProperties
+        }
+      >
+        <AppSidebar user={user} />
 
-      <SidebarInset>
-        <Header />
-        {children}
-      </SidebarInset>
-    </SidebarProvider>
+        <SidebarInset className="min-h-0 w-full min-w-0 flex-1 p-4 pt-0">
+          {/* <ScrollArea
+            scrollBarProps={{ orientation: "vertical" }}
+            className="overflow-y-hidden"
+          > */}
+          <Header />
+          {children}
+          {/* </ScrollArea> */}
+        </SidebarInset>
+      </SidebarProvider>
+    </div>
   );
 };

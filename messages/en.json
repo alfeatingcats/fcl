@@ -50,7 +50,8 @@
     "expandDetails": "Expand details for {title}",
     "selectAll": "Select all",
     "selectRow": "Select row",
-    "tagsPlaceholder": "tags..."
+    "tagsPlaceholder": "tags...",
+    "searchPlaceholder": "Search..."
   },
   "Time": {
     "inMinutes": "in {count, plural, one {# min} other {# mins}}",
