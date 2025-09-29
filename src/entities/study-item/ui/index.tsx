@@ -1,1 +1,6 @@
-export { StatusCell, TitleCell, CreatedCell } from "./study-item-cell";
+export {
+  StatusCell,
+  TitleCell,
+  CreatedCell,
+  TagsCell,
+} from "./study-item-cell";

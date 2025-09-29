@@ -7,15 +7,14 @@ import {
   LayoutDashboard,
 } from "lucide-react";
 
-import type messages from "../../../messages/en.json";
+import type { SidebarTKey } from "../types";
 
-export type SidebarMessageKeys = Exclude<keyof typeof messages.Sidebar, "home">;
-export type SidebarRouteRoot = Record<SidebarMessageKeys, SidebarRoute>;
+export type SidebarRouteRoot = Record<SidebarTKey, SidebarRoute>;
 export type SidebarRoute = {
   url: string;
   icon: LucideIcon;
-  parent: SidebarMessageKeys | null;
-  key: SidebarMessageKeys;
+  parent: SidebarTKey | null;
+  key: SidebarTKey;
 };
 
 export const routesMap: SidebarRouteRoot = {

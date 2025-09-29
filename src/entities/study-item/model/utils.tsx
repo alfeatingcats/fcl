@@ -1,11 +1,6 @@
-import { capitalize } from "es-toolkit";
-import { replace } from "es-toolkit/compat";
 import type { StudyItem } from "@prisma/client";
 import type { createFormatter } from "next-intl";
 import type { TimeTranslations } from "@/shared/types";
-
-export const formatStudyItemStatus = (status: string) =>
-  replace(capitalize(status), "_", " ");
 
 export const canRowExpand = (item: StudyItem) => Boolean(item.description);
 

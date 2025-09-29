@@ -2,16 +2,12 @@ import { useId, useMemo } from "react";
 import { useTranslations } from "next-intl";
 
 import { cn } from "@/shared/lib/utils";
-import type { CFC } from "@/shared/types";
 import { Badge } from "@/components/ui/badge";
 import { Label } from "@/components/ui/label";
+import type { CFC, TagColorTKey } from "@/shared/types";
 import { PRESET_COLOR_CLASSES } from "@/shared/lib/const";
 import { FormControl, FormItem } from "@/components/ui/form";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-
-import type messages from "../../../../messages/en.json";
-
-type TagColorKeys = keyof typeof messages.TagColors;
 
 type TagColorRadioGroupProps = {
   value?: string;
@@ -32,7 +28,7 @@ export const TagColorRadioGroup: CFC<TagColorRadioGroupProps> = ({
         const colorName = colorCN
           .split(" ")
           .find((c) => c.startsWith("text-"))!
-          .split("-")[1] as TagColorKeys;
+          .split("-")[1] as TagColorTKey;
 
         return { value: colorCN, label: t(colorName) };
       }),
