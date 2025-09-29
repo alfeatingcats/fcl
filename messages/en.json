@@ -104,5 +104,11 @@
   },
   "NavMain": {
     "platform": "Platform"
+  },
+  "StudyItemStatus": {
+    "IN_PROGRESS": "In Progress",
+    "COMPLETED": "Completed",
+    "PAUSED": "Paused",
+    "ARCHIVED": "Archived"
   }
 }

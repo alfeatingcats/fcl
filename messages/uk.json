@@ -104,5 +104,11 @@
   },
   "NavMain": {
     "platform": "Платформа"
+  },
+  "StudyItemStatus": {
+    "IN_PROGRESS": "В процесі",
+    "COMPLETED": "Завершено",
+    "PAUSED": "Призупинено",
+    "ARCHIVED": "Архівовано"
   }
 }

@@ -1,18 +1,27 @@
 // Common utility and generic types used across the project
 
-import type { StorageValue } from "zustand/middleware/persist";
-import type { UserStoreState } from "@/shared/stores/timezone-store";
-import type { createFormatter, useTranslations } from "next-intl";
 import type { UseFormReturn } from "react-hook-form";
-import type { UseEmblaCarouselType } from "embla-carousel-react";
 import type useEmblaCarousel from "embla-carousel-react";
+import type { StorageValue } from "zustand/middleware/persist";
+import type { UseEmblaCarouselType } from "embla-carousel-react";
+import type { createFormatter, useTranslations } from "next-intl";
+import type { UserStoreState } from "@/shared/stores/timezone-store";
+
+import type messages from "../../../messages/en.json";
 
 // Storage value for Zustand persist
 export type PersistedUserStoreState = StorageValue<Partial<UserStoreState>>;
 
 // Formatter type for next-intl
+export type TagColorTKey = keyof typeof messages.TagColors;
+export type StudyItemStatusTKey = keyof typeof messages.StudyItemStatus;
+export type SidebarTKey = Exclude<keyof typeof messages.Sidebar, "home">;
+
 export type IntlFormatter = ReturnType<typeof createFormatter>;
 export type TimeTranslations = ReturnType<typeof useTranslations<"Time">>;
+export type StudyItemStatusTranslations = ReturnType<
+  typeof useTranslations<"StudyItemStatus">
+>;
 
 // Embla Carousel types
 export type EmblaCarouselApi = UseEmblaCarouselType[1];
