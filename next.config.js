@@ -12,6 +12,8 @@ const withNextIntl = createNextIntlPlugin({
 });
 
 /** @type {import("next").NextConfig} */
-const config = {};
+const config = {
+  typedRoutes: true,
+};
 
 export default withNextIntl(config);
