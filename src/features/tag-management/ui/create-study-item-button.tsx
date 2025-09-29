@@ -14,7 +14,7 @@ export const CreateStudyItemButton = ({
 }: CreateStudyItemButtonProps) => {
   const t = useTranslations("StudyItemDrawer");
   return (
-    <Button variant="default" disabled={isCreating} {...props}>
+    <Button disabled={isCreating} {...props}>
       <PlusIcon />
       {t("createButton")}
     </Button>
