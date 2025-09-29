@@ -101,5 +101,8 @@
     "settings": "Settings",
     "support": "Support",
     "home": "Home"
+  },
+  "NavMain": {
+    "platform": "Platform"
   }
 }

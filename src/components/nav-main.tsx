@@ -2,6 +2,7 @@
 
 import type { FC } from "react";
 import { ChevronRight } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 import {
   SidebarGroup,
@@ -23,9 +24,10 @@ import { Link } from "@/i18n/routing";
 import type { NavMainItem } from "@/shared/types/nav-main";
 
 export const NavMain: FC<{ items: Array<NavMainItem> }> = ({ items }) => {
+  const t = useTranslations("NavMain");
   return (
     <SidebarGroup>
-      <SidebarGroupLabel>Platform</SidebarGroupLabel>
+      <SidebarGroupLabel>{t("platform")}</SidebarGroupLabel>
       <SidebarMenu>
         {items.map((item) => (
           <Collapsible key={item.title} asChild defaultOpen={item.isActive}>
