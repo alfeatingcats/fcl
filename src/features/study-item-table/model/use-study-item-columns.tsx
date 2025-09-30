@@ -1,18 +1,26 @@
 import { type ColumnDef } from "@tanstack/react-table";
 import { useFormatter, useTranslations } from "next-intl";
 
+import type {
+  StudyItem,
+  StudyItemTag,
+  Tag,
+  StudyRepetition,
+} from "@prisma/client";
 import {
   TagsCell,
   TitleCell,
   StatusCell,
   CreatedCell,
+  RepetitionsCell,
 } from "@/entities/study-item/ui";
 import { Checkbox } from "@/components/ui/checkbox";
-import type { StudyItem, StudyItemTag, Tag } from "@prisma/client";
 
 export const useStudyItemColumns = () => {
   const t = useTranslations("StudyItemTable");
   const ts = useTranslations("StudyItemStatus");
+  const tsi = useTranslations("Sidebar");
+
   const format = useFormatter();
   const columns: ColumnDef<StudyItem>[] = [
     {
@@ -28,7 +36,7 @@ export const useStudyItemColumns = () => {
           }
           onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
           aria-label={t("selectAll")}
-          className="!ml-1.5"
+          className="!mr-1.5 !ml-1.5"
         />
       ),
       cell: ({ row }) => (
@@ -71,6 +79,17 @@ export const useStudyItemColumns = () => {
       ),
     },
     {
+      header: tsi("reviewCycle"),
+      size: 180,
+      maxSize: 200,
+      minSize: 100,
+      accessorKey: "repetitions",
+      cell: ({ row }) => {
+        const repetitions: StudyRepetition[] = row.getValue("repetitions");
+        return <RepetitionsCell repetitions={repetitions} />;
+      },
+    },
+    {
       header: t("status"),
       size: 120,
       maxSize: 140,
@@ -79,7 +98,7 @@ export const useStudyItemColumns = () => {
       cell: ({ row }) => <StatusCell status={row.getValue("status")} t={ts} />,
     },
     {
-      header: () => <div>{t("tags")}</div>,
+      header: t("tags"),
       accessorKey: "itemTags",
       size: 120,
       maxSize: 140,

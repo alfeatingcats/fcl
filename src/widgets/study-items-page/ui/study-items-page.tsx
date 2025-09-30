@@ -6,10 +6,7 @@ import {
   TagForm,
   CreateStudyItemButton,
 } from "@/features/tag-management";
-import {
-  StudyItemTable,
-  StudyItemTableHeader,
-} from "@/features/study-item-table";
+import { StudyItemDataTable } from "@/features/study-item-table";
 import {
   StudyItemDrawer,
   StudyItemForm,
@@ -41,7 +38,8 @@ export const StudyItemsPage = () => {
 
   return (
     <>
-      <StudyItemTableHeader
+      <StudyItemDataTable
+        studyItems={studyItems.items}
         renderCreateButton={
           <CreateStudyItemButton
             isCreating={isCreating}
@@ -49,7 +47,6 @@ export const StudyItemsPage = () => {
           />
         }
       />
-      <StudyItemTable studyItems={studyItems.items} />
 
       <StudyItemDrawer
         isPending={isCreating}

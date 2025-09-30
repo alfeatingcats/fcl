@@ -99,25 +99,25 @@ export const studyItemsRouter = createTRPCRouter({
 
       const items = await ctx.db.studyItem.findMany({
         where,
-        take: limit + 1, // +1
+        take: limit + 1,
         cursor: cursor ? { id: cursor } : undefined,
         orderBy: { createdAt: "desc" },
         include: {
           repetitions: {
-            where: { status: "PENDING" },
+            // where: { status: "PENDING" },
             orderBy: { scheduledAt: "asc" },
-            take: 1,
+            // take: 1,
           },
           itemTags: {
             include: { tag: true },
           },
-          _count: {
-            select: {
-              repetitions: {
-                where: { status: "COMPLETED" },
-              },
-            },
-          },
+          // _count: {
+          //   select: {
+          //     repetitions: {
+          //       where: { status: "COMPLETED" },
+          //     },
+          //   },
+          // },
         },
       });
 

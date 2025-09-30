@@ -1,31 +1,31 @@
 "use client";
 
 import {
-  BadgeCheck,
   Bell,
-  ChevronsUpDown,
-  CreditCard,
   LogOut,
   Sparkles,
+  BadgeCheck,
+  CreditCard,
+  ChevronsUpDown,
 } from "lucide-react";
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import {
+  useSidebar,
+  SidebarMenu,
+  SidebarMenuItem,
+  SidebarMenuButton,
+} from "@/components/ui/sidebar";
 import {
   DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuGroup,
   DropdownMenuItem,
+  DropdownMenuGroup,
   DropdownMenuLabel,
-  DropdownMenuSeparator,
+  DropdownMenuContent,
   DropdownMenuTrigger,
+  DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
-import {
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
-  useSidebar,
-} from "@/components/ui/sidebar";
-import type { StrictBasicUserInfo } from "@/shared/types";
+import type { StrictBasicUserInfo } from "@/shared/api/schemas";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 export function NavUser({ user }: { user: StrictBasicUserInfo }) {
   const { isMobile } = useSidebar();
