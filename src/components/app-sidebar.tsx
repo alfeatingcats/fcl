@@ -16,7 +16,7 @@ import {
   SidebarMenuItem,
   SidebarMenuButton,
 } from "@/components/ui/sidebar";
-import type { StrictBasicUserInfo } from "@/shared/types";
+import type { StrictBasicUserInfo } from "@/shared/api/schemas";
 import { useSidebarData } from "@/shared/hooks/use-sidebar-data";
 
 type AppSidebarProps = ComponentProps<typeof Sidebar> & {

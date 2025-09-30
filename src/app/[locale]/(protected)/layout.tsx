@@ -4,7 +4,7 @@ import type { PropsWithChildren } from "react";
 
 import { auth } from "@/server/auth";
 import { redirect, type routing } from "@/i18n/routing";
-import type { StrictBasicUserInfo } from "@/shared/types";
+import type { StrictBasicUserInfo } from "@/shared/api/schemas";
 import { publicPaths, SIDEBAR_COOKIE_NAME } from "@/shared/lib/const";
 
 import { ClientLayout } from "./client-layout";
@@ -17,9 +17,9 @@ const ProtectedRootLayout = async ({
   children,
   params,
 }: PropsWithChildren<ProtectedRootLayoutProps>) => {
-  const { locale } = await params;
-
   const userSession = await auth();
+
+  const { locale } = await params;
   const cookieStore = await cookies();
 
   if (!userSession?.user) {

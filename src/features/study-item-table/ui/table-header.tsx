@@ -1,17 +1,20 @@
-import type { ReactNode } from "react";
-import { FilterIcon } from "lucide-react";
-
-import { Button } from "@/components/ui/button";
+import type { FC, ReactNode } from "react";
 import { useTranslations } from "next-intl";
+import { FilterIcon, TagIcon } from "lucide-react";
+import type { UseFormReturn } from "react-hook-form";
+
 import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import type { ReadStudyItemInput } from "@/shared/api/schemas";
 
 type StudyItemTableHeaderProps = {
   renderCreateButton?: ReactNode;
+  form: UseFormReturn<ReadStudyItemInput>;
 };
 
-export const StudyItemTableHeader = ({
+export const StudyItemTableHeader: FC<StudyItemTableHeaderProps> = ({
   renderCreateButton,
-}: StudyItemTableHeaderProps) => {
+}) => {
   const t = useTranslations("StudyItemTable");
   return (
     <div className="flex items-center gap-3">
@@ -21,7 +24,11 @@ export const StudyItemTableHeader = ({
       />
       <Button variant="outline">
         <FilterIcon />
-        {t("filter")}
+        {t("status")}
+      </Button>
+      <Button variant="outline">
+        <TagIcon />
+        {t("tags")}
       </Button>
       <div className="flex flex-1 items-center justify-end">
         {renderCreateButton}

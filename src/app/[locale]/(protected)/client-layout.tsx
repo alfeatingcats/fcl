@@ -1,10 +1,11 @@
 "use client";
 
 import { Header } from "@/widgets/header";
+import type { CFC } from "@/shared/types";
 import { AppSidebar } from "@/components/app-sidebar";
 import { SidebarInset } from "@/components/ui/sidebar";
-import type { CFC, StrictBasicUserInfo } from "@/shared/types";
 import { SidebarProvider } from "@/components/ui/sidebar";
+import type { StrictBasicUserInfo } from "@/shared/api/schemas";
 
 type ClientLayoutProps = {
   user: StrictBasicUserInfo;
