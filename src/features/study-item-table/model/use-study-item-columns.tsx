@@ -13,8 +13,17 @@ import {
   StatusCell,
   CreatedCell,
   RepetitionsCell,
+  HeaderCell,
 } from "@/entities/study-item/ui";
 import { Checkbox } from "@/components/ui/checkbox";
+import {
+  TextIcon,
+  HeadingIcon,
+  Calendar,
+  WaypointsIcon,
+  Flag,
+  Tags,
+} from "lucide-react";
 
 export const useStudyItemColumns = () => {
   const t = useTranslations("StudyItemTable");
@@ -49,7 +58,9 @@ export const useStudyItemColumns = () => {
       ),
     },
     {
-      header: t("title"),
+      header() {
+        return <HeaderCell title={t("title")} icon={HeadingIcon} />;
+      },
       size: 180,
       maxSize: 200,
       minSize: 100,
@@ -57,19 +68,21 @@ export const useStudyItemColumns = () => {
       cell: ({ row }) => <TitleCell title={row.getValue("title")} />,
     },
     {
-      header: t("description"),
+      header() {
+        return <HeaderCell title={t("description")} icon={TextIcon} />;
+      },
       accessorKey: "description",
       maxSize: 200,
       size: 180,
       minSize: 100,
       cell: ({ row }) => (
-        <div className="truncate font-medium">
-          {row.getValue("description") ?? ""}
-        </div>
+        <div className="truncate">{row.getValue("description") ?? ""}</div>
       ),
     },
     {
-      header: t("created"),
+      header() {
+        return <HeaderCell title={t("created")} icon={Calendar} />;
+      },
       size: 180,
       maxSize: 200,
       minSize: 100,
@@ -79,7 +92,9 @@ export const useStudyItemColumns = () => {
       ),
     },
     {
-      header: tsi("reviewCycle"),
+      header() {
+        return <HeaderCell title={tsi("reviewCycle")} icon={WaypointsIcon} />;
+      },
       size: 180,
       maxSize: 200,
       minSize: 100,
@@ -90,7 +105,9 @@ export const useStudyItemColumns = () => {
       },
     },
     {
-      header: t("status"),
+      header() {
+        return <HeaderCell title={t("status")} icon={Flag} />;
+      },
       size: 120,
       maxSize: 140,
       minSize: 100,
@@ -98,7 +115,9 @@ export const useStudyItemColumns = () => {
       cell: ({ row }) => <StatusCell status={row.getValue("status")} t={ts} />,
     },
     {
-      header: t("tags"),
+      header() {
+        return <HeaderCell title={t("tags")} icon={Tags} />;
+      },
       accessorKey: "itemTags",
       size: 120,
       maxSize: 140,

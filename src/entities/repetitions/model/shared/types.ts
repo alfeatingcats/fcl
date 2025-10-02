@@ -1,3 +1,6 @@
+import type { RouterOutputs } from "@/trpc/react";
+import type { StudyItem, StudyRepetition, Tag } from "@prisma/client";
+
 export interface ChartPoint {
   x: number;
   time: number;
@@ -9,7 +12,22 @@ export interface CurrentPoint {
   retention: number;
 }
 
-export interface RetentionChartProps {
+export interface RepetitionChartProps {
   repetitionDates?: Date[];
   currentRepetition?: number;
 }
+
+export type RepetitionsListRow = Pick<
+  StudyRepetition,
+  | "scheduledAt"
+  | "status"
+  | "difficulty"
+  | "id"
+  | "studyItemId"
+  | "repetitionNumber"
+> &
+  Pick<StudyItem, "title" | "description"> &
+  Pick<
+    RouterOutputs["studyItem"]["getTodayRepetitions"][number]["studyItem"],
+    "itemTags"
+  >;

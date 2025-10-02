@@ -32,5 +32,7 @@ export const ReadStudyItemsSchema = z.object({
   cursor: z.string().cuid().optional(),
 });
 
+export const DeleteStudyItemSchema = z.object({ id: z.string() });
+
 export type ReadStudyItemInput = z.input<typeof ReadStudyItemsSchema>;
 export type CreateStudyItemInput = z.input<typeof CreateStudyItemSchema>;

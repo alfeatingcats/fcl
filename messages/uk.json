@@ -58,8 +58,18 @@
     "inHours": "через {count, plural, one {# год} few {# год} many {# год} other {# год}}",
     "inDays": "через {count, plural, one {# день} few {# дні} many {# днів} other {# дня}}",
     "inWeeks": "через {count, plural, one {# тиждень} few {# тижні} many {# тижнів} other {# тижня}}",
+    "inMonths": "через {count, plural, one {# місяць} few {# місяці} many {# місяців} other {# місяців}}",
+    "inYears": "через {count, plural, one {# рік} few {# роки} many {# років} other {# років}}",
+
     "ago": "тому",
-    "now": "зараз"
+    "now": "зараз",
+
+    "minutesAgo": "{count, plural, one {# хвилину тому} few {# хвилини тому} many {# хвилин тому} other {# хвилини тому}}",
+    "hoursAgo": "{count, plural, one {# годину тому} few {# години тому} many {# годин тому} other {# години тому}}",
+    "daysAgo": "{count, plural, one {# день тому} few {# дні тому} many {# днів тому} other {# днів тому}}",
+    "weeksAgo": "{count, plural, one {# тиждень тому} few {# тижні тому} many {# тижнів тому} other {# тижнів тому}}",
+    "monthsAgo": "{count, plural, one {# місяць тому} few {# місяці тому} many {# місяців тому} other {# місяців тому}}",
+    "yearsAgo": "{count, plural, one {# рік тому} few {# роки тому} many {# років тому} other {# років тому}}"
   },
   "Study": {
     "repetition": "Цикл повторень",
@@ -110,5 +120,15 @@
     "COMPLETED": "Завершено",
     "PAUSED": "Призупинено",
     "ARCHIVED": "Архівовано"
+  },
+  "Repetitions": {
+    "next": "Наступне",
+    "stageProgress": "Етап {current} з {total}"
+  },
+  "RepetitionStatus": {
+    "PENDING": "В очікуванні",
+    "COMPLETED": "Завершено",
+    "MISSED": "Пропущено",
+    "SKIPPED": "Ігноровано"
   }
 }

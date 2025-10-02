@@ -13,7 +13,8 @@ export { getDefaultRepetitionDates } from "./model/shared";
 export type {
   ChartPoint,
   CurrentPoint,
-  RetentionChartProps,
+  RepetitionChartProps,
+  RepetitionsListRow,
 } from "./model/shared";
 
-export { RetentionMicroChart } from "./ui";
+export { RepetitionMicroChart, RepetitionList } from "./ui";

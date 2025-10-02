@@ -7,6 +7,7 @@ import { EBBINGHAUS_INTERVALS } from "@/shared/lib/const";
 import { CompleteRepetitionSchema } from "@/entities/repetitions";
 import {
   CreateStudyItemSchema,
+  DeleteStudyItemSchema,
   ReadStudyItemsSchema,
   UpdateStudyItemSchema,
 } from "@/shared/api/schemas";
@@ -250,6 +251,33 @@ export const studyItemsRouter = createTRPCRouter({
           repetitions: { orderBy: { repetitionNumber: "asc" } },
           itemTags: { include: { tag: true } },
         },
+      });
+    }),
+
+  // Delete study item
+  delete: protectedProcedure
+    .input(DeleteStudyItemSchema)
+    .mutation(async ({ ctx, input }) => {
+      // Check access permissions
+      const existingItem = await ctx.db.studyItem.findFirst({
+        where: {
+          id: input.id,
+          createdById: ctx.session.user.id,
+        },
+      });
+
+      if (!existingItem) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Study item not found",
+        });
+      }
+
+      // Cascade delete will automatically remove:
+      // - StudyRepetition (onDelete: Cascade)
+      // - StudyItemTag (onDelete: Cascade)
+      return await ctx.db.studyItem.delete({
+        where: { id: input.id },
       });
     }),
 });

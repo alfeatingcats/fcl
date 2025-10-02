@@ -13,7 +13,7 @@ import {
   BreadcrumbPage,
 } from "@/components/ui/breadcrumb";
 import { Link, type routing, usePathname } from "@/i18n/routing";
-import { routesMap, type SidebarRoute } from "@/shared/lib/routes";
+import { routesMap, type SidebarRoute } from "@/shared/config/routes";
 
 /** Normalizes URL: removes trailing slash (except for root) */
 const normalize = (u: string | undefined | null) =>

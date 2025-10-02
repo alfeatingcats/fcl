@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 
-import { useUserStore } from "../stores";
+import { useUserStore } from "../../../stores";
 
 export function useDetectTimeZone() {
   const { timeZone, setTimeZone } = useUserStore();

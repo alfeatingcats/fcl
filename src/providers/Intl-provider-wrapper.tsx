@@ -6,9 +6,10 @@ import {
   type Locale,
 } from "next-intl";
 import React from "react";
-import { useUserStore } from "@/shared/stores";
-import { useDetectTimeZone } from "@/shared/hooks";
+
 import type { CFC } from "@/shared/types";
+import { useUserStore } from "@/shared/stores";
+import { useDetectTimeZone } from "@/shared/lib/date";
 
 export const IntlProviderWrapper: CFC<{
   locale: Locale;

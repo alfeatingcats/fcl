@@ -15,12 +15,16 @@ export type PersistedUserStoreState = StorageValue<Partial<UserStoreState>>;
 // Formatter type for next-intl
 export type TagColorTKey = keyof typeof messages.TagColors;
 export type StudyItemStatusTKey = keyof typeof messages.StudyItemStatus;
+export type RepetitionStatusTKey = keyof typeof messages.RepetitionStatus;
 export type SidebarTKey = Exclude<keyof typeof messages.Sidebar, "home">;
 
 export type IntlFormatter = ReturnType<typeof createFormatter>;
 export type TimeTranslations = ReturnType<typeof useTranslations<"Time">>;
 export type StudyItemStatusTranslations = ReturnType<
   typeof useTranslations<"StudyItemStatus">
+>;
+export type RepetitionStatusTranslations = ReturnType<
+  typeof useTranslations<"RepetitionStatus">
 >;
 
 // Embla Carousel types

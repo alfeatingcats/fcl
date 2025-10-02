@@ -3,6 +3,7 @@ import { isEmpty } from "es-toolkit/compat";
 
 import { Badge } from "@/components/ui/badge";
 import type { StudyItemTag, Tag } from "@prisma/client";
+import { cn } from "@/shared/lib/utils";
 
 export interface TagsCellProps {
   tags: Array<StudyItemTag & { tag: Tag }>;
@@ -16,7 +17,7 @@ export const TagsCell = ({ tags }: TagsCellProps) => {
   return (
     <div className="flex min-w-[200px] flex-wrap gap-1">
       {tags.map(({ tag }) => (
-        <Badge className={`${tag.color}`} key={tag.id}>
+        <Badge className={cn(`${tag.color}`)} key={tag.id}>
           {tag.name}
         </Badge>
       ))}

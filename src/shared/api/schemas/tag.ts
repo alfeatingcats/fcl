@@ -1,3 +1,4 @@
+import { PRESET_COLOR_CLASSES } from "@/shared/lib/const";
 import z from "zod";
 
 export const CreateTagSchema = z.object({
@@ -6,10 +7,7 @@ export const CreateTagSchema = z.object({
     .min(1, "Tag name cannot be empty")
     .max(50, "Tag name is too long")
     .regex(/^[a-zA-Zа-яёА-ЯЁ0-9\s\-_]+$/, "Invalid characters in tag name"),
-  color: z
-    .string()
-    .optional()
-    .default("bg-blue-100 text-blue-700 border border-blue-300"),
+  color: z.string().optional().default(PRESET_COLOR_CLASSES[0]!),
 });
 
 export const UpdateTagSchema = z.object({
@@ -20,6 +18,11 @@ export const UpdateTagSchema = z.object({
     .max(50, "Tag name is too long")
     .optional(),
   color: z.string().optional(),
+});
+
+export const DeleteTagSchema = z.object({
+  id: z.string().cuid(),
+  transferToTagId: z.string().cuid().optional(), // Transfer relations to another tag
 });
 
 export type CreateTagInput = z.input<typeof CreateTagSchema>;

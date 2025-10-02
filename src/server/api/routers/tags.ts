@@ -2,7 +2,11 @@
 import { z } from "zod";
 import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";
 import { TRPCError } from "@trpc/server";
-import { CreateTagSchema, UpdateTagSchema } from "@/shared/api/schemas";
+import {
+  CreateTagSchema,
+  DeleteTagSchema,
+  UpdateTagSchema,
+} from "@/shared/api/schemas";
 
 export const tagsRouter = createTRPCRouter({
   /**
@@ -248,12 +252,7 @@ export const tagsRouter = createTRPCRouter({
    * Delete tag
    */
   delete: protectedProcedure
-    .input(
-      z.object({
-        id: z.string().cuid(),
-        transferToTagId: z.string().cuid().optional(), // Transfer relations to another tag
-      }),
-    )
+    .input(DeleteTagSchema)
     .mutation(async ({ ctx, input }) => {
       return await ctx.db.$transaction(async (tx) => {
         // Check if tag exists
