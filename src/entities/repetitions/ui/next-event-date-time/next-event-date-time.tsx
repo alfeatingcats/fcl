@@ -4,7 +4,7 @@ import { useFormatter, useTranslations } from "next-intl";
 
 import { useRelativeTime } from "@/shared/lib/date";
 
-import { EventBadge } from "../repetition-badge";
+import { EventBadge } from "../badge";
 
 type NextEventDateTimeProps = {
   scheduledAt: Date;

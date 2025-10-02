@@ -1,2 +1,2 @@
-export { RepetitionMicroChart } from "./repetition-micro-chart";
-export { RepetitionList } from "./repetition-list";
+export { RepetitionMicroChart } from "./micro-chart";
+export { RepetitionList } from "./list";

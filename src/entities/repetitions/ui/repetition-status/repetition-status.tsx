@@ -4,7 +4,7 @@ import { SquircleDashed } from "lucide-react";
 
 import type { RepetitionStatusTKey } from "@/shared/types";
 
-import { EventBadge } from "../repetition-badge";
+import { EventBadge } from "../badge";
 
 type RepetitionStatusProps = {
   status: RepetitionStatusTKey;

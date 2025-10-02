@@ -4,9 +4,9 @@ import { Badge } from "@/components/ui/badge";
 
 import { RepetitionStatus } from "../repetition-status";
 import { type RepetitionsListRow } from "../../model/shared";
-import { NextEventDateTime } from "../repetition-next-event-date-time";
+import { NextEventDateTime } from "../next-event-date-time";
 import { Button } from "@/components/ui/button";
-import { Check, Settings } from "lucide-react";
+import { Ellipsis } from "lucide-react";
 import { cn } from "@/shared/lib/utils";
 import { RepetitionStage } from "../repetition-stage";
 
@@ -38,21 +38,16 @@ export const RepetitionListRow: FC<RepetitionListRowProps> = ({
         </div>
         <div className="text-muted-foreground text-sm">{description}</div>
       </div>
-      <div className="flex gap-4 px-2 pt-2 pb-1">
-        <NextEventDateTime scheduledAt={scheduledAt} />
-        <RepetitionStatus status={status} />
-        <div className="flex flex-1 justify-end gap-1.5">
+      <div className="flex flex-row items-center">
+        <div className="flex flex-1 flex-wrap gap-4 gap-y-1 px-2 pt-2 pb-1">
           <RepetitionStage currentStage={repetitionNumber} />
-          {/* <Button size="xxs" variant="outline" className="rounded-md">
-            <Check />
+          <RepetitionStatus status={status} />
+          <NextEventDateTime scheduledAt={scheduledAt} />
+        </div>
+        <div className="flex h-full items-start pt-1 pr-2">
+          <Button variant="ghost" size="xxs" className="">
+            <Ellipsis />
           </Button>
-          <Button
-            size="xxs"
-            variant="outline"
-            className="dark:border-accent-foreground/50 rounded-md border-2 !px-1 dark:bg-black"
-          >
-            <Settings />
-          </Button> */}
         </div>
       </div>
     </div>

@@ -1,6 +1,6 @@
 import type { FC } from "react";
 import type { RepetitionsListRow } from "../../model/shared";
-import { RepetitionListRow } from "../repetition-list-row";
+import { RepetitionListRow } from "../list-row";
 
 type RepetitionListProps = {
   repetitions: Array<RepetitionsListRow>;
@@ -8,7 +8,7 @@ type RepetitionListProps = {
 
 export const RepetitionList: FC<RepetitionListProps> = ({ repetitions }) => {
   return (
-    <section className="flex flex-col gap-4">
+    <section className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
       {repetitions.map((repetitionData) => (
         <RepetitionListRow {...repetitionData} key={repetitionData.id} />
       ))}

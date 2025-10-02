@@ -123,7 +123,9 @@
   },
   "Repetitions": {
     "next": "Next",
-    "stageProgress": "Stage {current} of {total}"
+    "stageProgress": "Stage {current} of {total}",
+    "stageLabel": "Stage",
+    "stageCount": "{current} of {total}"
   },
   "RepetitionStatus": {
     "PENDING": "Pending",
