@@ -9,7 +9,7 @@ import {
 
 export const RepetitionsPage: FC = () => {
   const [todayRepetitions] =
-    api.studyItem.getTodayRepetitions.useSuspenseQuery();
+    api.repetitions.getTodayRepetitions.useSuspenseQuery();
 
   const repetitionsListData: Array<RepetitionsListRow> = todayRepetitions.map(
     (repetition) => ({

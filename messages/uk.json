@@ -60,10 +60,8 @@
     "inWeeks": "через {count, plural, one {# тиждень} few {# тижні} many {# тижнів} other {# тижня}}",
     "inMonths": "через {count, plural, one {# місяць} few {# місяці} many {# місяців} other {# місяців}}",
     "inYears": "через {count, plural, one {# рік} few {# роки} many {# років} other {# років}}",
-
     "ago": "тому",
     "now": "зараз",
-
     "minutesAgo": "{count, plural, one {# хвилину тому} few {# хвилини тому} many {# хвилин тому} other {# хвилини тому}}",
     "hoursAgo": "{count, plural, one {# годину тому} few {# години тому} many {# годин тому} other {# години тому}}",
     "daysAgo": "{count, plural, one {# день тому} few {# дні тому} many {# днів тому} other {# днів тому}}",
@@ -95,9 +93,19 @@
     "createSuccess": "Тег \"{name}\" успішно створено",
     "createError": "Не вдалося створити тег \"{name}\""
   },
+  "StudyItem": {
+    "getByIdTitle": "Деталі навички",
+    "getByIdLoading": "Завантаження інформації про навичку...",
+    "resetButton": "Скинути повторення",
+    "resetConfirmTitle": "Скинути повторення для цієї навички?",
+    "resetConfirmDescription": "Це видалить усі поточні повторення та створить нові з початку. Цю дію не можна скасувати."
+  },
   "StudyItemMessages": {
     "createSuccess": "Навичка \"{name}\" успішно створена",
-    "createError": "Не вдалося створити навичку \"{name}\""
+    "createError": "Не вдалося створити навичку \"{name}\"",
+    "getByIdError": "Навичку не знайдено або доступ заборонено",
+    "resetSuccess": "Повторення для «{title}» скинуто",
+    "resetError": "Не вдалося скинути повторення для «{title}»"
   },
   "StudyPage": {
     "title": "Мої навички",
@@ -125,12 +133,78 @@
     "next": "Наступне",
     "stageProgress": "Етап {current} з {total}",
     "stageLabel": "Етап",
-    "stageCount": "{current} з {total}"
+    "stageCount": "{current} з {total}",
+    "completeButton": "Завершити повторення",
+    "skipButton": "Пропустити повторення",
+    "bulkCompleteButton": "Завершити вибрані",
+    "bulkCompleteConfirmTitle": "Завершити вибрані повторення?",
+    "bulkCompleteConfirmDescription": "Ви збираєтеся позначити {count} повторень як виконані. Цю дію не можна скасувати.",
+    "bulkCompleteFromItemsButton": "Завершити повторення для вибраних навичок",
+    "bulkCompleteFromItemsConfirmTitle": "Завершити повторення для вибраних навичок?",
+    "bulkCompleteFromItemsConfirmDescription": "Ви збираєтеся завершити всі повторення для {count} вибраних навичок. Цю дію не можна скасувати.",
+    "bulkCompleteFromRepetitionsButton": "Завершити всі повторення цієї навички",
+    "bulkCompleteFromRepetitionsConfirmTitle": "Завершити всі повторення цієї навички?",
+    "bulkCompleteFromRepetitionsConfirmDescription": "Ви збираєтеся завершити всі повторення для цієї навички. Цю дію не можна скасувати.",
+    "statsTitle": "Статистика повторень",
+    "upcomingTitle": "Майбутні повторення",
+    "resetButton": "Скинути повторення"
+  },
+  "RepetitionsMessages": {
+    "completeSuccess": "Повторення позначено як виконане",
+    "completeError": "Не вдалося завершити повторення",
+    "skipSuccess": "Повторення пропущено",
+    "skipError": "Не вдалося пропустити повторення",
+    "bulkCompleteSuccess": "{count, plural, one {# повторення позначено як виконане} few {# повторення позначено як виконані} other {# повторень позначено як виконані}}",
+    "bulkCompleteError": "Не вдалося завершити повторення",
+    "statsTitle": "Статистика повторень",
+    "statsTotal": "Усього повторень: {count}",
+    "statsCompleted": "Виконано: {count}",
+    "statsMissed": "Пропущено: {count}",
+    "statsSkipped": "Пропущено користувачем: {count}",
+    "statsError": "Не вдалося завантажити статистику повторень",
+    "getUpcomingSuccess": "Майбутні повторення успішно завантажено",
+    "getUpcomingError": "Не вдалося завантажити заплановані повторення"
   },
   "RepetitionStatus": {
     "PENDING": "В очікуванні",
     "COMPLETED": "Завершено",
     "MISSED": "Пропущено",
     "SKIPPED": "Ігноровано"
+  },
+  "Errors": {
+    "PARSE_ERROR": "Неправильні дані отримано сервером",
+    "BAD_REQUEST": "Некоректні дані запиту",
+    "INTERNAL_SERVER_ERROR": "Внутрішня помилка сервера",
+    "NOT_IMPLEMENTED": "Функцію ще не реалізовано",
+    "BAD_GATEWAY": "Помилка зв’язку з сервером",
+    "SERVICE_UNAVAILABLE": "Сервіс тимчасово недоступний",
+    "GATEWAY_TIMEOUT": "Час очікування відповіді сервера вичерпано",
+    "UNAUTHORIZED": "Потрібно увійти в систему, щоб виконати дію",
+    "FORBIDDEN": "У вас немає дозволу на цю дію",
+    "NOT_FOUND": "Запитаний ресурс не знайдено",
+    "METHOD_NOT_SUPPORTED": "Ця дія не підтримується",
+    "TIMEOUT": "Час очікування запиту вичерпано",
+    "CONFLICT": "Конфлікт даних. Оновіть сторінку та спробуйте ще раз",
+    "PRECONDITION_FAILED": "Умови запиту не виконано",
+    "PAYLOAD_TOO_LARGE": "Завантажені дані занадто великі",
+    "UNSUPPORTED_MEDIA_TYPE": "Непідтримуваний формат файлу або даних",
+    "UNPROCESSABLE_CONTENT": "Не вдалося обробити дані",
+    "TOO_MANY_REQUESTS": "Забагато запитів. Спробуйте пізніше",
+    "CLIENT_CLOSED_REQUEST": "Запит було скасовано користувачем"
+  },
+  "ConfirmDialogs": {
+    "confirmTitle": "Ви впевнені?",
+    "confirmDescription": "Цю дію не можна скасувати.",
+    "confirmButton": "Підтвердити",
+    "cancelButton": "Скасувати",
+    "deleteTitle": "Видалити елемент?",
+    "deleteDescription": "Це остаточно видалить елемент. Цю дію не можна скасувати.",
+    "archiveTitle": "Архівувати елемент?",
+    "archiveDescription": "Елемент буде переміщено до архіву. Ви зможете відновити його пізніше.",
+    "restoreTitle": "Відновити елемент?",
+    "restoreDescription": "Елемент буде відновлено і стане активним знову.",
+    "resetTitle": "Скинути дані?",
+    "resetDescription": "Це скине весь прогрес і почне все спочатку. Цю дію не можна скасувати.",
+    "bulkActionWarning": "Ви збираєтеся виконати масову дію над {count} елементами."
   }
 }

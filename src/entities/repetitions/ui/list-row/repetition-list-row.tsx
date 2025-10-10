@@ -5,10 +5,9 @@ import { Badge } from "@/components/ui/badge";
 import { RepetitionStatus } from "../repetition-status";
 import { type RepetitionsListRow } from "../../model/shared";
 import { NextEventDateTime } from "../next-event-date-time";
-import { Button } from "@/components/ui/button";
-import { Ellipsis } from "lucide-react";
 import { cn } from "@/shared/lib/utils";
 import { RepetitionStage } from "../repetition-stage";
+import { CardDropdown } from "../card-dropdown";
 
 type RepetitionListRowProps = RepetitionsListRow;
 
@@ -22,9 +21,9 @@ export const RepetitionListRow: FC<RepetitionListRowProps> = ({
 }) => {
   return (
     <div className="text-card-foreground bg-muted flex flex-col items-stretch !rounded-xl p-1">
-      <div className="bg-card flex flex-col justify-start !rounded-xl p-4">
+      <div className="bg-card flex h-full flex-col justify-start !rounded-xl p-4">
         <div className="flex gap-3">
-          <span className="font-medium">{title}</span>
+          <span className="truncate font-medium">{title}</span>
           <span className="flex flex-row gap-2">
             {itemTags.map((tag) => (
               <Badge
@@ -36,7 +35,9 @@ export const RepetitionListRow: FC<RepetitionListRowProps> = ({
             ))}
           </span>
         </div>
-        <div className="text-muted-foreground text-sm">{description}</div>
+        <div className="text-muted-foreground line-clamp-2 text-sm">
+          {description}
+        </div>
       </div>
       <div className="flex flex-row items-center">
         <div className="flex flex-1 flex-wrap gap-4 gap-y-1 px-2 pt-2 pb-1">
@@ -44,10 +45,8 @@ export const RepetitionListRow: FC<RepetitionListRowProps> = ({
           <RepetitionStatus status={status} />
           <NextEventDateTime scheduledAt={scheduledAt} />
         </div>
-        <div className="flex h-full items-start pt-1 pr-2">
-          <Button variant="ghost" size="xxs" className="">
-            <Ellipsis />
-          </Button>
+        <div className="flex h-full items-start pt-2 pr-2">
+          <CardDropdown />
         </div>
       </div>
     </div>

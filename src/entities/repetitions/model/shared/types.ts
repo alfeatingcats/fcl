@@ -28,6 +28,6 @@ export type RepetitionsListRow = Pick<
 > &
   Pick<StudyItem, "title" | "description"> &
   Pick<
-    RouterOutputs["studyItem"]["getTodayRepetitions"][number]["studyItem"],
+    RouterOutputs["repetitions"]["getTodayRepetitions"][number]["studyItem"],
     "itemTags"
   >;

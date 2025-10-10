@@ -18,11 +18,11 @@ export const useManageStudyItem = (): UseManageStudyItemReturn => {
     useBoolean(false);
 
   const { handleCreateStudyItem, isCreating } = useCreateStudyItem({
-    onSuccess: (name) => {
+    onSuccess: ({ name }) => {
       toast.success(t("createSuccess", { name }));
       handleDrawerChange(false);
     },
-    onError: (name) => {
+    onError: ({ name }) => {
       toast.error(t("createError", { name }));
     },
   });

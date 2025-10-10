@@ -5,7 +5,7 @@ import { Waypoints } from "lucide-react";
 import { EBBINGHAUS_INTERVALS } from "@/shared/lib/const";
 
 type RepetitionStageProps = {
-  readonly currentStage: number | string;
+  currentStage: number | string;
 };
 export const RepetitionStage: FC<RepetitionStageProps> = ({ currentStage }) => {
   const t = useTranslations("Repetitions");

@@ -1,4 +1,7 @@
-export { CompleteRepetitionSchema } from "./model/schemas";
+export {
+  CompleteRepetitionSchema,
+  type CompleteRepetitionInput,
+} from "./model/schemas";
 
 export {
   MICRO_CHART_CONFIG,

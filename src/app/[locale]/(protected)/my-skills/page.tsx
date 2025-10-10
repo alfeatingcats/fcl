@@ -1,15 +1,13 @@
 import { ErrorBoundary, Suspense } from "@suspensive/react";
 
-import { auth } from "@/server/auth";
-import { api, HydrateClient } from "@/trpc/server";
+import { HydrateClient } from "@/trpc/server";
 import { StudyItemsPage } from "@/widgets/study-items-page";
+import { protectedApiPrefetch } from "@/shared/api";
 
 const MySkillsPage = async () => {
-  const authResult = await auth();
-
-  if (authResult?.user) {
-    void api.studyItem.getAll.prefetch({ limit: 10 });
-  }
+  await protectedApiPrefetch((api) =>
+    api.studyItem.getAll.prefetch({ limit: 10 }),
+  );
 
   return (
     <HydrateClient>

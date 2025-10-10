@@ -60,10 +60,8 @@
     "inWeeks": "in {count, plural, one {# week} other {# weeks}}",
     "inMonths": "in {count, plural, one {# month} other {# months}}",
     "inYears": "in {count, plural, one {# year} other {# years}}",
-
     "ago": "ago",
     "now": "now",
-
     "minutesAgo": "{count, plural, one {# min ago} other {# mins ago}}",
     "hoursAgo": "{count, plural, one {# hr ago} other {# hrs ago}}",
     "daysAgo": "{count, plural, one {# day ago} other {# days ago}}",
@@ -95,9 +93,19 @@
     "createSuccess": "Tag \"{name}\" created successfully",
     "createError": "Failed to create tag \"{name}\""
   },
+  "StudyItem": {
+    "getByIdTitle": "Skill details",
+    "getByIdLoading": "Loading skill information...",
+    "resetButton": "Reset repetitions",
+    "resetConfirmTitle": "Reset repetitions for this skill?",
+    "resetConfirmDescription": "This will delete all existing repetitions and recreate them from the beginning. This action cannot be undone."
+  },
   "StudyItemMessages": {
     "createSuccess": "Skill \"{name}\" created successfully",
-    "createError": "Failed to create skill \"{name}\""
+    "createError": "Failed to create skill \"{name}\"",
+    "getByIdError": "Skill not found or access denied",
+    "resetSuccess": "Repetitions for \"{title}\" have been reset",
+    "resetError": "Failed to reset repetitions for \"{title}\""
   },
   "StudyPage": {
     "title": "My Skills",
@@ -125,12 +133,78 @@
     "next": "Next",
     "stageProgress": "Stage {current} of {total}",
     "stageLabel": "Stage",
-    "stageCount": "{current} of {total}"
+    "stageCount": "{current} of {total}",
+    "completeButton": "Complete repetition",
+    "skipButton": "Skip repetition",
+    "bulkCompleteButton": "Complete selected",
+    "bulkCompleteConfirmTitle": "Complete selected repetitions?",
+    "bulkCompleteConfirmDescription": "You are about to mark {count} repetitions as completed. This action cannot be undone.",
+    "bulkCompleteFromItemsButton": "Complete repetitions for selected skills",
+    "bulkCompleteFromItemsConfirmTitle": "Complete repetitions for selected skills?",
+    "bulkCompleteFromItemsConfirmDescription": "You are about to complete all repetitions for {count} selected skills. This action cannot be undone.",
+    "bulkCompleteFromRepetitionsButton": "Complete all repetitions for this skill",
+    "bulkCompleteFromRepetitionsConfirmTitle": "Complete all repetitions for this skill?",
+    "bulkCompleteFromRepetitionsConfirmDescription": "You are about to complete all repetitions for this skill. This action cannot be undone.",
+    "statsTitle": "Repetition statistics",
+    "upcomingTitle": "Upcoming repetitions",
+    "resetButton": "Reset repetitions"
+  },
+  "RepetitionsMessages": {
+    "completeSuccess": "Repetition marked as completed",
+    "completeError": "Failed to mark repetition as completed",
+    "skipSuccess": "Repetition skipped",
+    "skipError": "Failed to skip repetition",
+    "bulkCompleteSuccess": "{count, plural, one {# repetition marked as completed} other {# repetitions marked as completed}}",
+    "bulkCompleteError": "Failed to complete repetitions",
+    "statsTitle": "Repetition Statistics",
+    "statsTotal": "Total repetitions: {count}",
+    "statsCompleted": "Completed: {count}",
+    "statsMissed": "Missed: {count}",
+    "statsSkipped": "Skipped: {count}",
+    "statsError": "Failed to load repetition statistics",
+    "getUpcomingSuccess": "Upcoming repetitions loaded successfully",
+    "getUpcomingError": "Failed to load upcoming repetitions"
   },
   "RepetitionStatus": {
     "PENDING": "Pending",
     "COMPLETED": "Completed",
     "MISSED": "Missed",
     "SKIPPED": "Skipped"
+  },
+  "Errors": {
+    "PARSE_ERROR": "Invalid data received by the server",
+    "BAD_REQUEST": "Invalid request data",
+    "INTERNAL_SERVER_ERROR": "Internal server error",
+    "NOT_IMPLEMENTED": "This feature is not implemented",
+    "BAD_GATEWAY": "Server communication error",
+    "SERVICE_UNAVAILABLE": "Service temporarily unavailable",
+    "GATEWAY_TIMEOUT": "Server took too long to respond",
+    "UNAUTHORIZED": "You must be signed in to perform this action",
+    "FORBIDDEN": "You don’t have permission to perform this action",
+    "NOT_FOUND": "The requested resource was not found",
+    "METHOD_NOT_SUPPORTED": "This action is not supported",
+    "TIMEOUT": "The request timed out",
+    "CONFLICT": "Conflict detected. Please refresh and try again",
+    "PRECONDITION_FAILED": "Request conditions were not met",
+    "PAYLOAD_TOO_LARGE": "The uploaded data is too large",
+    "UNSUPPORTED_MEDIA_TYPE": "Unsupported file or data format",
+    "UNPROCESSABLE_CONTENT": "The data could not be processed",
+    "TOO_MANY_REQUESTS": "Too many requests. Please wait a moment",
+    "CLIENT_CLOSED_REQUEST": "Request was cancelled by the client"
+  },
+  "ConfirmDialogs": {
+    "confirmTitle": "Are you sure?",
+    "confirmDescription": "This action cannot be undone.",
+    "confirmButton": "Confirm",
+    "cancelButton": "Cancel",
+    "deleteTitle": "Delete item?",
+    "deleteDescription": "This will permanently delete the item. This action cannot be undone.",
+    "archiveTitle": "Archive item?",
+    "archiveDescription": "The item will be moved to the archive. You can restore it later.",
+    "restoreTitle": "Restore item?",
+    "restoreDescription": "The item will be restored and become active again.",
+    "resetTitle": "Reset data?",
+    "resetDescription": "This will reset all progress and start from the beginning. This action cannot be undone.",
+    "bulkActionWarning": "You are about to perform a bulk action on {count} items."
   }
 }

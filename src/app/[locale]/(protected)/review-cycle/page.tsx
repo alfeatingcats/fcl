@@ -6,7 +6,7 @@ import { RepetitionsPage } from "@/widgets/repetitions-page";
 
 const ReviewCyclePage = async () => {
   await protectedApiPrefetch((api) =>
-    api.studyItem.getTodayRepetitions.prefetch(),
+    api.repetitions.getTodayRepetitions.prefetch(),
   );
 
   return (
