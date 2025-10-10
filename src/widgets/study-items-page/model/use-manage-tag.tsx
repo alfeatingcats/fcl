@@ -17,11 +17,11 @@ export const useManageTag = (): UseManageStudyItemReturn<CreateTagInput> => {
     useBoolean(false);
 
   const { handleCreateTag, isLoading } = useCreateTag({
-    onSuccess: (name) => {
+    onSuccess: ({ name }) => {
       toast.success(t("createSuccess", { name }));
       toggleCreateTagDrawer();
     },
-    onError: (name) => {
+    onError: ({ name }) => {
       toast.error(t("createError", { name }));
     },
   });

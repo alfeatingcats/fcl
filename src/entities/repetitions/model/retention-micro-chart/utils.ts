@@ -1,9 +1,9 @@
 import { MICRO_CHART_CONFIG } from "./config";
 import { getDefaultRepetitionDates } from "../shared/utils";
-import type { ChartPoint, RetentionChartProps } from "../shared/types";
+import type { ChartPoint, RepetitionChartProps } from "../shared/types";
 
 // Calculate the position of the current point on the X axis
-export const getCurrentPointX = (data: RetentionChartProps): number | null => {
+export const getCurrentPointX = (data: RepetitionChartProps): number | null => {
   const {
     currentRepetition = 1,
     repetitionDates = getDefaultRepetitionDates(),
@@ -56,7 +56,7 @@ const interpolateTime = (
 };
 
 // Generate Ebbinghaus curve data
-export const generateCurveData = (data: RetentionChartProps): ChartPoint[] => {
+export const generateCurveData = (data: RepetitionChartProps): ChartPoint[] => {
   const _data: ChartPoint[] = [];
   const { repetitionDates = getDefaultRepetitionDates() } = data;
 

@@ -1,4 +1,7 @@
-export { CompleteRepetitionSchema } from "./model/schemas";
+export {
+  CompleteRepetitionSchema,
+  type CompleteRepetitionInput,
+} from "./model/schemas";
 
 export {
   MICRO_CHART_CONFIG,
@@ -13,7 +16,8 @@ export { getDefaultRepetitionDates } from "./model/shared";
 export type {
   ChartPoint,
   CurrentPoint,
-  RetentionChartProps,
+  RepetitionChartProps,
+  RepetitionsListRow,
 } from "./model/shared";
 
-export { RetentionMicroChart } from "./ui";
+export { RepetitionMicroChart, RepetitionList } from "./ui";

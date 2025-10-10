@@ -1,5 +1,7 @@
 import { api } from "@/trpc/react";
 
+import { useQueryErrorHandler } from "@/shared/hooks";
+
 import type { TagsListType } from "./types";
 
 export interface UseGetAllTagsParams {
@@ -16,10 +18,13 @@ export type UseGetAllTags = (
 ) => UseGetAllTagsResult;
 
 export const useGetAllTags: UseGetAllTags = ({ shouldFetchTags }) => {
-  const { data: allTags, isPending } = api.tags.getAll.useQuery(
-    {},
-    { enabled: shouldFetchTags },
-  );
+  const {
+    error,
+    isPending,
+    data: allTags,
+  } = api.tags.getAll.useQuery({}, { enabled: shouldFetchTags });
+
+  useQueryErrorHandler(error);
 
   return { allTags, isPending };
 };

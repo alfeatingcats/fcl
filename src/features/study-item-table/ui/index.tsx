@@ -1,12 +1,14 @@
+import { useForm } from "react-hook-form";
+import type { FC, ReactNode } from "react";
 import { Form } from "@/components/ui/form";
+import { zodResolver } from "@hookform/resolvers/zod";
+
 import {
   ReadStudyItemsSchema,
   type ReadStudyItemInput,
 } from "@/shared/api/schemas";
-import { zodResolver } from "@hookform/resolvers/zod";
 import type { StudyItem } from "@prisma/client";
-import type { FC, ReactNode } from "react";
-import { useForm } from "react-hook-form";
+
 import { StudyItemTableHeader } from "./table-header";
 import { StudyItemTableContent } from "./table-content";
 import { StudyItemTableFooter } from "./table-footer";
@@ -18,9 +20,6 @@ import { StudyItemTableFooter } from "./table-footer";
 //   page: z.number().min(1).default(1),
 //   pageSize: z.number().min(10).max(100).default(20),
 // });
-// const filterSchema = ReadStudyItemInput;
-
-// type FilterFormValues = z.infer<typeof filterSchema>;
 
 interface StudyItemDataTableProps {
   studyItems: Array<StudyItem>;
@@ -42,7 +41,6 @@ export const StudyItemDataTable: FC<StudyItemDataTableProps> = ({
     },
   });
 
-  // Отслеживаем изменения формы
   const handleFormChange = (values: ReadStudyItemInput) => {
     console.log("Form values changed:", values);
 
@@ -51,10 +49,7 @@ export const StudyItemDataTable: FC<StudyItemDataTableProps> = ({
 
   return (
     <Form {...form}>
-      <form
-        onChange={form.handleSubmit(handleFormChange)}
-        className="space-y-3"
-      >
+      <div onChange={form.handleSubmit(handleFormChange)} className="space-y-3">
         <StudyItemTableHeader
           form={form}
           renderCreateButton={renderCreateButton}
@@ -63,7 +58,7 @@ export const StudyItemDataTable: FC<StudyItemDataTableProps> = ({
         <StudyItemTableContent studyItems={studyItems} />
 
         <StudyItemTableFooter form={form} totalCount={10} />
-      </form>
+      </div>
     </Form>
   );
 };

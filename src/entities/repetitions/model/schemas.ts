@@ -8,3 +8,5 @@ export const CompleteRepetitionSchema = z.object({
     .max(5, "Difficulty must be between 1 and 5")
     .int("Difficulty must be an integer"),
 });
+
+export type CompleteRepetitionInput = z.input<typeof CompleteRepetitionSchema>;

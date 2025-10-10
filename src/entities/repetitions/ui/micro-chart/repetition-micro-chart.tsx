@@ -8,7 +8,7 @@ import { ChartContainer } from "@/components/ui/chart";
 import {
   getDefaultRepetitionDates,
   type CurrentPoint,
-  type RetentionChartProps,
+  type RepetitionChartProps,
 } from "../../model/shared";
 import {
   generateCurveData,
@@ -17,7 +17,7 @@ import {
   microChartConfig,
 } from "../../model/retention-micro-chart";
 
-export const RetentionMicroChart: FC<RetentionChartProps> = ({
+export const RepetitionMicroChart: FC<RepetitionChartProps> = ({
   repetitionDates = getDefaultRepetitionDates(),
   currentRepetition = 1,
 }) => {

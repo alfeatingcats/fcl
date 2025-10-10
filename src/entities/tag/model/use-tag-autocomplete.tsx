@@ -1,3 +1,4 @@
+import { useQueryErrorHandler } from "@/shared/hooks";
 import { api, type RouterOutputs } from "@/trpc/react";
 
 export interface UseTagAutocompleteParams {
@@ -22,11 +23,16 @@ export const useTagAutocomplete: UseTagAutocomplete = ({
   shouldFetchTags,
   maxTagResults = 10,
 }) => {
-  const { data: autocompleteTags, isPending } =
-    api.tags.searchForAutocomplete.useQuery(
-      { excludeIds: selectedTagIds ?? [], query, limit: maxTagResults },
-      { enabled: shouldFetchTags },
-    );
+  const {
+    error,
+    isPending,
+    data: autocompleteTags,
+  } = api.tags.searchForAutocomplete.useQuery(
+    { excludeIds: selectedTagIds ?? [], query, limit: maxTagResults },
+    { enabled: shouldFetchTags },
+  );
+
+  useQueryErrorHandler(error);
 
   return { autocompleteTags, isPending };
 };

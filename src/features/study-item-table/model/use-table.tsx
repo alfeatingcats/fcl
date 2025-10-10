@@ -9,7 +9,6 @@ import { useStudyItemColumns } from "./use-study-item-columns";
 
 export const useStudyItemTable = (studyItems: Array<StudyItem>) => {
   const columns = useStudyItemColumns();
-  console.log({ studyItems });
 
   const table = useReactTable({
     data: studyItems,

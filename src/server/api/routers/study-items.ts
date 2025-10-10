@@ -4,13 +4,12 @@ import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";
 
 import { EBBINGHAUS_INTERVALS } from "@/shared/lib/const";
 
-import { CompleteRepetitionSchema } from "@/entities/repetitions";
 import {
   CreateStudyItemSchema,
+  DeleteStudyItemSchema,
   ReadStudyItemsSchema,
   UpdateStudyItemSchema,
 } from "@/shared/api/schemas";
-import { getTodayRange } from "@/shared/lib/i18n/date";
 
 export const studyItemsRouter = createTRPCRouter({
   create: protectedProcedure
@@ -133,87 +132,6 @@ export const studyItemsRouter = createTRPCRouter({
       };
     }),
 
-  completeRepetition: protectedProcedure
-    .input(CompleteRepetitionSchema)
-    .mutation(async ({ ctx, input }) => {
-      return await ctx.db.$transaction(async (tx) => {
-        const repetition = await tx.studyRepetition.findFirst({
-          where: {
-            id: input.repetitionId,
-            studyItem: { createdById: ctx.session.user.id },
-          },
-          include: { studyItem: true },
-        });
-
-        if (!repetition) {
-          throw new TRPCError({
-            code: "NOT_FOUND",
-            message: "Repetition not found",
-          });
-        }
-
-        if (repetition.status === "COMPLETED") {
-          throw new TRPCError({
-            code: "BAD_REQUEST",
-            message: "Repetition is already completed",
-          });
-        }
-
-        // Mark the repetition as completed
-        const updatedRepetition = await tx.studyRepetition.update({
-          where: { id: input.repetitionId },
-          data: {
-            status: "COMPLETED",
-            completedAt: new Date(),
-            difficulty: input.difficulty,
-          },
-        });
-
-        // Check if all repetitions are completed
-        const remainingRepetitions = await tx.studyRepetition.count({
-          where: {
-            studyItemId: repetition.studyItemId,
-            status: "PENDING",
-          },
-        });
-
-        // If all repetitions are completed, mark the study item as completed
-        if (remainingRepetitions === 0) {
-          await tx.studyItem.update({
-            where: { id: repetition.studyItemId },
-            data: {
-              status: "COMPLETED",
-              completedAt: new Date(),
-            },
-          });
-        }
-
-        return updatedRepetition;
-      });
-    }),
-
-  getTodayRepetitions: protectedProcedure.query(async ({ ctx }) => {
-    const { start, end } = getTodayRange(ctx.timeZone);
-
-    return await ctx.db.studyRepetition.findMany({
-      where: {
-        scheduledAt: { gte: new Date(start), lt: new Date(end) },
-        status: "PENDING",
-        studyItem: { createdById: ctx.session.user.id },
-      },
-      include: {
-        studyItem: {
-          include: {
-            itemTags: {
-              include: { tag: true },
-            },
-          },
-        },
-      },
-      orderBy: { scheduledAt: "asc" },
-    });
-  }),
-
   // Update study item
   update: protectedProcedure
     .input(UpdateStudyItemSchema)
@@ -250,6 +168,33 @@ export const studyItemsRouter = createTRPCRouter({
           repetitions: { orderBy: { repetitionNumber: "asc" } },
           itemTags: { include: { tag: true } },
         },
+      });
+    }),
+
+  // Delete study item
+  delete: protectedProcedure
+    .input(DeleteStudyItemSchema)
+    .mutation(async ({ ctx, input }) => {
+      // Check access permissions
+      const existingItem = await ctx.db.studyItem.findFirst({
+        where: {
+          id: input.id,
+          createdById: ctx.session.user.id,
+        },
+      });
+
+      if (!existingItem) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Study item not found",
+        });
+      }
+
+      // Cascade delete will automatically remove:
+      // - StudyRepetition (onDelete: Cascade)
+      // - StudyItemTag (onDelete: Cascade)
+      return await ctx.db.studyItem.delete({
+        where: { id: input.id },
       });
     }),
 });

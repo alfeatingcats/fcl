@@ -1,2 +1,7 @@
-export type { ChartPoint, CurrentPoint, RetentionChartProps } from "./types";
+export type {
+  ChartPoint,
+  CurrentPoint,
+  RepetitionChartProps,
+  RepetitionsListRow,
+} from "./types";
 export { getDefaultRepetitionDates } from "./utils";

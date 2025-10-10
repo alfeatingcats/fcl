@@ -1,14 +1,25 @@
+import { useTrpcErrorHandler } from "@/shared/lib/trpc-error-handler";
+import type { CallbackHandlers } from "@/shared/types";
 import { api } from "@/trpc/react";
 import { useCallback } from "react";
 
-export const useDeleteTag = () => {
+export const useDeleteTag = ({
+  onError,
+  onSuccess,
+}: CallbackHandlers<void, void>) => {
   const utils = api.useUtils();
+  const handleError = useTrpcErrorHandler();
 
   const deleteTagMutation = api.tags.delete.useMutation({
     onSuccess: async () => {
+      onSuccess();
       await utils.tags.invalidate();
       await utils.studyItem.invalidate();
-      console.log("Tag deleted and related data invalidated");
+      await utils.repetitions.invalidate();
+    },
+    onError: (error) => {
+      onError();
+      handleError(error);
     },
   });
 
