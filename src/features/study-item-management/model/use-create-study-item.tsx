@@ -2,8 +2,8 @@ import { useCallback } from "react";
 
 import { api } from "@/trpc/react";
 import type { CreateStudyItemInput } from "@/shared/api/schemas";
-import { useTrpcErrorHandler } from "@/shared/lib/trpc-error-handler";
 import type { CallbackHandlers } from "@/shared/types";
+import { useTrpcErrorHandler } from "@/shared/hooks";
 
 export const useCreateStudyItem = ({
   onError,
