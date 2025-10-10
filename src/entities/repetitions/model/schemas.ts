@@ -10,3 +10,22 @@ export const CompleteRepetitionSchema = z.object({
 });
 
 export type CompleteRepetitionInput = z.input<typeof CompleteRepetitionSchema>;
+
+export const SkipRepetitionSchema = CompleteRepetitionSchema.pick({
+  repetitionId: true,
+});
+
+export type SkipRepetitionInput = z.input<typeof SkipRepetitionSchema>;
+
+export const BulkRepetitionsSchema = z.object({
+  repetitions: z.array(CompleteRepetitionSchema),
+});
+
+export type BulkRepetitionsInput = z.input<typeof BulkRepetitionsSchema>;
+
+export const UpcomingEventSchema = z.object({
+  start: z.date(),
+  end: z.date(),
+});
+
+export type UpcomingEventInput = z.input<typeof UpcomingEventSchema>;
