@@ -24,7 +24,7 @@ export const getErrorMessage = (
   if (error instanceof AppRouterError) {
     const code =
       (error as AppRouterClientError).data?.code ?? "INTERNAL_SERVER_ERROR";
-    const key = `Errors.${code}` as ErrorsTKey;
+    const key = `${code}` as ErrorsTKey;
     try {
       return t(key);
     } catch {
