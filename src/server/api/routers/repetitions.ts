@@ -1,6 +1,11 @@
 import { TRPCError } from "@trpc/server";
 import { getTodayRange } from "@/shared/lib/i18n/date";
-import { CompleteRepetitionSchema } from "@/entities/repetitions";
+import {
+  CompleteRepetitionSchema,
+  SkipRepetitionSchema,
+  BulkRepetitionsSchema,
+  UpcomingEventSchema,
+} from "@/entities/repetitions";
 import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";
 
 export const repetitionsRouter = createTRPCRouter({
@@ -84,4 +89,68 @@ export const repetitionsRouter = createTRPCRouter({
       orderBy: { scheduledAt: "asc" },
     });
   }),
+
+  skip: protectedProcedure
+    .input(SkipRepetitionSchema)
+    .mutation(async ({ ctx, input }) => {
+      return await ctx.db.studyRepetition.update({
+        where: { id: input.repetitionId },
+        data: { status: "SKIPPED", updatedAt: new Date() },
+      });
+    }),
+
+  bulkComplete: protectedProcedure
+    .input(BulkRepetitionsSchema)
+    .mutation(async ({ ctx, input }) => {
+      return await ctx.db.$transaction(async (tx) => {
+        const results = [];
+        for (const r of input.repetitions) {
+          const rep = await tx.studyRepetition.update({
+            where: { id: r.repetitionId },
+            data: {
+              status: "COMPLETED",
+              completedAt: new Date(),
+              difficulty: r.difficulty,
+            },
+          });
+          results.push(rep);
+        }
+        return results;
+      });
+    }),
+
+  getStats: protectedProcedure.query(async ({ ctx }) => {
+    const userId = ctx.session.user.id;
+
+    const total = await ctx.db.studyRepetition.count({
+      where: { studyItem: { createdById: userId } },
+    });
+    const completed = await ctx.db.studyRepetition.count({
+      where: { studyItem: { createdById: userId }, status: "COMPLETED" },
+    });
+    const missed = await ctx.db.studyRepetition.count({
+      where: { studyItem: { createdById: userId }, status: "MISSED" },
+    });
+    const skipped = await ctx.db.studyRepetition.count({
+      where: { studyItem: { createdById: userId }, status: "SKIPPED" },
+    });
+
+    return { total, completed, missed, skipped };
+  }),
+
+  //TODO: pagination, timezone
+  getUpcoming: protectedProcedure
+    .input(UpcomingEventSchema)
+    .query(async ({ ctx, input }) => {
+      return await ctx.db.studyRepetition.findMany({
+        where: {
+          studyItem: { createdById: ctx.session.user.id },
+          scheduledAt: { gte: input.start, lte: input.end },
+        },
+        include: {
+          studyItem: true,
+        },
+        orderBy: { scheduledAt: "asc" },
+      });
+    }),
 });
