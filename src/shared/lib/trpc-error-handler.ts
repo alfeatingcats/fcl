@@ -1,11 +1,7 @@
-import { toast } from "sonner";
-import { useTranslations } from "next-intl";
-
 import { TRPCClientError } from "@trpc/client";
 import type { AppRouter } from "@/server/api/root";
 
 import type { ErrorsTKey, ErrorsTranslations } from "../types";
-import { useCallback } from "react";
 
 const AppRouterError = TRPCClientError<AppRouter>;
 type AppRouterClientError = TRPCClientError<AppRouter>;

@@ -1,5 +1,5 @@
 import type { RouterOutputs } from "@/trpc/react";
-import type { StudyItem, StudyRepetition, Tag } from "@prisma/client";
+import type { StudyItem, StudyRepetition } from "@prisma/client";
 
 export interface ChartPoint {
   x: number;
