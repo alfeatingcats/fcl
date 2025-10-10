@@ -1,10 +1,10 @@
 import { api } from "@/trpc/react";
 import { useCallback } from "react";
 
-import type { CompleteRepetitionInput } from "@/entities/repetitions";
 import { toast } from "sonner";
 import { useTranslations } from "next-intl";
 import { useTrpcErrorHandler } from "@/shared/hooks";
+import type { CompleteRepetitionInput } from "@/shared/api/schemas";
 
 export const useCompleteRepetition = (
   input: Pick<CompleteRepetitionInput, "difficulty">,
