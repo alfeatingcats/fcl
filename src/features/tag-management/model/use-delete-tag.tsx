@@ -1,4 +1,4 @@
-import { useTrpcErrorHandler } from "@/shared/lib/trpc-error-handler";
+import { useTrpcErrorHandler } from "@/shared/hooks";
 import type { CallbackHandlers } from "@/shared/types";
 import { api } from "@/trpc/react";
 import { useCallback } from "react";

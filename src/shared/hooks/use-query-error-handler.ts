@@ -1,6 +1,5 @@
 import { useEffect } from "react";
-
-import { useTrpcErrorHandler } from "../lib/trpc-error-handler";
+import { useTrpcErrorHandler } from "./use-trpc-error-handler";
 
 /**
  * Automatically handles errors from TRPC useQuery hooks using toast notifications.

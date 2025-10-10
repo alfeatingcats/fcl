@@ -1,11 +1,5 @@
 import type { LucideIcon } from "lucide-react";
-import {
-  cloneElement,
-  createElement,
-  isValidElement,
-  type FC,
-  type ReactElement,
-} from "react";
+import { type FC, type ReactElement } from "react";
 
 type HeaderCellProps = {
   title: string;
@@ -13,13 +7,13 @@ type HeaderCellProps = {
 };
 
 export const HeaderCell: FC<HeaderCellProps> = ({ title, icon }) => {
-  const iconElement = isValidElement(icon)
-    ? cloneElement(icon as ReactElement<{ className?: string }>, {
-        className: "size-3 text-black dark:text-white",
-      })
-    : createElement(icon, {
-        className: "size-3 text-black dark:text-white",
-      });
+  // const iconElement = isValidElement(icon)
+  //   ? cloneElement(icon as ReactElement<{ className?: string }>, {
+  //       className: "size-3 text-black dark:text-white",
+  //     })
+  //   : createElement(icon, {
+  //       className: "size-3 text-black dark:text-white",
+  //     });
 
   return (
     <div className="flex items-center gap-2">

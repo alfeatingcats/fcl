@@ -2,8 +2,8 @@ import { api } from "@/trpc/react";
 import { useCallback } from "react";
 
 import type { CreateTagInput } from "@/shared/api/schemas";
-import { useTrpcErrorHandler } from "@/shared/lib/trpc-error-handler";
 import type { CallbackHandlers } from "@/shared/types";
+import { useTrpcErrorHandler } from "@/shared/hooks";
 
 export const useCreateTag = ({ onError, onSuccess }: CallbackHandlers) => {
   const utils = api.useUtils();
