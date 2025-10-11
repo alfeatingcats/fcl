@@ -21,7 +21,7 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 import { Link } from "@/i18n/routing";
-import type { NavMainItem } from "@/shared/types/nav-main";
+import type { NavMainItem } from "@/shared/types/navigation.types";
 
 export const NavMain: FC<{ items: Array<NavMainItem> }> = ({ items }) => {
   const t = useTranslations("NavMain");

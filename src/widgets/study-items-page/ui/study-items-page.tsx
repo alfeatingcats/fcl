@@ -49,10 +49,10 @@ export const StudyItemsPage = () => {
       />
 
       <StudyItemDrawer
-        isPending={isCreating}
-        onCreate={form.handleSubmit(onSubmit)}
-        isDrawerOpen={isStudyItemCreationOpen}
-        handleDrawerChange={handleDrawerChange}
+        isLoading={isCreating}
+        onSubmit={form.handleSubmit(onSubmit)}
+        isOpen={isStudyItemCreationOpen}
+        onOpenChange={handleDrawerChange}
       >
         <StudyItemForm
           form={form}
@@ -62,10 +62,10 @@ export const StudyItemsPage = () => {
         />
 
         <TagCreateDrawer
-          isPending={isCreatingTag}
-          isDrawerOpen={isCreateTagDrawerOpen}
-          handleDrawerChange={handleTagDrawerChange}
-          onCreate={formTag.handleSubmit(onSubmitTag)}
+          isLoading={isCreatingTag}
+          isOpen={isCreateTagDrawerOpen}
+          onOpenChange={handleTagDrawerChange}
+          onSubmit={formTag.handleSubmit(onSubmitTag)}
         >
           <TagForm form={formTag} />
         </TagCreateDrawer>

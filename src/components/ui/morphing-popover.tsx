@@ -17,7 +17,7 @@ import {
   type Transition,
   type Variants,
 } from "motion/react";
-import useClickOutside from "@/shared/hooks/useClickOutside";
+import useClickOutside from "@/shared/hooks/use-click-outside";
 import { cn } from "@/shared/lib/utils";
 
 const TRANSITION: Transition = {

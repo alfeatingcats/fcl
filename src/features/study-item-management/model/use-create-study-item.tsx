@@ -1,12 +1,12 @@
-import { useCallback } from "react";
+import { useMemo } from "react";
 
 import { api } from "@/trpc/react";
-import type { CreateStudyItemInput } from "@/shared/api/schemas";
 import type { CallbackHandlers } from "@/shared/types";
 import { useTrpcErrorHandler } from "@/shared/hooks";
+import { noop } from "es-toolkit";
 
 export const useCreateStudyItem = ({
-  onError,
+  onError = noop,
   onSuccess,
 }: CallbackHandlers) => {
   const utils = api.useUtils();
@@ -24,13 +24,11 @@ export const useCreateStudyItem = ({
     },
   });
 
-  const handleCreateStudyItem = useCallback(
-    (data: CreateStudyItemInput) => createStudyItem.mutate(data),
+  return useMemo(
+    () => ({
+      isCreating: createStudyItem.isPending,
+      handleCreateStudyItem: createStudyItem.mutate,
+    }),
     [createStudyItem],
   );
-
-  return {
-    isCreating: createStudyItem.isPending,
-    handleCreateStudyItem,
-  };
 };

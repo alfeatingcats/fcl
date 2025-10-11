@@ -13,6 +13,13 @@ export type {
   CurrentPoint,
   RepetitionChartProps,
   RepetitionsListRow,
+  CompleteRepetitionDialogState,
+  OnCompleteRepetition,
 } from "./model/shared";
 
-export { RepetitionMicroChart, RepetitionList } from "./ui";
+export {
+  RepetitionMicroChart,
+  RepetitionList,
+  CardDropdown,
+  RadioGroupDifficulty,
+} from "./ui";
