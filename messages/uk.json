@@ -147,7 +147,12 @@
     "bulkCompleteFromRepetitionsConfirmDescription": "Ви збираєтеся завершити всі повторення для цієї навички. Цю дію не можна скасувати.",
     "statsTitle": "Статистика повторень",
     "upcomingTitle": "Майбутні повторення",
-    "resetButton": "Скинути повторення"
+    "resetButton": "Скинути повторення",
+    "repetition": "Повторення",
+    "completeRepetitionDescription": "Оцініть, наскільки складно вам було згадати цю інформацію, та натисніть 'Зберегти'.",
+    "difficultyLabel": "Складність",
+    "veryEasy": "Дуже легко",
+    "veryDifficult": "Дуже складно"
   },
   "RepetitionsMessages": {
     "completeSuccess": "Повторення позначено як виконане",

@@ -12,6 +12,7 @@ export const CreateStudyItemSchema = z.object({
     .optional()
     .default([]),
 });
+export type CreateStudyItemInput = z.input<typeof CreateStudyItemSchema>;
 
 export const UpdateStudyItemSchema = z.object({
   id: z.string().cuid("Invalid note ID"),
@@ -31,8 +32,9 @@ export const ReadStudyItemsSchema = z.object({
   limit: z.number().min(1).max(100).default(10),
   cursor: z.string().cuid().optional(),
 });
+export type ReadStudyItemInput = z.input<typeof ReadStudyItemsSchema>;
+
+export const StudyItemIdSchema = UpdateStudyItemSchema.pick({ id: true });
+export type StudyItemIdInput = z.input<typeof StudyItemIdSchema>;
 
 export const DeleteStudyItemSchema = z.object({ id: z.string() });
-
-export type ReadStudyItemInput = z.input<typeof ReadStudyItemsSchema>;
-export type CreateStudyItemInput = z.input<typeof CreateStudyItemSchema>;

@@ -4,8 +4,12 @@ import { useCallback } from "react";
 import type { CreateTagInput } from "@/shared/api/schemas";
 import type { CallbackHandlers } from "@/shared/types";
 import { useTrpcErrorHandler } from "@/shared/hooks";
+import { noop } from "es-toolkit";
 
-export const useCreateTag = ({ onError, onSuccess }: CallbackHandlers) => {
+export const useCreateTag = ({
+  onError = noop,
+  onSuccess,
+}: CallbackHandlers) => {
   const utils = api.useUtils();
   const handleError = useTrpcErrorHandler();
 

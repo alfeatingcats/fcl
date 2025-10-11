@@ -8,6 +8,7 @@ import {
   CreateStudyItemSchema,
   DeleteStudyItemSchema,
   ReadStudyItemsSchema,
+  StudyItemIdSchema,
   UpdateStudyItemSchema,
 } from "@/shared/api/schemas";
 
@@ -195,6 +196,62 @@ export const studyItemsRouter = createTRPCRouter({
       // - StudyItemTag (onDelete: Cascade)
       return await ctx.db.studyItem.delete({
         where: { id: input.id },
+      });
+    }),
+
+  getById: protectedProcedure
+    .input(StudyItemIdSchema)
+    .query(async ({ ctx, input }) => {
+      const item = await ctx.db.studyItem.findFirst({
+        where: { id: input.id, createdById: ctx.session.user.id },
+        include: {
+          repetitions: { orderBy: { repetitionNumber: "asc" } },
+          itemTags: { include: { tag: true } },
+        },
+      });
+
+      if (!item) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Study item not found",
+        });
+      }
+      return item;
+    }),
+
+  resetRepetitions: protectedProcedure
+    .input(StudyItemIdSchema)
+    .mutation(async ({ ctx, input }) => {
+      const item = await ctx.db.studyItem.findFirst({
+        where: { id: input.id, createdById: ctx.session.user.id },
+      });
+      if (!item) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Study item not found",
+        });
+      }
+
+      return await ctx.db.$transaction(async (tx) => {
+        await tx.studyRepetition.deleteMany({
+          where: { studyItemId: input.id },
+        });
+
+        const now = new Date();
+        const repetitions = EBBINGHAUS_INTERVALS.map(
+          (intervalMinutes, index) => ({
+            studyItemId: input.id,
+            repetitionNumber: index + 1,
+            scheduledAt: new Date(now.getTime() + intervalMinutes * 60 * 1000),
+          }),
+        );
+
+        await tx.studyRepetition.createMany({ data: repetitions });
+
+        return await tx.studyItem.findUnique({
+          where: { id: input.id },
+          include: { repetitions: true },
+        });
       });
     }),
 });

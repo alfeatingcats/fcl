@@ -1,34 +1,64 @@
 "use client";
 
-import type { FC } from "react";
-import { api } from "@/trpc/react";
+import { useMemo, type FC } from "react";
+import { isNil, pick } from "es-toolkit";
+import { isEmpty } from "es-toolkit/compat";
+
 import {
   RepetitionList,
   type RepetitionsListRow,
 } from "@/entities/repetitions";
+import { api } from "@/trpc/react";
+import {
+  CompleteRepetitionForm,
+  useCompleteRepetitionOverlay,
+} from "@/features/complete-repetition";
+
+import { CompleteRepetitionModal } from "./modals";
+import { mapTodayRepetitionsToListData } from "../model";
+import { getActiveRepetitionDetails } from "../model/utils";
 
 export const RepetitionsPage: FC = () => {
   const [todayRepetitions] =
     api.repetitions.getTodayRepetitions.useSuspenseQuery();
 
-  const repetitionsListData: Array<RepetitionsListRow> = todayRepetitions.map(
-    (repetition) => ({
-      scheduledAt: repetition.scheduledAt,
-      status: repetition.status,
-      difficulty: repetition.difficulty,
-      id: repetition.id,
-      studyItemId: repetition.studyItemId,
-      title: repetition.studyItem.title,
-      description: repetition.studyItem.description,
-      itemTags: repetition.studyItem.itemTags,
-      repetitionNumber: repetition.repetitionNumber,
-    }),
+  const {
+    form,
+    isOpen,
+    handleOpenChange,
+    isLoading,
+    activeRepetitionId,
+    onSubmit,
+  } = useCompleteRepetitionOverlay();
+
+  const repetitionsListData = useMemo<Array<RepetitionsListRow>>(
+    () => mapTodayRepetitionsToListData(todayRepetitions),
+    [todayRepetitions],
   );
-  console.log({ todayRepetitions, repetitionsListData });
+
+  const activeRepetitionDetails = useMemo(
+    () => getActiveRepetitionDetails(repetitionsListData, activeRepetitionId),
+    [activeRepetitionId, repetitionsListData],
+  );
 
   return (
     <div>
-      <RepetitionList repetitions={repetitionsListData} />
+      <RepetitionList
+        repetitions={repetitionsListData}
+        onCompleteRepetition={handleOpenChange}
+      />
+
+      <CompleteRepetitionModal
+        isOpen={isOpen}
+        onOpenChange={handleOpenChange}
+        onSubmit={form.handleSubmit(onSubmit)}
+        isLoading={isLoading}
+        title={activeRepetitionDetails?.title}
+        description={activeRepetitionDetails?.description}
+        repetitionNumber={activeRepetitionDetails?.repetitionNumber}
+      >
+        <CompleteRepetitionForm form={form} />
+      </CompleteRepetitionModal>
     </div>
   );
 };

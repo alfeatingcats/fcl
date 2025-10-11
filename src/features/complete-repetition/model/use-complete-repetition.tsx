@@ -1,37 +1,39 @@
-import { api } from "@/trpc/react";
-import { useCallback } from "react";
-
-import type { CompleteRepetitionInput } from "@/entities/repetitions";
 import { toast } from "sonner";
+import { useMemo } from "react";
 import { useTranslations } from "next-intl";
-import { useTrpcErrorHandler } from "@/shared/hooks";
 
-export const useCompleteRepetition = (
-  input: Pick<CompleteRepetitionInput, "difficulty">,
-) => {
+import { api } from "@/trpc/react";
+import { useTrpcErrorHandler } from "@/shared/hooks";
+import type { CallbackHandlers } from "@/shared/types";
+import { noop } from "es-toolkit";
+
+export const useCompleteRepetition = ({
+  onSuccess,
+  onError = noop,
+}: CallbackHandlers<void, void>) => {
   const utils = api.useUtils();
   const handleError = useTrpcErrorHandler();
   const t = useTranslations("RepetitionsMessages");
 
   const completeRepetitionMutation = api.repetitions.complete.useMutation({
     onSuccess: async () => {
-      await utils.repetitions.invalidate();
       toast.success(t("completeSuccess"));
+      onSuccess();
+      await utils.repetitions.invalidate();
+      await utils.studyItem.invalidate();
     },
     onError: (error) => {
       toast.error(t("completeError"));
       handleError(error);
+      onError();
     },
   });
 
-  const handleCompleteRepetition = useCallback(
-    async (repetitionId: string) => {
-      await completeRepetitionMutation.mutateAsync({ ...input, repetitionId });
-    },
-    [input, completeRepetitionMutation],
+  return useMemo(
+    () => ({
+      handleCompleteRepetition: completeRepetitionMutation.mutate,
+      isLoading: completeRepetitionMutation.isPending,
+    }),
+    [completeRepetitionMutation],
   );
-
-  return {
-    handleCompleteRepetition,
-  };
 };

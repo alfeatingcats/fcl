@@ -1,12 +1,13 @@
 import { TRPCError } from "@trpc/server";
 import { getTodayRange } from "@/shared/lib/i18n/date";
+
+import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";
 import {
+  BulkRepetitionsSchema,
   CompleteRepetitionSchema,
   SkipRepetitionSchema,
-  BulkRepetitionsSchema,
   UpcomingEventSchema,
-} from "@/entities/repetitions";
-import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";
+} from "@/shared/api/schemas";
 
 export const repetitionsRouter = createTRPCRouter({
   complete: protectedProcedure

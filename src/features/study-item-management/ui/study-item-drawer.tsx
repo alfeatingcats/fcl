@@ -2,32 +2,32 @@
 
 import { useTranslations } from "next-intl";
 
-import type { CFC } from "@/shared/types";
 import { FormDrawer } from "@/components/ui/custom";
-import type { DrawerFormProps } from "@/shared/types";
+import type { CFC, OverlayFormProps } from "@/shared/types";
+import type { CreateStudyItemInput } from "@/shared/api/schemas";
 
 import { StudyItemProgressCard } from "./study-item-progress-card";
 
-export const StudyItemDrawer: CFC<DrawerFormProps> = ({
-  onCreate,
+export const StudyItemDrawer: CFC<OverlayFormProps<CreateStudyItemInput>> = ({
+  isOpen,
+  onSubmit,
   children,
-  isDrawerOpen,
-  isPending = false,
-  handleDrawerChange,
+  onOpenChange,
+  isLoading = false,
 }) => {
   const t = useTranslations("StudyItemDrawer");
   const ta = useTranslations("UiActions");
   return (
     <FormDrawer
       title={t("title")}
-      isPending={isPending}
-      isDrawerOpen={isDrawerOpen}
+      isLoading={isLoading}
+      isOpen={isOpen}
       description={t("description")}
       submitButtonProps={{
-        onClick: () => void onCreate(),
+        onClick: () => void onSubmit(),
         children: ta("create"),
       }}
-      handleDrawerChange={handleDrawerChange}
+      onOpenChange={onOpenChange}
     >
       <>
         {children}

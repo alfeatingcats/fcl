@@ -1,1 +1,1 @@
-export { CardDropdown } from "./repetition-card-dropdown";
+export { RepetitionActionDropdown as CardDropdown } from "./repetition-card-dropdown";

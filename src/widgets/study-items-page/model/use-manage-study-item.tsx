@@ -27,9 +27,7 @@ export const useManageStudyItem = (): UseManageStudyItemReturn => {
     },
   });
 
-  const { form, onSubmit } = useStudyItemForm({
-    onCreate: handleCreateStudyItem,
-  });
+  const { form } = useStudyItemForm({});
 
   const handleDrawerChange = useCallback(
     (open: boolean) => {
@@ -43,7 +41,7 @@ export const useManageStudyItem = (): UseManageStudyItemReturn => {
 
   return {
     form,
-    onSubmit,
+    onSubmit: handleCreateStudyItem,
     isCreating,
     handleDrawerChange,
     toggleDrawer: toggleStudyItemCreation,

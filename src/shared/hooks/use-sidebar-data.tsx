@@ -3,7 +3,7 @@ import { useTranslations } from "next-intl";
 import { usePathname } from "@/i18n/routing";
 
 import { routesMap } from "../config/routes";
-import type { NavMainItem } from "../types/nav-main";
+import type { NavMainItem } from "../types/navigation.types";
 
 export const useSidebarData = (): NavMainItem[] => {
   const t = useTranslations("Sidebar");

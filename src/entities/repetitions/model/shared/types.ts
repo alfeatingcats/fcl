@@ -31,3 +31,9 @@ export type RepetitionsListRow = Pick<
     RouterOutputs["repetitions"]["getTodayRepetitions"][number]["studyItem"],
     "itemTags"
   >;
+
+export type CompleteRepetitionDialogState = null | string;
+
+export type OnCompleteRepetition = (
+  state: CompleteRepetitionDialogState,
+) => void;

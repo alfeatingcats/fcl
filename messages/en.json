@@ -147,7 +147,12 @@
     "bulkCompleteFromRepetitionsConfirmDescription": "You are about to complete all repetitions for this skill. This action cannot be undone.",
     "statsTitle": "Repetition statistics",
     "upcomingTitle": "Upcoming repetitions",
-    "resetButton": "Reset repetitions"
+    "resetButton": "Reset repetitions",
+    "repetition": "Repetition",
+    "completeRepetitionDescription": "Rate how difficult it was to recall this information, then click 'Save'.",
+    "difficultyLabel": "Difficulty",
+    "veryEasy": "Very easy",
+    "veryDifficult": "Very difficult"
   },
   "RepetitionsMessages": {
     "completeSuccess": "Repetition marked as completed",

@@ -1,15 +1,4 @@
 export {
-  CompleteRepetitionSchema,
-  type CompleteRepetitionInput,
-  SkipRepetitionSchema,
-  type SkipRepetitionInput,
-  BulkRepetitionsSchema,
-  type BulkRepetitionsInput,
-  UpcomingEventSchema,
-  type UpcomingEventInput,
-} from "./model/schemas";
-
-export {
   MICRO_CHART_CONFIG,
   calculateRetention,
   generateCurveData,
@@ -24,6 +13,13 @@ export type {
   CurrentPoint,
   RepetitionChartProps,
   RepetitionsListRow,
+  CompleteRepetitionDialogState,
+  OnCompleteRepetition,
 } from "./model/shared";
 
-export { RepetitionMicroChart, RepetitionList } from "./ui";
+export {
+  RepetitionMicroChart,
+  RepetitionList,
+  CardDropdown,
+  RadioGroupDifficulty,
+} from "./ui";

@@ -14,11 +14,11 @@ import {
   DrawerNested,
 } from "@/components/ui/drawer";
 import { cn } from "@/shared/lib/utils";
-import type { CFC } from "@/shared/types";
+import type { CFC, OverlayFormProps } from "@/shared/types";
 import { Button } from "@/components/ui/button";
-import type { DrawerFormProps } from "@/shared/types";
 
 import { ScrollArea } from "../../scroll-area";
+import type { CreateStudyItemInput } from "@/shared/api/schemas";
 
 type FormDrawerProps = {
   title: string;
@@ -28,19 +28,19 @@ type FormDrawerProps = {
   submitButtonProps?: ComponentProps<typeof Button>;
   cancelButtonProps?: ComponentProps<typeof Button>;
   contentCN?: string;
-} & Omit<DrawerFormProps, "onCreate">;
+} & Omit<OverlayFormProps<CreateStudyItemInput>, "onSubmit">;
 
 export const FormDrawer: CFC<FormDrawerProps> = ({
   title,
+  isOpen,
   children,
   contentCN,
   description,
-  isDrawerOpen,
-  isPending = false,
+  onOpenChange,
+  isLoading = false,
   isNestedDrawer = false,
   submitButtonProps: { children: submitButtonText, ...restSubmitProps } = {},
   cancelButtonProps: { children: cancelButtonText, ...restCancelProps } = {},
-  handleDrawerChange,
 }) => {
   const DrawerComponent = useMemo(
     () => (isNestedDrawer ? DrawerNested : Drawer),
@@ -51,8 +51,8 @@ export const FormDrawer: CFC<FormDrawerProps> = ({
   return (
     <DrawerComponent
       direction="right"
-      open={isDrawerOpen}
-      onOpenChange={handleDrawerChange}
+      open={isOpen}
+      onOpenChange={onOpenChange}
     >
       <DrawerContent className={cn("!max-w-[28rem] py-6", contentCN)}>
         <ScrollArea type="auto" className="h-screen overflow-y-hidden">
@@ -72,8 +72,8 @@ export const FormDrawer: CFC<FormDrawerProps> = ({
         </ScrollArea>
 
         <DrawerFooter className="px-6 pb-0">
-          <Button disabled={isPending} {...restSubmitProps}>
-            {isPending ? (
+          <Button disabled={isLoading} {...restSubmitProps}>
+            {isLoading ? (
               <LoaderCircleIcon className="size-4 animate-spin" />
             ) : null}
             {submitButtonText ?? t("submit")}
