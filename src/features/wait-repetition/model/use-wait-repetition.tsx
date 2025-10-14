@@ -7,7 +7,7 @@ import { useTrpcErrorHandler } from "@/shared/hooks";
 import type { CallbackHandlers } from "@/shared/types";
 import { noop } from "es-toolkit";
 
-export const useCompleteRepetition = ({
+export const useWaitRepetition = ({
   onSuccess,
   onError = noop,
 }: CallbackHandlers<void, void>) => {
@@ -15,15 +15,15 @@ export const useCompleteRepetition = ({
   const handleError = useTrpcErrorHandler();
   const t = useTranslations("RepetitionsMessages");
 
-  const completeRepetitionMutation = api.repetitions.complete.useMutation({
+  const completeRepetitionMutation = api.repetitions.wait.useMutation({
     onSuccess: async () => {
-      toast.success(t("completeSuccess"));
+      toast.success(t("waitSuccess"));
       onSuccess();
       await utils.repetitions.invalidate();
       await utils.studyItem.invalidate();
     },
     onError: (error) => {
-      toast.error(t("completeError"));
+      toast.error(t("waitError"));
       handleError(error);
       onError();
     },

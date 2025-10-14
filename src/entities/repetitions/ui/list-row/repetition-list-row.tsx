@@ -3,17 +3,17 @@ import type { FC } from "react";
 import { Badge } from "@/components/ui/badge";
 
 import { RepetitionStatus } from "../repetition-status";
-import {
-  type OnCompleteRepetition,
-  type RepetitionsListRow,
-} from "../../model/shared";
+import { type RepetitionsListRow } from "../../model/shared";
 import { NextEventDateTime } from "../next-event-date-time";
 import { cn } from "@/shared/lib/utils";
 import { RepetitionStage } from "../repetition-stage";
 import { CardDropdown } from "../card-dropdown";
+import type { RepetitionActionType } from "@/shared/types";
 
 type RepetitionListRowProps = RepetitionsListRow & {
-  onCompleteRepetition: OnCompleteRepetition;
+  onCompleteRepetition: (type: RepetitionActionType) => void;
+  onSkipRepetition: (type: RepetitionActionType) => void;
+  onWaitRepetition: (type: RepetitionActionType) => void;
 };
 
 export const RepetitionListRow: FC<RepetitionListRowProps> = ({
@@ -23,8 +23,9 @@ export const RepetitionListRow: FC<RepetitionListRowProps> = ({
   description,
   status,
   repetitionNumber,
-  id,
   onCompleteRepetition,
+  onSkipRepetition,
+  onWaitRepetition,
 }) => {
   return (
     <div className="text-card-foreground bg-muted flex flex-col items-stretch !rounded-xl p-1">
@@ -54,8 +55,10 @@ export const RepetitionListRow: FC<RepetitionListRowProps> = ({
         </div>
         <div className="flex h-full items-start pt-2 pr-2">
           <CardDropdown
+            status={status}
             onCompleteRepetition={onCompleteRepetition}
-            repetitionId={id}
+            onSkipRepetition={onSkipRepetition}
+            onWaitRepetition={onWaitRepetition}
           />
         </div>
       </div>

@@ -1,11 +1,9 @@
 import { isNil, pick } from "es-toolkit";
 import { isEmpty } from "es-toolkit/compat";
 
-import type {
-  RepetitionsListRow,
-  CompleteRepetitionDialogState,
-} from "@/entities/repetitions";
+import type { RepetitionsListRow } from "@/entities/repetitions";
 import type { RouterOutputs } from "@/trpc/react";
+import type { RepetitionOverlayPayload } from "@/shared/types";
 
 export const mapTodayRepetitionsToListData = (
   repetitions: RouterOutputs["repetitions"]["getTodayRepetitions"],
@@ -24,7 +22,7 @@ export const mapTodayRepetitionsToListData = (
 
 export const getActiveRepetitionDetails = (
   repetitions: Array<RepetitionsListRow>,
-  activeRepetitionId: CompleteRepetitionDialogState,
+  activeRepetitionId: RepetitionOverlayPayload,
 ) => {
   if (isNil(activeRepetitionId) || isEmpty(repetitions) || isNil(repetitions)) {
     return null;

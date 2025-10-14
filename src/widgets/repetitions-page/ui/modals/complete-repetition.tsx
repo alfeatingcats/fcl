@@ -1,4 +1,12 @@
-import { useCallback } from "react";
+import { useTranslations } from "next-intl";
+import {
+  cloneElement,
+  useCallback,
+  useEffect,
+  type FC,
+  type ReactElement,
+  type ReactNode,
+} from "react";
 
 import {
   Dialog,
@@ -10,76 +18,108 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import type { CFC, OverlayFormProps } from "@/shared/types";
-import type { OnCompleteRepetition } from "@/entities/repetitions";
-import type { CompleteRepetitionInput } from "@/shared/api/schemas";
-import { useTranslations } from "next-intl";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { CheckCircle2Icon } from "lucide-react";
+import type { OverlayEntityContent } from "@/shared/types";
 
-type CompleteRepetitionModalProps = OverlayFormProps<
-  CompleteRepetitionInput,
-  OnCompleteRepetition
-> & { title?: string; description?: string | null; repetitionNumber?: number };
+import {
+  Item,
+  ItemContent,
+  ItemDescription,
+  ItemMedia,
+  ItemTitle,
+} from "@/components/ui/item";
+import { useResetState } from "ahooks";
+import { isNil } from "es-toolkit";
 
-export const CompleteRepetitionModal: CFC<CompleteRepetitionModalProps> = ({
+type RepetitionSummary = {
+  title?: string;
+  description?: string | null;
+  repetitionNumber?: number | string;
+};
+
+type ActionRepetitionModalProps = {
+  onClear: () => void;
+  isOpen: boolean;
+} & OverlayEntityContent & {
+    renderContent: ReactNode;
+    repetitionNumber: string | number;
+    renderSubmitButton: ReactElement;
+  };
+
+export const ActionRepetitionModal: FC<ActionRepetitionModalProps> = ({
   isOpen,
-  children,
-  onSubmit,
-  onOpenChange,
-  isLoading,
-  title,
-  description,
+  entity,
+  overlay,
+  renderContent,
   repetitionNumber,
+  renderSubmitButton,
+  onClear,
 }) => {
-  const t = useTranslations("Repetitions");
-  const tui = useTranslations("UiActions");
+  const t = useTranslations("UiActions");
+
+  const [state, setState, resetState] = useResetState<RepetitionSummary>({
+    repetitionNumber: 1,
+    description: null,
+    title: "",
+  });
+
+  useEffect(() => {
+    if (!isNil(entity?.title)) {
+      setState({
+        repetitionNumber,
+        title: entity.title,
+        description: entity?.description,
+      });
+    }
+  }, [entity, isOpen, repetitionNumber, resetState, setState]);
+
   const handleOpenChange = useCallback(
     (open: boolean) => {
       if (!open) {
-        onOpenChange(null);
+        onClear();
       }
     },
-    [onOpenChange],
+    [onClear],
   );
-
   return (
     <Dialog open={isOpen} onOpenChange={handleOpenChange}>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>{t("completeButton")}</DialogTitle>
-          <DialogDescription>
-            {t("completeRepetitionDescription")}
-          </DialogDescription>
+          <DialogTitle>{overlay.title}</DialogTitle>
+          {overlay.description && (
+            <DialogDescription>{overlay.description}</DialogDescription>
+          )}
         </DialogHeader>
 
-        <Alert className="flex flex-row gap-2">
-          <span className="text-accent bg-accent-foreground flex size-6 shrink-0 items-center justify-center rounded-full border leading-none">
-            {repetitionNumber}
-          </span>
-          <div>
-            <AlertTitle className="line-clamp-1">{title}</AlertTitle>
-            <AlertDescription className="line-clamp-2">
-              {description}
-            </AlertDescription>
-          </div>
-        </Alert>
+        <Item variant="outline" size="sm">
+          <ItemMedia className="text-accent bg-accent-foreground flex shrink-0 items-center justify-center rounded-md border p-3 leading-none">
+            {`${state.repetitionNumber}/7`}
+          </ItemMedia>
+          <ItemContent>
+            <ItemTitle className="line-clamp-1">{state.title}</ItemTitle>
+            <ItemDescription className="line-clamp-2">
+              {state.description}
+            </ItemDescription>
+          </ItemContent>
+        </Item>
 
-        {children}
+        {renderContent}
+
         <DialogFooter>
           <DialogClose asChild>
             <Button className="flex-1/2" type="button" variant="outline">
-              {tui("cancel")}
+              {t("cancel")}
             </Button>
           </DialogClose>
-          <Button
-            className="flex-1/2"
-            onClick={onSubmit}
-            disabled={isLoading}
-            type="button"
-          >
-            {tui("submit")}
-          </Button>
+          {cloneElement(
+            renderSubmitButton as ReactElement<{
+              className?: string;
+              type?: "button";
+            }>,
+            {
+              className: "flex-1/2",
+              type: "button",
+            },
+          )}
         </DialogFooter>
       </DialogContent>
     </Dialog>
