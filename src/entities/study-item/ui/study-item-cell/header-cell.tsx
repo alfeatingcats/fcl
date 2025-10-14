@@ -6,7 +6,7 @@ type HeaderCellProps = {
   icon: LucideIcon | ReactElement;
 };
 
-export const HeaderCell: FC<HeaderCellProps> = ({ title, icon }) => {
+export const HeaderCell: FC<HeaderCellProps> = ({ title }) => {
   // const iconElement = isValidElement(icon)
   //   ? cloneElement(icon as ReactElement<{ className?: string }>, {
   //       className: "size-3 text-black dark:text-white",

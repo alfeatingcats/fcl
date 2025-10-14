@@ -13,9 +13,9 @@ export type {
   CurrentPoint,
   RepetitionChartProps,
   RepetitionsListRow,
-  CompleteRepetitionDialogState,
-  OnCompleteRepetition,
 } from "./model/shared";
+
+export { useTodayRepetitions } from "./model";
 
 export {
   RepetitionMicroChart,

@@ -1,64 +1,138 @@
 "use client";
 
 import { useMemo, type FC } from "react";
-import { isNil, pick } from "es-toolkit";
-import { isEmpty } from "es-toolkit/compat";
+import { useTranslations } from "next-intl";
 
 import {
   RepetitionList,
   type RepetitionsListRow,
 } from "@/entities/repetitions";
-import { api } from "@/trpc/react";
-import {
-  CompleteRepetitionForm,
-  useCompleteRepetitionOverlay,
-} from "@/features/complete-repetition";
+import { Button } from "@/components/ui/button";
+import { useTodayRepetitions } from "@/entities/repetitions";
+import { CompleteRepetitionForm } from "@/features/complete-repetition";
 
-import { CompleteRepetitionModal } from "./modals";
+import {
+  useWaitRepetitionAction,
+  useSkipRepetitionAction,
+  useCompleteRepetitionAction,
+  useRepetitionsOverlayEntityContent,
+} from "../model/hooks";
 import { mapTodayRepetitionsToListData } from "../model";
-import { getActiveRepetitionDetails } from "../model/utils";
+import { ActionRepetitionModal } from "./modals/complete-repetition";
 
 export const RepetitionsPage: FC = () => {
-  const [todayRepetitions] =
-    api.repetitions.getTodayRepetitions.useSuspenseQuery();
+  const t = useTranslations("Repetitions");
 
-  const {
-    form,
-    isOpen,
-    handleOpenChange,
-    isLoading,
-    activeRepetitionId,
-    onSubmit,
-  } = useCompleteRepetitionOverlay();
+  const [todayRepetitions] = useTodayRepetitions();
 
   const repetitionsListData = useMemo<Array<RepetitionsListRow>>(
     () => mapTodayRepetitionsToListData(todayRepetitions),
     [todayRepetitions],
   );
 
-  const activeRepetitionDetails = useMemo(
-    () => getActiveRepetitionDetails(repetitionsListData, activeRepetitionId),
-    [activeRepetitionId, repetitionsListData],
-  );
+  const {
+    skip,
+    wait,
+    title,
+    onClear,
+    complete,
+    description,
+    activeRepetition,
+    repetitionNumber,
+    setActiveRepetition,
+  } = useRepetitionsOverlayEntityContent(repetitionsListData);
+
+  const {
+    form: completeForm,
+    isLoading: isCompleteLoading,
+    onSubmit: onCompleteSubmit,
+  } = useCompleteRepetitionAction(activeRepetition, onClear);
+  const {
+    form: skipForm,
+    isLoading: isSkipLoading,
+    onSubmit: onSkipSubmit,
+  } = useSkipRepetitionAction(activeRepetition, onClear);
+  const {
+    form: waitForm,
+    isLoading: isWaitLoading,
+    onSubmit: onWaitSubmit,
+  } = useWaitRepetitionAction(activeRepetition, onClear);
 
   return (
     <div>
       <RepetitionList
         repetitions={repetitionsListData}
-        onCompleteRepetition={handleOpenChange}
+        onCompleteRepetition={setActiveRepetition}
+        onSkipRepetition={setActiveRepetition}
+        onWaitRepetition={setActiveRepetition}
       />
 
-      <CompleteRepetitionModal
-        isOpen={isOpen}
-        onOpenChange={handleOpenChange}
-        onSubmit={form.handleSubmit(onSubmit)}
-        isLoading={isLoading}
-        title={activeRepetitionDetails?.title}
-        description={activeRepetitionDetails?.description}
-        repetitionNumber={activeRepetitionDetails?.repetitionNumber}
-      >
-        <CompleteRepetitionForm form={form} />
-      </CompleteRepetitionModal>
+      <ActionRepetitionModal
+        onClear={onClear}
+        entity={{
+          title: title,
+          description: description,
+        }}
+        repetitionNumber={repetitionNumber || ""}
+        overlay={{
+          title: complete.overlay.title,
+          description: complete.overlay.description,
+        }}
+        isOpen={activeRepetition.action === "complete"}
+        renderContent={<CompleteRepetitionForm form={completeForm} />}
+        renderSubmitButton={
+          <Button
+            onClick={completeForm.handleSubmit(onCompleteSubmit)}
+            disabled={isCompleteLoading}
+          >
+            {t("completeLabel")}
+          </Button>
+        }
+      />
+      <ActionRepetitionModal
+        onClear={onClear}
+        entity={{
+          title: title,
+          description: description,
+        }}
+        repetitionNumber={repetitionNumber || ""}
+        overlay={{
+          title: skip.overlay.title,
+          description: skip.overlay.description,
+        }}
+        isOpen={activeRepetition.action === "skip"}
+        renderContent={null}
+        renderSubmitButton={
+          <Button
+            onClick={skipForm.handleSubmit(onSkipSubmit)}
+            disabled={isSkipLoading}
+          >
+            {t("skipLabel")}
+          </Button>
+        }
+      />
+      <ActionRepetitionModal
+        onClear={onClear}
+        entity={{
+          title: title,
+          description: description,
+        }}
+        repetitionNumber={repetitionNumber || ""}
+        overlay={{
+          title: wait.overlay.title,
+          description: wait.overlay.description,
+        }}
+        isOpen={activeRepetition.action === "wait"}
+        renderContent={null}
+        renderSubmitButton={
+          <Button
+            onClick={waitForm.handleSubmit(onWaitSubmit)}
+            disabled={isWaitLoading}
+          >
+            {t("waitLabel")}
+          </Button>
+        }
+      />
     </div>
   );
 };

@@ -1,1 +1,1 @@
-export { CompleteRepetitionModal } from "./complete-repetition";
+export { ActionRepetitionModal } from "./complete-repetition";

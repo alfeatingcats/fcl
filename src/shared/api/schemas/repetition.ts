@@ -17,6 +17,12 @@ export const SkipRepetitionSchema = CompleteRepetitionSchema.pick({
 
 export type SkipRepetitionInput = z.input<typeof SkipRepetitionSchema>;
 
+export const WaitRepetitionSchema = CompleteRepetitionSchema.pick({
+  repetitionId: true,
+});
+
+export type WaitRepetitionInput = z.input<typeof WaitRepetitionSchema>;
+
 export const BulkRepetitionsSchema = z.object({
   repetitions: z.array(CompleteRepetitionSchema),
 });

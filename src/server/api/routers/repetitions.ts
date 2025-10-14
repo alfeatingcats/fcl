@@ -100,6 +100,15 @@ export const repetitionsRouter = createTRPCRouter({
       });
     }),
 
+  wait: protectedProcedure
+    .input(SkipRepetitionSchema)
+    .mutation(async ({ ctx, input }) => {
+      return await ctx.db.studyRepetition.update({
+        where: { id: input.repetitionId },
+        data: { status: "PENDING", updatedAt: new Date() },
+      });
+    }),
+
   bulkComplete: protectedProcedure
     .input(BulkRepetitionsSchema)
     .mutation(async ({ ctx, input }) => {

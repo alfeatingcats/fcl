@@ -15,13 +15,6 @@ export type UseFormOverlayReturn<
   handleOpenChange: H;
 };
 
-export type UseToggleableFormOverlayReturn<
-  T extends FieldValues,
-  H,
-> = UseFormOverlayReturn<T, H> & {
-  toggle: () => void;
-};
-
 export type OverlayFormProps<T extends object, H = (open: boolean) => void> = {
   isOpen: boolean;
   onOpenChange: H;
