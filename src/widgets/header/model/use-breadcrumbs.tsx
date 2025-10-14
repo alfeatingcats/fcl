@@ -3,6 +3,7 @@
 import React from "react";
 import { compact, last } from "es-toolkit";
 import { useLocale, useTranslations } from "next-intl";
+import { Link, type routing, usePathname } from "@/i18n/routing";
 
 import {
   Breadcrumb,
@@ -12,21 +13,36 @@ import {
   BreadcrumbSeparator,
   BreadcrumbPage,
 } from "@/components/ui/breadcrumb";
-import { Link, type routing, usePathname } from "@/i18n/routing";
-import { routesMap, type SidebarRoute } from "@/shared/config/routes";
+import { useDynamicBreadcrumbStore } from "@/shared/stores";
+import { breadcrumbRoutesMap } from "@/shared/config/routes";
+import type { SidebarTKey } from "@/shared/types";
 
-/** Normalizes URL: removes trailing slash (except for root) */
+/** Remove trailing slashes */
 const normalize = (u: string | undefined | null) =>
   !u ? "/" : u === "/" || u === "#" ? u : u.replace(/\/$/, "");
 
 const supportedLocales: Array<(typeof routing.locales)[number]> = ["en", "uk"];
 
+/** Check if the path matches a template like /my-skills/[id] */
+const matchDynamicRoute = (path: string, routeUrl: string): boolean => {
+  const pathParts = compact(path.split("/"));
+  const routeParts = compact(routeUrl.split("/"));
+
+  if (pathParts.length !== routeParts.length) return false;
+
+  return routeParts.every(
+    (part, i) =>
+      (part.startsWith("[") && part.endsWith("]")) || part === pathParts[i],
+  );
+};
+
 export const useBreadcrumbs = (): React.ReactElement | null => {
   const locale = useLocale();
   const t = useTranslations("Sidebar");
   const pathname = usePathname() || "/";
+  const entries = useDynamicBreadcrumbStore((s) => s.entries);
 
-  // remove locale prefix (if present)
+  // Remove locale from the path
   const segments = compact(pathname.split("/"));
   const pathNoLocale =
     segments.length > 0 &&
@@ -35,36 +51,32 @@ export const useBreadcrumbs = (): React.ReactElement | null => {
       : pathname;
 
   const normalizedPath = normalize(pathNoLocale);
+  const allRoutes = Object.values(breadcrumbRoutesMap);
 
-  const allRoutes = Object.values(routesMap) as Omit<SidebarRoute, "icon">[];
-
-  // first, exact match
-  let current = allRoutes.find((r) => normalize(r.url) === normalizedPath);
-
-  // fallback by last segment
-  if (!current) {
-    const lastSegment = last(compact(normalizedPath.split("/")));
-    if (lastSegment) {
-      current = allRoutes.find(
-        (r) => last(compact(r.url.split("/"))) === lastSegment,
-      );
-    }
-  }
+  // Exact or dynamic match
+  const current =
+    allRoutes.find((r) => normalize(r.url) === normalizedPath) ??
+    allRoutes.find(
+      (r) => matchDynamicRoute(normalizedPath, r.url) && r.dynamic,
+    );
 
   if (!current) return null;
 
-  // build crumbs chain
+  // Build the parent chain
   const crumbs: (typeof current)[] = [];
   for (let route: typeof current | undefined = current; route; ) {
     crumbs.unshift(route);
-    route = route.parent
-      ? (routesMap[route.parent] as typeof route)
-      : undefined;
+    route = route.parent ? breadcrumbRoutesMap[route.parent] : undefined;
   }
+
+  // Check if there is a title for the dynamic segment
+  const lastSegment = last(segments);
+  const dynamicTitle = lastSegment ? entries[lastSegment] : undefined;
 
   return (
     <Breadcrumb>
       <BreadcrumbList>
+        {/* Home */}
         <BreadcrumbItem>
           <BreadcrumbLink asChild>
             <Link locale={locale} href="/">
@@ -76,19 +88,34 @@ export const useBreadcrumbs = (): React.ReactElement | null => {
         <BreadcrumbSeparator />
 
         {crumbs.map((crumb, idx) => {
-          const isLast = idx === crumbs.length - 1;
+          const isLastCrumb = idx === crumbs.length - 1;
+          const isDynamic = crumb.dynamic;
+
+          // If dynamic route
+          if (isDynamic) {
+            return (
+              <React.Fragment key={crumb.key}>
+                <BreadcrumbItem>
+                  <BreadcrumbPage>{dynamicTitle ?? "…"}</BreadcrumbPage>
+                </BreadcrumbItem>
+              </React.Fragment>
+            );
+          }
+
+          const isLast = isLastCrumb;
+
           return (
             <BreadcrumbItem key={crumb.key}>
               {isLast ? (
-                <BreadcrumbPage>{t(crumb.key)}</BreadcrumbPage>
+                <BreadcrumbPage>{t(crumb.key as SidebarTKey)}</BreadcrumbPage>
               ) : (
                 <BreadcrumbLink asChild>
                   <Link locale={locale} href={crumb.url}>
-                    {t(crumb.key)}
+                    {t(crumb.key as SidebarTKey)}
                   </Link>
                 </BreadcrumbLink>
               )}
-              {idx < crumbs.length - 1 && <BreadcrumbSeparator />}
+              {!isLast && <BreadcrumbSeparator />}
             </BreadcrumbItem>
           );
         })}

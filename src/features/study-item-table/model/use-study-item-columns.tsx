@@ -65,7 +65,9 @@ export const useStudyItemColumns = () => {
       maxSize: 200,
       minSize: 100,
       accessorKey: "title",
-      cell: ({ row }) => <TitleCell title={row.getValue("title")} />,
+      cell: ({ row }) => {
+        return <TitleCell title={row.getValue("title")} id={row.original.id} />;
+      },
     },
     {
       header() {

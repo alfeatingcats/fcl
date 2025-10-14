@@ -1,0 +1,1 @@
+export { useStudyItem } from "./model";

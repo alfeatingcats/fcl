@@ -2,17 +2,19 @@ import { useTranslations } from "next-intl";
 
 import { usePathname } from "@/i18n/routing";
 
-import { routesMap } from "../config/routes";
 import type { NavMainItem } from "../types/navigation.types";
+import { sidebarRoutesMap } from "../config/sidebar";
 
 export const useSidebarData = (): NavMainItem[] => {
   const t = useTranslations("Sidebar");
   const pathname = usePathname();
 
-  const rootRoutes = Object.values(routesMap).filter((r) => r.parent === null);
+  const rootRoutes = Object.values(sidebarRoutesMap).filter(
+    (r) => r.parent === null,
+  );
 
   return rootRoutes.map((route) => {
-    const children = Object.values(routesMap).filter(
+    const children = Object.values(sidebarRoutesMap).filter(
       (r) => r.parent === route.key,
     );
 

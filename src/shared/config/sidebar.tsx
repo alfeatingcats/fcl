@@ -9,24 +9,16 @@ import {
 
 import type { SidebarTKey } from "../types";
 
-type RouteBreadcrumbProperties = SidebarTKey | DynamicRouteKeys;
+export type SidebarRouteRoot = Record<SidebarTKey, SidebarRoute>;
 
-export type DynamicRouteKeys = "skillDetails";
-
-export type BreadcrumbsRouteRoot = Record<
-  RouteBreadcrumbProperties,
-  BreadcrumbRoute
->;
-
-export type BreadcrumbRoute = {
+export type SidebarRoute = {
   url: string;
   icon: LucideIcon;
   parent: SidebarTKey | null;
-  key: RouteBreadcrumbProperties;
-  dynamic?: boolean;
+  key: SidebarTKey;
 };
 
-export const breadcrumbRoutesMap: BreadcrumbsRouteRoot = {
+export const sidebarRoutesMap: SidebarRouteRoot = {
   dashboard: {
     key: "dashboard",
     url: "/dashboard",
@@ -38,13 +30,6 @@ export const breadcrumbRoutesMap: BreadcrumbsRouteRoot = {
     url: "/my-skills",
     icon: BookOpenCheck,
     parent: null,
-  },
-  skillDetails: {
-    key: "skillDetails",
-    url: "/my-skills/[id]",
-    icon: BookOpenCheck,
-    parent: "mySkills",
-    dynamic: true,
   },
   reviewCycle: {
     key: "reviewCycle",
@@ -66,6 +51,6 @@ export const breadcrumbRoutesMap: BreadcrumbsRouteRoot = {
   },
 } as const;
 
-export type RouteKey = keyof typeof breadcrumbRoutesMap;
+export type SidebarRouteKey = keyof typeof sidebarRoutesMap;
 
-export const routesList = Object.values(breadcrumbRoutesMap);
+export const sidebarNavigationRoutes = Object.values(sidebarRoutesMap);
