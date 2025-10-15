@@ -1,15 +1,11 @@
 "use client";
 
 import { useStudyItem } from "@/entities/study-item";
-import { useDynamicBreadcrumb } from "@/shared/hooks";
-
-import { useParams } from "next/navigation";
+import { useDynamicBreadcrumb, useIdParam } from "@/shared/hooks";
 
 export const StudyItemPage = () => {
-  const { id } = useParams<{ id: string }>();
-
+  const id = useIdParam();
   const studyItem = useStudyItem(id);
-
   useDynamicBreadcrumb(studyItem?.title, id);
 
   return <div>StudyItemPage</div>;
