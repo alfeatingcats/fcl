@@ -5,7 +5,7 @@ import { useCallback } from "react";
 import {
   useCreateStudyItem,
   useStudyItemForm,
-} from "@/features/study-item-management";
+} from "@/features/create-study-item";
 
 import type { UseManageStudyItemReturn } from "./types";
 import { toast } from "sonner";
@@ -17,7 +17,7 @@ export const useManageStudyItem = (): UseManageStudyItemReturn => {
   const [isStudyItemCreationOpen, { toggle: toggleStudyItemCreation }] =
     useBoolean(false);
 
-  const { handleCreateStudyItem, isCreating } = useCreateStudyItem({
+  const { mutate, isPending } = useCreateStudyItem({
     onSuccess: ({ name }) => {
       toast.success(t("createSuccess", { name }));
       handleDrawerChange(false);
@@ -41,8 +41,8 @@ export const useManageStudyItem = (): UseManageStudyItemReturn => {
 
   return {
     form,
-    onSubmit: handleCreateStudyItem,
-    isCreating,
+    onSubmit: mutate,
+    isCreating: isPending,
     handleDrawerChange,
     toggleDrawer: toggleStudyItemCreation,
     isDrawerOpen: isStudyItemCreationOpen,

@@ -1,18 +1,18 @@
-import { useMemo } from "react";
-
-import { api } from "@/trpc/react";
-import type { CallbackHandlers } from "@/shared/types";
-import { useTrpcErrorHandler } from "@/shared/hooks";
 import { noop } from "es-toolkit";
 
-export const useCreateStudyItem = ({
+import { api } from "@/trpc/react";
+import { useTrpcErrorHandler } from "@/shared/hooks";
+import type { CallbackHandlers } from "@/shared/types";
+import type { TrpcMutationHook } from "@/shared/api/types";
+
+export const useCreateStudyItem: TrpcMutationHook<"studyItem", "create"> = ({
   onError = noop,
   onSuccess,
 }: CallbackHandlers) => {
   const utils = api.useUtils();
   const handleError = useTrpcErrorHandler();
 
-  const createStudyItem = api.studyItem.create.useMutation({
+  return api.studyItem.create.useMutation({
     onSuccess: async (data) => {
       await utils.studyItem.invalidate();
       await utils.tags.invalidate();
@@ -23,12 +23,4 @@ export const useCreateStudyItem = ({
       handleError(error);
     },
   });
-
-  return useMemo(
-    () => ({
-      isCreating: createStudyItem.isPending,
-      handleCreateStudyItem: createStudyItem.mutate,
-    }),
-    [createStudyItem],
-  );
 };

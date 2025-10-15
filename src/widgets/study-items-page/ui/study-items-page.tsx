@@ -10,7 +10,7 @@ import { StudyItemDataTable } from "@/features/study-item-table";
 import {
   StudyItemDrawer,
   StudyItemForm,
-} from "@/features/study-item-management/ui";
+} from "@/features/create-study-item/ui";
 import { CreateTagButton } from "@/features/tag-selector";
 
 import { useManageStudyItem, useManageTag } from "../model";

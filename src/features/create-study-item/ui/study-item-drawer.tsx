@@ -5,8 +5,7 @@ import { useTranslations } from "next-intl";
 import { FormDrawer } from "@/components/ui/custom";
 import type { CFC, OverlayFormProps } from "@/shared/types";
 import type { CreateStudyItemInput } from "@/shared/api/schemas";
-
-import { StudyItemProgressCard } from "./study-item-progress-card";
+import { StudyItemProgressCard } from "@/entities/study-item";
 
 export const StudyItemDrawer: CFC<OverlayFormProps<CreateStudyItemInput>> = ({
   isOpen,
