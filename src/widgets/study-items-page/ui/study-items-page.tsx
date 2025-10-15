@@ -1,17 +1,17 @@
 "use client";
 
 import { api } from "@/trpc/react";
-import {
-  TagCreateDrawer,
-  TagForm,
-  CreateStudyItemButton,
-} from "@/features/tag-management";
 import { StudyItemDataTable } from "@/features/study-item-table";
 import {
   StudyItemDrawer,
   StudyItemForm,
 } from "@/features/create-study-item/ui";
 import { CreateTagButton } from "@/features/tag-selector";
+import {
+  CreateStudyItemButton,
+  TagCreateDrawer,
+  TagForm,
+} from "@/features/create-tag";
 
 import { useManageStudyItem, useManageTag } from "../model";
 
