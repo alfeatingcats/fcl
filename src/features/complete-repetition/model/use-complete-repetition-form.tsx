@@ -1,6 +1,5 @@
 "use client";
 import { useForm } from "react-hook-form";
-import { useMemo } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import {
@@ -8,14 +7,11 @@ import {
   type CompleteRepetitionInput,
 } from "@/shared/api/schemas";
 
-export const useCompleteRepetitionForm = (isLoading: boolean) => {
-  const form = useForm<CompleteRepetitionInput>({
+export const useCompleteRepetitionForm = (isLoading: boolean) =>
+  useForm<CompleteRepetitionInput>({
     resolver: zodResolver(CompleteRepetitionSchema),
     defaultValues: {
       difficulty: 1,
     },
     disabled: isLoading,
   });
-
-  return useMemo(() => ({ form }), [form]);
-};

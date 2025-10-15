@@ -2,13 +2,12 @@
 import { toast } from "sonner";
 import { useBoolean } from "ahooks";
 import { useCallback } from "react";
+import { useTranslations } from "next-intl";
 
-import { useTagForm } from "@/features/tag-management";
-import { useCreateTag } from "@/features/tag-management";
 import type { CreateTagInput } from "@/shared/api/schemas";
+import { useCreateTag, useTagForm } from "@/features/create-tag";
 
 import type { UseManageStudyItemReturn } from "./types";
-import { useTranslations } from "next-intl";
 
 export const useManageTag = (): UseManageStudyItemReturn<CreateTagInput> => {
   const t = useTranslations("TagMessages");
@@ -16,7 +15,7 @@ export const useManageTag = (): UseManageStudyItemReturn<CreateTagInput> => {
   const [isCreateTagDrawerOpen, { toggle: toggleCreateTagDrawer }] =
     useBoolean(false);
 
-  const { handleCreateTag, isLoading } = useCreateTag({
+  const { mutate, isPending } = useCreateTag({
     onSuccess: ({ name }) => {
       toast.success(t("createSuccess", { name }));
       toggleCreateTagDrawer();
@@ -26,9 +25,7 @@ export const useManageTag = (): UseManageStudyItemReturn<CreateTagInput> => {
     },
   });
 
-  const { form, onSubmit } = useTagForm({
-    onCreate: handleCreateTag,
-  });
+  const { form } = useTagForm({});
 
   const handleDrawerChange = useCallback(
     (open: boolean) => {
@@ -42,9 +39,9 @@ export const useManageTag = (): UseManageStudyItemReturn<CreateTagInput> => {
 
   return {
     form,
-    onSubmit,
+    onSubmit: mutate,
     handleDrawerChange,
-    isCreating: isLoading,
+    isCreating: isPending,
     toggleDrawer: toggleCreateTagDrawer,
     isDrawerOpen: isCreateTagDrawerOpen,
   };

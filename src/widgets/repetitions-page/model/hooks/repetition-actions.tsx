@@ -4,8 +4,8 @@ import {
 } from "@/features/complete-repetition";
 import type {
   CompleteRepetitionInput,
-  SkipRepetitionInput,
   WaitRepetitionInput,
+  SkipRepetitionInput,
 } from "@/shared/api/schemas";
 import {
   useSkipRepetition,
@@ -18,20 +18,20 @@ import {
 
 import { createRepetitionAction } from "./create-repetition-action";
 
-export const useCompleteRepetitionAction =
-  createRepetitionAction<CompleteRepetitionInput>(
-    useCompleteRepetition,
-    useCompleteRepetitionForm,
-  );
+export const useCompleteRepetitionAction = createRepetitionAction<
+  CompleteRepetitionInput,
+  "repetitions",
+  "complete"
+>(useCompleteRepetition, useCompleteRepetitionForm);
 
-export const useSkipRepetitionAction =
-  createRepetitionAction<SkipRepetitionInput>(
-    useSkipRepetition,
-    useSkipRepetitionForm,
-  );
+export const useSkipRepetitionAction = createRepetitionAction<
+  SkipRepetitionInput,
+  "repetitions",
+  "skip"
+>(useSkipRepetition, useSkipRepetitionForm);
 
-export const useWaitRepetitionAction =
-  createRepetitionAction<WaitRepetitionInput>(
-    useWaitRepetition,
-    useWaitRepetitionForm,
-  );
+export const useWaitRepetitionAction = createRepetitionAction<
+  WaitRepetitionInput,
+  "repetitions",
+  "wait"
+>(useWaitRepetition, useWaitRepetitionForm);

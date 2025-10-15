@@ -1,21 +1,22 @@
 import { toast } from "sonner";
-import { useMemo } from "react";
 import { useTranslations } from "next-intl";
 
 import { api } from "@/trpc/react";
 import { useTrpcErrorHandler } from "@/shared/hooks";
-import type { CallbackHandlers } from "@/shared/types";
 import { noop } from "es-toolkit";
+import type { TrpcMutationHook } from "@/shared/api/types";
 
-export const useWaitRepetition = ({
-  onSuccess,
-  onError = noop,
-}: CallbackHandlers<void, void>) => {
+export const useWaitRepetition: TrpcMutationHook<
+  "repetitions",
+  "wait",
+  void,
+  void
+> = ({ onSuccess, onError = noop }) => {
   const utils = api.useUtils();
   const handleError = useTrpcErrorHandler();
   const t = useTranslations("RepetitionsMessages");
 
-  const completeRepetitionMutation = api.repetitions.wait.useMutation({
+  return api.repetitions.wait.useMutation({
     onSuccess: async () => {
       toast.success(t("waitSuccess"));
       onSuccess();
@@ -28,12 +29,4 @@ export const useWaitRepetition = ({
       onError();
     },
   });
-
-  return useMemo(
-    () => ({
-      mutate: completeRepetitionMutation.mutate,
-      isLoading: completeRepetitionMutation.isPending,
-    }),
-    [completeRepetitionMutation],
-  );
 };

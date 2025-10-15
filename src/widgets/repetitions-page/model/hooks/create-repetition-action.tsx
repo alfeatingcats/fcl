@@ -1,33 +1,47 @@
-import { useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import type { UseFormReturn } from "react-hook-form";
 
 import type { RepetitionActionState } from "@/shared/types";
 import type { SkipRepetitionInput } from "@/shared/api/schemas";
 
 import { useRepetitionActionState } from "./use-repetition-action-state";
+import type { RouterInputs } from "@/trpc/react";
+import type { TrpcMutationHook } from "@/shared/api/types";
 
-export const createRepetitionAction = <TFormData extends SkipRepetitionInput>(
-  useMutationHook: (callbacks: { onSuccess: () => void }) => {
-    mutate: (data: TFormData) => void;
-    isLoading: boolean;
-  },
-  useFormHook: (isLoading: boolean) => {
-    form: UseFormReturn<TFormData>;
-  },
+export const createRepetitionAction = <
+  TFormData extends SkipRepetitionInput,
+  TPath extends keyof RouterInputs,
+  TKey extends keyof RouterInputs[TPath],
+>(
+  useMutationHook: TrpcMutationHook<
+    TPath,
+    TKey,
+    object | void,
+    object | void,
+    unknown
+  >,
+  useFormHook: (isLoading: boolean) => UseFormReturn<TFormData>,
 ) => {
+  type TInput = RouterInputs[TPath][TKey];
+
   return (state: RepetitionActionState, onClear: () => void) => {
-    const { mutate, isLoading } = useMutationHook({ onSuccess: onClear });
-    const { form } = useFormHook(isLoading);
+    const { mutate, isPending } = useMutationHook({ onSuccess: onClear });
+    const form = useFormHook(isPending);
 
     useRepetitionActionState(form, state.repetitionId);
+
+    const handleSubmit = useCallback(
+      (data: TFormData & TInput) => mutate(data),
+      [mutate],
+    );
 
     return useMemo(
       () => ({
         form,
-        isLoading,
-        onSubmit: mutate,
+        isLoading: isPending,
+        onSubmit: handleSubmit,
       }),
-      [form, mutate, isLoading],
+      [form, isPending, handleSubmit],
     );
   };
 };
