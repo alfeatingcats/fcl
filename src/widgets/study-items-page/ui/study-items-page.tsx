@@ -21,19 +21,19 @@ export const StudyItemsPage = () => {
   const {
     form,
     onSubmit,
-    isCreating,
-    handleDrawerChange,
-    isDrawerOpen: isStudyItemCreationOpen,
-    toggleDrawer: toggleStudyItemCreation,
+    isLoading: isCreating,
+    handleOpenChange: handleDrawerChange,
+    isOpen: isStudyItemCreationOpen,
+    toggleVisibility: toggleStudyItemCreation,
   } = useManageStudyItem();
 
   const {
     form: formTag,
     onSubmit: onSubmitTag,
-    isCreating: isCreatingTag,
-    isDrawerOpen: isCreateTagDrawerOpen,
-    toggleDrawer: toggleCreateTagDrawer,
-    handleDrawerChange: handleTagDrawerChange,
+    isLoading: isCreatingTag,
+    isOpen: isCreateTagDrawerOpen,
+    toggleVisibility: toggleCreateTagDrawer,
+    handleOpenChange: handleTagDrawerChange,
   } = useManageTag();
 
   return (

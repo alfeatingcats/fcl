@@ -1,7 +1,7 @@
 import { api } from "@/trpc/react";
 
-import { useTrpcErrorHandler } from "@/shared/hooks";
 import { noop } from "es-toolkit";
+import { useTrpcErrorHandler } from "@/shared/api";
 import type { TrpcMutationHook } from "@/shared/api/types";
 
 export const useCreateTag: TrpcMutationHook<"tags", "create"> = ({

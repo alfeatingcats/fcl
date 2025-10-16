@@ -1,8 +1,7 @@
 import { api } from "@/trpc/react";
 
-import { useQueryErrorHandler } from "@/shared/hooks";
-
 import type { TagsListType } from "./types";
+import { useQueryErrorHandler } from "@/shared/api";
 
 export interface UseGetAllTagsParams {
   shouldFetchTags: boolean;

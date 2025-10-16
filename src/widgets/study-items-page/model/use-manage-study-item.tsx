@@ -1,50 +1,42 @@
 'use client"';
-import { useBoolean } from "ahooks";
-import { useCallback } from "react";
 
 import {
   useCreateStudyItem,
   useStudyItemForm,
 } from "@/features/create-study-item";
 
-import type { UseManageStudyItemReturn } from "./types";
 import { toast } from "sonner";
 import { useTranslations } from "next-intl";
+import type { UseFormOverlayReturn } from "@/shared/types";
+import type { CreateStudyItemInput } from "@/shared/api/schemas";
+import { useDrawerState } from "@/shared/hooks";
 
-export const useManageStudyItem = (): UseManageStudyItemReturn => {
-  const t = useTranslations("StudyItemMessages");
+export const useManageStudyItem =
+  (): UseFormOverlayReturn<CreateStudyItemInput> => {
+    const t = useTranslations("StudyItemMessages");
 
-  const [isStudyItemCreationOpen, { toggle: toggleStudyItemCreation }] =
-    useBoolean(false);
+    const { form } = useStudyItemForm({});
 
-  const { mutate, isPending } = useCreateStudyItem({
-    onSuccess: ({ name }) => {
-      toast.success(t("createSuccess", { name }));
-      handleDrawerChange(false);
-    },
-    onError: ({ name }) => {
-      toast.error(t("createError", { name }));
-    },
-  });
+    const drawer = useDrawerState({
+      onClose: () => form.reset(),
+    });
 
-  const { form } = useStudyItemForm({});
+    const { mutate, isPending } = useCreateStudyItem({
+      onSuccess: ({ name }) => {
+        toast.success(t("createSuccess", { name }));
+        drawer.handleChange(false);
+      },
+      onError: ({ name }) => {
+        toast.error(t("createError", { name }));
+      },
+    });
 
-  const handleDrawerChange = useCallback(
-    (open: boolean) => {
-      if (!open) {
-        form.reset();
-      }
-      toggleStudyItemCreation();
-    },
-    [form, toggleStudyItemCreation],
-  );
-
-  return {
-    form,
-    onSubmit: mutate,
-    isCreating: isPending,
-    handleDrawerChange,
-    toggleDrawer: toggleStudyItemCreation,
-    isDrawerOpen: isStudyItemCreationOpen,
+    return {
+      form,
+      onSubmit: mutate,
+      isLoading: isPending,
+      handleOpenChange: drawer.handleChange,
+      toggleVisibility: drawer.toggle,
+      isOpen: drawer.isOpen,
+    };
   };
-};

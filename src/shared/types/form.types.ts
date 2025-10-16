@@ -13,6 +13,7 @@ export type UseFormOverlayReturn<
   form: UseFormReturn<T>;
   onSubmit: (data: T) => void;
   handleOpenChange: H;
+  toggleVisibility: () => void;
 };
 
 export type OverlayFormProps<T extends object, H = (open: boolean) => void> = {

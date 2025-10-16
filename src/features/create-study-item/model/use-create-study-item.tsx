@@ -1,7 +1,7 @@
 import { noop } from "es-toolkit";
 
 import { api } from "@/trpc/react";
-import { useTrpcErrorHandler } from "@/shared/hooks";
+import { useTrpcErrorHandler } from "@/shared/api";
 import type { CallbackHandlers } from "@/shared/types";
 import type { TrpcMutationHook } from "@/shared/api/types";
 

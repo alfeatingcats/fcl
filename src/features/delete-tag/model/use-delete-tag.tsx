@@ -1,8 +1,8 @@
 import { noop } from "es-toolkit";
 
 import { api } from "@/trpc/react";
+import { useTrpcErrorHandler } from "@/shared/api";
 import type { TrpcMutationHook } from "@/shared/api/types";
-import { useTrpcErrorHandler } from "@/shared/hooks";
 
 export const useDeleteTag: TrpcMutationHook<"tags", "delete"> = ({
   onError = noop,
