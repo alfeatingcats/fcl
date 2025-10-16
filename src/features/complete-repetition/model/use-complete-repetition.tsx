@@ -3,7 +3,7 @@ import { noop } from "es-toolkit";
 import { useTranslations } from "next-intl";
 
 import { api } from "@/trpc/react";
-import { useTrpcErrorHandler } from "@/shared/api";
+import { useMutationErrorHandler } from "@/shared/api";
 import type { TrpcMutationHook } from "@/shared/api/types";
 
 export const useCompleteRepetition: TrpcMutationHook<
@@ -13,7 +13,7 @@ export const useCompleteRepetition: TrpcMutationHook<
   void
 > = ({ onSuccess, onError = noop }) => {
   const utils = api.useUtils();
-  const handleError = useTrpcErrorHandler();
+  const handleError = useMutationErrorHandler();
   const t = useTranslations("RepetitionsMessages");
 
   return api.repetitions.complete.useMutation({

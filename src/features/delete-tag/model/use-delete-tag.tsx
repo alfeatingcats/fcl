@@ -1,7 +1,7 @@
 import { noop } from "es-toolkit";
 
 import { api } from "@/trpc/react";
-import { useTrpcErrorHandler } from "@/shared/api";
+import { useMutationErrorHandler } from "@/shared/api";
 import type { TrpcMutationHook } from "@/shared/api/types";
 
 export const useDeleteTag: TrpcMutationHook<"tags", "delete"> = ({
@@ -9,7 +9,7 @@ export const useDeleteTag: TrpcMutationHook<"tags", "delete"> = ({
   onSuccess,
 }) => {
   const utils = api.useUtils();
-  const handleError = useTrpcErrorHandler();
+  const handleError = useMutationErrorHandler();
 
   return api.tags.delete.useMutation({
     onSuccess: async ({ deletedTag: { name } }) => {

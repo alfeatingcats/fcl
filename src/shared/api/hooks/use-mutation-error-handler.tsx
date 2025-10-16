@@ -5,13 +5,13 @@ import { useTranslations } from "next-intl";
 import { getErrorMessage } from "../lib/trpc-error-handler";
 
 /**
- * Default toast-based error handler for TRPC hooks.
+ * Default toast-based error handler for TRPC mutation hooks.
  *
  * Usage:
- * const handleError = useTrpcErrorHandler();
+ * const handleError = useMutationErrorHandler();
  * trpc.repetitions.complete.useMutation({ onError: handleError });
  */
-export const useTrpcErrorHandler = () => {
+export const useMutationErrorHandler = () => {
   const t = useTranslations("Errors");
 
   return useCallback(
