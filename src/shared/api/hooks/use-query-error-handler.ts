@@ -1,3 +1,4 @@
+"use client";
 import { useEffect } from "react";
 import { useTrpcErrorHandler } from "./use-trpc-error-handler";
 

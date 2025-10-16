@@ -1,5 +1,5 @@
+import { useTrpcErrorHandler } from "@/shared/api";
 import type { TrpcMutationHook } from "@/shared/api/types";
-import { useTrpcErrorHandler } from "@/shared/hooks";
 import { api } from "@/trpc/react";
 
 export const useUpdateStudyItem: TrpcMutationHook<"studyItem", "update"> = ({

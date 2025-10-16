@@ -1,6 +1,6 @@
 "use client";
-import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm, type UseFormReturn } from "react-hook-form";
 
 import { CreateTagSchema, type CreateTagInput } from "@/shared/api/schemas";
 
@@ -10,13 +10,10 @@ type UseTagFormProps = {
   defaultValues?: Partial<CreateTagInput>;
 };
 
-export const useTagForm = ({
-  defaultValues = defaultTagFormValues,
-}: UseTagFormProps) => {
-  const form = useForm<CreateTagInput>({
-    resolver: zodResolver(CreateTagSchema),
-    defaultValues,
-  });
+type TagFormReturn = UseFormReturn<CreateTagInput>;
 
-  return { form };
-};
+export const useTagForm = (props?: UseTagFormProps): TagFormReturn =>
+  useForm<CreateTagInput>({
+    resolver: zodResolver(CreateTagSchema),
+    defaultValues: props?.defaultValues ?? defaultTagFormValues,
+  });

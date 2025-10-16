@@ -1,7 +1,7 @@
 import { TRPCClientError } from "@trpc/client";
 import type { AppRouter } from "@/server/api/root";
 
-import type { ErrorsTKey, ErrorsTranslations } from "../types";
+import type { ErrorsTKey, ErrorsTranslations } from "../../types";
 
 const AppRouterError = TRPCClientError<AppRouter>;
 type AppRouterClientError = TRPCClientError<AppRouter>;

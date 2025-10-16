@@ -1,4 +1,4 @@
-import { useQueryErrorHandler } from "@/shared/hooks";
+import { useQueryErrorHandler } from "@/shared/api";
 import { api, type RouterOutputs } from "@/trpc/react";
 
 export interface UseTagAutocompleteParams {

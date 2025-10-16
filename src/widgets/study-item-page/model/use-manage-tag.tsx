@@ -19,7 +19,7 @@ export const useManageTag = (): UseFormOverlayReturn<CreateTagInput> => {
   const { mutate, isPending } = useCreateTag({
     onSuccess: ({ name }) => {
       toast.success(t("createSuccess", { name }));
-      drawer.close();
+      drawer.handleChange(false);
     },
     onError: ({ name }) => {
       toast.error(t("createError", { name }));
