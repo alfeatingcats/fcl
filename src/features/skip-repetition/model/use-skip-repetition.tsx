@@ -4,7 +4,7 @@ import { useTranslations } from "next-intl";
 import { api } from "@/trpc/react";
 
 import { noop } from "es-toolkit";
-import { useTrpcErrorHandler } from "@/shared/api";
+import { useMutationErrorHandler } from "@/shared/api";
 import type { TrpcMutationHook } from "@/shared/api/types";
 
 export const useSkipRepetition: TrpcMutationHook<
@@ -14,7 +14,7 @@ export const useSkipRepetition: TrpcMutationHook<
   void
 > = ({ onSuccess, onError = noop }) => {
   const utils = api.useUtils();
-  const handleError = useTrpcErrorHandler();
+  const handleError = useMutationErrorHandler();
   const t = useTranslations("RepetitionsMessages");
 
   return api.repetitions.skip.useMutation({

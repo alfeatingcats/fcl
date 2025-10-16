@@ -1,4 +1,4 @@
-import { useTrpcErrorHandler } from "@/shared/api";
+import { useMutationErrorHandler } from "@/shared/api";
 import type { TrpcMutationHook } from "@/shared/api/types";
 import { api } from "@/trpc/react";
 
@@ -7,7 +7,7 @@ export const useUpdateStudyItem: TrpcMutationHook<"studyItem", "update"> = ({
   onSuccess,
 }) => {
   const utils = api.useUtils();
-  const handleError = useTrpcErrorHandler();
+  const handleError = useMutationErrorHandler();
 
   return api.studyItem.update.useMutation({
     onSuccess: async (data) => {

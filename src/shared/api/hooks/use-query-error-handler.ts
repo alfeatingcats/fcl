@@ -1,6 +1,6 @@
 "use client";
 import { useEffect } from "react";
-import { useTrpcErrorHandler } from "./use-trpc-error-handler";
+import { useMutationErrorHandler } from "./use-mutation-error-handler";
 
 /**
  * Automatically handles errors from TRPC useQuery hooks using toast notifications.
@@ -10,7 +10,7 @@ import { useTrpcErrorHandler } from "./use-trpc-error-handler";
  * useQueryErrorHandler(query.error);
  */
 export const useQueryErrorHandler = (error: unknown) => {
-  const handleError = useTrpcErrorHandler();
+  const handleError = useMutationErrorHandler();
 
   useEffect(() => {
     if (error) {
