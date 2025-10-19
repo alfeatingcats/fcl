@@ -12,7 +12,6 @@ export const useUpdateStudyItem: TrpcMutationHook<"studyItem", "update"> = ({
   return api.studyItem.update.useMutation({
     onSuccess: async (data) => {
       await utils.studyItem.invalidate();
-      await utils.tags.invalidate();
       await utils.repetitions.invalidate();
       onSuccess({ name: data?.title ?? "" });
     },

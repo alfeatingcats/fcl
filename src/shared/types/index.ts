@@ -4,4 +4,4 @@ export * from "./i18n.types";
 export * from "./navigation.types";
 export * from "./storage.types";
 export * from "./utility.types";
-export * from "./repetition.types";
+export * from "./repetition";

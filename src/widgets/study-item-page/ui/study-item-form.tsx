@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import type { FC, ReactNode } from "react";
 import { useTranslations } from "next-intl";
 import type { UseFormReturn } from "react-hook-form";
 
@@ -17,16 +17,16 @@ import {
 import type { CFC } from "@/shared/types";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import type { CreateStudyItemInput } from "@/shared/api/schemas";
+import type { UpdateStudyItemInput } from "@/shared/api/schemas";
 
 type StudyItemFormProps = {
   isLoading?: boolean;
   renderCreateTagButton: ReactNode;
   defaultTags?: RequiredCreateTagInput[];
-  form: UseFormReturn<CreateStudyItemInput>;
+  form: UseFormReturn<UpdateStudyItemInput>;
 };
 
-export const StudyItemForm: CFC<StudyItemFormProps> = ({
+export const StudyItemForm: FC<StudyItemFormProps> = ({
   form,
   defaultTags,
   isLoading = false,
@@ -36,37 +36,21 @@ export const StudyItemForm: CFC<StudyItemFormProps> = ({
 
   return (
     <Form {...form}>
-      <form className="space-y-4">
+      <form className="space-y-6">
         <FormField
           control={form.control}
           name="title"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{t("titleLabel")}</FormLabel>
               <FormControl>
-                <Input
-                  placeholder={t("titlePlaceholder")}
-                  disabled={isLoading}
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="description"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>{t("descriptionLabel")}</FormLabel>
-              <FormControl>
-                <Textarea
-                  placeholder={t("descriptionPlaceholder")}
-                  disabled={isLoading}
-                  {...field}
-                />
+                <div className="flex flex-row">
+                  <Input
+                    placeholder={t("titlePlaceholder")}
+                    disabled={isLoading}
+                    className="!border-none !bg-transparent text-xl shadow-none hover:cursor-pointer md:text-2xl"
+                    {...field}
+                  />
+                </div>
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -91,6 +75,26 @@ export const StudyItemForm: CFC<StudyItemFormProps> = ({
                   ref={ref}
                   onBlur={onBlur}
                   renderCreateTagButton={renderCreateTagButton}
+                  tagsWrapperClassName="!max-w-sm"
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="description"
+          render={({ field }) => (
+            <FormItem className="">
+              <FormLabel>{t("descriptionLabel")}</FormLabel>
+              <FormControl>
+                <Textarea
+                  className="!max-w-lg"
+                  placeholder={t("descriptionPlaceholder")}
+                  disabled={isLoading}
+                  {...field}
                 />
               </FormControl>
               <FormMessage />

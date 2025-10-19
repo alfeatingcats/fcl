@@ -17,7 +17,7 @@ import type { RequiredCreateTagInput } from "../model/types";
 type TagsListContentProps = {
   isPending: boolean;
   selectedTagIds: string[];
-  handleSelect: (tagId: string) => void;
+  handleSelect: (tag: RequiredCreateTagInput) => void;
   displayTags: RequiredCreateTagInput[] | undefined;
 };
 
@@ -71,7 +71,13 @@ export const TagsListContent = ({
                 }}
               >
                 <TagsItem
-                  onSelect={() => handleSelect(tag.id)}
+                  onSelect={() =>
+                    handleSelect({
+                      color: tag?.color,
+                      id: tag.id,
+                      name: tag.name,
+                    })
+                  }
                   value={tag.name}
                   className="hover:bg-accent/50 transition-colors"
                 >

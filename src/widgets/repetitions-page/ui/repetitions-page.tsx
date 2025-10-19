@@ -4,6 +4,7 @@ import { useMemo, type FC } from "react";
 import { useTranslations } from "next-intl";
 
 import {
+  ActionRepetitionModal,
   RepetitionList,
   type RepetitionsListRow,
 } from "@/entities/repetitions";
@@ -18,7 +19,6 @@ import {
   useRepetitionsOverlayEntityContent,
 } from "../model/hooks";
 import { mapTodayRepetitionsToListData } from "../model";
-import { ActionRepetitionModal } from "./modals/complete-repetition";
 
 export const RepetitionsPage: FC = () => {
   const t = useTranslations("Repetitions");

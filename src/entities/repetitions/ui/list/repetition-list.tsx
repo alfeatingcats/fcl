@@ -1,19 +1,12 @@
 import { useCallback, type FC } from "react";
 
-import { RepetitionListRow } from "../list-row";
-import type { RepetitionsListRow } from "../../model/shared";
 import type {
-  RepetitionActionState,
   RepetitionActionType,
   RepetitionOverlayPayload,
 } from "@/shared/types";
 
-type RepetitionListProps = {
-  repetitions: Array<RepetitionsListRow>;
-  onCompleteRepetition: (state: RepetitionActionState) => void;
-  onSkipRepetition: (state: RepetitionActionState) => void;
-  onWaitRepetition: (state: RepetitionActionState) => void;
-};
+import { RepetitionListRow } from "../list-row";
+import type { RepetitionListProps } from "../../model/shared";
 
 export const RepetitionList: FC<RepetitionListProps> = ({
   repetitions,

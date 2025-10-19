@@ -9,6 +9,7 @@ export type SidebarTKey = Exclude<keyof typeof messages.Sidebar, "home">;
 
 export type IntlFormatter = ReturnType<typeof createFormatter>;
 export type TimeTranslations = ReturnType<typeof useTranslations<"Time">>;
+export type Repetitions = ReturnType<typeof useTranslations<"Repetitions">>;
 export type StudyItemStatusTranslations = ReturnType<
   typeof useTranslations<"StudyItemStatus">
 >;

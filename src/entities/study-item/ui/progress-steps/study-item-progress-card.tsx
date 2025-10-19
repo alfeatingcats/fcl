@@ -12,11 +12,19 @@ import {
 import { Button } from "@/components/ui/button";
 import { ProgressStepper } from "./study-item-progress";
 import type { CFC } from "@/shared/types";
+import type { HTMLAttributes } from "react";
+import { cn } from "@/shared/lib/utils";
 
-export const StudyItemProgressCard: CFC = () => {
+type StudyItemProgressCardProps = {
+  className?: HTMLAttributes<HTMLDivElement>["className"];
+};
+
+export const StudyItemProgressCard: CFC<StudyItemProgressCardProps> = ({
+  className,
+}) => {
   const t = useTranslations("StudyItemDrawer");
   return (
-    <div className="!w-full">
+    <div className={cn("w-full", className)}>
       <Card variant="accent">
         <CardHeader>
           <CardHeading>

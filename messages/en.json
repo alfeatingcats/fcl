@@ -103,6 +103,8 @@
   "StudyItemMessages": {
     "createSuccess": "Skill \"{name}\" created successfully",
     "createError": "Failed to create skill \"{name}\"",
+    "updateSuccess": "Skill \"{name}\" updated successfully",
+    "updateError": "Failed to update skill \"{name}\"",
     "getByIdError": "Skill not found or access denied",
     "resetSuccess": "Repetitions for \"{title}\" have been reset",
     "resetError": "Failed to reset repetitions for \"{title}\""
@@ -133,6 +135,7 @@
     "next": "Next",
     "stageProgress": "Stage {current} of {total}",
     "stageLabel": "Stage",
+    "nextRepetition": "Next repetition",
     "stageCount": "{current} of {total}",
     "completeButton": "Complete repetition",
     "completeLabel": "Complete",
@@ -159,8 +162,14 @@
     "skipOverlayTitle": "Skip repetition",
     "waitOverlayTitle": "Restore repetition status",
     "difficultyLabel": "Difficulty",
+    "unsetDifficulty": "Not set",
     "veryEasy": "Very easy",
-    "veryDifficult": "Very difficult"
+    "easy": "Easy",
+    "medium": "Medium",
+    "difficult": "Difficult",
+    "veryDifficult": "Very difficult",
+    "scheduledAt": "Review Time",
+    "completedAt": "Completed At"
   },
   "RepetitionsMessages": {
     "completeSuccess": "Repetition marked as completed",

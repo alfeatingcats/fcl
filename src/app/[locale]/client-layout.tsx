@@ -1,4 +1,5 @@
 "use client";
+
 import type { CFC } from "@/shared/types";
 import { Toaster } from "@/components/ui/sonner";
 import { TRPCReactProvider } from "@/trpc/react";

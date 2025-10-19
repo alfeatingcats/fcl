@@ -11,9 +11,9 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import type { StudyItem } from "@prisma/client";
-import { ScrollArea } from "@/components/ui/scroll-area";
 
 import { useStudyItemTable } from "../model/use-table";
+import { OverlayScrollbarsComponent } from "overlayscrollbars-react";
 
 interface StudyItemTableContentProps {
   studyItems: Array<StudyItem>;
@@ -26,10 +26,14 @@ export const StudyItemTableContent: FC<StudyItemTableContentProps> = ({
   const { table } = useStudyItemTable(studyItems);
 
   return (
-    <ScrollArea
-      type="auto"
+    <OverlayScrollbarsComponent
       className="rounded-md border"
-      scrollBarProps={{ orientation: "horizontal" }}
+      element="span"
+      options={{
+        scrollbars: { autoHide: "scroll" },
+        overflow: { x: "scroll", y: "hidden" },
+      }}
+      defer
     >
       <Table>
         <TableHeader>
@@ -87,6 +91,6 @@ export const StudyItemTableContent: FC<StudyItemTableContentProps> = ({
           )}
         </TableBody>
       </Table>
-    </ScrollArea>
+    </OverlayScrollbarsComponent>
   );
 };

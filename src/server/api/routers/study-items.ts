@@ -137,38 +137,82 @@ export const studyItemsRouter = createTRPCRouter({
   update: protectedProcedure
     .input(UpdateStudyItemSchema)
     .mutation(async ({ ctx, input }) => {
-      // Check access permissions
-      const existingItem = await ctx.db.studyItem.findFirst({
-        where: {
-          id: input.id,
-          createdById: ctx.session.user.id,
-        },
-      });
-
-      if (!existingItem) {
-        throw new TRPCError({
-          code: "NOT_FOUND",
-          message: "Study item not found",
+      return await ctx.db.$transaction(async (tx) => {
+        // Check access permissions
+        const existingItem = await tx.studyItem.findFirst({
+          where: {
+            id: input.id,
+            createdById: ctx.session.user.id,
+          },
         });
-      }
 
-      const updateData: Record<string, unknown> = {};
-      if (!isNil(input.title)) updateData.title = input.title;
-      if (!isNil(input.description)) updateData.description = input.description;
-      if (!isNil(input.status)) {
-        updateData.status = input.status;
-        if (input.status === "COMPLETED") {
-          updateData.completedAt = new Date();
+        if (!existingItem) {
+          throw new TRPCError({
+            code: "NOT_FOUND",
+            message: "Study item not found",
+          });
         }
-      }
 
-      return await ctx.db.studyItem.update({
-        where: { id: input.id },
-        data: updateData,
-        include: {
-          repetitions: { orderBy: { repetitionNumber: "asc" } },
-          itemTags: { include: { tag: true } },
-        },
+        // Prepare update data for the study item
+        const updateData: Record<string, unknown> = {};
+        if (!isNil(input.title)) updateData.title = input.title;
+        if (!isNil(input.description))
+          updateData.description = input.description;
+        if (!isNil(input.status)) {
+          updateData.status = input.status;
+          if (input.status === "COMPLETED") {
+            updateData.completedAt = new Date();
+          }
+        }
+
+        // Update the study item if there are changes
+        if (Object.keys(updateData).length > 0) {
+          await tx.studyItem.update({
+            where: { id: input.id },
+            data: updateData,
+          });
+        }
+
+        // Handle tags synchronization if tagIds provided
+        if (!isNil(input.tagIds)) {
+          // Delete existing tag connections
+          await tx.studyItemTag.deleteMany({
+            where: {
+              studyItemId: input.id,
+            },
+          });
+
+          // Create new tag connections
+          if (input.tagIds.length > 0) {
+            const tagConnections = input.tagIds.map((tagId) => ({
+              studyItemId: input.id,
+              tagId,
+            }));
+
+            await tx.studyItemTag.createMany({
+              data: tagConnections,
+            });
+          }
+        }
+
+        // Return updated item with all relations
+        return await tx.studyItem.findUnique({
+          where: { id: input.id },
+          include: {
+            repetitions: {
+              orderBy: { repetitionNumber: "asc" },
+            },
+            itemTags: {
+              include: { tag: true },
+            },
+            createdBy: {
+              select: {
+                name: true,
+                image: true,
+              },
+            },
+          },
+        });
       });
     }),
 

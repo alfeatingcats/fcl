@@ -3,5 +3,8 @@ export type {
   CurrentPoint,
   RepetitionChartProps,
   RepetitionsListRow,
+  ActionRepetitionModalProps,
+  RepetitionSummary,
+  RepetitionListProps,
 } from "./types";
 export { getDefaultRepetitionDates } from "./utils";

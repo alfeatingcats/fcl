@@ -7,7 +7,7 @@ import { type RepetitionsListRow } from "../../model/shared";
 import { NextEventDateTime } from "../next-event-date-time";
 import { cn } from "@/shared/lib/utils";
 import { RepetitionStage } from "../repetition-stage";
-import { CardDropdown } from "../card-dropdown";
+import { RepetitionActionDropdown } from "../card-dropdown";
 import type { RepetitionActionType } from "@/shared/types";
 
 type RepetitionListRowProps = RepetitionsListRow & {
@@ -54,7 +54,7 @@ export const RepetitionListRow: FC<RepetitionListRowProps> = ({
           <NextEventDateTime scheduledAt={scheduledAt} />
         </div>
         <div className="flex h-full items-start pt-2 pr-2">
-          <CardDropdown
+          <RepetitionActionDropdown
             status={status}
             onCompleteRepetition={onCompleteRepetition}
             onSkipRepetition={onSkipRepetition}

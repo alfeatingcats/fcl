@@ -20,6 +20,9 @@ export { useTodayRepetitions } from "./model";
 export {
   RepetitionMicroChart,
   RepetitionList,
-  CardDropdown,
   RadioGroupDifficulty,
+  RepetitionDifficulty,
+  CompletedEventDateTime,
+  NextEventDateTime,
+  ActionRepetitionModal,
 } from "./ui";

@@ -1,0 +1,1 @@
+export { RepetitionsTableContent } from "./table";

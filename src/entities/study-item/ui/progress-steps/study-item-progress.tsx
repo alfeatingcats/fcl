@@ -31,6 +31,7 @@ export const ProgressStepper = () => {
   const format = useFormatter();
   const t = useTranslations("Time");
   const steps = createStepTimeline(format, t);
+
   return (
     <div className="!w-full space-y-8 text-start">
       <Stepper defaultValue={1} orientation="vertical" className="!w-full">
