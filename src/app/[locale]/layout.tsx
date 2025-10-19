@@ -1,4 +1,5 @@
 import "@/styles/globals.css";
+import "overlayscrollbars/overlayscrollbars.css";
 
 import { type Metadata } from "next";
 import { notFound } from "next/navigation";

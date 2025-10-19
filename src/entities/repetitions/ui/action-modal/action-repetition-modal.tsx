@@ -18,7 +18,6 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import type { OverlayEntityContent } from "@/shared/types";
 
 import {
   Item,
@@ -29,21 +28,10 @@ import {
 } from "@/components/ui/item";
 import { useResetState } from "ahooks";
 import { isNil } from "es-toolkit";
-
-type RepetitionSummary = {
-  title?: string;
-  description?: string | null;
-  repetitionNumber?: number | string;
-};
-
-type ActionRepetitionModalProps = {
-  onClear: () => void;
-  isOpen: boolean;
-} & OverlayEntityContent & {
-    renderContent: ReactNode;
-    repetitionNumber: string | number;
-    renderSubmitButton: ReactElement;
-  };
+import type {
+  ActionRepetitionModalProps,
+  RepetitionSummary,
+} from "../../model/shared/types";
 
 export const ActionRepetitionModal: FC<ActionRepetitionModalProps> = ({
   isOpen,

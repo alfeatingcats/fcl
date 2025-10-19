@@ -103,6 +103,8 @@
   "StudyItemMessages": {
     "createSuccess": "Навичка \"{name}\" успішно створена",
     "createError": "Не вдалося створити навичку \"{name}\"",
+    "updateSuccess": "Навичка \"{name}\" успішно оновлена",
+    "updateError": "Не вдалося оновити навичку \"{name}\"",
     "getByIdError": "Навичку не знайдено або доступ заборонено",
     "resetSuccess": "Повторення для «{title}» скинуто",
     "resetError": "Не вдалося скинути повторення для «{title}»"
@@ -133,6 +135,7 @@
     "next": "Наступне",
     "stageProgress": "Етап {current} з {total}",
     "stageLabel": "Етап",
+    "nextRepetition": "Наступне повторення",
     "stageCount": "{current} з {total}",
     "completeButton": "Завершити повторення",
     "completeLabel": "Завершити",
@@ -159,8 +162,14 @@
     "skipOverlayTitle": "Пропустити повторення",
     "waitOverlayTitle": "Відновити статус повторення",
     "difficultyLabel": "Складність",
+    "unsetDifficulty": "Не вказано",
     "veryEasy": "Дуже легко",
-    "veryDifficult": "Дуже складно"
+    "easy": "Легко",
+    "medium": "Середньо",
+    "difficult": "Складно",
+    "veryDifficult": "Дуже складно",
+    "scheduledAt": "Час повторення",
+    "completedAt": "Час завершення"
   },
   "RepetitionsMessages": {
     "completeSuccess": "Повторення позначено як виконане",

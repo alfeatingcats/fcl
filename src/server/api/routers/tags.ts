@@ -173,25 +173,31 @@ export const tagsRouter = createTRPCRouter({
   searchForAutocomplete: protectedProcedure
     .input(
       z.object({
-        query: z.string().min(1).max(50),
+        query: z.string().min(0).max(50),
         limit: z.number().min(1).max(10).default(5),
         excludeIds: z.array(z.string().cuid()).optional().default([]),
       }),
     )
     .query(async ({ ctx, input }) => {
+      const hasQuery = input.query.trim().length > 0;
+
       return await ctx.db.tag.findMany({
         where: {
-          name: {
-            contains: input.query,
-            mode: "insensitive",
-          },
+          // If there is a query - filter by name
+          ...(hasQuery && {
+            name: {
+              contains: input.query,
+              mode: "insensitive",
+            },
+          }),
+          // Always exclude already selected tags
           id: {
             notIn: input.excludeIds,
           },
         },
         take: input.limit,
         orderBy: [
-          { itemTags: { _count: "desc" } }, // Popular first
+          { itemTags: { _count: "desc" } }, // Most popular first
           { name: "asc" }, // Then alphabetically
         ],
         select: {

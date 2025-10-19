@@ -1,5 +1,7 @@
-import { useQueryErrorHandler } from "@/shared/api";
+"use client";
+
 import { api, type RouterOutputs } from "@/trpc/react";
+import { useQueryErrorHandler } from "@/shared/api";
 
 export interface UseTagAutocompleteParams {
   query: string;
@@ -17,12 +19,12 @@ export type UseTagAutocomplete = (
   params: UseTagAutocompleteParams,
 ) => UseTagAutocompleteResult;
 
-export const useTagAutocomplete: UseTagAutocomplete = ({
+export const useTagAutocomplete = ({
   query,
   selectedTagIds,
   shouldFetchTags,
   maxTagResults = 10,
-}) => {
+}: UseTagAutocompleteParams): UseTagAutocompleteResult => {
   const {
     error,
     isPending,
@@ -34,5 +36,8 @@ export const useTagAutocomplete: UseTagAutocomplete = ({
 
   useQueryErrorHandler(error);
 
-  return { autocompleteTags, isPending };
+  return {
+    autocompleteTags,
+    isPending,
+  };
 };

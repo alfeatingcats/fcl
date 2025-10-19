@@ -1,101 +1,88 @@
-import { isNil } from "es-toolkit";
-import { isEmpty } from "es-toolkit/compat";
-import { useEffect, useState, useCallback, useMemo } from "react";
+import { useEffect, useMemo, useState, useCallback } from "react";
 
-import { useTagManagement } from "./use-manage-tags";
-import type { RequiredCreateTagInput, UseTagSelector } from "./types";
+import { useTagAutocomplete } from "@/entities/tag";
 
-export const useTagSelector: UseTagSelector = ({
+import type { RequiredCreateTagInput, UseTagSelectorParams } from "./types";
+
+export type Tag = {
+  id: string;
+  name: string;
+  color?: string | null;
+};
+
+export type UseTagSelectorResult = {
+  query: string;
+  setQuery: (v: string) => void;
+  handleClearInput: () => void;
+
+  selectedTags: Tag[];
+  selectedTagIds: string[];
+  handleSelect: (tagId: string) => void;
+  handleRemove: (tagId: string) => void;
+
+  displayTags: Tag[];
+  isPending: boolean;
+  error?: unknown;
+};
+
+export const useTagSelector = ({
   query,
-  onChange,
   defaultTags,
-}) => {
-  const [selectedTags, updateSelectedTags] = useState<RequiredCreateTagInput[]>(
+  onChange,
+}: UseTagSelectorParams) => {
+  const [selectedTags, setSelectedTags] = useState<RequiredCreateTagInput[]>(
     defaultTags ?? [],
   );
 
-  const selectedTagIds = useMemo(() => {
-    return selectedTags.map((tag) => tag.id);
-  }, [selectedTags]);
+  const selectedTagIds = useMemo(
+    () => selectedTags.map((t) => t.id),
+    [selectedTags],
+  );
 
-  const {
-    allTags,
-    autocompleteTags,
-    isAllTagsPending,
-    isAutocompleteTagsPending,
-  } = useTagManagement({
-    query,
-    tagIds: selectedTagIds,
-  });
+  const handleSelect = useCallback((tag: RequiredCreateTagInput) => {
+    setSelectedTags((prev) => {
+      const isSelected = prev.some((t) => t.id === tag.id);
+      return isSelected ? prev.filter((t) => t.id !== tag.id) : [...prev, tag];
+    });
+  }, []);
 
-  const availableTags = useMemo(() => {
-    return allTags?.map((tag) => ({
-      id: tag.id,
-      name: tag.name,
-      color: tag.color ?? "",
-    }));
-  }, [allTags]);
-
-  const transformedAutocompleteTags = useMemo(() => {
-    return autocompleteTags?.map((tag) => ({
-      id: tag.id,
-      name: tag.name,
-      color: tag.color ?? "",
-    }));
-  }, [autocompleteTags]);
+  const handleRemove = useCallback((id: string) => {
+    setSelectedTags((prev) => prev.filter((t) => t.id !== id));
+  }, []);
 
   useEffect(() => {
-    updateSelectedTags(defaultTags ?? []);
-    if (!isNil(defaultTags) && !isEmpty(defaultTags)) {
-      const defaultTagIds = defaultTags.map((tag) => tag.id);
-      onChange(defaultTags, defaultTagIds);
-    }
+    onChange(selectedTags, selectedTagIds);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [defaultTags]);
+  }, [selectedTags, selectedTagIds]);
 
-  const handleRemove = useCallback(
-    (tagId: string) => {
-      const newSelectedTags = selectedTags.filter((tag) => tag.id !== tagId);
-      updateSelectedTags(newSelectedTags);
+  const { autocompleteTags, isPending } = useTagAutocomplete({
+    query: query ?? "",
+    selectedTagIds: [], // Remove exclusion to allow potential overlap if needed, but filter in display
+    shouldFetchTags: true,
+    maxTagResults: 10,
+  });
 
-      const newSelectedTagIds = newSelectedTags.map((tag) => tag.id);
-      onChange(newSelectedTags, newSelectedTagIds);
-    },
-    [selectedTags, onChange],
-  );
+  const filteredSelected = useMemo(() => {
+    return selectedTags.filter((tag) =>
+      tag.name.toLowerCase().includes(query?.toLowerCase() ?? ""),
+    );
+  }, [selectedTags, query]);
 
-  const handleSelect = useCallback(
-    (tagId: string) => {
-      const tagExists = selectedTags.some((tag) => tag.id === tagId);
-      let newSelectedTags: RequiredCreateTagInput[];
-
-      if (tagExists) {
-        newSelectedTags = selectedTags.filter((tag) => tag.id !== tagId);
-      } else {
-        const tagToAdd =
-          availableTags?.find((tag) => tag.id === tagId) ??
-          transformedAutocompleteTags?.find((tag) => tag.id === tagId);
-
-        if (!tagToAdd) return;
-        newSelectedTags = [...selectedTags, tagToAdd];
-      }
-
-      updateSelectedTags(newSelectedTags);
-
-      const newSelectedTagIds = newSelectedTags.map((tag) => tag.id);
-      onChange(newSelectedTags, newSelectedTagIds);
-    },
-    [selectedTags, availableTags, transformedAutocompleteTags, onChange],
-  );
+  const displayTags = useMemo(() => {
+    // Merge filtered selected (first) + autocomplete suggestions
+    // Assume autocomplete may include some selected if overlap, but dedupe by id
+    const combined = [...filteredSelected, ...(autocompleteTags ?? [])];
+    return combined.filter(
+      (tag, index, self) => index === self.findIndex((t) => t.id === tag.id),
+    );
+  }, [filteredSelected, autocompleteTags]);
 
   return {
     selectedTags,
     selectedTagIds,
-    availableTags,
-    autocompleteTags: transformedAutocompleteTags,
-    isAllTagsPending,
-    isAutocompleteTagsPending,
     handleSelect,
     handleRemove,
+    displayTags,
+    isPending,
   };
 };

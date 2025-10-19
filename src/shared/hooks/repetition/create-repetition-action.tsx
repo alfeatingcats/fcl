@@ -1,12 +1,12 @@
 import { useCallback, useMemo } from "react";
+import type { RouterInputs } from "@/trpc/react";
 import type { UseFormReturn } from "react-hook-form";
 
+import type { TrpcMutationHook } from "@/shared/api/types";
 import type { RepetitionActionState } from "@/shared/types";
 import type { SkipRepetitionInput } from "@/shared/api/schemas";
 
 import { useRepetitionActionState } from "./use-repetition-action-state";
-import type { RouterInputs } from "@/trpc/react";
-import type { TrpcMutationHook } from "@/shared/api/types";
 
 export const createRepetitionAction = <
   TFormData extends SkipRepetitionInput,

@@ -2,6 +2,7 @@
 import { useTranslations } from "next-intl";
 import { useMemo, type ComponentProps } from "react";
 import { Expand, LoaderCircleIcon } from "lucide-react";
+import { OverlayScrollbarsComponent } from "overlayscrollbars-react";
 
 import {
   Drawer,
@@ -17,9 +18,6 @@ import { cn } from "@/shared/lib/utils";
 import type { CFC, OverlayFormProps } from "@/shared/types";
 import { Button } from "@/components/ui/button";
 
-import { ScrollArea } from "../../scroll-area";
-import type { CreateStudyItemInput } from "@/shared/api/schemas";
-
 type FormDrawerProps = {
   title: string;
   description: string;
@@ -28,7 +26,7 @@ type FormDrawerProps = {
   submitButtonProps?: ComponentProps<typeof Button>;
   cancelButtonProps?: ComponentProps<typeof Button>;
   contentCN?: string;
-} & Omit<OverlayFormProps<CreateStudyItemInput>, "onSubmit">;
+} & Omit<OverlayFormProps<object>, "onSubmit">;
 
 export const FormDrawer: CFC<FormDrawerProps> = ({
   title,
@@ -55,7 +53,14 @@ export const FormDrawer: CFC<FormDrawerProps> = ({
       onOpenChange={onOpenChange}
     >
       <DrawerContent className={cn("!max-w-[28rem] py-6", contentCN)}>
-        <ScrollArea type="auto" className="h-screen overflow-y-hidden">
+        <OverlayScrollbarsComponent
+          element="div"
+          options={{
+            scrollbars: { autoHide: "scroll" },
+            overflow: { x: "hidden", y: "scroll" },
+          }}
+          defer
+        >
           <div className="space-y-4 px-6 pb-0.5">
             <DrawerHeader className="mb-5 p-0">
               <DrawerTitle className="flex items-center justify-between">
@@ -69,7 +74,7 @@ export const FormDrawer: CFC<FormDrawerProps> = ({
 
             {children}
           </div>
-        </ScrollArea>
+        </OverlayScrollbarsComponent>
 
         <DrawerFooter className="px-6 pb-0">
           <Button disabled={isLoading} {...restSubmitProps}>

@@ -6,6 +6,7 @@ import { AppSidebar } from "@/components/app-sidebar";
 import { SidebarInset } from "@/components/ui/sidebar";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import type { StrictBasicUserInfo } from "@/shared/api/schemas";
+import { OverlayScrollbarsComponent } from "overlayscrollbars-react";
 
 type ClientLayoutProps = {
   user: StrictBasicUserInfo;
@@ -18,7 +19,7 @@ export const ClientLayout: CFC<ClientLayoutProps> = ({
   sidebarValue,
 }) => {
   return (
-    <div className="flex h-screen w-screen overflow-hidden">
+    <div className="flex h-screen w-screen !max-w-screen overflow-hidden">
       <SidebarProvider
         defaultOpen={sidebarValue}
         style={
@@ -29,14 +30,20 @@ export const ClientLayout: CFC<ClientLayoutProps> = ({
       >
         <AppSidebar user={user} />
 
-        <SidebarInset className="min-h-0 w-full min-w-0 flex-1 p-4 pt-0">
-          {/* <ScrollArea
-            scrollBarProps={{ orientation: "vertical" }}
-            className="overflow-y-hidden"
-          > */}
-          <Header />
-          {children}
-          {/* </ScrollArea> */}
+        <SidebarInset className="min-h-0 w-full min-w-0 flex-1">
+          <OverlayScrollbarsComponent
+            element="div"
+            options={{
+              scrollbars: { autoHide: "scroll" },
+              overflow: { x: "hidden", y: "scroll" },
+            }}
+            defer
+          >
+            <div className="min-h-full w-full p-4 pt-0">
+              <Header />
+              {children}
+            </div>
+          </OverlayScrollbarsComponent>
         </SidebarInset>
       </SidebarProvider>
     </div>

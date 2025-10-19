@@ -23,7 +23,14 @@ export const UpdateStudyItemSchema = z.object({
     .optional(),
   description: z.string().max(1000, "Description is too long").optional(),
   status: z.enum(["IN_PROGRESS", "COMPLETED", "PAUSED", "ARCHIVED"]).optional(),
+  tagIds: z
+    .array(z.string().cuid("Invalid tag ID"))
+    .max(10, "Maximum of 10 tags allowed")
+    .optional()
+    .default([]),
 });
+
+export type UpdateStudyItemInput = z.input<typeof UpdateStudyItemSchema>;
 
 export const ReadStudyItemsSchema = z.object({
   status: z.enum(["IN_PROGRESS", "COMPLETED", "PAUSED", "ARCHIVED"]).optional(),

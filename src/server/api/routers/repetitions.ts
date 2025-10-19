@@ -105,7 +105,12 @@ export const repetitionsRouter = createTRPCRouter({
     .mutation(async ({ ctx, input }) => {
       return await ctx.db.studyRepetition.update({
         where: { id: input.repetitionId },
-        data: { status: "PENDING", updatedAt: new Date() },
+        data: {
+          status: "PENDING",
+          updatedAt: new Date(),
+          completedAt: null,
+          difficulty: null,
+        },
       });
     }),
 
