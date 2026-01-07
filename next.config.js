@@ -15,7 +15,6 @@ const withNextIntl = createNextIntlPlugin({
 const config = {
   typedRoutes: true,
   output: "standalone",
-  swcMinify: true,
 };
 
 export default withNextIntl(config);
