@@ -5,4 +5,8 @@ echo "Running database migrations..."
 node_modules/.bin/prisma migrate deploy
 
 echo "Starting application..."
-exec node standalone-server.js
+if [ -f "standalone-server.js" ]; then
+    exec node standalone-server.js
+else
+    exec node server.js
+fi
