@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "next build",
+    "build": "prisma migrate deploy && next build",
     "check": "next lint && tsc --noEmit",
     "db:generate": "prisma migrate dev",
     "db:migrate": "prisma migrate deploy",
@@ -26,6 +26,7 @@
     "@hookform/resolvers": "5.2.1",
     "@js-temporal/polyfill": "^0.5.1",
     "@prisma/client": "6.5.0",
+    "prisma": "6.5.0",
     "@radix-ui/react-accordion": "1.2.11",
     "@radix-ui/react-alert-dialog": "1.1.14",
     "@radix-ui/react-aspect-ratio": "1.1.7",
@@ -104,7 +105,6 @@
     "postcss": "8.5.3",
     "prettier": "3.5.3",
     "prettier-plugin-tailwindcss": "0.6.11",
-    "prisma": "6.5.0",
     "tailwindcss": "4.0.15",
     "typescript": "5.9.2",
     "typescript-eslint": "8.27.0"
@@ -117,6 +117,14 @@
     "overrides": {
       "@types/react": "19.1.11",
       "@types/react-dom": "19.1.8"
-    }
+    },
+    "onlyBuiltDependencies": [
+      "@prisma/client",
+      "@prisma/engines",
+      "esbuild",
+      "prisma",
+      "sharp",
+      "unrs-resolver"
+    ]
   }
 }
