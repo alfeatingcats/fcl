@@ -25,7 +25,7 @@ WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
-RUN pnpm dlx prisma generate
+RUN npx prisma generate
 
 # ENV NEXT_TELEMETRY_DISABLED 1
 
