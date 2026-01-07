@@ -34,8 +34,9 @@ COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 COPY --from=builder /app/public ./public
 COPY --from=builder /app/prisma ./prisma
 
-RUN npm install prisma@6.5.0
+RUN npm install prisma@6.5.0 --no-save --no-package-lock
 
+# 3. Entrypoint
 COPY --from=builder /app/docker-entrypoint.sh ./
 RUN chmod +x docker-entrypoint.sh
 
