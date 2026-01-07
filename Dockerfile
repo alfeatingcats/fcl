@@ -29,15 +29,14 @@ RUN apk add --no-cache openssl libc6-compat
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
-RUN npm install prisma@6.5.0 @prisma/client@6.5.0 --omit=dev
-
-COPY --from=builder /app/prisma ./prisma
-
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 COPY --from=builder /app/public ./public
-COPY --from=builder /app/docker-entrypoint.sh ./
+COPY --from=builder /app/prisma ./prisma
 
+RUN npm install prisma@6.5.0
+
+COPY --from=builder /app/docker-entrypoint.sh ./
 RUN chmod +x docker-entrypoint.sh
 
 USER nextjs
