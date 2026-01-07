@@ -14,7 +14,7 @@ import {
 import { useCallback, useMemo } from "react";
 import { PillIndicator } from "@/components/kibo-ui/pill";
 import { RepetitionActionDropdown } from "@/entities/repetitions/ui/card-dropdown";
-import { noop } from "es-toolkit";
+
 import type { RepetitionListProps } from "@/entities/repetitions/model";
 import type {
   RepetitionActionType,

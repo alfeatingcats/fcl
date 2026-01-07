@@ -1,7 +1,7 @@
 import { cookies } from "next/headers";
 import {
   USER_STORE_LOCAL_STORAGE_KEY,
-  type UserStoreState,
+  type UserStore,
 } from "@/shared/stores/timezone-store";
 import { getRequestConfig } from "next-intl/server";
 import { hasLocale, type Formats } from "next-intl";
@@ -20,7 +20,7 @@ export default getRequestConfig(async ({ requestLocale }) => {
     if (zustandCookie) {
       const parsed = JSON.parse(
         decodeURIComponent(zustandCookie),
-      ) as StorageValue<Partial<UserStoreState>>;
+      ) as StorageValue<Partial<UserStore>>;
 
       if (parsed.state?.timeZone) {
         tz = parsed.state.timeZone;

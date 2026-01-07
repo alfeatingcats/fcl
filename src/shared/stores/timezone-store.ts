@@ -2,7 +2,7 @@ import { create } from "zustand";
 import { setCookie, getCookie } from "tiny-cookie";
 import { persist, createJSONStorage } from "zustand/middleware";
 
-export type UserStoreState = {
+export type UserStore = {
   timeZone: string;
   setTimeZone: (tz: string) => void;
 };
@@ -54,7 +54,7 @@ const cookieStorage = {
   },
 };
 
-export const useUserStore = create<UserStoreState>()(
+export const useUserStore = create<UserStore>()(
   persist(
     (set) => ({
       timeZone: "UTC",
@@ -72,7 +72,6 @@ export const useUserStore = create<UserStoreState>()(
             return;
           }
 
-          // Automatically update timezone after loading
           if (typeof window !== "undefined" && state) {
             const browserTz = Intl.DateTimeFormat().resolvedOptions().timeZone;
             const currentTz = state.timeZone ?? "UTC";

@@ -15,7 +15,7 @@ import { db } from "@/server/db";
 import { auth } from "@/server/auth";
 import { initTRPC, TRPCError } from "@trpc/server";
 import { USER_STORE_LOCAL_STORAGE_KEY } from "@/shared/stores";
-import type { UserStoreState } from "@/shared/stores/timezone-store";
+import type { UserStore } from "@/shared/stores/timezone-store";
 
 /**
  * 1. CONTEXT
@@ -47,7 +47,7 @@ export const createTRPCContext = async (opts: { headers: Headers }) => {
         );
 
         const parsed = JSON.parse(value) as StorageValue<
-          Partial<UserStoreState>
+          Partial<UserStore>
         >;
 
         if (parsed.state?.timeZone) {

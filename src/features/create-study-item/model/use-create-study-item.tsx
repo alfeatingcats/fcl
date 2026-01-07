@@ -2,13 +2,12 @@ import { noop } from "es-toolkit";
 
 import { api } from "@/trpc/react";
 import { useMutationErrorHandler } from "@/shared/api";
-import type { CallbackHandlers } from "@/shared/types";
 import type { TrpcMutationHook } from "@/shared/api/types";
 
 export const useCreateStudyItem: TrpcMutationHook<"studyItem", "create"> = ({
   onError = noop,
   onSuccess,
-}: CallbackHandlers) => {
+}) => {
   const utils = api.useUtils();
   const handleError = useMutationErrorHandler();
 

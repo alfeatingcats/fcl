@@ -54,7 +54,7 @@ export const RepetitionActionDropdown: FC<RepetitionActionDropdownProps> = ({
             {t("completeButton")}
           </DropdownMenuItem>
           <DropdownMenuItem
-            disabled={status === "SKIPPED"}
+            disabled={status === "SKIPPED" || status === "COMPLETED"}
             onClick={() => onSkipRepetition("skip")}
           >
             <UndoDot className="scale-x-[-1]" /> {t("skipButton")}
