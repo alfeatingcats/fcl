@@ -3,10 +3,7 @@ FROM --platform=linux/amd64 node:20-alpine AS deps
 RUN apk add --no-cache libc6-compat openssl
 WORKDIR /app
 
-# Install Prisma Client
 COPY prisma ./prisma
-
-# Install dependencies based on the preferred package manager
 COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* ./
 
 RUN \
@@ -15,6 +12,7 @@ RUN \
     elif [ -f pnpm-lock.yaml ]; then npm install -g pnpm && pnpm i; \
     else echo "Lockfile not found." && exit 1; \
     fi
+
 
 ##### BUILDER
 FROM --platform=linux/amd64 node:20-alpine AS builder
@@ -27,8 +25,6 @@ COPY . .
 
 RUN npx prisma generate
 
-# ENV NEXT_TELEMETRY_DISABLED 1
-
 RUN \
     if [ -f yarn.lock ]; then SKIP_ENV_VALIDATION=1 yarn build; \
     elif [ -f package-lock.json ]; then SKIP_ENV_VALIDATION=1 npm run build; \
@@ -36,34 +32,37 @@ RUN \
     else echo "Lockfile not found." && exit 1; \
     fi
 
+
 ##### RUNNER
 FROM --platform=linux/amd64 node:20-alpine AS runner
 WORKDIR /app
 
-ENV NODE_ENV production
+ENV NODE_ENV=production
+
+RUN apk add --no-cache libc6-compat openssl
 
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
-COPY --from=builder /app/node_modules/.bin/prisma ./node_modules/.bin/prisma
-COPY --from=builder /app/node_modules/@prisma ./node_modules/@prisma
-COPY --from=builder /app/prisma ./prisma
-COPY --from=builder /app/node_modules/prisma ./node_modules/prisma
 
+COPY --from=builder /app/package.json ./
+RUN npm install prisma@6.5.0 @prisma/client@6.5.0
+
+# Prisma schema
+COPY --from=builder /app/prisma ./prisma
+
+# Next.js standalone
 COPY --from=builder /app/next.config.js ./
 COPY --from=builder /app/public ./public
-COPY --from=builder /app/package.json ./package.json
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
-
+# entrypoint
 COPY --from=builder /app/docker-entrypoint.sh ./
 RUN chmod +x docker-entrypoint.sh
 
 USER nextjs
-
 EXPOSE 3000
-
 ENV HOSTNAME="0.0.0.0"
 
 ENTRYPOINT ["./docker-entrypoint.sh"]
