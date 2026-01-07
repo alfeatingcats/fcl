@@ -3,66 +3,46 @@ FROM --platform=linux/amd64 node:20-alpine AS deps
 RUN apk add --no-cache libc6-compat openssl
 WORKDIR /app
 
-COPY prisma ./prisma
-COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* ./
+COPY package.json pnpm-lock.yaml ./
+COPY prisma ./prisma 
 
-RUN \
-    if [ -f yarn.lock ]; then yarn --frozen-lockfile; \
-    elif [ -f package-lock.json ]; then npm ci; \
-    elif [ -f pnpm-lock.yaml ]; then npm install -g pnpm && pnpm i; \
-    else echo "Lockfile not found." && exit 1; \
-    fi
-
+RUN npm install -g pnpm && pnpm i --frozen-lockfile
 
 ##### BUILDER
 FROM --platform=linux/amd64 node:20-alpine AS builder
-ARG DATABASE_URL
-ARG NEXT_PUBLIC_CLIENTVAR
 WORKDIR /app
-
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
 RUN npx prisma generate
 
-RUN \
-    if [ -f yarn.lock ]; then SKIP_ENV_VALIDATION=1 yarn build; \
-    elif [ -f package-lock.json ]; then SKIP_ENV_VALIDATION=1 npm run build; \
-    elif [ -f pnpm-lock.yaml ]; then npm install -g pnpm && SKIP_ENV_VALIDATION=1 pnpm run build; \
-    else echo "Lockfile not found." && exit 1; \
-    fi
-
+ENV SKIP_ENV_VALIDATION=1
+RUN npm install -g pnpm && pnpm run build
 
 ##### RUNNER
 FROM --platform=linux/amd64 node:20-alpine AS runner
 WORKDIR /app
 
 ENV NODE_ENV=production
-
-RUN apk add --no-cache libc6-compat openssl
+RUN apk add --no-cache openssl libc6-compat
 
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
-
-COPY --from=builder /app/package.json ./
-RUN npm install prisma@6.5.0 @prisma/client@6.5.0
-
-# Prisma schema
 COPY --from=builder /app/prisma ./prisma
+COPY --from=builder /app/node_modules/prisma ./node_modules/prisma
+COPY --from=builder /app/node_modules/@prisma ./node_modules/@prisma
 
-# Next.js standalone
-COPY --from=builder /app/next.config.js ./
-COPY --from=builder /app/public ./public
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+COPY --from=builder /app/public ./public
 
-# entrypoint
 COPY --from=builder /app/docker-entrypoint.sh ./
 RUN chmod +x docker-entrypoint.sh
 
 USER nextjs
 EXPOSE 3000
 ENV HOSTNAME="0.0.0.0"
+ENV PORT=3000
 
 ENTRYPOINT ["./docker-entrypoint.sh"]

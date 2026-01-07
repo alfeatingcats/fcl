@@ -2,7 +2,12 @@
 set -e
 
 echo "Running database migrations..."
-node_modules/.bin/prisma migrate deploy
+npx prisma migrate deploy
 
 echo "Starting application..."
-exec node server.js
+if [ -f "server.js" ]; then
+    exec node server.js
+else
+    echo "Error: server.js not found!"
+    exit 1
+fi
