@@ -95,6 +95,10 @@
   },
   "StudyItem": {
     "getByIdTitle": "Skill details",
+    "title": "Skill",
+    "deleteButton": "Delete skill",
+    "deleteConfirmTitle": "Delete this skill?",
+    "deleteConfirmDescription": "This will permanently delete the skill and all its repetitions. This action cannot be undone.",
     "getByIdLoading": "Loading skill information...",
     "resetButton": "Reset repetitions",
     "resetConfirmTitle": "Reset repetitions for this skill?",
@@ -105,6 +109,8 @@
     "createError": "Failed to create skill \"{name}\"",
     "updateSuccess": "Skill \"{name}\" updated successfully",
     "updateError": "Failed to update skill \"{name}\"",
+    "deleteSuccess": "Skill \"{name}\" deleted successfully",
+    "deleteError": "Failed to delete skill \"{name}\"",
     "getByIdError": "Skill not found or access denied",
     "resetSuccess": "Repetitions for \"{title}\" have been reset",
     "resetError": "Failed to reset repetitions for \"{title}\""

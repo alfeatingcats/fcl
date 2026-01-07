@@ -1,83 +1,75 @@
 #!/usr/bin/env bash
-# Use this script to start a docker container for a local development database
+# Start a local development PostgreSQL database using Podman or Docker
 
-# TO RUN ON WINDOWS:
-# 1. Install WSL (Windows Subsystem for Linux) - https://learn.microsoft.com/en-us/windows/wsl/install
-# 2. Install Docker Desktop or Podman Deskop
-# - Docker Desktop for Windows - https://docs.docker.com/docker-for-windows/install/
-# - Podman Desktop - https://podman.io/getting-started/installation
-# 3. Open WSL - `wsl`
-# 4. Run this script - `./start-database.sh`
-
-# On Linux and macOS you can run this script directly - `./start-database.sh`
-
-# import env variables from .env
 set -a
 source .env
 
+# Parse DB info from DATABASE_URL
 DB_PASSWORD=$(echo "$DATABASE_URL" | awk -F':' '{print $3}' | awk -F'@' '{print $1}')
-DB_PORT=$(echo "$DATABASE_URL" | awk -F':' '{print $4}' | awk -F'\/' '{print $1}')
+DB_PORT=$(echo "$DATABASE_URL" | awk -F':' '{print $4}' | awk -F'/' '{print $1}')
 DB_NAME=$(echo "$DATABASE_URL" | awk -F'/' '{print $4}')
 DB_CONTAINER_NAME="$DB_NAME-postgres"
 
-if ! [ -x "$(command -v docker)" ] && ! [ -x "$(command -v podman)" ]; then
-  echo -e "Docker or Podman is not installed. Please install docker or podman and try again.\nDocker install guide: https://docs.docker.com/engine/install/\nPodman install guide: https://podman.io/getting-started/installation"
+# Check if docker or podman exists
+if ! command -v docker >/dev/null 2>&1 && ! command -v podman >/dev/null 2>&1; then
+  echo "Docker or Podman is not installed. Install one and try again."
   exit 1
 fi
 
-# determine which docker command to use
-if [ -x "$(command -v docker)" ]; then
+# Select command
+if command -v docker >/dev/null 2>&1; then
   DOCKER_CMD="docker"
-elif [ -x "$(command -v podman)" ]; then
+elif command -v podman >/dev/null 2>&1; then
   DOCKER_CMD="podman"
 fi
 
-if ! $DOCKER_CMD info > /dev/null 2>&1; then
-  echo "$DOCKER_CMD daemon is not running. Please start $DOCKER_CMD and try again."
-  exit 1
-fi
-
+# Check port availability
 if command -v nc >/dev/null 2>&1; then
   if nc -z localhost "$DB_PORT" 2>/dev/null; then
     echo "Port $DB_PORT is already in use."
     exit 1
   fi
 else
-  echo "Warning: Unable to check if port $DB_PORT is already in use (netcat not installed)"
-  read -p "Do you want to continue anyway? [y/N]: " -r REPLY
+  echo "Warning: netcat not installed, can't check port."
+  read -p "Continue anyway? [y/N]: " REPLY
   if ! [[ $REPLY =~ ^[Yy]$ ]]; then
-    echo "Aborting."
     exit 1
   fi
 fi
 
+# Start existing running container
 if [ "$($DOCKER_CMD ps -q -f name=$DB_CONTAINER_NAME)" ]; then
   echo "Database container '$DB_CONTAINER_NAME' already running"
   exit 0
 fi
 
+# Start stopped container if exists
 if [ "$($DOCKER_CMD ps -q -a -f name=$DB_CONTAINER_NAME)" ]; then
   $DOCKER_CMD start "$DB_CONTAINER_NAME"
   echo "Existing database container '$DB_CONTAINER_NAME' started"
   exit 0
 fi
 
+# Handle default password
 if [ "$DB_PASSWORD" = "password" ]; then
-  echo "You are using the default database password"
-  read -p "Should we generate a random password for you? [y/N]: " -r REPLY
-  if ! [[ $REPLY =~ ^[Yy]$ ]]; then
-    echo "Please change the default password in the .env file and try again"
+  echo "Default database password detected."
+  read -p "Generate a random password? [y/N]: " REPLY
+  if [[ $REPLY =~ ^[Yy]$ ]]; then
+    DB_PASSWORD=$(openssl rand -base64 12 | tr '+/' '-_')
+    sed -i "s#:password@#:$DB_PASSWORD@#" .env
+    echo "Password updated in .env"
+  else
+    echo "Please set a secure password in .env and rerun."
     exit 1
   fi
-  # Generate a random URL-safe password
-  DB_PASSWORD=$(openssl rand -base64 12 | tr '+/' '-_')
-  sed -i '' "s#:password@#:$DB_PASSWORD@#" .env
 fi
 
+# Run the container
 $DOCKER_CMD run -d \
   --name $DB_CONTAINER_NAME \
   -e POSTGRES_USER="postgres" \
   -e POSTGRES_PASSWORD="$DB_PASSWORD" \
   -e POSTGRES_DB="$DB_NAME" \
   -p "$DB_PORT":5432 \
-  docker.io/postgres && echo "Database container '$DB_CONTAINER_NAME' was successfully created"
+  docker.io/postgres \
+  && echo "Database container '$DB_CONTAINER_NAME' created successfully."
