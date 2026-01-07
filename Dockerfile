@@ -53,8 +53,19 @@ COPY --from=builder /app/package.json ./package.json
 COPY --from=builder /app/.next/standalone ./
 COPY --from=builder /app/.next/static ./.next/static
 
+COPY --from=builder /app/node_modules/.bin/prisma ./node_modules/.bin/prisma
+COPY --from=builder /app/node_modules/@prisma ./node_modules/@prisma
+COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma
+COPY --from=builder /app/prisma ./prisma
+
+COPY docker-entrypoint.sh ./
+RUN chmod +x docker-entrypoint.sh
+
 EXPOSE 3000
 
 ENV HOSTNAME="0.0.0.0"
 
+ENTRYPOINT ["./docker-entrypoint.sh"]
+
 CMD ["server.js"]
+
