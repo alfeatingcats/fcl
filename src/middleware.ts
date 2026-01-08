@@ -24,8 +24,3 @@ export default function middleware(
     return (authMiddleware as any)(req, event);
   }
 }
-
-export const config = {
-  matcher: ["/((?!api|_next|_vercel|.*\\..*).*)"],
-  runtime: "nodejs",
-};

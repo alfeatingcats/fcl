@@ -14,7 +14,6 @@ const withNextIntl = createNextIntlPlugin({
 /** @type {import("next").NextConfig} */
 const config = {
   typedRoutes: true,
-  output: "standalone",
 };
 
 export default withNextIntl(config);
