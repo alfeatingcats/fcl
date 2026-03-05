@@ -1,0 +1,14 @@
+import type { Prisma } from '@prisma/client';
+import * as z from 'zod';
+import { StudyRepetitionOrderByWithRelationInputObjectSchema as StudyRepetitionOrderByWithRelationInputObjectSchema } from './objects/StudyRepetitionOrderByWithRelationInput.schema';
+import { StudyRepetitionWhereInputObjectSchema as StudyRepetitionWhereInputObjectSchema } from './objects/StudyRepetitionWhereInput.schema';
+import { StudyRepetitionWhereUniqueInputObjectSchema as StudyRepetitionWhereUniqueInputObjectSchema } from './objects/StudyRepetitionWhereUniqueInput.schema';
+import { StudyRepetitionCountAggregateInputObjectSchema as StudyRepetitionCountAggregateInputObjectSchema } from './objects/StudyRepetitionCountAggregateInput.schema';
+import { StudyRepetitionMinAggregateInputObjectSchema as StudyRepetitionMinAggregateInputObjectSchema } from './objects/StudyRepetitionMinAggregateInput.schema';
+import { StudyRepetitionMaxAggregateInputObjectSchema as StudyRepetitionMaxAggregateInputObjectSchema } from './objects/StudyRepetitionMaxAggregateInput.schema';
+import { StudyRepetitionAvgAggregateInputObjectSchema as StudyRepetitionAvgAggregateInputObjectSchema } from './objects/StudyRepetitionAvgAggregateInput.schema';
+import { StudyRepetitionSumAggregateInputObjectSchema as StudyRepetitionSumAggregateInputObjectSchema } from './objects/StudyRepetitionSumAggregateInput.schema';
+
+export const StudyRepetitionAggregateSchema: z.ZodType<Prisma.StudyRepetitionAggregateArgs> = z.object({ orderBy: z.union([StudyRepetitionOrderByWithRelationInputObjectSchema, StudyRepetitionOrderByWithRelationInputObjectSchema.array()]).optional(), where: StudyRepetitionWhereInputObjectSchema.optional(), cursor: StudyRepetitionWhereUniqueInputObjectSchema.optional(), take: z.number().optional(), skip: z.number().optional(), _count: z.union([ z.literal(true), StudyRepetitionCountAggregateInputObjectSchema ]).optional(), _min: StudyRepetitionMinAggregateInputObjectSchema.optional(), _max: StudyRepetitionMaxAggregateInputObjectSchema.optional(), _avg: StudyRepetitionAvgAggregateInputObjectSchema.optional(), _sum: StudyRepetitionSumAggregateInputObjectSchema.optional() }).strict() as unknown as z.ZodType<Prisma.StudyRepetitionAggregateArgs>;
+
+export const StudyRepetitionAggregateZodSchema = z.object({ orderBy: z.union([StudyRepetitionOrderByWithRelationInputObjectSchema, StudyRepetitionOrderByWithRelationInputObjectSchema.array()]).optional(), where: StudyRepetitionWhereInputObjectSchema.optional(), cursor: StudyRepetitionWhereUniqueInputObjectSchema.optional(), take: z.number().optional(), skip: z.number().optional(), _count: z.union([ z.literal(true), StudyRepetitionCountAggregateInputObjectSchema ]).optional(), _min: StudyRepetitionMinAggregateInputObjectSchema.optional(), _max: StudyRepetitionMaxAggregateInputObjectSchema.optional(), _avg: StudyRepetitionAvgAggregateInputObjectSchema.optional(), _sum: StudyRepetitionSumAggregateInputObjectSchema.optional() }).strict();

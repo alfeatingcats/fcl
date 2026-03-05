@@ -1,9 +1,10 @@
+import type { GetStudyItemByIdInfer } from "@/shared/api/schemas";
 import type {
   OverlayEntityContent,
   RepetitionActionState,
 } from "@/shared/types";
 import type { RouterOutputs } from "@/trpc/react";
-import type { StudyItem, StudyRepetition } from "@prisma/client";
+import type { StudyRepetition } from "@prisma/client";
 import type { ReactElement, ReactNode } from "react";
 
 export interface ChartPoint {
@@ -31,7 +32,7 @@ export type RepetitionsListRow = Pick<
   | "studyItemId"
   | "repetitionNumber"
 > &
-  Pick<StudyItem, "title" | "description"> &
+  Pick<GetStudyItemByIdInfer, "title" | "description" | "descriptionText"> &
   Pick<
     RouterOutputs["repetitions"]["getTodayRepetitions"][number]["studyItem"],
     "itemTags"

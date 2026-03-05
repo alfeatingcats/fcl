@@ -43,7 +43,7 @@ export const StudyItemTableContent: FC<StudyItemTableContentProps> = ({
                 return (
                   <TableHead
                     key={header.id}
-                    className="text-muted-foreground !py-3"
+                    className="text-muted-foreground py-3!"
                   >
                     {header.isPlaceholder
                       ? null

@@ -45,7 +45,7 @@ export const useStudyItemColumns = () => {
           }
           onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
           aria-label={t("selectAll")}
-          className="!mr-1.5 !ml-1.5"
+          className="mr-1.5! ml-1.5!"
         />
       ),
       cell: ({ row }) => (
@@ -53,7 +53,7 @@ export const useStudyItemColumns = () => {
           checked={row.getIsSelected()}
           onCheckedChange={(value) => row.toggleSelected(!!value)}
           aria-label={t("selectRow")}
-          className="!ml-1.5"
+          className="ml-1.5!"
         />
       ),
     },
@@ -73,12 +73,12 @@ export const useStudyItemColumns = () => {
       header() {
         return <HeaderCell title={t("description")} icon={TextIcon} />;
       },
-      accessorKey: "description",
+      accessorKey: "descriptionText",
       maxSize: 200,
       size: 180,
       minSize: 100,
       cell: ({ row }) => (
-        <div className="truncate">{row.getValue("description") ?? ""}</div>
+        <div className="truncate">{row.getValue("descriptionText") ?? ""}</div>
       ),
     },
     {

@@ -1,0 +1,13 @@
+import type { Prisma } from '@prisma/client';
+import * as z from 'zod';
+import { StudyItemTagWhereInputObjectSchema as StudyItemTagWhereInputObjectSchema } from './objects/StudyItemTagWhereInput.schema';
+import { StudyItemTagOrderByWithAggregationInputObjectSchema as StudyItemTagOrderByWithAggregationInputObjectSchema } from './objects/StudyItemTagOrderByWithAggregationInput.schema';
+import { StudyItemTagScalarWhereWithAggregatesInputObjectSchema as StudyItemTagScalarWhereWithAggregatesInputObjectSchema } from './objects/StudyItemTagScalarWhereWithAggregatesInput.schema';
+import { StudyItemTagScalarFieldEnumSchema } from './enums/StudyItemTagScalarFieldEnum.schema';
+import { StudyItemTagCountAggregateInputObjectSchema as StudyItemTagCountAggregateInputObjectSchema } from './objects/StudyItemTagCountAggregateInput.schema';
+import { StudyItemTagMinAggregateInputObjectSchema as StudyItemTagMinAggregateInputObjectSchema } from './objects/StudyItemTagMinAggregateInput.schema';
+import { StudyItemTagMaxAggregateInputObjectSchema as StudyItemTagMaxAggregateInputObjectSchema } from './objects/StudyItemTagMaxAggregateInput.schema';
+
+export const StudyItemTagGroupBySchema: z.ZodType<Prisma.StudyItemTagGroupByArgs> = z.object({ where: StudyItemTagWhereInputObjectSchema.optional(), orderBy: z.union([StudyItemTagOrderByWithAggregationInputObjectSchema, StudyItemTagOrderByWithAggregationInputObjectSchema.array()]).optional(), having: StudyItemTagScalarWhereWithAggregatesInputObjectSchema.optional(), take: z.number().optional(), skip: z.number().optional(), by: z.array(StudyItemTagScalarFieldEnumSchema), _count: z.union([ z.literal(true), StudyItemTagCountAggregateInputObjectSchema ]).optional(), _min: StudyItemTagMinAggregateInputObjectSchema.optional(), _max: StudyItemTagMaxAggregateInputObjectSchema.optional() }).strict() as unknown as z.ZodType<Prisma.StudyItemTagGroupByArgs>;
+
+export const StudyItemTagGroupByZodSchema = z.object({ where: StudyItemTagWhereInputObjectSchema.optional(), orderBy: z.union([StudyItemTagOrderByWithAggregationInputObjectSchema, StudyItemTagOrderByWithAggregationInputObjectSchema.array()]).optional(), having: StudyItemTagScalarWhereWithAggregatesInputObjectSchema.optional(), take: z.number().optional(), skip: z.number().optional(), by: z.array(StudyItemTagScalarFieldEnumSchema), _count: z.union([ z.literal(true), StudyItemTagCountAggregateInputObjectSchema ]).optional(), _min: StudyItemTagMinAggregateInputObjectSchema.optional(), _max: StudyItemTagMaxAggregateInputObjectSchema.optional() }).strict();

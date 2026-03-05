@@ -1,30 +1,26 @@
-'use client"';
+"use client";
 
-import { toast } from "sonner";
 import { useTranslations } from "next-intl";
-
-import type { UseFormOverlayReturn } from "@/shared/types";
-import type { UpdateStudyItemInput } from "@/shared/api/schemas";
+import { toast } from "sonner";
 import {
   useUpdateStudyItem,
   useUpdateStudyItemForm,
 } from "@/features/update-study-item";
+import type { UpdateStudyItemInput } from "@/shared/api/schemas";
 
-type ManageStudyItemReturn = Pick<
-  UseFormOverlayReturn<UpdateStudyItemInput>,
-  "form" | "onSubmit" | "isLoading"
+type FormFields = Pick<
+  UpdateStudyItemInput,
+  "description" | "tagIds" | "title" | "id"
 >;
 
-export const useManageStudyItem = (
-  formInitValues: UpdateStudyItemInput,
-): ManageStudyItemReturn => {
+export const useManageStudyItem = (formInitValues: FormFields) => {
   const t = useTranslations("StudyItemMessages");
-
   const form = useUpdateStudyItemForm({ defaultValues: formInitValues });
 
   const { mutate, isPending } = useUpdateStudyItem({
-    onSuccess: ({ name }) => {
-      toast.success(t("updateSuccess", { name }));
+    onSuccess: (data) => {
+      form.reset(form.getValues(), { keepValues: true });
+      toast.success(t("updateSuccess", { name: data.name }));
     },
     onError: ({ name }) => {
       toast.error(t("updateError", { name }));

@@ -1,0 +1,23 @@
+import * as z from 'zod';
+export const StudyRepetitionFindManyResultSchema = z.object({
+  data: z.array(z.object({
+  id: z.string(),
+  repetitionNumber: z.number().int(),
+  scheduledAt: z.date(),
+  completedAt: z.date().optional(),
+  status: z.unknown(),
+  difficulty: z.number().int().optional(),
+  studyItem: z.unknown(),
+  studyItemId: z.string(),
+  createdAt: z.date(),
+  updatedAt: z.date()
+})),
+  pagination: z.object({
+  page: z.number().int().min(1),
+  pageSize: z.number().int().min(1),
+  total: z.number().int().min(0),
+  totalPages: z.number().int().min(0),
+  hasNext: z.boolean(),
+  hasPrev: z.boolean()
+})
+});

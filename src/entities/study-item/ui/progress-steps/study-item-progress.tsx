@@ -33,22 +33,24 @@ export const ProgressStepper = () => {
   const steps = createStepTimeline(format, t);
 
   return (
-    <div className="!w-full space-y-8 text-start">
-      <Stepper defaultValue={1} orientation="vertical" className="!w-full">
+    <div className="w-full! space-y-8 text-start">
+      <Stepper defaultValue={1} orientation="vertical" className="w-full!">
         {steps.map(({ step, date, diff, tooltip }, _, _steps) => (
           <StepperItem
             key={step}
             step={step}
-            className="relative !w-full items-start not-last:flex-1"
+            className="relative w-full! items-start not-last:flex-1"
           >
             <StepperTrigger
               asChild
-              className="!w-full items-start rounded pb-6 last:pb-0"
+              className="w-full! items-start rounded pb-6 last:pb-0"
             >
               <div className="flex w-full items-start gap-2">
                 <StepperIndicator />
                 <div className="mt-0.5 w-full px-2 text-left">
-                  <StepperTitle className="flex items-center justify-between gap-2">
+                  <StepperTitle
+                    className="flex items-center justify-between gap-2"
+                  >
                     <Tooltip>
                       <TooltipTrigger>{date}</TooltipTrigger>
                       <TooltipContent>{tooltip}</TooltipContent>
@@ -64,7 +66,10 @@ export const ProgressStepper = () => {
               </div>
             </StepperTrigger>
             {step < steps.length && (
-              <StepperSeparator className="bg-muted absolute top-6 left-3 -order-1 m-0 h-6 w-0.5 -translate-x-1/2" />
+              <StepperSeparator
+                className="bg-muted absolute top-6 left-3 -order-1 m-0 h-6 w-0.5
+                  -translate-x-1/2"
+              />
             )}
           </StepperItem>
         ))}

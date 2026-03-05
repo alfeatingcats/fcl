@@ -45,5 +45,6 @@ export const getActiveRepetitionDetails = (
     "title",
     "description",
     "repetitionNumber",
+    "descriptionText",
   ]);
 };

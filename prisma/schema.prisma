@@ -6,6 +6,10 @@ generator client {
     binaryTargets = ["native", "linux-musl-openssl-3.0.x"]
 }
 
+generator zod {
+  provider = "prisma-zod-generator"
+}
+
 datasource db {
     provider = "postgresql"
     // NOTE: When using mysql or sqlserver, uncomment the @db.Text annotations in model Account below
@@ -66,7 +70,8 @@ model VerificationToken {
 model StudyItem {
     id          String  @id @default(cuid())
     title       String
-    description String?
+    description       Json?      @db.Json
+    descriptionText   String?    @db.Text
     status      Status  @default(IN_PROGRESS)
 
     createdAt   DateTime  @default(now())

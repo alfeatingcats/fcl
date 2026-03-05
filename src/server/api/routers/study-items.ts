@@ -1,5 +1,6 @@
 import { isNil } from "es-toolkit";
 import { TRPCError } from "@trpc/server";
+import { Prisma } from "@prisma/client";
 import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";
 
 import { EBBINGHAUS_INTERVALS } from "@/shared/lib/const";
@@ -9,8 +10,13 @@ import {
   DeleteStudyItemSchema,
   ReadStudyItemsSchema,
   StudyItemIdSchema,
+  GetStudyItemByIdOutputSchema,
   UpdateStudyItemSchema,
+  type StudyItemIdInput,
+  type GetStudyItemByIdInfer,
+  type UpdateStudyItemInput,
 } from "@/shared/api/schemas";
+import { extractTextFromLexicalJSON2 } from "@/shared/lib/utils";
 
 export const studyItemsRouter = createTRPCRouter({
   create: protectedProcedure
@@ -22,9 +28,22 @@ export const studyItemsRouter = createTRPCRouter({
         const studyItem = await tx.studyItem.create({
           data: {
             title: input.title,
-            description: input.description,
+            description:
+              (input?.description as Prisma.InputJsonValue) ?? Prisma.JsonNull,
+            descriptionText: !isNil(input?.description)
+              ? extractTextFromLexicalJSON2(input?.description)
+              : null,
             createdById: ctx.session.user.id,
           },
+        });
+
+        console.log({
+          input,
+          description:
+            (input?.description as Prisma.InputJsonValue) ?? Prisma.JsonNull,
+          descriptionText: !isNil(input?.description)
+            ? extractTextFromLexicalJSON2(input?.description)
+            : null,
         });
 
         const repetitions = EBBINGHAUS_INTERVALS.map(
@@ -84,7 +103,12 @@ export const studyItemsRouter = createTRPCRouter({
         ...(search && {
           OR: [
             { title: { contains: search, mode: "insensitive" as const } },
-            { description: { contains: search, mode: "insensitive" as const } },
+            {
+              descriptionText: {
+                contains: search,
+                mode: "insensitive" as const,
+              },
+            },
           ],
         }),
         ...(tagIds &&
@@ -156,8 +180,12 @@ export const studyItemsRouter = createTRPCRouter({
         // Prepare update data for the study item
         const updateData: Record<string, unknown> = {};
         if (!isNil(input.title)) updateData.title = input.title;
-        if (!isNil(input.description))
+        if (!isNil(input.description)) {
           updateData.description = input.description;
+          updateData.descriptionText = extractTextFromLexicalJSON2(
+            input.description,
+          );
+        }
         if (!isNil(input.status)) {
           updateData.status = input.status;
           if (input.status === "COMPLETED") {
@@ -245,6 +273,7 @@ export const studyItemsRouter = createTRPCRouter({
 
   getById: protectedProcedure
     .input(StudyItemIdSchema)
+    .output(GetStudyItemByIdOutputSchema)
     .query(async ({ ctx, input }) => {
       const item = await ctx.db.studyItem.findFirst({
         where: { id: input.id, createdById: ctx.session.user.id },
@@ -260,7 +289,8 @@ export const studyItemsRouter = createTRPCRouter({
           message: "Study item not found",
         });
       }
-      return item;
+
+      return item as GetStudyItemByIdInfer;
     }),
 
   resetRepetitions: protectedProcedure

@@ -1,8 +1,8 @@
 import type { RepetitionsListRow } from "@/entities/repetitions";
-import type { RouterOutputs } from "@/trpc/react";
+import type { GetStudyItemByIdInfer } from "@/shared/api/schemas";
 
 export const mapStudyItemToRepetitionList = (
-  studyItem: RouterOutputs["studyItem"]["getById"],
+  studyItem: GetStudyItemByIdInfer,
 ): Array<RepetitionsListRow> => {
   return studyItem.repetitions.map((repetition) => {
     return {
@@ -14,6 +14,7 @@ export const mapStudyItemToRepetitionList = (
       title: studyItem.title,
       description: studyItem.description,
       itemTags: studyItem.itemTags,
+      descriptionText: studyItem.descriptionText ?? "",
       repetitionNumber: repetition.repetitionNumber,
     };
   });

@@ -1,0 +1,12 @@
+import type { Prisma } from '@prisma/client';
+import * as z from 'zod';
+import { StudyItemTagOrderByWithRelationInputObjectSchema as StudyItemTagOrderByWithRelationInputObjectSchema } from './objects/StudyItemTagOrderByWithRelationInput.schema';
+import { StudyItemTagWhereInputObjectSchema as StudyItemTagWhereInputObjectSchema } from './objects/StudyItemTagWhereInput.schema';
+import { StudyItemTagWhereUniqueInputObjectSchema as StudyItemTagWhereUniqueInputObjectSchema } from './objects/StudyItemTagWhereUniqueInput.schema';
+import { StudyItemTagCountAggregateInputObjectSchema as StudyItemTagCountAggregateInputObjectSchema } from './objects/StudyItemTagCountAggregateInput.schema';
+import { StudyItemTagMinAggregateInputObjectSchema as StudyItemTagMinAggregateInputObjectSchema } from './objects/StudyItemTagMinAggregateInput.schema';
+import { StudyItemTagMaxAggregateInputObjectSchema as StudyItemTagMaxAggregateInputObjectSchema } from './objects/StudyItemTagMaxAggregateInput.schema';
+
+export const StudyItemTagAggregateSchema: z.ZodType<Prisma.StudyItemTagAggregateArgs> = z.object({ orderBy: z.union([StudyItemTagOrderByWithRelationInputObjectSchema, StudyItemTagOrderByWithRelationInputObjectSchema.array()]).optional(), where: StudyItemTagWhereInputObjectSchema.optional(), cursor: StudyItemTagWhereUniqueInputObjectSchema.optional(), take: z.number().optional(), skip: z.number().optional(), _count: z.union([ z.literal(true), StudyItemTagCountAggregateInputObjectSchema ]).optional(), _min: StudyItemTagMinAggregateInputObjectSchema.optional(), _max: StudyItemTagMaxAggregateInputObjectSchema.optional() }).strict() as unknown as z.ZodType<Prisma.StudyItemTagAggregateArgs>;
+
+export const StudyItemTagAggregateZodSchema = z.object({ orderBy: z.union([StudyItemTagOrderByWithRelationInputObjectSchema, StudyItemTagOrderByWithRelationInputObjectSchema.array()]).optional(), where: StudyItemTagWhereInputObjectSchema.optional(), cursor: StudyItemTagWhereUniqueInputObjectSchema.optional(), take: z.number().optional(), skip: z.number().optional(), _count: z.union([ z.literal(true), StudyItemTagCountAggregateInputObjectSchema ]).optional(), _min: StudyItemTagMinAggregateInputObjectSchema.optional(), _max: StudyItemTagMaxAggregateInputObjectSchema.optional() }).strict();

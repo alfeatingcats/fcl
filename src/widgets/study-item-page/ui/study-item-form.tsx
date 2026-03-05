@@ -1,6 +1,8 @@
-import type { FC, ReactNode } from "react";
+import { type FC, type ReactNode } from "react";
 import { useTranslations } from "next-intl";
 import type { UseFormReturn } from "react-hook-form";
+import type { SerializedEditorState } from "lexical";
+import { useDebounceFn } from "ahooks";
 
 import {
   Form,
@@ -14,16 +16,20 @@ import {
   TagsSelector,
   type RequiredCreateTagInput,
 } from "@/features/tag-selector";
-import type { CFC } from "@/shared/types";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
+import { Editor } from "@/components/blocks/editor-x/editor";
 import type { UpdateStudyItemInput } from "@/shared/api/schemas";
+
+type TForm = Pick<
+  UpdateStudyItemInput,
+  "description" | "tagIds" | "title" | "id"
+>;
 
 type StudyItemFormProps = {
   isLoading?: boolean;
   renderCreateTagButton: ReactNode;
   defaultTags?: RequiredCreateTagInput[];
-  form: UseFormReturn<UpdateStudyItemInput>;
+  form: UseFormReturn<TForm>;
 };
 
 export const StudyItemForm: FC<StudyItemFormProps> = ({
@@ -34,6 +40,18 @@ export const StudyItemForm: FC<StudyItemFormProps> = ({
 }) => {
   const t = useTranslations("StudyItemForm");
 
+  const { run: debouncedOnChange } = useDebounceFn(
+    (value: unknown) =>
+      form.setValue("description", value as TForm["description"], {
+        shouldValidate: false,
+        shouldDirty: true,
+        shouldTouch: true,
+      }),
+    {
+      wait: 300,
+    },
+  );
+
   return (
     <Form {...form}>
       <form className="space-y-6">
@@ -41,13 +59,13 @@ export const StudyItemForm: FC<StudyItemFormProps> = ({
           control={form.control}
           name="title"
           render={({ field }) => (
-            <FormItem>
+            <FormItem className="w-100">
               <FormControl>
                 <div className="flex flex-row">
                   <Input
                     placeholder={t("titlePlaceholder")}
                     disabled={isLoading}
-                    className="!border-none !bg-transparent text-xl shadow-none hover:cursor-pointer md:text-2xl"
+                    className="hover:cursor-pointer"
                     {...field}
                   />
                 </div>
@@ -69,7 +87,7 @@ export const StudyItemForm: FC<StudyItemFormProps> = ({
                   onChange={(_, selectedTagIds) => {
                     form.setValue(
                       "tagIds",
-                      selectedTagIds.length > 0 ? selectedTagIds : undefined,
+                      selectedTagIds.length > 0 ? selectedTagIds : [],
                     );
                   }}
                   ref={ref}
@@ -90,11 +108,20 @@ export const StudyItemForm: FC<StudyItemFormProps> = ({
             <FormItem className="">
               <FormLabel>{t("descriptionLabel")}</FormLabel>
               <FormControl>
-                <Textarea
-                  className="!max-w-lg"
+                <Editor
+                  // wrapperClassName="h-160"
+                  // disabled={isLoading}
+                  // editorSerializedState={
+                  //   studyItem?.description as unknown as SerializedEditorState
+                  // }
+                  editorSerializedState={
+                    (field.value as unknown as SerializedEditorState) ??
+                    undefined
+                  }
                   placeholder={t("descriptionPlaceholder")}
-                  disabled={isLoading}
-                  {...field}
+                  onSerializedChange={(editorState) =>
+                    debouncedOnChange(editorState)
+                  }
                 />
               </FormControl>
               <FormMessage />

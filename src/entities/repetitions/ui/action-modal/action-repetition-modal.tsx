@@ -5,7 +5,6 @@ import {
   useEffect,
   type FC,
   type ReactElement,
-  type ReactNode,
 } from "react";
 
 import {
@@ -70,7 +69,7 @@ export const ActionRepetitionModal: FC<ActionRepetitionModalProps> = ({
   );
   return (
     <Dialog open={isOpen} onOpenChange={handleOpenChange}>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-106.25">
         <DialogHeader>
           <DialogTitle>{overlay.title}</DialogTitle>
           {overlay.description && (
