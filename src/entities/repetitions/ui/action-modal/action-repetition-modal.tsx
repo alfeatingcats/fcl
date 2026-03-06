@@ -78,12 +78,17 @@ export const ActionRepetitionModal: FC<ActionRepetitionModalProps> = ({
         </DialogHeader>
 
         <Item variant="outline" size="sm">
-          <ItemMedia className="text-accent bg-accent-foreground flex shrink-0 items-center justify-center rounded-md border p-3 leading-none">
+          <ItemMedia
+            className="text-accent bg-accent-foreground flex shrink-0
+              items-center justify-center rounded-md border p-3 leading-none"
+          >
             {`${state.repetitionNumber}/7`}
           </ItemMedia>
           <ItemContent>
             <ItemTitle className="line-clamp-1">{state.title}</ItemTitle>
-            <ItemDescription className="line-clamp-2">
+            <ItemDescription
+              className="line-clamp-3 overflow-wrap-anywhere break-all"
+            >
               {state.description}
             </ItemDescription>
           </ItemContent>

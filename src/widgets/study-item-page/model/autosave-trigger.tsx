@@ -17,7 +17,17 @@ export const AutosaveTrigger = ({
   isPending,
   handleSubmit,
 }: AutosaveTriggerProps) => {
-  const values = useWatch({ control });
+  const [descriptionInputValue] = useWatch<UpdateStudyItemInput>({
+    control,
+    name: ["description"],
+  });
+
+  const [idInputValue, tagIdsInputValue, titleInputValue] =
+    useWatch<UpdateStudyItemInput>({
+      control,
+      name: ["id", "tagIds", "title"],
+    });
+
   const { isDirty, isValid } = useFormState({ control });
 
   useDebounceEffect(
@@ -27,8 +37,15 @@ export const AutosaveTrigger = ({
       }
     },
 
-    [values, isDirty, isValid],
-    { wait: 800 },
+    [
+      descriptionInputValue,
+      idInputValue,
+      tagIdsInputValue,
+      titleInputValue,
+      isDirty,
+      isValid,
+    ],
+    { wait: 1000 },
   );
 
   return null;

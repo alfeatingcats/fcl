@@ -88,6 +88,10 @@ export const StudyItemForm: FC<StudyItemFormProps> = ({
                     form.setValue(
                       "tagIds",
                       selectedTagIds.length > 0 ? selectedTagIds : [],
+                      {
+                        shouldDirty: true,
+                        shouldTouch: true,
+                      },
                     );
                   }}
                   ref={ref}
@@ -119,9 +123,9 @@ export const StudyItemForm: FC<StudyItemFormProps> = ({
                     undefined
                   }
                   placeholder={t("descriptionPlaceholder")}
-                  onSerializedChange={(editorState) =>
-                    debouncedOnChange(editorState)
-                  }
+                  onSerializedChange={(editorState) => {
+                    debouncedOnChange(editorState);
+                  }}
                 />
               </FormControl>
               <FormMessage />

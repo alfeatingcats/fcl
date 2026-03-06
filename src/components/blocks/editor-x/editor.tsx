@@ -12,7 +12,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 
 import { nodes } from "./nodes";
 import { Plugins, type PluginsProps } from "./plugins";
-import type { FC } from "react";
+import { useMemo, type FC } from "react";
 
 const editorConfig: InitialConfigType = {
   namespace: "Editor",
@@ -38,20 +38,22 @@ export const Editor: FC<EditorProps> = ({
   placeholder,
   wrapperClassName,
 }) => {
+  const initialConfig = useMemo(
+    () => ({
+      ...editorConfig,
+      ...(editorState ? { editorState } : {}),
+      ...(editorSerializedState
+        ? { editorState: JSON.stringify(editorSerializedState) }
+        : {}),
+    }),
+    [editorSerializedState, editorState],
+  );
   return (
     <div
       className="bg-background overflow-hidden rounded-lg border shadow"
       onClick={(e) => e.stopPropagation()}
     >
-      <LexicalComposer
-        initialConfig={{
-          ...editorConfig,
-          ...(editorState ? { editorState } : {}),
-          ...(editorSerializedState
-            ? { editorState: JSON.stringify(editorSerializedState) }
-            : {}),
-        }}
-      >
+      <LexicalComposer initialConfig={initialConfig}>
         <TooltipProvider>
           <Plugins
             wrapperClassName={wrapperClassName}
