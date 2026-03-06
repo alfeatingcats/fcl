@@ -35,7 +35,6 @@ export type ReadStudyItemsOutputSchemaType = z.infer<
   typeof ReadStudyItemsOutputSchema
 >;
 
-// 4. The GetStudyItemByIdOutputSchema you were looking for
 export const GetStudyItemByIdOutputSchema = StudyItemSchema.extend({
   repetitions: z.array(StudyRepetitionSchema),
   itemTags: z.array(TagWithRelationSchema),

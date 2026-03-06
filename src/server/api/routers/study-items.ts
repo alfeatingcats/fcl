@@ -1,6 +1,8 @@
 import { isNil } from "es-toolkit";
 import { TRPCError } from "@trpc/server";
 import { Prisma } from "@prisma/client";
+
+import { StudyItemSchema } from "prisma/generated/schemas";
 import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";
 
 import { EBBINGHAUS_INTERVALS } from "@/shared/lib/const";
@@ -238,6 +240,7 @@ export const studyItemsRouter = createTRPCRouter({
   // Delete study item
   delete: protectedProcedure
     .input(DeleteStudyItemSchema)
+    .output(StudyItemSchema)
     .mutation(async ({ ctx, input }) => {
       // Check access permissions
       const existingItem = await ctx.db.studyItem.findFirst({

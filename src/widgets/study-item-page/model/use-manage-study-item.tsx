@@ -1,12 +1,14 @@
 "use client";
 
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { toast } from "sonner";
 import {
   useUpdateStudyItem,
   useUpdateStudyItemForm,
 } from "@/features/update-study-item";
 import type { UpdateStudyItemInput } from "@/shared/api/schemas";
+import { useDeleteStudyItem } from "@/features/delete-study-item";
+import { useRouter } from "@/i18n/routing";
 
 type FormFields = Pick<
   UpdateStudyItemInput,
@@ -15,6 +17,9 @@ type FormFields = Pick<
 
 export const useManageStudyItem = (formInitValues: FormFields) => {
   const t = useTranslations("StudyItemMessages");
+  const locale = useLocale();
+  const router = useRouter();
+
   const form = useUpdateStudyItemForm({ defaultValues: formInitValues });
 
   const { mutate, isPending } = useUpdateStudyItem({
@@ -27,9 +32,24 @@ export const useManageStudyItem = (formInitValues: FormFields) => {
     },
   });
 
+  const { mutate: deleteStudyItem, isPending: isDeleteLoading } =
+    useDeleteStudyItem({
+      onSuccess: () => {
+        toast.success(
+          t("deleteSuccess", { name: formInitValues?.title ?? "" }),
+        );
+        router.replace("/my-skills", { locale });
+      },
+      onError: () => {
+        toast.error(t("deleteError", { name: formInitValues?.title ?? "" }));
+      },
+    });
+
   return {
     form,
     onSubmit: mutate,
     isLoading: isPending,
+    deleteStudyItem,
+    isDeleteLoading,
   };
 };

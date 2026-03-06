@@ -18,8 +18,10 @@ import {
   WaypointsIcon,
   Flag,
   Tags,
+  Settings,
 } from "lucide-react";
 import type { ReadStudyItemsOutputSchemaType } from "@/shared/api/schemas/fg/study-item";
+import { DeleteStudyItemButton } from "@/features/delete-study-item";
 
 export const useStudyItemColumns = () => {
   const t = useTranslations("StudyItemTable");
@@ -133,6 +135,18 @@ export const useStudyItemColumns = () => {
           const tags: Array<StudyItemTag & { tag: Tag }> =
             row.getValue("itemTags");
           return <TagsCell tags={tags} />;
+        },
+      },
+      {
+        header() {
+          return <HeaderCell title={t("actions")} icon={Settings} />;
+        },
+        accessorKey: "id",
+        size: 120,
+        maxSize: 140,
+        minSize: 100,
+        cell: () => {
+          return <DeleteStudyItemButton size={"sm"} />;
         },
       },
     ];

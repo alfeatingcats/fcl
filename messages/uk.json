@@ -51,7 +51,8 @@
     "selectAll": "Вибрати все",
     "selectRow": "Вибрати рядок",
     "tagsPlaceholder": "теги...",
-    "searchPlaceholder": "Пошук..."
+    "searchPlaceholder": "Пошук...",
+    "actions": "Дії"
   },
   "Time": {
     "inMinutes": "через {count, plural, one {# хв} few {# хв} many {# хв} other {# хв}}",

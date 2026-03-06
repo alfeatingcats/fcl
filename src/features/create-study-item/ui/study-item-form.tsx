@@ -16,7 +16,6 @@ import {
 } from "@/features/tag-selector";
 import type { CFC } from "@/shared/types";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import type { CreateStudyItemInput } from "@/shared/api/schemas";
 import { Editor } from "@/components/blocks/editor-x/editor";
 
@@ -65,7 +64,6 @@ export const StudyItemForm: CFC<StudyItemFormProps> = ({
               <FormControl>
                 <Editor
                   wrapperClassName="h-120"
-                  // disabled={isLoading}
                   placeholder={t("descriptionPlaceholder")}
                   onSerializedChange={(editorState) => {
                     field.onChange(editorState);
@@ -76,24 +74,6 @@ export const StudyItemForm: CFC<StudyItemFormProps> = ({
             </FormItem>
           )}
         />
-
-        {/* <FormField
-          control={form.control}
-          name="description"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>{t("descriptionLabel")}</FormLabel>
-              <FormControl>
-                <Textarea
-                  placeholder={t("descriptionPlaceholder")}
-                  disabled={isLoading}
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        /> */}
 
         <FormField
           control={form.control}
