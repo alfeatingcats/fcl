@@ -18,7 +18,7 @@ export type RepetitionOverlayActionConfig = Record<
 
 export type UseRepetitionsOverlayEntityContentReturn =
   RepetitionOverlayActionConfig &
-    Required<ReturnType<typeof getActiveRepetitionDetails>> & {
+    ReturnType<typeof getActiveRepetitionDetails> & {
       onClear: () => void;
       setActiveRepetition: SetRepetitionActionState;
       activeRepetition: RepetitionActionState;

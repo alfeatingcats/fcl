@@ -23,6 +23,10 @@ export const FullRepetitionSchema = StudyRepetitionSchema.extend({
   }),
 });
 
+export type FullRepetitionType = z.infer<typeof FullRepetitionSchema>;
+export const FullRepetitionListSchema = z.array(FullRepetitionSchema);
+export type FullRepetitionListType = z.infer<typeof FullRepetitionListSchema>;
+
 // 3. Statistics
 export const RepetitionStatsOutputSchema = z.object({
   total: z.number(),

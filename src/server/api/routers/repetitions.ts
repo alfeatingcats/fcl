@@ -10,6 +10,7 @@ import {
   UpcomingEventSchema,
 } from "@/shared/api/schemas";
 import {
+  FullRepetitionListSchema,
   FullRepetitionSchema,
   RepetitionStatsOutputSchema,
   RepetitionWithItemSchema,
@@ -78,7 +79,7 @@ export const repetitionsRouter = createTRPCRouter({
     }),
 
   getTodayRepetitions: protectedProcedure
-    .output(z.array(FullRepetitionSchema))
+    .output(FullRepetitionListSchema)
     .query(async ({ ctx }) => {
       const { start, end } = getTodayRange(ctx.timeZone);
 
