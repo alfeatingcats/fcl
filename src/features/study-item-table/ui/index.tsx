@@ -7,11 +7,11 @@ import {
   ReadStudyItemsSchema,
   type ReadStudyItemInput,
 } from "@/shared/api/schemas";
-import type { StudyItem } from "@prisma/client";
 
 import { StudyItemTableHeader } from "./table-header";
 import { StudyItemTableContent } from "./table-content";
 import { StudyItemTableFooter } from "./table-footer";
+import type { ReadStudyItemsOutputSchemaType } from "@/shared/api/schemas/fg/study-item";
 
 // const filterSchema = z.object({
 //   search: z.string().optional(),
@@ -22,7 +22,7 @@ import { StudyItemTableFooter } from "./table-footer";
 // });
 
 interface StudyItemDataTableProps {
-  studyItems: Array<StudyItem>;
+  studyItems: ReadStudyItemsOutputSchemaType["items"];
   //   totalCount: number;
   renderCreateButton?: ReactNode;
   //   onFilterChange?: (filters: ReadStudyItemInput) => void;

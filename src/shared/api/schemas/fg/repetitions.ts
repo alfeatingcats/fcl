@@ -1,0 +1,32 @@
+import {
+  StudyItemSchema,
+  StudyItemTagSchema,
+  StudyRepetitionSchema,
+  TagSchema,
+} from "prisma/generated/schemas";
+import { z } from "zod";
+
+// 1. Repetition + StudyItem (for getUpcoming)
+export const RepetitionWithItemSchema = StudyRepetitionSchema.extend({
+  studyItem: StudyItemSchema,
+});
+
+// 2. Full structure (for getTodayRepetitions)
+// We go deeper: Repetition -> StudyItem -> StudyItemTag -> Tag
+export const FullRepetitionSchema = StudyRepetitionSchema.extend({
+  studyItem: StudyItemSchema.extend({
+    itemTags: z.array(
+      StudyItemTagSchema.extend({
+        tag: TagSchema,
+      }),
+    ),
+  }),
+});
+
+// 3. Statistics
+export const RepetitionStatsOutputSchema = z.object({
+  total: z.number(),
+  completed: z.number(),
+  missed: z.number(),
+  skipped: z.number(),
+});

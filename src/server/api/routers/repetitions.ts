@@ -1,5 +1,6 @@
 import { TRPCError } from "@trpc/server";
 import { getTodayRange } from "@/shared/lib/i18n/date";
+import z from "zod";
 
 import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";
 import {
@@ -8,10 +9,17 @@ import {
   SkipRepetitionSchema,
   UpcomingEventSchema,
 } from "@/shared/api/schemas";
+import {
+  FullRepetitionSchema,
+  RepetitionStatsOutputSchema,
+  RepetitionWithItemSchema,
+} from "@/shared/api/schemas/fg/repetitions";
+import { StudyRepetitionSchema } from "prisma/generated/schemas";
 
 export const repetitionsRouter = createTRPCRouter({
   complete: protectedProcedure
     .input(CompleteRepetitionSchema)
+    .output(StudyRepetitionSchema)
     .mutation(async ({ ctx, input }) => {
       return await ctx.db.$transaction(async (tx) => {
         const repetition = await tx.studyRepetition.findFirst({
@@ -69,30 +77,33 @@ export const repetitionsRouter = createTRPCRouter({
       });
     }),
 
-  getTodayRepetitions: protectedProcedure.query(async ({ ctx }) => {
-    const { start, end } = getTodayRange(ctx.timeZone);
+  getTodayRepetitions: protectedProcedure
+    .output(z.array(FullRepetitionSchema))
+    .query(async ({ ctx }) => {
+      const { start, end } = getTodayRange(ctx.timeZone);
 
-    return await ctx.db.studyRepetition.findMany({
-      where: {
-        scheduledAt: { gte: new Date(start), lt: new Date(end) },
-        status: "PENDING",
-        studyItem: { createdById: ctx.session.user.id },
-      },
-      include: {
-        studyItem: {
-          include: {
-            itemTags: {
-              include: { tag: true },
+      return await ctx.db.studyRepetition.findMany({
+        where: {
+          scheduledAt: { gte: new Date(start), lt: new Date(end) },
+          status: "PENDING",
+          studyItem: { createdById: ctx.session.user.id },
+        },
+        include: {
+          studyItem: {
+            include: {
+              itemTags: {
+                include: { tag: true },
+              },
             },
           },
         },
-      },
-      orderBy: { scheduledAt: "asc" },
-    });
-  }),
+        orderBy: { scheduledAt: "asc" },
+      });
+    }),
 
   skip: protectedProcedure
     .input(SkipRepetitionSchema)
+    .output(StudyRepetitionSchema)
     .mutation(async ({ ctx, input }) => {
       return await ctx.db.studyRepetition.update({
         where: { id: input.repetitionId },
@@ -102,6 +113,7 @@ export const repetitionsRouter = createTRPCRouter({
 
   wait: protectedProcedure
     .input(SkipRepetitionSchema)
+    .output(StudyRepetitionSchema)
     .mutation(async ({ ctx, input }) => {
       return await ctx.db.studyRepetition.update({
         where: { id: input.repetitionId },
@@ -116,6 +128,7 @@ export const repetitionsRouter = createTRPCRouter({
 
   bulkComplete: protectedProcedure
     .input(BulkRepetitionsSchema)
+    .output(z.array(StudyRepetitionSchema))
     .mutation(async ({ ctx, input }) => {
       return await ctx.db.$transaction(async (tx) => {
         const results = [];
@@ -134,28 +147,31 @@ export const repetitionsRouter = createTRPCRouter({
       });
     }),
 
-  getStats: protectedProcedure.query(async ({ ctx }) => {
-    const userId = ctx.session.user.id;
+  getStats: protectedProcedure
+    .output(RepetitionStatsOutputSchema)
+    .query(async ({ ctx }) => {
+      const userId = ctx.session.user.id;
 
-    const total = await ctx.db.studyRepetition.count({
-      where: { studyItem: { createdById: userId } },
-    });
-    const completed = await ctx.db.studyRepetition.count({
-      where: { studyItem: { createdById: userId }, status: "COMPLETED" },
-    });
-    const missed = await ctx.db.studyRepetition.count({
-      where: { studyItem: { createdById: userId }, status: "MISSED" },
-    });
-    const skipped = await ctx.db.studyRepetition.count({
-      where: { studyItem: { createdById: userId }, status: "SKIPPED" },
-    });
+      const total = await ctx.db.studyRepetition.count({
+        where: { studyItem: { createdById: userId } },
+      });
+      const completed = await ctx.db.studyRepetition.count({
+        where: { studyItem: { createdById: userId }, status: "COMPLETED" },
+      });
+      const missed = await ctx.db.studyRepetition.count({
+        where: { studyItem: { createdById: userId }, status: "MISSED" },
+      });
+      const skipped = await ctx.db.studyRepetition.count({
+        where: { studyItem: { createdById: userId }, status: "SKIPPED" },
+      });
 
-    return { total, completed, missed, skipped };
-  }),
+      return { total, completed, missed, skipped };
+    }),
 
   //TODO: pagination, timezone
   getUpcoming: protectedProcedure
     .input(UpcomingEventSchema)
+    .output(z.array(RepetitionWithItemSchema))
     .query(async ({ ctx, input }) => {
       return await ctx.db.studyRepetition.findMany({
         where: {

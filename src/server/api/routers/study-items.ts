@@ -12,11 +12,10 @@ import {
   StudyItemIdSchema,
   GetStudyItemByIdOutputSchema,
   UpdateStudyItemSchema,
-  type StudyItemIdInput,
   type GetStudyItemByIdInfer,
-  type UpdateStudyItemInput,
 } from "@/shared/api/schemas";
 import { extractTextFromLexicalJSON2 } from "@/shared/lib/utils";
+import { ReadStudyItemsOutputSchema } from "@/shared/api/schemas/fg/study-item";
 
 export const studyItemsRouter = createTRPCRouter({
   create: protectedProcedure
@@ -35,15 +34,6 @@ export const studyItemsRouter = createTRPCRouter({
               : null,
             createdById: ctx.session.user.id,
           },
-        });
-
-        console.log({
-          input,
-          description:
-            (input?.description as Prisma.InputJsonValue) ?? Prisma.JsonNull,
-          descriptionText: !isNil(input?.description)
-            ? extractTextFromLexicalJSON2(input?.description)
-            : null,
         });
 
         const repetitions = EBBINGHAUS_INTERVALS.map(
@@ -94,6 +84,7 @@ export const studyItemsRouter = createTRPCRouter({
     }),
   getAll: protectedProcedure
     .input(ReadStudyItemsSchema)
+    .output(ReadStudyItemsOutputSchema)
     .query(async ({ ctx, input }) => {
       const { status, tagIds, search, limit, cursor } = input;
 
