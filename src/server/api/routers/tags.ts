@@ -50,7 +50,10 @@ export const tagsRouter = createTRPCRouter({
     .input(
       z.object({
         search: z.string().optional(),
-        sortBy: z.enum(["name", "usage", "created"]).default("usage"),
+        sortBy: z
+          .enum(["name", "usage", "created"])
+          .default("usage")
+          .optional(),
         includeUnused: z.boolean().default(true),
       }),
     )

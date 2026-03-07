@@ -30,8 +30,6 @@ export const RepetitionsPage: FC = () => {
     [todayRepetitions],
   );
 
-  console.log({ todayRepetitions });
-
   const {
     skip,
     wait,

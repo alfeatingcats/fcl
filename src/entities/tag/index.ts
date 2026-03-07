@@ -1,6 +1,7 @@
 export {
   useGetAllTags,
   useTagAutocomplete,
+  useSuspenseGetAllTags,
   type TagItem,
   type TagsListType,
   type UseGetAllTagsResult,

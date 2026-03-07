@@ -5,6 +5,7 @@ import {
   BookOpenCheck,
   type LucideIcon,
   LayoutDashboard,
+  Tags,
 } from "lucide-react";
 
 import type { SidebarTKey } from "../types";
@@ -35,6 +36,12 @@ export const sidebarRoutesMap: SidebarRouteRoot = {
     key: "reviewCycle",
     url: "/review-cycle",
     icon: Route,
+    parent: "mySkills",
+  },
+  tags: {
+    key: "tags",
+    url: "/tags",
+    icon: Tags,
     parent: "mySkills",
   },
   settings: {
