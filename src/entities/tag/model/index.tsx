@@ -9,3 +9,4 @@ export {
   type UseTagAutocompleteParams,
 } from "./use-tag-autocomplete";
 export type { TagsListType, TagItem } from "./types";
+export { useSuspenseGetAllTags } from "./use-suspence-get-all-tags";

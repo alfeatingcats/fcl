@@ -25,7 +25,7 @@ const Input: InputProps = ({ className, type, ...props }) => {
 const Search: InputProps["Search"] = (props) => {
   return (
     <div className="relative">
-      <div className="text-muted-foreground/80 pointer-events-none absolute inset-y-0 start-0 flex items-center justify-center ps-3 peer-disabled:opacity-50">
+      <div className="text-muted-foreground/80 pointer-events-none absolute inset-y-0 inset-s-0 flex items-center justify-center ps-3 peer-disabled:opacity-50">
         <SearchIcon size={16} />
       </div>
       <Input className="peer ps-9 pe-9" type="search" {...props} />

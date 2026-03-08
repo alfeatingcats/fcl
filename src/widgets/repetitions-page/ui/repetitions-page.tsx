@@ -36,10 +36,11 @@ export const RepetitionsPage: FC = () => {
     title,
     onClear,
     complete,
-    description,
+    // description,
     activeRepetition,
     repetitionNumber,
     setActiveRepetition,
+    descriptionText,
   } = useRepetitionsOverlayEntityContent(repetitionsListData);
 
   const {
@@ -71,7 +72,7 @@ export const RepetitionsPage: FC = () => {
         onClear={onClear}
         entity={{
           title: title,
-          description: description,
+          description: descriptionText,
         }}
         repetitionNumber={repetitionNumber || ""}
         overlay={{
@@ -93,7 +94,7 @@ export const RepetitionsPage: FC = () => {
         onClear={onClear}
         entity={{
           title: title,
-          description: description,
+          description: descriptionText,
         }}
         repetitionNumber={repetitionNumber || ""}
         overlay={{
@@ -115,7 +116,7 @@ export const RepetitionsPage: FC = () => {
         onClear={onClear}
         entity={{
           title: title,
-          description: description,
+          description: descriptionText,
         }}
         repetitionNumber={repetitionNumber || ""}
         overlay={{

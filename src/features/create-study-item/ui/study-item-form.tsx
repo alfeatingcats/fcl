@@ -16,8 +16,8 @@ import {
 } from "@/features/tag-selector";
 import type { CFC } from "@/shared/types";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import type { CreateStudyItemInput } from "@/shared/api/schemas";
+import { Editor } from "@/components/blocks/editor-x/editor";
 
 type StudyItemFormProps = {
   isLoading?: boolean;
@@ -62,10 +62,12 @@ export const StudyItemForm: CFC<StudyItemFormProps> = ({
             <FormItem>
               <FormLabel>{t("descriptionLabel")}</FormLabel>
               <FormControl>
-                <Textarea
+                <Editor
+                  wrapperClassName="h-120"
                   placeholder={t("descriptionPlaceholder")}
-                  disabled={isLoading}
-                  {...field}
+                  onSerializedChange={(editorState) => {
+                    field.onChange(editorState);
+                  }}
                 />
               </FormControl>
               <FormMessage />

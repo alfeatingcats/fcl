@@ -7,6 +7,12 @@ import {
   DeleteTagSchema,
   UpdateTagSchema,
 } from "@/shared/api/schemas";
+import {
+  PopularTagOutputSchema,
+  TagAutocompleteOutputSchema,
+  TagWithStatsOutputSchema,
+  UserTagStatsOutputSchema,
+} from "@/shared/api/schemas/fg/tags";
 
 export const tagsRouter = createTRPCRouter({
   /**
@@ -44,10 +50,14 @@ export const tagsRouter = createTRPCRouter({
     .input(
       z.object({
         search: z.string().optional(),
-        sortBy: z.enum(["name", "usage", "created"]).default("usage"),
+        sortBy: z
+          .enum(["name", "usage", "created"])
+          .default("usage")
+          .optional(),
         includeUnused: z.boolean().default(true),
       }),
     )
+    .output(TagWithStatsOutputSchema)
     .query(async ({ ctx, input }) => {
       const { search, sortBy, includeUnused } = input;
       const userId = ctx.session.user.id;
@@ -146,6 +156,7 @@ export const tagsRouter = createTRPCRouter({
         limit: z.number().min(1).max(20).default(10),
       }),
     )
+    .output(PopularTagOutputSchema)
     .query(async ({ ctx, input }) => {
       return await ctx.db.tag.findMany({
         take: input.limit,
@@ -178,6 +189,7 @@ export const tagsRouter = createTRPCRouter({
         excludeIds: z.array(z.string().cuid()).optional().default([]),
       }),
     )
+    .output(TagAutocompleteOutputSchema)
     .query(async ({ ctx, input }) => {
       const hasQuery = input.query.trim().length > 0;
 
@@ -333,80 +345,82 @@ export const tagsRouter = createTRPCRouter({
   /**
    * Get user tag statistics
    */
-  getUserTagStats: protectedProcedure.query(async ({ ctx }) => {
-    const userId = ctx.session.user.id;
+  getUserTagStats: protectedProcedure
+    .output(UserTagStatsOutputSchema)
+    .query(async ({ ctx }) => {
+      const userId = ctx.session.user.id;
 
-    // Total tags used by user
-    const totalTags = await ctx.db.tag.count({
-      where: {
-        itemTags: {
-          some: {
-            studyItem: { createdById: userId },
+      // Total tags used by user
+      const totalTags = await ctx.db.tag.count({
+        where: {
+          itemTags: {
+            some: {
+              studyItem: { createdById: userId },
+            },
           },
         },
-      },
-    });
+      });
 
-    // Most popular tags of user
-    const topTags = await ctx.db.tag.findMany({
-      where: {
-        itemTags: {
-          some: {
-            studyItem: { createdById: userId },
+      // Most popular tags of user
+      const topTags = await ctx.db.tag.findMany({
+        where: {
+          itemTags: {
+            some: {
+              studyItem: { createdById: userId },
+            },
           },
         },
-      },
-      take: 5,
-      orderBy: {
-        itemTags: { _count: "desc" },
-      },
-      include: {
-        _count: {
-          select: {
-            itemTags: {
-              where: {
-                studyItem: { createdById: userId },
+        take: 5,
+        orderBy: {
+          itemTags: { _count: "desc" },
+        },
+        include: {
+          _count: {
+            select: {
+              itemTags: {
+                where: {
+                  studyItem: { createdById: userId },
+                },
               },
             },
           },
         },
-      },
-    });
+      });
 
-    // Recently created tags
-    const recentTags = await ctx.db.tag.findMany({
-      where: {
-        itemTags: {
-          some: {
-            studyItem: { createdById: userId },
+      // Recently created tags
+      const recentTags = await ctx.db.tag.findMany({
+        where: {
+          itemTags: {
+            some: {
+              studyItem: { createdById: userId },
+            },
           },
         },
-      },
-      take: 3,
-      orderBy: { createdAt: "desc" },
-      include: {
-        _count: {
-          select: {
-            itemTags: {
-              where: {
-                studyItem: { createdById: userId },
+        take: 3,
+        orderBy: { createdAt: "desc" },
+        include: {
+          _count: {
+            select: {
+              itemTags: {
+                where: {
+                  studyItem: { createdById: userId },
+                },
               },
             },
           },
         },
-      },
-    });
+      });
 
-    return {
-      totalTags,
-      topTags: topTags.map((tag) => ({
-        ...tag,
-        usageCount: tag._count.itemTags,
-      })),
-      recentTags: recentTags.map((tag) => ({
-        ...tag,
-        usageCount: tag._count.itemTags,
-      })),
-    };
-  }),
+      return {
+        totalTags,
+        topTags: topTags.map((tag) => ({
+          ...tag,
+          usageCount: tag._count.itemTags,
+        })),
+        recentTags: recentTags.map((tag) => ({
+          ...tag,
+          usageCount: tag._count.itemTags,
+        })),
+      };
+    }),
 });

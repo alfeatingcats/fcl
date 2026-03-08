@@ -49,3 +49,6 @@ yarn-error.log*
 messages/*.d.json.ts
 # Local Netlify folder
 .netlify
+
+# Prisma
+/prisma/generated

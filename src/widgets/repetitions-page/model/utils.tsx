@@ -1,8 +1,8 @@
 import type { RepetitionsListRow } from "@/entities/repetitions";
-import type { RouterOutputs } from "@/trpc/react";
+import { type FullRepetitionListType } from "@/shared/api/schemas/fg/repetitions";
 
 export const mapTodayRepetitionsToListData = (
-  repetitions: RouterOutputs["repetitions"]["getTodayRepetitions"],
+  repetitions: FullRepetitionListType,
 ): Array<RepetitionsListRow> =>
   repetitions.map((repetition) => ({
     scheduledAt: repetition.scheduledAt,
@@ -12,6 +12,7 @@ export const mapTodayRepetitionsToListData = (
     studyItemId: repetition.studyItemId,
     title: repetition.studyItem.title,
     description: repetition.studyItem.description,
+    descriptionText: repetition.studyItem.descriptionText ?? "",
     itemTags: repetition.studyItem.itemTags,
     repetitionNumber: repetition.repetitionNumber,
   }));

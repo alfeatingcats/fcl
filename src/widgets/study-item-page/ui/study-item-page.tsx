@@ -1,5 +1,6 @@
 "use client";
-import { useMemo } from "react";
+
+import { useCallback, useMemo } from "react";
 import { useTranslations } from "next-intl";
 
 import {
@@ -27,26 +28,37 @@ import { StudyItemForm } from "./study-item-form";
 import { useManageTag } from "../model/use-manage-tag";
 import { mapStudyItemToRepetitionList } from "../model/utils";
 import { useManageStudyItem } from "../model/use-manage-study-item";
+import { AutosaveTrigger } from "../model/autosave-trigger";
+import { DeleteStudyItemButton } from "@/features/delete-study-item";
 
 export const StudyItemPage = () => {
   const id = useIdParam();
   const studyItem = useStudyItem(id);
   useDynamicBreadcrumb(studyItem?.title, id);
+
   const t = useTranslations("Repetitions");
 
-  const { form } = useManageStudyItem({
-    description: studyItem?.description ?? undefined,
-    title: studyItem?.title,
-    id: studyItem?.id,
-    tagIds: studyItem?.itemTags.map((itemTag) => itemTag.tag.id),
-  });
+  const { form, onSubmit, isLoading, deleteStudyItem, isDeleteLoading } =
+    useManageStudyItem({
+      description: studyItem?.description,
+      title: studyItem?.title,
+      id: studyItem?.id,
+      tagIds: studyItem?.itemTags.map((itemTag) => itemTag.tag.id),
+    });
 
-  const mappedItemTags: Array<RequiredCreateTagInput> = studyItem?.itemTags.map(
-    (itemTag) => ({
-      id: itemTag.tag.id,
-      color: itemTag.tag.color!,
-      name: itemTag.tag.name,
-    }),
+  const handleStudyItemDelete = useCallback(
+    () => deleteStudyItem({ id }),
+    [deleteStudyItem, id],
+  );
+
+  const mappedItemTags = useMemo<Array<RequiredCreateTagInput>>(
+    () =>
+      studyItem?.itemTags.map((itemTag) => ({
+        id: itemTag.tag.id,
+        color: itemTag.tag.color,
+        name: itemTag.tag.name,
+      })),
+    [studyItem?.itemTags],
   );
 
   const {
@@ -69,10 +81,10 @@ export const StudyItemPage = () => {
     title,
     onClear,
     complete,
-    description,
     activeRepetition,
     repetitionNumber,
     setActiveRepetition,
+    descriptionText,
   } = useRepetitionsOverlayEntityContent(repetitionsListData);
 
   const {
@@ -92,7 +104,13 @@ export const StudyItemPage = () => {
   } = useWaitRepetitionAction(activeRepetition, onClear);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-5">
+      <DeleteStudyItemButton
+        isLoading={isDeleteLoading}
+        onClick={handleStudyItemDelete}
+        type="button"
+      />
+      {/* #region Study item form* */}
       <StudyItemForm
         form={form}
         defaultTags={mappedItemTags}
@@ -100,6 +118,13 @@ export const StudyItemPage = () => {
           <CreateTagButton onClick={toggleCreateTagDrawer} />
         }
       />
+      <AutosaveTrigger
+        control={form.control}
+        onSubmit={onSubmit}
+        isPending={isLoading}
+        handleSubmit={form.handleSubmit}
+      />
+      {/* #endregion  */}
 
       <RepetitionsTableContent
         repetitions={studyItem?.repetitions}
@@ -107,7 +132,6 @@ export const StudyItemPage = () => {
         onWaitRepetition={setActiveRepetition}
         onCompleteRepetition={setActiveRepetition}
       />
-
       <TagCreateDrawer
         isLoading={isCreatingTag}
         isOpen={isCreateTagDrawerOpen}
@@ -116,12 +140,11 @@ export const StudyItemPage = () => {
       >
         <TagForm form={formTag} />
       </TagCreateDrawer>
-
       <ActionRepetitionModal
         onClear={onClear}
         entity={{
           title: title,
-          description: description,
+          description: descriptionText,
         }}
         repetitionNumber={repetitionNumber || ""}
         overlay={{
@@ -143,7 +166,7 @@ export const StudyItemPage = () => {
         onClear={onClear}
         entity={{
           title: title,
-          description: description,
+          description: descriptionText,
         }}
         repetitionNumber={repetitionNumber || ""}
         overlay={{
@@ -165,7 +188,7 @@ export const StudyItemPage = () => {
         onClear={onClear}
         entity={{
           title: title,
-          description: description,
+          description: descriptionText,
         }}
         repetitionNumber={repetitionNumber || ""}
         overlay={{

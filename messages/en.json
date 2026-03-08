@@ -51,7 +51,8 @@
     "selectAll": "Select All",
     "selectRow": "Select Row",
     "tagsPlaceholder": "tags...",
-    "searchPlaceholder": "Search..."
+    "searchPlaceholder": "Search...",
+    "actions": "Actions"
   },
   "Time": {
     "inMinutes": "in {count, plural, one {# min} other {# mins}}",
@@ -123,6 +124,7 @@
   "Sidebar": {
     "dashboard": "Dashboard",
     "mySkills": "My Skills",
+    "tags": "Tags",
     "reviewCycle": "Review Cycle",
     "settings": "Settings",
     "support": "Support",

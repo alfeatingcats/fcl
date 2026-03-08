@@ -10,13 +10,13 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import type { StudyItem } from "@prisma/client";
 
 import { useStudyItemTable } from "../model/use-table";
 import { OverlayScrollbarsComponent } from "overlayscrollbars-react";
+import type { ReadStudyItemsOutputSchemaType } from "@/shared/api/schemas/fg/study-item";
 
 interface StudyItemTableContentProps {
-  studyItems: Array<StudyItem>;
+  studyItems: ReadStudyItemsOutputSchemaType["items"];
 }
 export const StudyItemTableContent: FC<StudyItemTableContentProps> = ({
   studyItems = [],
@@ -43,7 +43,7 @@ export const StudyItemTableContent: FC<StudyItemTableContentProps> = ({
                 return (
                   <TableHead
                     key={header.id}
-                    className="text-muted-foreground !py-3"
+                    className="text-muted-foreground py-3!"
                   >
                     {header.isPlaceholder
                       ? null
@@ -68,7 +68,10 @@ export const StudyItemTableContent: FC<StudyItemTableContentProps> = ({
                   {row.getVisibleCells().map((cell) => (
                     <TableCell
                       key={cell.id}
-                      className="py-2 whitespace-nowrap [&:has([aria-expanded])]:w-px [&:has([aria-expanded])]:py-0 [&:has([aria-expanded])]:pr-0"
+                      className="py-2 whitespace-nowrap
+                        [&:has([aria-expanded])]:w-px
+                        [&:has([aria-expanded])]:py-0
+                        [&:has([aria-expanded])]:pr-0"
                     >
                       {flexRender(
                         cell.column.columnDef.cell,

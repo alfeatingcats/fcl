@@ -1,9 +1,13 @@
+import type { GetStudyItemByIdInfer } from "@/shared/api/schemas";
+import type { FullRepetitionType } from "@/shared/api/schemas/fg/repetitions";
 import type {
   OverlayEntityContent,
   RepetitionActionState,
 } from "@/shared/types";
 import type { RouterOutputs } from "@/trpc/react";
-import type { StudyItem, StudyRepetition } from "@prisma/client";
+import type { StudyRepetition } from "@prisma/client";
+import type { StudyItemType } from "prisma/generated/schemas/models/StudyItem.schema";
+import type { StudyRepetitionType } from "prisma/generated/schemas/models/StudyRepetition.schema";
 import type { ReactElement, ReactNode } from "react";
 
 export interface ChartPoint {
@@ -23,7 +27,7 @@ export interface RepetitionChartProps {
 }
 
 export type RepetitionsListRow = Pick<
-  StudyRepetition,
+  StudyRepetitionType,
   | "scheduledAt"
   | "status"
   | "difficulty"
@@ -31,11 +35,8 @@ export type RepetitionsListRow = Pick<
   | "studyItemId"
   | "repetitionNumber"
 > &
-  Pick<StudyItem, "title" | "description"> &
-  Pick<
-    RouterOutputs["repetitions"]["getTodayRepetitions"][number]["studyItem"],
-    "itemTags"
-  >;
+  Pick<StudyItemType, "title" | "description" | "descriptionText"> &
+  Pick<FullRepetitionType["studyItem"], "itemTags">;
 
 export type RepetitionSummary = {
   title?: string;

@@ -26,6 +26,7 @@ export const RepetitionListRow: FC<RepetitionListRowProps> = ({
   onCompleteRepetition,
   onSkipRepetition,
   onWaitRepetition,
+  descriptionText,
 }) => {
   return (
     <div className="text-card-foreground bg-muted flex flex-col items-stretch !rounded-xl p-1">
@@ -44,7 +45,7 @@ export const RepetitionListRow: FC<RepetitionListRowProps> = ({
           </span>
         </div>
         <div className="text-muted-foreground line-clamp-2 text-sm">
-          {description}
+          {descriptionText}
         </div>
       </div>
       <div className="flex flex-row items-center">

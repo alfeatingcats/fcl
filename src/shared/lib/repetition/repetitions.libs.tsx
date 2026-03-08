@@ -37,7 +37,10 @@ export const getRepetitionOverlayConfig = (
 export const getActiveRepetitionDetails = (
   repetitions: Array<RepetitionsListRow>,
   activeRepetitionId: RepetitionOverlayPayload,
-) => {
+): Pick<
+  RepetitionsListRow,
+  "title" | "description" | "repetitionNumber" | "descriptionText"
+> | null => {
   if (isNil(activeRepetitionId) || isEmpty(repetitions) || isNil(repetitions)) {
     return null;
   }
@@ -45,5 +48,6 @@ export const getActiveRepetitionDetails = (
     "title",
     "description",
     "repetitionNumber",
+    "descriptionText",
   ]);
 };

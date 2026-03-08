@@ -51,8 +51,9 @@ export const FormDrawer: CFC<FormDrawerProps> = ({
       direction="right"
       open={isOpen}
       onOpenChange={onOpenChange}
+      handleOnly={true}
     >
-      <DrawerContent className={cn("!max-w-[28rem] py-6", contentCN)}>
+      <DrawerContent className={cn("max-w-136! py-6", contentCN)}>
         <OverlayScrollbarsComponent
           element="div"
           options={{
@@ -76,18 +77,18 @@ export const FormDrawer: CFC<FormDrawerProps> = ({
           </div>
         </OverlayScrollbarsComponent>
 
-        <DrawerFooter className="px-6 pb-0">
-          <Button disabled={isLoading} {...restSubmitProps}>
+        <DrawerFooter className="flex flex-row gap-3 px-6 pb-0">
+          <DrawerClose asChild>
+            <Button className="flex-1" variant="outline" {...restCancelProps}>
+              {cancelButtonText ?? t("cancel")}
+            </Button>
+          </DrawerClose>
+          <Button className="flex-1" disabled={isLoading} {...restSubmitProps}>
             {isLoading ? (
               <LoaderCircleIcon className="size-4 animate-spin" />
             ) : null}
             {submitButtonText ?? t("submit")}
           </Button>
-          <DrawerClose asChild>
-            <Button variant="outline" {...restCancelProps}>
-              {cancelButtonText ?? t("cancel")}
-            </Button>
-          </DrawerClose>
         </DrawerFooter>
       </DrawerContent>
     </DrawerComponent>

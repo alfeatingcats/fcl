@@ -9,11 +9,21 @@ import {
 } from "@/shared/api/schemas";
 
 type UseStudyItemFormProps = {
-  defaultValues?: Partial<UpdateStudyItemInput>;
+  defaultValues?: Partial<
+    Pick<UpdateStudyItemInput, "description" | "tagIds" | "title" | "id">
+  >;
 };
 
 export const useUpdateStudyItemForm = (props?: UseStudyItemFormProps) =>
   useForm<UpdateStudyItemInput>({
-    resolver: zodResolver(UpdateStudyItemSchema),
+    resolver: zodResolver(
+      UpdateStudyItemSchema.pick({
+        id: true,
+        title: true,
+        description: true,
+        tagIds: true,
+      }),
+    ),
     defaultValues: props?.defaultValues ?? {},
+    mode: "onChange",
   });

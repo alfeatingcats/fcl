@@ -19,7 +19,7 @@ export const ClientLayout: CFC<ClientLayoutProps> = ({
   sidebarValue,
 }) => {
   return (
-    <div className="flex h-screen w-screen !max-w-screen overflow-hidden">
+    <div className="flex h-screen w-screen max-w-screen! overflow-hidden">
       <SidebarProvider
         defaultOpen={sidebarValue}
         style={
@@ -39,7 +39,7 @@ export const ClientLayout: CFC<ClientLayoutProps> = ({
             }}
             defer
           >
-            <div className="min-h-full w-full p-4 pt-0">
+            <div className="min-h-full w-full px-10 pb-8 pt-2">
               <Header />
               {children}
             </div>
