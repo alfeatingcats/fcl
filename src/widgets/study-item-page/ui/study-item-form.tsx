@@ -1,36 +1,37 @@
-import { type FC, type ReactNode } from "react";
-import { useTranslations } from "next-intl";
-import type { UseFormReturn } from "react-hook-form";
-import type { SerializedEditorState } from "lexical";
-import { useDebounceFn } from "ahooks";
+import { useDebounceFn } from 'ahooks'
+import type { SerializedEditorState } from 'lexical'
+import { useTranslations } from 'next-intl'
+import { type FC, type ReactNode } from 'react'
+import type { UseFormReturn } from 'react-hook-form'
 
+import { Editor } from '@/components/blocks/editor-x/editor'
 import {
   Form,
+  FormControl,
+  FormField,
   FormItem,
   FormLabel,
-  FormField,
   FormMessage,
-  FormControl,
-} from "@/components/ui/form";
+} from '@/components/ui/form'
+import { Input } from '@/components/ui/input'
+import type { UpdateStudyItemInput } from '@/shared/api/schemas'
+
 import {
-  TagsSelector,
   type RequiredCreateTagInput,
-} from "@/features/tag-selector";
-import { Input } from "@/components/ui/input";
-import { Editor } from "@/components/blocks/editor-x/editor";
-import type { UpdateStudyItemInput } from "@/shared/api/schemas";
+  TagsSelector,
+} from '@/features/tag-selector'
 
 type TForm = Pick<
   UpdateStudyItemInput,
-  "description" | "tagIds" | "title" | "id"
->;
+  'description' | 'tagIds' | 'title' | 'id'
+>
 
 type StudyItemFormProps = {
-  isLoading?: boolean;
-  renderCreateTagButton: ReactNode;
-  defaultTags?: RequiredCreateTagInput[];
-  form: UseFormReturn<TForm>;
-};
+  isLoading?: boolean
+  renderCreateTagButton: ReactNode
+  defaultTags?: RequiredCreateTagInput[]
+  form: UseFormReturn<TForm>
+}
 
 export const StudyItemForm: FC<StudyItemFormProps> = ({
   form,
@@ -38,11 +39,11 @@ export const StudyItemForm: FC<StudyItemFormProps> = ({
   isLoading = false,
   renderCreateTagButton,
 }) => {
-  const t = useTranslations("StudyItemForm");
+  const t = useTranslations('StudyItemForm')
 
   const { run: debouncedOnChange } = useDebounceFn(
     (value: unknown) =>
-      form.setValue("description", value as TForm["description"], {
+      form.setValue('description', value as TForm['description'], {
         shouldValidate: false,
         shouldDirty: true,
         shouldTouch: true,
@@ -50,7 +51,7 @@ export const StudyItemForm: FC<StudyItemFormProps> = ({
     {
       wait: 300,
     },
-  );
+  )
 
   return (
     <Form {...form}>
@@ -63,7 +64,7 @@ export const StudyItemForm: FC<StudyItemFormProps> = ({
               <FormControl>
                 <div className="flex flex-row">
                   <Input
-                    placeholder={t("titlePlaceholder")}
+                    placeholder={t('titlePlaceholder')}
                     disabled={isLoading}
                     className="hover:cursor-pointer"
                     {...field}
@@ -80,19 +81,19 @@ export const StudyItemForm: FC<StudyItemFormProps> = ({
           name="tagIds"
           render={({ field: { ref, onBlur } }) => (
             <FormItem>
-              <FormLabel>{t("tagsLabel")}</FormLabel>
+              <FormLabel>{t('tagsLabel')}</FormLabel>
               <FormControl>
                 <TagsSelector
                   defaultTags={defaultTags}
                   onChange={(_, selectedTagIds) => {
                     form.setValue(
-                      "tagIds",
+                      'tagIds',
                       selectedTagIds.length > 0 ? selectedTagIds : [],
                       {
                         shouldDirty: true,
                         shouldTouch: true,
                       },
-                    );
+                    )
                   }}
                   ref={ref}
                   onBlur={onBlur}
@@ -110,7 +111,7 @@ export const StudyItemForm: FC<StudyItemFormProps> = ({
           name="description"
           render={({ field }) => (
             <FormItem className="">
-              <FormLabel>{t("descriptionLabel")}</FormLabel>
+              <FormLabel>{t('descriptionLabel')}</FormLabel>
               <FormControl>
                 <Editor
                   // wrapperClassName="h-160"
@@ -122,9 +123,9 @@ export const StudyItemForm: FC<StudyItemFormProps> = ({
                     (field.value as unknown as SerializedEditorState) ??
                     undefined
                   }
-                  placeholder={t("descriptionPlaceholder")}
+                  placeholder={t('descriptionPlaceholder')}
                   onSerializedChange={(editorState) => {
-                    debouncedOnChange(editorState);
+                    debouncedOnChange(editorState)
                   }}
                 />
               </FormControl>
@@ -134,5 +135,5 @@ export const StudyItemForm: FC<StudyItemFormProps> = ({
         />
       </form>
     </Form>
-  );
-};
+  )
+}

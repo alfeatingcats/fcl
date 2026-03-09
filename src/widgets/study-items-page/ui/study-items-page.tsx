@@ -1,22 +1,20 @@
-"use client";
+'use client'
 
-import { api } from "@/trpc/react";
-import { StudyItemDataTable } from "@/features/study-item-table";
-import {
-  StudyItemDrawer,
-  StudyItemForm,
-} from "@/features/create-study-item/ui";
-import { CreateTagButton } from "@/features/tag-selector";
+import { StudyItemDrawer, StudyItemForm } from '@/features/create-study-item/ui'
 import {
   CreateStudyItemButton,
   TagCreateDrawer,
   TagForm,
-} from "@/features/create-tag";
+} from '@/features/create-tag'
+import { StudyItemDataTable } from '@/features/study-item-table'
+import { CreateTagButton } from '@/features/tag-selector'
 
-import { useManageStudyItem, useManageTag } from "../model";
+import { api } from '@/trpc/react'
+
+import { useManageStudyItem, useManageTag } from '../model'
 
 export const StudyItemsPage = () => {
-  const [studyItems] = api.studyItem.getAll.useSuspenseQuery({ limit: 10 });
+  const [studyItems] = api.studyItem.getAll.useSuspenseQuery({ limit: 10 })
 
   const {
     form,
@@ -25,7 +23,7 @@ export const StudyItemsPage = () => {
     handleOpenChange: handleDrawerChange,
     isOpen: isStudyItemCreationOpen,
     toggleVisibility: toggleStudyItemCreation,
-  } = useManageStudyItem();
+  } = useManageStudyItem()
 
   const {
     form: formTag,
@@ -34,7 +32,7 @@ export const StudyItemsPage = () => {
     isOpen: isCreateTagDrawerOpen,
     toggleVisibility: toggleCreateTagDrawer,
     handleOpenChange: handleTagDrawerChange,
-  } = useManageTag();
+  } = useManageTag()
 
   return (
     <>
@@ -71,5 +69,5 @@ export const StudyItemsPage = () => {
         </TagCreateDrawer>
       </StudyItemDrawer>
     </>
-  );
-};
+  )
+}

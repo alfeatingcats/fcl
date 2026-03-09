@@ -1,18 +1,24 @@
 // src/server/api/routers/tags.ts
-import { z } from "zod";
-import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";
-import { TRPCError } from "@trpc/server";
+
+import { TRPCError } from '@trpc/server'
+import { z } from 'zod'
+
 import {
   CreateTagSchema,
+  DeleteTagOutputSchema,
   DeleteTagSchema,
   UpdateTagSchema,
-} from "@/shared/api/schemas";
+} from '@/shared/api/schemas'
 import {
   PopularTagOutputSchema,
   TagAutocompleteOutputSchema,
   TagWithStatsOutputSchema,
   UserTagStatsOutputSchema,
-} from "@/shared/api/schemas/fg/tags";
+} from '@/shared/api/schemas/fg/tags'
+
+import { createTRPCRouter, protectedProcedure } from '@/server/api/trpc'
+
+import { TagSchema } from '$/prisma/generated/schemas'
 
 export const tagsRouter = createTRPCRouter({
   /**
@@ -24,15 +30,15 @@ export const tagsRouter = createTRPCRouter({
       // Check if a tag with the same name already exists (globally)
       const existingTag = await ctx.db.tag.findFirst({
         where: {
-          name: { equals: input.name, mode: "insensitive" },
+          name: { equals: input.name, mode: 'insensitive' },
         },
-      });
+      })
 
       if (existingTag) {
         throw new TRPCError({
-          code: "CONFLICT",
-          message: "A tag with this name already exists",
-        });
+          code: 'CONFLICT',
+          message: 'A tag with this name already exists',
+        })
       }
 
       return await ctx.db.tag.create({
@@ -40,7 +46,7 @@ export const tagsRouter = createTRPCRouter({
           name: input.name.trim(),
           color: input.color,
         },
-      });
+      })
     }),
 
   /**
@@ -51,25 +57,25 @@ export const tagsRouter = createTRPCRouter({
       z.object({
         search: z.string().optional(),
         sortBy: z
-          .enum(["name", "usage", "created"])
-          .default("usage")
+          .enum(['name', 'usage', 'created'])
+          .default('usage')
           .optional(),
         includeUnused: z.boolean().default(true),
       }),
     )
     .output(TagWithStatsOutputSchema)
     .query(async ({ ctx, input }) => {
-      const { search, sortBy, includeUnused } = input;
-      const userId = ctx.session.user.id;
+      const { search, sortBy, includeUnused } = input
+      const userId = ctx.session.user.id
 
       // Base query
-      const where: Record<string, unknown> = {};
+      const where: Record<string, unknown> = {}
 
       if (search) {
         where.name = {
           contains: search,
-          mode: "insensitive",
-        };
+          mode: 'insensitive',
+        }
       }
 
       // Exclude unused tags if needed
@@ -80,7 +86,7 @@ export const tagsRouter = createTRPCRouter({
               createdById: userId,
             },
           },
-        };
+        }
       }
 
       const tags = await ctx.db.tag.findMany({
@@ -101,7 +107,7 @@ export const tagsRouter = createTRPCRouter({
             where: {
               studyItem: {
                 createdById: userId,
-                status: { not: "ARCHIVED" },
+                status: { not: 'ARCHIVED' },
               },
             },
             include: {
@@ -115,23 +121,23 @@ export const tagsRouter = createTRPCRouter({
             take: 3, // For preview of recent notes
           },
         },
-      });
+      })
 
       // Sorting
       const sortedTags = tags.sort((a, b) => {
         switch (sortBy) {
-          case "name":
-            return a.name.localeCompare(b.name);
-          case "usage":
-            return b._count.itemTags - a._count.itemTags;
-          case "created":
+          case 'name':
+            return a.name.localeCompare(b.name)
+          case 'usage':
+            return b._count.itemTags - a._count.itemTags
+          case 'created':
             return (
               new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-            );
+            )
           default:
-            return 0;
+            return 0
         }
-      });
+      })
 
       return sortedTags.map((tag) => ({
         id: tag.id,
@@ -144,7 +150,7 @@ export const tagsRouter = createTRPCRouter({
           status: it.studyItem.status,
           createdAt: it.studyItem.createdAt,
         })),
-      }));
+      }))
     }),
 
   /**
@@ -162,7 +168,7 @@ export const tagsRouter = createTRPCRouter({
         take: input.limit,
         orderBy: {
           itemTags: {
-            _count: "desc",
+            _count: 'desc',
           },
         },
         include: {
@@ -175,7 +181,7 @@ export const tagsRouter = createTRPCRouter({
             some: {}, // Only tags that have been used at least once
           },
         },
-      });
+      })
     }),
 
   /**
@@ -191,7 +197,7 @@ export const tagsRouter = createTRPCRouter({
     )
     .output(TagAutocompleteOutputSchema)
     .query(async ({ ctx, input }) => {
-      const hasQuery = input.query.trim().length > 0;
+      const hasQuery = input.query.trim().length > 0
 
       return await ctx.db.tag.findMany({
         where: {
@@ -199,7 +205,7 @@ export const tagsRouter = createTRPCRouter({
           ...(hasQuery && {
             name: {
               contains: input.query,
-              mode: "insensitive",
+              mode: 'insensitive',
             },
           }),
           // Always exclude already selected tags
@@ -209,8 +215,8 @@ export const tagsRouter = createTRPCRouter({
         },
         take: input.limit,
         orderBy: [
-          { itemTags: { _count: "desc" } }, // Most popular first
-          { name: "asc" }, // Then alphabetically
+          { itemTags: { _count: 'desc' } }, // Most popular first
+          { name: 'asc' }, // Then alphabetically
         ],
         select: {
           id: true,
@@ -220,7 +226,7 @@ export const tagsRouter = createTRPCRouter({
             select: { itemTags: true },
           },
         },
-      });
+      })
     }),
 
   /**
@@ -228,42 +234,43 @@ export const tagsRouter = createTRPCRouter({
    */
   update: protectedProcedure
     .input(UpdateTagSchema)
+    .output(TagSchema)
     .mutation(async ({ ctx, input }) => {
-      const { id, ...updateData } = input;
+      const { id, ...updateData } = input
 
       // Check if tag exists
       const existingTag = await ctx.db.tag.findUnique({
         where: { id },
-      });
+      })
 
       if (!existingTag) {
         throw new TRPCError({
-          code: "NOT_FOUND",
-          message: "Tag not found",
-        });
+          code: 'NOT_FOUND',
+          message: 'Tag not found',
+        })
       }
 
       // If name is being changed, check for uniqueness
       if (updateData.name && updateData.name !== existingTag.name) {
         const duplicateTag = await ctx.db.tag.findFirst({
           where: {
-            name: { equals: updateData.name, mode: "insensitive" },
+            name: { equals: updateData.name, mode: 'insensitive' },
             id: { not: id },
           },
-        });
+        })
 
         if (duplicateTag) {
           throw new TRPCError({
-            code: "CONFLICT",
-            message: "A tag with this name already exists",
-          });
+            code: 'CONFLICT',
+            message: 'A tag with this name already exists',
+          })
         }
       }
 
       return await ctx.db.tag.update({
         where: { id },
         data: updateData,
-      });
+      })
     }),
 
   /**
@@ -271,6 +278,7 @@ export const tagsRouter = createTRPCRouter({
    */
   delete: protectedProcedure
     .input(DeleteTagSchema)
+    .output(DeleteTagOutputSchema)
     .mutation(async ({ ctx, input }) => {
       return await ctx.db.$transaction(async (tx) => {
         // Check if tag exists
@@ -279,32 +287,32 @@ export const tagsRouter = createTRPCRouter({
           include: {
             _count: { select: { itemTags: true } },
           },
-        });
+        })
 
         if (!tag) {
           throw new TRPCError({
-            code: "NOT_FOUND",
-            message: "Tag not found",
-          });
+            code: 'NOT_FOUND',
+            message: 'Tag not found',
+          })
         }
 
         // If a transfer target is provided
         if (input.transferToTagId) {
           const targetTag = await tx.tag.findUnique({
             where: { id: input.transferToTagId },
-          });
+          })
 
           if (!targetTag) {
             throw new TRPCError({
-              code: "NOT_FOUND",
-              message: "Target tag for transfer not found",
-            });
+              code: 'NOT_FOUND',
+              message: 'Target tag for transfer not found',
+            })
           }
 
           // Transfer all relations to the new tag
           const itemTags = await tx.studyItemTag.findMany({
             where: { tagId: input.id },
-          });
+          })
 
           for (const itemTag of itemTags) {
             // Check if a relation with the target tag already exists
@@ -315,7 +323,7 @@ export const tagsRouter = createTRPCRouter({
                   tagId: input.transferToTagId,
                 },
               },
-            });
+            })
 
             if (!existingConnection) {
               await tx.studyItemTag.create({
@@ -323,7 +331,7 @@ export const tagsRouter = createTRPCRouter({
                   studyItemId: itemTag.studyItemId,
                   tagId: input.transferToTagId,
                 },
-              });
+              })
             }
           }
         }
@@ -331,15 +339,15 @@ export const tagsRouter = createTRPCRouter({
         // Delete the tag (connections will be deleted via onDelete: Cascade)
         await tx.tag.delete({
           where: { id: input.id },
-        });
+        })
 
         return {
           deletedTag: tag,
           transferredConnections: input.transferToTagId
             ? tag._count.itemTags
             : 0,
-        };
-      });
+        }
+      })
     }),
 
   /**
@@ -348,7 +356,7 @@ export const tagsRouter = createTRPCRouter({
   getUserTagStats: protectedProcedure
     .output(UserTagStatsOutputSchema)
     .query(async ({ ctx }) => {
-      const userId = ctx.session.user.id;
+      const userId = ctx.session.user.id
 
       // Total tags used by user
       const totalTags = await ctx.db.tag.count({
@@ -359,7 +367,7 @@ export const tagsRouter = createTRPCRouter({
             },
           },
         },
-      });
+      })
 
       // Most popular tags of user
       const topTags = await ctx.db.tag.findMany({
@@ -372,7 +380,7 @@ export const tagsRouter = createTRPCRouter({
         },
         take: 5,
         orderBy: {
-          itemTags: { _count: "desc" },
+          itemTags: { _count: 'desc' },
         },
         include: {
           _count: {
@@ -385,7 +393,7 @@ export const tagsRouter = createTRPCRouter({
             },
           },
         },
-      });
+      })
 
       // Recently created tags
       const recentTags = await ctx.db.tag.findMany({
@@ -397,7 +405,7 @@ export const tagsRouter = createTRPCRouter({
           },
         },
         take: 3,
-        orderBy: { createdAt: "desc" },
+        orderBy: { createdAt: 'desc' },
         include: {
           _count: {
             select: {
@@ -409,7 +417,7 @@ export const tagsRouter = createTRPCRouter({
             },
           },
         },
-      });
+      })
 
       return {
         totalTags,
@@ -421,6 +429,6 @@ export const tagsRouter = createTRPCRouter({
           ...tag,
           usageCount: tag._count.itemTags,
         })),
-      };
+      }
     }),
-});
+})

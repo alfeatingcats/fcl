@@ -1,1 +1,1 @@
-export { RepetitionsPage } from "./ui";
+export { RepetitionsPage } from './ui'

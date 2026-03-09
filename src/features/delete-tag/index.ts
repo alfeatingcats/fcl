@@ -1,1 +1,2 @@
-export { useDeleteTag } from "./model";
+export { useDeleteTag, useDeleteTagModal } from './model'
+export { DeleteTagModal } from './ui'

@@ -1,65 +1,65 @@
-import { create } from "zustand";
-import { setCookie, getCookie } from "tiny-cookie";
-import { persist, createJSONStorage } from "zustand/middleware";
+import { getCookie, setCookie } from 'tiny-cookie'
+import { create } from 'zustand'
+import { createJSONStorage, persist } from 'zustand/middleware'
 
 export type UserStore = {
-  timeZone: string;
-  setTimeZone: (tz: string) => void;
-};
+  timeZone: string
+  setTimeZone: (tz: string) => void
+}
 
-export const USER_STORE_LOCAL_STORAGE_KEY = "user-store";
+export const USER_STORE_LOCAL_STORAGE_KEY = 'user-store'
 
 const cookieStorage = {
   getItem: (name: string): string | null => {
-    if (typeof window === "undefined") {
-      return null;
+    if (typeof window === 'undefined') {
+      return null
     }
 
     try {
-      return getCookie(name) ?? null;
+      return getCookie(name) ?? null
     } catch (error) {
-      console.warn("[UserStore] Failed to get cookie:", error);
-      return null;
+      console.warn('[UserStore] Failed to get cookie:', error)
+      return null
     }
   },
   setItem: (name: string, value: string): void => {
-    if (typeof window === "undefined") {
-      return;
+    if (typeof window === 'undefined') {
+      return
     }
 
     try {
       setCookie(name, value, {
-        path: "/",
-        expires: "1Y",
-        samesite: "lax",
-      });
+        path: '/',
+        expires: '1Y',
+        samesite: 'lax',
+      })
     } catch (error) {
-      console.warn("[UserStore] Failed to set cookie:", error);
+      console.warn('[UserStore] Failed to set cookie:', error)
     }
   },
   removeItem: (name: string): void => {
-    if (typeof window === "undefined") {
-      return;
+    if (typeof window === 'undefined') {
+      return
     }
 
     try {
-      setCookie(name, "", {
-        path: "/",
+      setCookie(name, '', {
+        path: '/',
         expires: new Date(0),
-        samesite: "lax",
-      });
+        samesite: 'lax',
+      })
     } catch (error) {
-      console.warn("[UserStore] Failed to remove cookie:", error);
+      console.warn('[UserStore] Failed to remove cookie:', error)
     }
   },
-};
+}
 
 export const useUserStore = create<UserStore>()(
   persist(
     (set) => ({
-      timeZone: "UTC",
+      timeZone: 'UTC',
       setTimeZone: (tz) => {
-        set({ timeZone: tz });
+        set({ timeZone: tz })
       },
     }),
     {
@@ -68,20 +68,20 @@ export const useUserStore = create<UserStore>()(
       onRehydrateStorage: () => {
         return (state, error) => {
           if (error) {
-            console.warn("[UserStore] Rehydration failed:", error);
-            return;
+            console.warn('[UserStore] Rehydration failed:', error)
+            return
           }
 
-          if (typeof window !== "undefined" && state) {
-            const browserTz = Intl.DateTimeFormat().resolvedOptions().timeZone;
-            const currentTz = state.timeZone ?? "UTC";
+          if (typeof window !== 'undefined' && state) {
+            const browserTz = Intl.DateTimeFormat().resolvedOptions().timeZone
+            const currentTz = state.timeZone ?? 'UTC'
 
             if (currentTz !== browserTz) {
-              setTimeout(() => state.setTimeZone?.(browserTz), 0);
+              setTimeout(() => state.setTimeZone?.(browserTz), 0)
             }
           }
-        };
+        }
       },
     },
   ),
-);
+)

@@ -1,1 +1,1 @@
-export { RepetitionMicroChart } from "./repetition-micro-chart";
+export { RepetitionMicroChart } from './repetition-micro-chart'

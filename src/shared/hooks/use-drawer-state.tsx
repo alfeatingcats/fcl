@@ -1,24 +1,23 @@
-"use client";
-import { useBoolean } from "ahooks";
-import { useCallback, useMemo } from "react";
+'use client'
+import { useBoolean } from 'ahooks'
+import { useCallback, useMemo } from 'react'
 
 type UseDrawerStateParams = {
-  onClose?: () => void;
-};
+  onClose?: () => void
+}
 
 export const useDrawerState = (params?: UseDrawerStateParams) => {
-  const [isOpen, { toggle, setTrue: open, setFalse: close }] =
-    useBoolean(false);
+  const [isOpen, { toggle, setTrue: open, setFalse: close }] = useBoolean(false)
 
   const handleChange = useCallback(
     (nextOpen: boolean) => {
       if (!nextOpen) {
-        params?.onClose?.();
+        params?.onClose?.()
       }
-      toggle();
+      toggle()
     },
     [params, toggle],
-  );
+  )
 
   return useMemo(
     () => ({
@@ -29,5 +28,5 @@ export const useDrawerState = (params?: UseDrawerStateParams) => {
       handleChange,
     }),
     [isOpen, open, close, toggle, handleChange],
-  );
-};
+  )
+}

@@ -1,1 +1,1 @@
-export { RepetitionsTableContent } from "./table";
+export { RepetitionsTableContent } from './table'

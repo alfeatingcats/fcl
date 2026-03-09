@@ -1,8 +1,8 @@
-import { toast } from "sonner";
-import { useCallback } from "react";
-import { useTranslations } from "next-intl";
+import { useTranslations } from 'next-intl'
+import { useCallback } from 'react'
+import { toast } from 'sonner'
 
-import { getErrorMessage } from "../lib/trpc-error-handler";
+import { getErrorMessage } from '../lib/trpc-error-handler'
 
 /**
  * Default toast-based error handler for TRPC mutation hooks.
@@ -12,12 +12,12 @@ import { getErrorMessage } from "../lib/trpc-error-handler";
  * trpc.repetitions.complete.useMutation({ onError: handleError });
  */
 export const useMutationErrorHandler = () => {
-  const t = useTranslations("Errors");
+  const t = useTranslations('Errors')
 
   return useCallback(
     (error: unknown) => {
-      toast.error(getErrorMessage(error, t));
+      toast.error(getErrorMessage(error, t))
     },
     [t],
-  );
-};
+  )
+}

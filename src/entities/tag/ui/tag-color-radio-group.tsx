@@ -1,39 +1,39 @@
-import { useId, useMemo } from "react";
-import { useTranslations } from "next-intl";
+import { useTranslations } from 'next-intl'
+import { useId, useMemo } from 'react'
 
-import { cn } from "@/shared/lib/utils";
-import { Badge } from "@/components/ui/badge";
-import { Label } from "@/components/ui/label";
-import type { CFC, TagColorTKey } from "@/shared/types";
-import { PRESET_COLOR_CLASSES } from "@/shared/lib/const";
-import { FormControl, FormItem } from "@/components/ui/form";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Badge } from '@/components/ui/badge'
+import { FormControl, FormItem } from '@/components/ui/form'
+import { Label } from '@/components/ui/label'
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
+import { PRESET_COLOR_CLASSES } from '@/shared/lib/const'
+import { cn } from '@/shared/lib/utils'
+import type { CFC, TagColorTKey } from '@/shared/types'
 
 type TagColorRadioGroupProps = {
-  value?: string;
-  onChange: (value: string) => void;
-};
+  value?: string
+  onChange: (value: string) => void
+}
 
 export const TagColorRadioGroup: CFC<TagColorRadioGroupProps> = ({
   value,
   onChange,
 }) => {
-  const id = useId();
-  const t = useTranslations("TagColors");
-  const tt = useTranslations("TagForm");
+  const id = useId()
+  const t = useTranslations('TagColors')
+  const tt = useTranslations('TagForm')
 
   const colors = useMemo(
     () =>
       PRESET_COLOR_CLASSES.map((colorCN) => {
         const colorName = colorCN
-          .split(" ")
-          .find((c) => c.startsWith("text-"))!
-          .split("-")[1] as TagColorTKey;
+          .split(' ')
+          .find((c) => c.startsWith('text-'))!
+          .split('-')[1] as TagColorTKey
 
-        return { value: colorCN, label: t(colorName) };
+        return { value: colorCN, label: t(colorName) }
       }),
     [t],
-  );
+  )
 
   return (
     <RadioGroup
@@ -67,13 +67,13 @@ export const TagColorRadioGroup: CFC<TagColorRadioGroupProps> = ({
             </div>
             <Badge
               id={`${`${id}-${value}`}-color`}
-              className={cn(value, "text-xs")}
+              className={cn(value, 'text-xs')}
             >
-              {tt("titleLabel")}
+              {tt('titleLabel')}
             </Badge>
           </div>
         </div>
       ))}
     </RadioGroup>
-  );
-};
+  )
+}

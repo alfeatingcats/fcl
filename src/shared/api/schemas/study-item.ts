@@ -1,16 +1,17 @@
-import type { JsonValue } from "@prisma/client/runtime/library";
-import z from "zod";
-import { CreateTagSchema } from "./tag";
-import { RepetitionStatus } from "@prisma/client";
+import { RepetitionStatus } from '@prisma/client'
+import type { JsonValue } from '@prisma/client/runtime/library'
+import z from 'zod'
+
+import { CreateTagSchema } from './tag'
 
 export const StatusSchema = z.enum([
-  "IN_PROGRESS",
-  "COMPLETED",
-  "PAUSED",
-  "ARCHIVED",
-]);
+  'IN_PROGRESS',
+  'COMPLETED',
+  'PAUSED',
+  'ARCHIVED',
+])
 
-export const Status = StatusSchema.enum;
+export const Status = StatusSchema.enum
 
 /* #region Outputs */
 export const LexicalStateSchema = z
@@ -24,7 +25,7 @@ export const LexicalStateSchema = z
       version: z.number(),
     }),
   })
-  .passthrough();
+  .passthrough()
 
 export const GetStudyItemByIdOutputSchema = z.object({
   id: z.string(),
@@ -62,56 +63,54 @@ export const GetStudyItemByIdOutputSchema = z.object({
       }),
     }),
   ),
-});
-export type GetStudyItemByIdInfer = z.infer<
-  typeof GetStudyItemByIdOutputSchema
->;
+})
+export type GetStudyItemByIdInfer = z.infer<typeof GetStudyItemByIdOutputSchema>
 /* #endregion */
 
 /* #region Create Study Item */
 export const CreateStudyItemSchema = z.object({
   title: z
     .string()
-    .min(1, "Title cannot be empty")
-    .max(200, "Title is too long"),
+    .min(1, 'Title cannot be empty')
+    .max(200, 'Title is too long'),
   description: LexicalStateSchema.optional().nullable(),
   descriptionText: z.string().max(5000).optional().nullable(),
   tagIds: z
-    .array(z.string().cuid("Invalid tag ID"))
-    .max(10, "Maximum of 10 tags allowed")
+    .array(z.string().cuid('Invalid tag ID'))
+    .max(10, 'Maximum of 10 tags allowed')
     .optional()
     .default([]),
-});
-export type CreateStudyItemInput = z.input<typeof CreateStudyItemSchema>;
+})
+export type CreateStudyItemInput = z.input<typeof CreateStudyItemSchema>
 /* #endregion */
 
 /* #region  Update Study Item */
 export const UpdateStudyItemSchema = z.object({
-  id: z.string().cuid("Invalid note ID"),
+  id: z.string().cuid('Invalid note ID'),
   title: z
     .string()
-    .min(1, "Title cannot be empty")
-    .max(200, "Title is too long")
+    .min(1, 'Title cannot be empty')
+    .max(200, 'Title is too long')
     .optional(),
   description: LexicalStateSchema.optional().nullable(),
   descriptionText: z.string().max(5000).optional().nullable(),
   status: StatusSchema.optional(),
   tagIds: z
-    .array(z.string().cuid("Invalid tag ID"))
-    .max(10, "Maximum of 10 tags allowed")
+    .array(z.string().cuid('Invalid tag ID'))
+    .max(10, 'Maximum of 10 tags allowed')
     .optional()
     .default([]),
-});
+})
 
-export type UpdateStudyItemInput = z.input<typeof UpdateStudyItemSchema>;
+export type UpdateStudyItemInput = z.input<typeof UpdateStudyItemSchema>
 /* #endregion */
 
 export type ExistStudyItemResponse = Omit<
   UpdateStudyItemInput,
-  "description"
+  'description'
 > & {
-  description?: JsonValue | null;
-};
+  description?: JsonValue | null
+}
 
 export const ReadStudyItemsSchema = z.object({
   status: StatusSchema.optional(),
@@ -119,10 +118,10 @@ export const ReadStudyItemsSchema = z.object({
   search: z.string().optional(),
   limit: z.number().min(1).max(100).default(10),
   cursor: z.string().cuid().optional(),
-});
-export type ReadStudyItemInput = z.input<typeof ReadStudyItemsSchema>;
+})
+export type ReadStudyItemInput = z.input<typeof ReadStudyItemsSchema>
 
-export const StudyItemIdSchema = UpdateStudyItemSchema.pick({ id: true });
-export type StudyItemIdInput = z.input<typeof StudyItemIdSchema>;
+export const StudyItemIdSchema = UpdateStudyItemSchema.pick({ id: true })
+export type StudyItemIdInput = z.input<typeof StudyItemIdSchema>
 
-export const DeleteStudyItemSchema = z.object({ id: z.string() });
+export const DeleteStudyItemSchema = z.object({ id: z.string() })

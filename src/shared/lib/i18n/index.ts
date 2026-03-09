@@ -1,1 +1,1 @@
-export { getTodayRange } from "./date";
+export { getTodayRange } from './date'
