@@ -8,7 +8,7 @@ export const Header = () => {
   const breadcrumbs = useBreadcrumbs();
 
   return (
-    <header className="flex h-16 shrink-0 items-center gap-2">
+    <header className="flex h-12 shrink-0 items-center gap-2 mb-2">
       <SidebarTrigger className="-ml-1" />
       {breadcrumbs}
     </header>

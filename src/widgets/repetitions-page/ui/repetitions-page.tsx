@@ -22,6 +22,7 @@ import { mapTodayRepetitionsToListData } from "../model";
 
 export const RepetitionsPage: FC = () => {
   const t = useTranslations("Repetitions");
+  const tp = useTranslations("ReviewCyclePage");
 
   const [todayRepetitions] = useTodayRepetitions();
 
@@ -60,7 +61,10 @@ export const RepetitionsPage: FC = () => {
   } = useWaitRepetitionAction(activeRepetition, onClear);
 
   return (
-    <div>
+    <div className="flex flex-col gap-4">
+      <h3 className="scroll-m-20 text-2xl font-semibold tracking-tight">
+        {tp("title")}
+      </h3>
       <RepetitionList
         repetitions={repetitionsListData}
         onCompleteRepetition={setActiveRepetition}

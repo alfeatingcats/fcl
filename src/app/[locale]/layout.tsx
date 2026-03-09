@@ -4,7 +4,7 @@ import "overlayscrollbars/overlayscrollbars.css";
 import { type Metadata } from "next";
 import { notFound } from "next/navigation";
 import { hasLocale } from "next-intl";
-import { Geist } from "next/font/google";
+import { Inter } from "next/font/google";
 import type { ReactNode } from "react";
 import { getMessages } from "next-intl/server";
 
@@ -21,9 +21,9 @@ export const metadata: Metadata = {
   description: "Focu landing page",
 };
 
-const geist = Geist({
+const inter = Inter({
   subsets: ["latin"],
-  variable: "--font-geist-sans",
+  variable: "--font-inter",
 });
 
 type RootLayoutProps = {
@@ -42,7 +42,7 @@ const RootLayout = async ({ children, params }: RootLayoutProps) => {
     <html
       lang={locale}
       suppressHydrationWarning
-      className={`${geist.variable}`}
+      className={`${inter.variable}`}
     >
       <body>
         <IntlProviderWrapper locale={locale} messages={messages}>

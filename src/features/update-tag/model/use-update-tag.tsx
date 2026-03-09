@@ -1,24 +1,26 @@
-import { noop } from "es-toolkit";
-
 import { api } from "@/trpc/react";
+
+import { noop } from "es-toolkit";
 import { useMutationErrorHandler } from "@/shared/api";
 import type { TrpcMutationHook } from "@/shared/api/types";
 
-export const useDeleteTag: TrpcMutationHook<"tags", "delete", void, void> = ({
-  onError = noop,
-  onSuccess,
-}) => {
+export const useUpdateTag: TrpcMutationHook<
+  "tags",
+  "update",
+  { name: string },
+  void
+> = ({ onError = noop, onSuccess }) => {
   const utils = api.useUtils();
   const handleError = useMutationErrorHandler();
 
-  return api.tags.delete.useMutation({
-    onSuccess: async () => {
-      onSuccess();
+  return api.tags.update.useMutation({
+    onSuccess: async ({ name }) => {
       await utils.tags.invalidate();
       await utils.studyItem.invalidate();
       await utils.repetitions.invalidate();
+      onSuccess({ name });
     },
-    onError: (error, {}) => {
+    onError: (error) => {
       onError();
       handleError(error);
     },

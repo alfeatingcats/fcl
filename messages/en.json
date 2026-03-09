@@ -2,7 +2,12 @@
   "UiActions": {
     "create": "Create",
     "submit": "Save",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "edit": "Edit",
+    "delete": "Delete",
+    "confirm": "Confirm",
+    "close": "Close",
+    "reset": "Reset"
   },
   "StudyItemDrawer": {
     "createButton": "Create Skill",
@@ -14,7 +19,10 @@
   "TagDrawer": {
     "createButton": "Create Tag",
     "title": "Create New Tag",
-    "description": "Enter a name and description for the new tag to organize your skills."
+    "description": "Enter a name for the new tag to organize your skills.",
+    "updateButton": "Update Tag",
+    "updateTitle": "Edit Tag",
+    "updateDescription": "Update the tag's name or color"
   },
   "StudyItemForm": {
     "titleLabel": "Title",
@@ -28,6 +36,14 @@
     "titlePlaceholder": "For example, 'Mathematics'",
     "colorLabel": "Color",
     "colorPlaceholder": "Choose a color for the tag"
+  },
+  "TagPage": {
+    "skills": "{count, plural, =0 {This tag is not used yet} one {This tag is used for # skill} other {This tag is used for # skills}}",
+    "title": "Organize your skills with tags"
+  },
+  "ReviewCyclePage": {
+    "repetitions": "{count, plural, =0 {No repetitions scheduled for this day} one {# repetition scheduled for this day} other {# repetitions scheduled for this day}}",
+    "title": "Manage your review cycle"
   },
   "ProgressStepper": {
     "start": "Start"
@@ -92,7 +108,18 @@
   },
   "TagMessages": {
     "createSuccess": "Tag \"{name}\" created successfully",
-    "createError": "Failed to create tag \"{name}\""
+    "createError": "Failed to create tag \"{name}\"",
+    "updateSuccess": "Tag \"{name}\" updated successfully",
+    "updateError": "Failed to update tag \"{name}\"",
+    "deleteSuccess": "Tag \"{name}\" deleted successfully",
+    "deleteError": "Failed to delete tag \"{name}\""
+  },
+  "TagDeleteDialog": {
+    "title": "Delete tag \"{name}\"?",
+    "description": "Are you sure you want to delete this tag?",
+    "usage": "{count, plural, =0 {This tag is not used by any skills.} one {This tag is used by # skill.} other {This tag is used by # skills.}}",
+    "warning": "Deleting this tag will remove it from all skills.",
+    "confirmButton": "Delete tag"
   },
   "StudyItem": {
     "getByIdTitle": "Skill details",

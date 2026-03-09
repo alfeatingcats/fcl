@@ -6,7 +6,7 @@ export const TagWithStatsOutputSchema = z.array(
   z.object({
     id: z.string(),
     name: z.string(),
-    color: z.string().nullable(),
+    color: z.string(),
     createdAt: z.date(),
     usageCount: z.number(),
     recentItems: z.array(
@@ -18,6 +18,8 @@ export const TagWithStatsOutputSchema = z.array(
     ),
   }),
 );
+
+export type TagWithStatsOutput = z.infer<typeof TagWithStatsOutputSchema>;
 
 // 2. Schema for user tag statistics
 export const UserTagStatsOutputSchema = z.object({

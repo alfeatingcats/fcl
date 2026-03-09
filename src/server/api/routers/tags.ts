@@ -4,6 +4,7 @@ import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";
 import { TRPCError } from "@trpc/server";
 import {
   CreateTagSchema,
+  DeleteTagOutputSchema,
   DeleteTagSchema,
   UpdateTagSchema,
 } from "@/shared/api/schemas";
@@ -13,6 +14,7 @@ import {
   TagWithStatsOutputSchema,
   UserTagStatsOutputSchema,
 } from "@/shared/api/schemas/fg/tags";
+import { TagSchema } from "prisma/generated/schemas";
 
 export const tagsRouter = createTRPCRouter({
   /**
@@ -228,6 +230,7 @@ export const tagsRouter = createTRPCRouter({
    */
   update: protectedProcedure
     .input(UpdateTagSchema)
+    .output(TagSchema)
     .mutation(async ({ ctx, input }) => {
       const { id, ...updateData } = input;
 
@@ -271,6 +274,7 @@ export const tagsRouter = createTRPCRouter({
    */
   delete: protectedProcedure
     .input(DeleteTagSchema)
+    .output(DeleteTagOutputSchema)
     .mutation(async ({ ctx, input }) => {
       return await ctx.db.$transaction(async (tx) => {
         // Check if tag exists
