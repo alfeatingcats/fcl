@@ -21,8 +21,8 @@ export const authConfig = {
       if (session.user && token) {
         session.user.id = token.id as string
         session.user.name = token.name
-        session.user.email = token.email!
-        session.user.image = token.picture!
+        session.user.email = token.email as string
+        session.user.image = token.picture
       }
       return session
     },

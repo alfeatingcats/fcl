@@ -1,7 +1,7 @@
 import { useDebounceFn } from 'ahooks'
 import type { SerializedEditorState } from 'lexical'
 import { useTranslations } from 'next-intl'
-import { type FC, type ReactNode } from 'react'
+import type { FC, ReactNode } from 'react'
 import type { UseFormReturn } from 'react-hook-form'
 
 import { Editor } from '@/components/blocks/editor-x/editor'

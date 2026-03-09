@@ -159,6 +159,8 @@ export const TagsValue = ({
     <Badge className={cn('flex items-center gap-2', className)} {...props}>
       {children}
       {onRemove && (
+        // biome-ignore lint/a11y/noStaticElementInteractions: <_explanation>
+        // biome-ignore lint/a11y/useKeyWithClickEvents: <_explanation>
         <div
           className="hover:text-muted-foreground size-auto cursor-pointer"
           onClick={handleRemove}
@@ -217,6 +219,7 @@ export const TagsInput = ({
         aria-label="Clear input"
         onClick={onClearInput}
         disabled={isLoading}
+        type="button"
       >
         {isLoading ? (
           <LoaderCircleIcon className="size-4 animate-spin" />

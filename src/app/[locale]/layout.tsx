@@ -1,7 +1,7 @@
 import '@/styles/globals.css'
 import 'overlayscrollbars/overlayscrollbars.css'
 
-import { type Metadata } from 'next'
+import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import { notFound } from 'next/navigation'
 import { hasLocale } from 'next-intl'

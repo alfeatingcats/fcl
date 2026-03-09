@@ -64,7 +64,7 @@ export function createStepTimeline(format: IntlFormatter, t: TimeTranslations) {
   }
 
   return generateRepetitionSchedule().map((rep, idx, arr) => {
-    const prev = idx > 0 ? arr[idx - 1]!.scheduledAt : null
+    const prev = idx > 0 ? arr[idx - 1]?.scheduledAt : null
     return {
       step: rep.repetitionNumber,
       date: formatStepDate(rep.scheduledAt),

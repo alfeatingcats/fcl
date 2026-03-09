@@ -85,6 +85,8 @@ export const TagsSelector: CFC<TagsSelectorProps> = ({
       <TagsContent
         commandCN="relative"
         footer={
+          // biome-ignore lint/a11y/noStaticElementInteractions: <_explanation>
+          // biome-ignore lint/a11y/useKeyWithClickEvents: <_explanation>
           <section
             onClick={toggleOpen.setLeft}
             className="flex justify-end border-t p-2"

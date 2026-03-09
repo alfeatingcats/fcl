@@ -7,7 +7,6 @@ import {
   ItemActions,
   ItemContent,
   ItemDescription,
-  ItemMedia,
   ItemTitle,
 } from '@/components/ui/item'
 import { cn } from '@/shared/lib/utils'

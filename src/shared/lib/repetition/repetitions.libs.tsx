@@ -46,10 +46,10 @@ export const getActiveRepetitionDetails = (
   if (isNil(activeRepetitionId) || isEmpty(repetitions) || isNil(repetitions)) {
     return null
   }
-  return pick(repetitions.find(({ id }) => id === activeRepetitionId)!, [
-    'title',
-    'description',
-    'repetitionNumber',
-    'descriptionText',
-  ])
+  return pick(
+    repetitions.find(
+      ({ id }) => id === activeRepetitionId,
+    ) as RepetitionsListRow,
+    ['title', 'description', 'repetitionNumber', 'descriptionText'],
+  )
 }

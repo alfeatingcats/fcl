@@ -11,7 +11,7 @@ export const useDateFnsConfig = () => {
   const withTZ = useCallback(
     (date: string | Date | number): TZDate => {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
+      // @ts-expect-error
       return TZDateMini.tz(timeZone, date)
     },
     [timeZone],

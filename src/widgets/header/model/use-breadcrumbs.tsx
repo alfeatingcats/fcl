@@ -48,7 +48,7 @@ export const useBreadcrumbs = (): React.ReactElement | null => {
   const pathNoLocale =
     segments.length > 0 &&
     supportedLocales.includes(segments[0] as (typeof supportedLocales)[number])
-      ? '/' + segments.slice(1).join('/')
+      ? `/${segments.slice(1).join('/')}`
       : pathname
 
   const normalizedPath = normalize(pathNoLocale)

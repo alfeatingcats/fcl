@@ -1,4 +1,4 @@
-import { AlarmClock, ClockFading } from 'lucide-react'
+import { ClockFading } from 'lucide-react'
 import { useFormatter, useTranslations } from 'next-intl'
 import type { FC } from 'react'
 

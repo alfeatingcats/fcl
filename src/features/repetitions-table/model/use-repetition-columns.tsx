@@ -1,5 +1,5 @@
 import type { StudyRepetition } from '@prisma/client'
-import { type ColumnDef } from '@tanstack/react-table'
+import type { ColumnDef } from '@tanstack/react-table'
 import { HeadingIcon, Waypoints } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import { useCallback, useMemo } from 'react'

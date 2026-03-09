@@ -1,5 +1,5 @@
 import type { StudyItemTag, StudyRepetition, Tag } from '@prisma/client'
-import { type ColumnDef } from '@tanstack/react-table'
+import type { ColumnDef } from '@tanstack/react-table'
 import {
   Calendar,
   Flag,

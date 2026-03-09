@@ -1,4 +1,4 @@
-import { type VariantProps } from 'class-variance-authority'
+import type { VariantProps } from 'class-variance-authority'
 import { useTranslations } from 'next-intl'
 
 import { Button, type buttonVariants } from '@/components/ui/button'

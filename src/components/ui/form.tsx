@@ -140,7 +140,7 @@ function FormMessage({ className, ...props }: React.ComponentProps<'p'>) {
   const extractMessage = React.useCallback((e: GlobalError): string => {
     if (typeof e === 'string' || typeof e === 'number') return String(e)
     if (typeof e === 'object' && e !== null) {
-      if (Object.prototype.hasOwnProperty.call(e, 'message')) {
+      if (Object.hasOwn(e, 'message')) {
         const msg = e.message
         if (typeof msg === 'string' || typeof msg === 'number')
           return String(msg)

@@ -1,5 +1,5 @@
 import type { LucideIcon } from 'lucide-react'
-import { type FC, type ReactElement } from 'react'
+import type { FC, ReactElement } from 'react'
 
 import { cn } from '@/shared/lib/utils'
 

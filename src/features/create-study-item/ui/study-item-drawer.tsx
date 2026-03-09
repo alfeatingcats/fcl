@@ -29,10 +29,8 @@ export const StudyItemDrawer: CFC<OverlayFormProps<CreateStudyItemInput>> = ({
       }}
       onOpenChange={onOpenChange}
     >
-      <>
-        {children}
-        <StudyItemProgressCard />
-      </>
+      {children}
+      <StudyItemProgressCard />
     </FormDrawer>
   )
 }

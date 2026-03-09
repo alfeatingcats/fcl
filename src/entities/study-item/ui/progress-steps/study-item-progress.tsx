@@ -1,5 +1,5 @@
 import { useFormatter, useTranslations } from 'next-intl'
-import { type FC } from 'react'
+import type { FC } from 'react'
 
 import { Badge } from '@/components/ui/badge'
 import {

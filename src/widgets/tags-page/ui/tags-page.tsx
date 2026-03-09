@@ -3,6 +3,8 @@
 import { useTranslations } from 'next-intl'
 import { useCallback } from 'react'
 
+import type { TagWithStatsOutput } from '@/shared/api/schemas/fg/tags'
+
 import { TagItem, useSuspenseGetAllTags } from '@/entities/tag'
 import { DeleteTagModal } from '@/features/delete-tag'
 import { UpdateTagDrawer, UpdateTagForm } from '@/features/update-tag'
@@ -41,9 +43,9 @@ export const TagsPage = () => {
       const tag = tags.find((t) => t.id === tagId)
 
       updateTagForm.reset({
-        id: tag!.id,
-        name: tag!.name,
-        color: tag!.color,
+        id: tag?.id,
+        name: tag?.name,
+        color: tag?.color,
       })
 
       toggleCreateTagDrawer()
@@ -56,13 +58,13 @@ export const TagsPage = () => {
       if (!tagId) {
         return
       }
-      const tag = tags.find((t) => t.id === tagId)
+      const tag = tags.find((t) => t.id === tagId) as TagWithStatsOutput[number]
 
       setTagToDelete({
-        id: tag!.id,
-        name: tag!.name,
-        color: tag!.color,
-        usageCount: tag!.usageCount,
+        id: tag.id,
+        name: tag.name,
+        color: tag.color,
+        usageCount: tag.usageCount,
       })
     },
     [setTagToDelete, tags],

@@ -16,28 +16,23 @@ export const TableBody: FC<TableBodyProps> = ({ table }) => {
   return (
     <Body>
       {table.getRowModel().rows?.length ? (
-        <>
-          {table.getRowModel().rows.map((row) => (
-            <TableRow
-              key={row.id}
-              data-state={row.getIsSelected() && 'selected'}
-            >
-              {row.getVisibleCells().map((cell) => {
-                return (
-                  <TableCell
-                    key={cell.id}
-                    className={cn(
-                      'whitespace-nowrap [&:has([aria-expanded])]:w-px [&:has([aria-expanded])]:py-0 [&:has([aria-expanded])]:pr-0',
-                      cell.column.columnDef.meta,
-                    )}
-                  >
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </TableCell>
-                )
-              })}
-            </TableRow>
-          ))}
-        </>
+        table.getRowModel().rows.map((row) => (
+          <TableRow key={row.id} data-state={row.getIsSelected() && 'selected'}>
+            {row.getVisibleCells().map((cell) => {
+              return (
+                <TableCell
+                  key={cell.id}
+                  className={cn(
+                    'whitespace-nowrap [&:has([aria-expanded])]:w-px [&:has([aria-expanded])]:py-0 [&:has([aria-expanded])]:pr-0',
+                    cell.column.columnDef.meta,
+                  )}
+                >
+                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                </TableCell>
+              )
+            })}
+          </TableRow>
+        ))
       ) : (
         <TableRow>
           <TableCell

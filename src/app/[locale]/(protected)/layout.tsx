@@ -37,6 +37,7 @@ const ProtectedRootLayout = async ({
   return (
     <ClientLayout
       user={
+        // biome-ignore lint/style/noNonNullAssertion: <_explanation>
         pick(userSession!.user, [
           'name',
           'email',

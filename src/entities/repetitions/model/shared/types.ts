@@ -1,16 +1,12 @@
-import type { StudyRepetition } from '@prisma/client'
 import type { StudyItemType } from 'prisma/generated/schemas/models/StudyItem.schema'
 import type { StudyRepetitionType } from 'prisma/generated/schemas/models/StudyRepetition.schema'
 import type { ReactElement, ReactNode } from 'react'
 
-import type { GetStudyItemByIdInfer } from '@/shared/api/schemas'
 import type { FullRepetitionType } from '@/shared/api/schemas/fg/repetitions'
 import type {
   OverlayEntityContent,
   RepetitionActionState,
 } from '@/shared/types'
-
-import type { RouterOutputs } from '@/trpc/react'
 
 export interface ChartPoint {
   x: number

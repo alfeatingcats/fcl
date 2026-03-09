@@ -1,6 +1,6 @@
 'use client'
 
-import React, { type FC, useMemo } from 'react'
+import { type FC, useMemo } from 'react'
 import { Area, AreaChart, Label, ReferenceDot } from 'recharts'
 
 import { ChartContainer } from '@/components/ui/chart'
@@ -42,7 +42,7 @@ export const RepetitionMicroChart: FC<RepetitionChartProps> = ({
   return (
     <ChartContainer
       config={microChartConfig}
-      className="max-h-[38px] min-h-[38px] w-[160px]"
+      className="max-h-9.5 min-h-9.5 w-40"
     >
       <AreaChart
         accessibilityLayer
