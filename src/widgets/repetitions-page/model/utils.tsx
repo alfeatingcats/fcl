@@ -1,4 +1,4 @@
-import { type FullRepetitionListType } from '@/shared/api/schemas/fg/repetitions'
+import type { FullRepetitionListType } from '@/shared/api/schemas/fg/repetitions'
 
 import type { RepetitionsListRow } from '@/entities/repetitions'
 

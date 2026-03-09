@@ -17,7 +17,9 @@ export const createRepetitionAction = <
   useMutationHook: TrpcMutationHook<
     TPath,
     TKey,
+    // biome-ignore lint/suspicious/noConfusingVoidType: <_explanation>
     object | void,
+    // biome-ignore lint/suspicious/noConfusingVoidType: <_explanation>
     object | void,
     unknown
   >,

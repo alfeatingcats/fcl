@@ -31,7 +31,7 @@ export const calculateRetention = (
     if (time >= repTime) {
       const daysSinceRep = (time - repTime) / MICRO_CHART_CONFIG.msPerDay
       // Forgetting curve: R = e^(-t/S), where S increases with each repetition
-      const strength = Math.pow(2, j + 1)
+      const strength = 2 ** (j + 1)
       retention =
         MICRO_CHART_CONFIG.maxRetention * Math.exp(-daysSinceRep / strength)
     }

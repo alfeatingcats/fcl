@@ -2,7 +2,7 @@ import type { ReactNode } from 'react'
 
 import type { CreateTagInput } from '@/shared/api/schemas'
 
-import { type UseTagManagementParams } from './use-manage-tags'
+import type { UseTagManagementParams } from './use-manage-tags'
 
 export type TagsSelectorProps = {
   onChange: (values: string[] | undefined) => void

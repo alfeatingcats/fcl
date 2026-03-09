@@ -5,7 +5,7 @@ import {
   useReactTable,
 } from '@tanstack/react-table'
 import { OverlayScrollbarsComponent } from 'overlayscrollbars-react'
-import { type FC } from 'react'
+import type { FC } from 'react'
 
 import { Table } from '@/components/ui/table'
 

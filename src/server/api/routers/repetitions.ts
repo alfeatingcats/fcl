@@ -9,7 +9,6 @@ import {
 } from '@/shared/api/schemas'
 import {
   FullRepetitionListSchema,
-  FullRepetitionSchema,
   RepetitionStatsOutputSchema,
   RepetitionWithItemSchema,
 } from '@/shared/api/schemas/fg/repetitions'

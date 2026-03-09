@@ -19,7 +19,7 @@ export const useDeleteTag: TrpcMutationHook<'tags', 'delete', void, void> = ({
       await utils.studyItem.invalidate()
       await utils.repetitions.invalidate()
     },
-    onError: (error, {}) => {
+    onError: (error) => {
       onError()
       handleError(error)
     },

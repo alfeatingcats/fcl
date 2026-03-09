@@ -1,4 +1,4 @@
-import { type CreateStudyItemInput } from '@/shared/api/schemas'
+import type { CreateStudyItemInput } from '@/shared/api/schemas'
 
 export const defaultStudyItemFormValues: Partial<CreateStudyItemInput> = {
   title: '',

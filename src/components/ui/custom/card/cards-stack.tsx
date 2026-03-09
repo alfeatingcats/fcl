@@ -34,6 +34,7 @@ export const CardStack = ({
     interval = setInterval(() => {
       setCards((prevCards: Card[]) => {
         const newArray = [...prevCards] // create a copy of the array
+        // biome-ignore lint/style/noNonNullAssertion: <_explanation>
         newArray.unshift(newArray.pop()!) // move the last element to the front
         return newArray
       })
@@ -46,7 +47,7 @@ export const CardStack = ({
         return (
           <motion.div
             key={card.id}
-            className="absolute flex h-60 w-60 flex-col justify-between rounded-3xl border border-neutral-200 bg-white p-4 shadow-xl shadow-black/[0.1] md:h-60 md:w-96 dark:border-white/[0.1] dark:bg-black dark:shadow-white/[0.05]"
+            className="absolute flex h-60 w-60 flex-col justify-between rounded-3xl border border-neutral-200 bg-white p-4 shadow-xl shadow-black/10 md:h-60 md:w-96 dark:border-white/10 dark:bg-black dark:shadow-white/5"
             style={{
               transformOrigin: 'top center',
             }}

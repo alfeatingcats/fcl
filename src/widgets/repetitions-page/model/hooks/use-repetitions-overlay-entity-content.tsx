@@ -43,6 +43,7 @@ export const useRepetitionsOverlayEntityContent = (
   return useMemo(
     () => ({
       ...overlayConfig,
+      // biome-ignore lint/style/noNonNullAssertion: <_explanation>
       ...activeRepetitionDetails!,
       onClear: handleClearActiveRepetition,
       setActiveRepetition,

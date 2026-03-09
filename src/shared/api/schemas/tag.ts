@@ -10,7 +10,10 @@ export const CreateTagSchema = z.object({
     .min(1, 'Tag name cannot be empty')
     .max(50, 'Tag name is too long')
     .regex(/^[a-zA-Zа-яёА-ЯЁ0-9\s\-_]+$/, 'Invalid characters in tag name'),
-  color: z.string().optional().default(PRESET_COLOR_CLASSES[0]!),
+  color: z
+    .string()
+    .optional()
+    .default(PRESET_COLOR_CLASSES[0] as string),
 })
 
 export type CreateTagInput = z.input<typeof CreateTagSchema>

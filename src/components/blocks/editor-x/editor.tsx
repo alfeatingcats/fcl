@@ -49,6 +49,8 @@ export const Editor: FC<EditorProps> = ({
     [editorSerializedState, editorState],
   )
   return (
+    // biome-ignore lint/a11y/noStaticElementInteractions: <_explanation>
+    // biome-ignore lint/a11y/useKeyWithClickEvents: <_explanation>
     <div
       className="bg-background overflow-hidden rounded-lg border shadow"
       onClick={(e) => e.stopPropagation()}

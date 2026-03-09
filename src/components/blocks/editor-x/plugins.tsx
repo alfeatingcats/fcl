@@ -257,10 +257,9 @@ export const Plugins: FC<PluginsProps> = ({
           <div className="flex flex-1 justify-end">
             {/* <ImportExportPlugin /> */}
             <EditModeTogglePlugin />
-            <>
-              <ClearEditorActionPlugin />
-              <ClearEditorPlugin />
-            </>
+
+            <ClearEditorActionPlugin />
+            <ClearEditorPlugin />
           </div>
         </div>
       </ActionsPlugin>

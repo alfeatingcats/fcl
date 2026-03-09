@@ -5,7 +5,6 @@ import {
   type Locale,
   NextIntlClientProvider,
 } from 'next-intl'
-import React from 'react'
 
 import { useDetectTimeZone } from '@/shared/lib/date'
 import { useUserStore } from '@/shared/stores'

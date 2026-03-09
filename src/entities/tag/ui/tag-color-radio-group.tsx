@@ -27,8 +27,8 @@ export const TagColorRadioGroup: CFC<TagColorRadioGroupProps> = ({
       PRESET_COLOR_CLASSES.map((colorCN) => {
         const colorName = colorCN
           .split(' ')
-          .find((c) => c.startsWith('text-'))!
-          .split('-')[1] as TagColorTKey
+          .find((c) => c.startsWith('text-'))
+          ?.split('-')[1] as TagColorTKey
 
         return { value: colorCN, label: t(colorName) }
       }),
