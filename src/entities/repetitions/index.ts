@@ -1,28 +1,24 @@
+export { useTodayRepetitions } from './model'
 export {
-  MICRO_CHART_CONFIG,
   calculateRetention,
   generateCurveData,
   getCurrentPointX,
+  MICRO_CHART_CONFIG,
   microChartConfig,
-} from "./model/retention-micro-chart";
-
-export { getDefaultRepetitionDates } from "./model/shared";
-
+} from './model/retention-micro-chart'
 export type {
   ChartPoint,
   CurrentPoint,
   RepetitionChartProps,
   RepetitionsListRow,
-} from "./model/shared";
-
-export { useTodayRepetitions } from "./model";
-
+} from './model/shared'
+export { getDefaultRepetitionDates } from './model/shared'
 export {
-  RepetitionMicroChart,
-  RepetitionList,
-  RadioGroupDifficulty,
-  RepetitionDifficulty,
+  ActionRepetitionModal,
   CompletedEventDateTime,
   NextEventDateTime,
-  ActionRepetitionModal,
-} from "./ui";
+  RadioGroupDifficulty,
+  RepetitionDifficulty,
+  RepetitionList,
+  RepetitionMicroChart,
+} from './ui'

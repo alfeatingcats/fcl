@@ -1,12 +1,12 @@
-import { useCallback, type FC } from "react";
+import { type FC, useCallback } from 'react'
 
 import type {
   RepetitionActionType,
   RepetitionOverlayPayload,
-} from "@/shared/types";
+} from '@/shared/types'
 
-import { RepetitionListRow } from "../list-row";
-import type { RepetitionListProps } from "../../model/shared";
+import type { RepetitionListProps } from '../../model/shared'
+import { RepetitionListRow } from '../list-row'
 
 export const RepetitionList: FC<RepetitionListProps> = ({
   repetitions,
@@ -16,7 +16,7 @@ export const RepetitionList: FC<RepetitionListProps> = ({
     (repetitionId: RepetitionOverlayPayload) => (type: RepetitionActionType) =>
       onCompleteRepetition({ repetitionId, action: type }),
     [onCompleteRepetition],
-  );
+  )
 
   return (
     <section className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
@@ -30,5 +30,5 @@ export const RepetitionList: FC<RepetitionListProps> = ({
         />
       ))}
     </section>
-  );
-};
+  )
+}

@@ -1,20 +1,20 @@
-import type { FC } from "react";
+import type { FC } from 'react'
 
-import { Badge } from "@/components/ui/badge";
+import { Badge } from '@/components/ui/badge'
+import { cn } from '@/shared/lib/utils'
+import type { RepetitionActionType } from '@/shared/types'
 
-import { RepetitionStatus } from "../repetition-status";
-import { type RepetitionsListRow } from "../../model/shared";
-import { NextEventDateTime } from "../next-event-date-time";
-import { cn } from "@/shared/lib/utils";
-import { RepetitionStage } from "../repetition-stage";
-import { RepetitionActionDropdown } from "../card-dropdown";
-import type { RepetitionActionType } from "@/shared/types";
+import { type RepetitionsListRow } from '../../model/shared'
+import { RepetitionActionDropdown } from '../card-dropdown'
+import { NextEventDateTime } from '../next-event-date-time'
+import { RepetitionStage } from '../repetition-stage'
+import { RepetitionStatus } from '../repetition-status'
 
 type RepetitionListRowProps = RepetitionsListRow & {
-  onCompleteRepetition: (type: RepetitionActionType) => void;
-  onSkipRepetition: (type: RepetitionActionType) => void;
-  onWaitRepetition: (type: RepetitionActionType) => void;
-};
+  onCompleteRepetition: (type: RepetitionActionType) => void
+  onSkipRepetition: (type: RepetitionActionType) => void
+  onWaitRepetition: (type: RepetitionActionType) => void
+}
 
 export const RepetitionListRow: FC<RepetitionListRowProps> = ({
   title,
@@ -37,7 +37,7 @@ export const RepetitionListRow: FC<RepetitionListRowProps> = ({
             {itemTags.map((tag) => (
               <Badge
                 key={tag.tagId}
-                className={cn(`${tag.tag.color}`, "h-[22px]")}
+                className={cn(`${tag.tag.color}`, 'h-[22px]')}
               >
                 {tag.tag.name}
               </Badge>
@@ -64,5 +64,5 @@ export const RepetitionListRow: FC<RepetitionListRowProps> = ({
         </div>
       </div>
     </div>
-  );
-};
+  )
+}

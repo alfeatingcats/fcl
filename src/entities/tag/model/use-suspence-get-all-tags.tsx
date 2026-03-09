@@ -1,5 +1,5 @@
-"use client";
+'use client'
 
-import { api } from "@/trpc/react";
+import { api } from '@/trpc/react'
 
-export const useSuspenseGetAllTags = () => api.tags.getAll.useSuspenseQuery({});
+export const useSuspenseGetAllTags = () => api.tags.getAll.useSuspenseQuery({})

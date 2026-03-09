@@ -1,5 +1,8 @@
-import { Info } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { Info } from 'lucide-react'
+import { useTranslations } from 'next-intl'
+import type { HTMLAttributes } from 'react'
+
+import { Button } from '@/components/ui/button'
 import {
   Card,
   CardContent,
@@ -8,27 +11,26 @@ import {
   CardHeading,
   CardTitle,
   CardToolbar,
-} from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { ProgressStepper } from "./study-item-progress";
-import type { CFC } from "@/shared/types";
-import type { HTMLAttributes } from "react";
-import { cn } from "@/shared/lib/utils";
+} from '@/components/ui/card'
+import { cn } from '@/shared/lib/utils'
+import type { CFC } from '@/shared/types'
+
+import { ProgressStepper } from './study-item-progress'
 
 type StudyItemProgressCardProps = {
-  className?: HTMLAttributes<HTMLDivElement>["className"];
-};
+  className?: HTMLAttributes<HTMLDivElement>['className']
+}
 
 export const StudyItemProgressCard: CFC<StudyItemProgressCardProps> = ({
   className,
 }) => {
-  const t = useTranslations("StudyItemDrawer");
+  const t = useTranslations('StudyItemDrawer')
   return (
-    <div className={cn("w-full", className)}>
+    <div className={cn('w-full', className)}>
       <Card variant="accent">
         <CardHeader>
           <CardHeading>
-            <CardTitle>{t("progressTitle")}</CardTitle>
+            <CardTitle>{t('progressTitle')}</CardTitle>
           </CardHeading>
           <CardToolbar>
             <Button
@@ -44,9 +46,9 @@ export const StudyItemProgressCard: CFC<StudyItemProgressCardProps> = ({
           <ProgressStepper />
         </CardContent>
         <CardFooter className="text-sm leading-none font-medium">
-          {t("progressDescription")}
+          {t('progressDescription')}
         </CardFooter>
       </Card>
     </div>
-  );
-};
+  )
+}

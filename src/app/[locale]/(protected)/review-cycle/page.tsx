@@ -1,13 +1,15 @@
-import { ErrorBoundary, Suspense } from "@suspensive/react";
+import { ErrorBoundary, Suspense } from '@suspensive/react'
 
-import { HydrateClient } from "@/trpc/server";
-import { protectedApiPrefetch } from "@/shared/api";
-import { RepetitionsPage } from "@/widgets/repetitions-page";
+import { protectedApiPrefetch } from '@/shared/api'
+
+import { RepetitionsPage } from '@/widgets/repetitions-page'
+
+import { HydrateClient } from '@/trpc/server'
 
 const ReviewCyclePage = async () => {
   await protectedApiPrefetch((api) =>
     api.repetitions.getTodayRepetitions.prefetch(),
-  );
+  )
 
   return (
     <HydrateClient>
@@ -17,7 +19,7 @@ const ReviewCyclePage = async () => {
         </Suspense>
       </ErrorBoundary>
     </HydrateClient>
-  );
-};
+  )
+}
 
-export default ReviewCyclePage;
+export default ReviewCyclePage

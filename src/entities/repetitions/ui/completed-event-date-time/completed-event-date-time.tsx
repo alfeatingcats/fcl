@@ -1,37 +1,37 @@
-import { isNil } from "es-toolkit";
-import { useMemo, type FC } from "react";
-import { AlarmClockCheck } from "lucide-react";
-import { useFormatter, useTranslations } from "next-intl";
+import { isNil } from 'es-toolkit'
+import { AlarmClockCheck } from 'lucide-react'
+import { useFormatter, useTranslations } from 'next-intl'
+import { type FC, useMemo } from 'react'
 
-import { useRelativeTime } from "@/shared/lib/date";
+import { useRelativeTime } from '@/shared/lib/date'
 
-import { EventBadge } from "../badge";
-import type { RepetitionBadgeVariants } from "../badge/repetition-badge";
+import { EventBadge } from '../badge'
+import type { RepetitionBadgeVariants } from '../badge/repetition-badge'
 
 type CompletedEventDateTimeProps = {
-  completedAt: Date | null;
-} & RepetitionBadgeVariants;
+  completedAt: Date | null
+} & RepetitionBadgeVariants
 
 export const CompletedEventDateTime: FC<CompletedEventDateTimeProps> = ({
   completedAt,
   wVariant,
 }) => {
-  const format = useFormatter();
-  const relativeTime = useRelativeTime();
-  const trs = useTranslations("RepetitionStatus");
+  const format = useFormatter()
+  const relativeTime = useRelativeTime()
+  const trs = useTranslations('RepetitionStatus')
 
   const eventDetails = useMemo(() => {
     if (isNil(completedAt)) {
-      return trs("PENDING");
+      return trs('PENDING')
     }
     const formattedCompletedTime = format.dateTime(completedAt, {
-      hour: "numeric",
-      minute: "numeric",
-    });
-    const formattedRelativeTime = relativeTime(completedAt, new Date());
+      hour: 'numeric',
+      minute: 'numeric',
+    })
+    const formattedRelativeTime = relativeTime(completedAt, new Date())
 
-    return `${formattedRelativeTime} (${formattedCompletedTime})`;
-  }, [completedAt, format, relativeTime, trs]);
+    return `${formattedRelativeTime} (${formattedCompletedTime})`
+  }, [completedAt, format, relativeTime, trs])
 
   return (
     <EventBadge
@@ -40,5 +40,5 @@ export const CompletedEventDateTime: FC<CompletedEventDateTimeProps> = ({
       icon={<AlarmClockCheck className="mr-1" />}
       wVariant={wVariant}
     />
-  );
-};
+  )
+}

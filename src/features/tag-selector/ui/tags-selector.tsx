@@ -1,37 +1,37 @@
-import { useTranslations } from "next-intl";
-import { useDebounce, useToggle } from "ahooks";
+import { useDebounce, useToggle } from 'ahooks'
+import { useTranslations } from 'next-intl'
 import {
+  type HTMLAttributes,
+  type ReactNode,
+  type Ref,
   useCallback,
   useState,
-  type Ref,
-  type ReactNode,
-  type HTMLAttributes,
-} from "react";
+} from 'react'
 
 import {
   Tags,
-  TagsInput,
-  TagsValue,
-  TagsTrigger,
   TagsContent,
-} from "@/components/ui/kibo-ui/tags";
-import type { CFC } from "@/shared/types";
+  TagsInput,
+  TagsTrigger,
+  TagsValue,
+} from '@/components/ui/kibo-ui/tags'
+import type { CFC } from '@/shared/types'
 
-import { TagsListContent } from "./tags-list-content";
-import { useTagSelector } from "../model/use-tag-selector";
-import type { RequiredCreateTagInput } from "../model/types";
+import type { RequiredCreateTagInput } from '../model/types'
+import { useTagSelector } from '../model/use-tag-selector'
+import { TagsListContent } from './tags-list-content'
 
 export type TagsSelectorProps = {
-  onBlur?: () => void;
-  ref?: Ref<HTMLInputElement>;
-  renderCreateTagButton: ReactNode;
-  defaultTags?: RequiredCreateTagInput[];
+  onBlur?: () => void
+  ref?: Ref<HTMLInputElement>
+  renderCreateTagButton: ReactNode
+  defaultTags?: RequiredCreateTagInput[]
   onChange: (
     selectedTags: RequiredCreateTagInput[],
     selectedTagIds: string[],
-  ) => void;
-  tagsWrapperClassName?: HTMLAttributes<HTMLDivElement>["className"];
-};
+  ) => void
+  tagsWrapperClassName?: HTMLAttributes<HTMLDivElement>['className']
+}
 
 export const TagsSelector: CFC<TagsSelectorProps> = ({
   ref,
@@ -39,13 +39,13 @@ export const TagsSelector: CFC<TagsSelectorProps> = ({
   onChange,
   defaultTags = [],
   renderCreateTagButton,
-  tagsWrapperClassName = "",
+  tagsWrapperClassName = '',
 }) => {
-  const t = useTranslations("TagsSelector");
+  const t = useTranslations('TagsSelector')
 
-  const [query, setQuery] = useState("");
-  const delayedQuery = useDebounce(query, { wait: 500 });
-  const [isTagsDropdownOpen, toggleOpen] = useToggle(false);
+  const [query, setQuery] = useState('')
+  const delayedQuery = useDebounce(query, { wait: 500 })
+  const [isTagsDropdownOpen, toggleOpen] = useToggle(false)
 
   const {
     selectedTags,
@@ -58,11 +58,11 @@ export const TagsSelector: CFC<TagsSelectorProps> = ({
     query: delayedQuery,
     defaultTags,
     onChange,
-  });
+  })
 
   const handleClearInput = useCallback(() => {
-    setQuery("");
-  }, []);
+    setQuery('')
+  }, [])
 
   return (
     <Tags
@@ -70,12 +70,12 @@ export const TagsSelector: CFC<TagsSelectorProps> = ({
       open={isTagsDropdownOpen}
       className={tagsWrapperClassName}
     >
-      <TagsTrigger tagsInputHint={t("searchPlaceholder")}>
+      <TagsTrigger tagsInputHint={t('searchPlaceholder')}>
         {selectedTags.map((tag) => (
           <TagsValue
             key={tag.id}
             onRemove={() => handleRemove(tag.id)}
-            className={tag.color ?? ""}
+            className={tag.color ?? ''}
           >
             {tag.name}
           </TagsValue>
@@ -99,7 +99,7 @@ export const TagsSelector: CFC<TagsSelectorProps> = ({
           value={query}
           onValueChange={setQuery}
           onClearInput={handleClearInput}
-          placeholder={t("searchPlaceholder")}
+          placeholder={t('searchPlaceholder')}
         />
 
         <TagsListContent
@@ -110,5 +110,5 @@ export const TagsSelector: CFC<TagsSelectorProps> = ({
         />
       </TagsContent>
     </Tags>
-  );
-};
+  )
+}

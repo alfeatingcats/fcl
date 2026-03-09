@@ -1,13 +1,13 @@
-import { type Metadata } from "next";
-import type { PropsWithChildren } from "react";
+import { type Metadata } from 'next'
+import type { PropsWithChildren } from 'react'
 
 export const metadata: Metadata = {
-  title: "My skill",
-  description: "Focu | My skill page",
-};
+  title: 'My skill',
+  description: 'Focu | My skill page',
+}
 
 const StudyItemLayout = async ({ children }: PropsWithChildren) => {
-  return <>{children}</>;
-};
+  return <>{children}</>
+}
 
-export default StudyItemLayout;
+export default StudyItemLayout

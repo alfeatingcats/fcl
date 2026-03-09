@@ -1,21 +1,20 @@
-'use client"';
-import type { TagType } from "prisma/generated/schemas/models/Tag.schema";
-
-import { useResetState } from "ahooks";
-import { isNil } from "es-toolkit";
+'use client"'
+import { useResetState } from 'ahooks'
+import { isNil } from 'es-toolkit'
+import type { TagType } from 'prisma/generated/schemas/models/Tag.schema'
 
 export type DeleteTagModalState =
-  | (Omit<TagType, "createdAt"> & { usageCount: number })
-  | null;
+  | (Omit<TagType, 'createdAt'> & { usageCount: number })
+  | null
 
 export const useDeleteTagModal = () => {
   const [tagToDelete, setTagToDelete, clearTagToDelete] =
-    useResetState<DeleteTagModalState>(null);
+    useResetState<DeleteTagModalState>(null)
 
   return {
     tagToDelete,
     setTagToDelete,
     clearTagToDelete,
     hasTagToDelete: !isNil(tagToDelete),
-  };
-};
+  }
+}

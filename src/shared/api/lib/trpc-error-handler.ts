@@ -1,10 +1,11 @@
-import { TRPCClientError } from "@trpc/client";
-import type { AppRouter } from "@/server/api/root";
+import { TRPCClientError } from '@trpc/client'
 
-import type { ErrorsTKey, ErrorsTranslations } from "../../types";
+import type { AppRouter } from '@/server/api/root'
 
-const AppRouterError = TRPCClientError<AppRouter>;
-type AppRouterClientError = TRPCClientError<AppRouter>;
+import type { ErrorsTKey, ErrorsTranslations } from '../../types'
+
+const AppRouterError = TRPCClientError<AppRouter>
+type AppRouterClientError = TRPCClientError<AppRouter>
 
 /**
  * Returns a localized error message for TRPC errors.
@@ -19,15 +20,15 @@ export const getErrorMessage = (
 ): string => {
   if (error instanceof AppRouterError) {
     const code =
-      (error as AppRouterClientError).data?.code ?? "INTERNAL_SERVER_ERROR";
-    const key: ErrorsTKey = `${code}`;
+      (error as AppRouterClientError).data?.code ?? 'INTERNAL_SERVER_ERROR'
+    const key: ErrorsTKey = `${code}`
     try {
-      return t(key);
+      return t(key)
     } catch {
-      return t("INTERNAL_SERVER_ERROR");
+      return t('INTERNAL_SERVER_ERROR')
     }
   }
 
   // Non-TRPC errors (network, unknown)
-  return t("INTERNAL_SERVER_ERROR");
-};
+  return t('INTERNAL_SERVER_ERROR')
+}

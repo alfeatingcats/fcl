@@ -1,18 +1,19 @@
-"use client";
+'use client'
 
-import { useTranslations } from "next-intl";
+import { useTranslations } from 'next-intl'
+import { useCallback } from 'react'
 
-import { TagItem, useSuspenseGetAllTags } from "@/entities/tag";
-import { useUpdateTag } from "../model/use-update-tag";
-import { UpdateTagDrawer, UpdateTagForm } from "@/features/update-tag";
-import { useCallback } from "react";
-import { TagDropdown } from "./tag-dropdown";
-import { DeleteTagModal } from "@/features/delete-tag";
-import { useDeleteTag } from "../model/use-delete-tag";
+import { TagItem, useSuspenseGetAllTags } from '@/entities/tag'
+import { DeleteTagModal } from '@/features/delete-tag'
+import { UpdateTagDrawer, UpdateTagForm } from '@/features/update-tag'
+
+import { useDeleteTag } from '../model/use-delete-tag'
+import { useUpdateTag } from '../model/use-update-tag'
+import { TagDropdown } from './tag-dropdown'
 
 export const TagsPage = () => {
-  const t = useTranslations("TagPage");
-  const [tags] = useSuspenseGetAllTags();
+  const t = useTranslations('TagPage')
+  const [tags] = useSuspenseGetAllTags()
 
   const {
     form: updateTagForm,
@@ -21,7 +22,7 @@ export const TagsPage = () => {
     isOpen: isCreateTagDrawerOpen,
     toggleVisibility: toggleCreateTagDrawer,
     handleOpenChange: handleTagDrawerChange,
-  } = useUpdateTag();
+  } = useUpdateTag()
 
   const {
     clearTagToDelete,
@@ -30,47 +31,47 @@ export const TagsPage = () => {
     onDelete,
     setTagToDelete,
     tagToDelete,
-  } = useDeleteTag();
+  } = useDeleteTag()
 
   const handleUpdateTag = useCallback(
     (tagId?: string) => {
       if (!tagId) {
-        return;
+        return
       }
-      const tag = tags.find((t) => t.id === tagId);
+      const tag = tags.find((t) => t.id === tagId)
 
       updateTagForm.reset({
         id: tag!.id,
         name: tag!.name,
         color: tag!.color,
-      });
+      })
 
-      toggleCreateTagDrawer();
+      toggleCreateTagDrawer()
     },
     [tags, toggleCreateTagDrawer, updateTagForm],
-  );
+  )
 
   const handleDeleteTag = useCallback(
     (tagId: string) => {
       if (!tagId) {
-        return;
+        return
       }
-      const tag = tags.find((t) => t.id === tagId);
+      const tag = tags.find((t) => t.id === tagId)
 
       setTagToDelete({
         id: tag!.id,
         name: tag!.name,
         color: tag!.color,
         usageCount: tag!.usageCount,
-      });
+      })
     },
     [setTagToDelete, tags],
-  );
+  )
 
   return (
     <div className="flex flex-col gap-4">
       <h3 className="scroll-m-20 text-2xl font-semibold tracking-tight">
-        {t("title")}
+        {t('title')}
       </h3>
       <section className="grid w-full grid-cols-2 gap-3">
         {tags.map((tag) => (
@@ -107,5 +108,5 @@ export const TagsPage = () => {
         onDelete={onDelete}
       />
     </div>
-  );
-};
+  )
+}

@@ -1,49 +1,44 @@
-import { useMemo, type FC } from "react";
-import { useTranslations } from "next-intl";
-import {
-  CircleAlert,
-  CircleCheck,
-  CircleDashed,
-  CircleOff,
-} from "lucide-react";
+import { CircleAlert, CircleCheck, CircleDashed, CircleOff } from 'lucide-react'
+import { useTranslations } from 'next-intl'
+import { type FC, useMemo } from 'react'
 
 import type {
   LabeledComponentProps,
   RepetitionStatusTKey,
-} from "@/shared/types";
+} from '@/shared/types'
 
-import { EventBadge } from "../badge";
-import type { RepetitionBadgeVariants } from "../badge/repetition-badge";
+import { EventBadge } from '../badge'
+import type { RepetitionBadgeVariants } from '../badge/repetition-badge'
 
 type RepetitionStatusProps = {
-  status: RepetitionStatusTKey;
+  status: RepetitionStatusTKey
 } & LabeledComponentProps &
-  RepetitionBadgeVariants;
+  RepetitionBadgeVariants
 
 export const RepetitionStatus: FC<RepetitionStatusProps> = ({
   status,
   withLabel = true,
   wVariant,
 }) => {
-  const t = useTranslations("StudyItemTable");
-  const tr = useTranslations("RepetitionStatus");
+  const t = useTranslations('StudyItemTable')
+  const tr = useTranslations('RepetitionStatus')
 
-  const repetitionStatus = t("status");
-  const statusDescription = tr(status);
+  const repetitionStatus = t('status')
+  const statusDescription = tr(status)
   const statusIcon = useMemo(() => {
     switch (status) {
-      case "PENDING":
-        return <CircleDashed className="mr-1" />;
-      case "COMPLETED":
-        return <CircleCheck className="mr-1" />;
-      case "MISSED":
-        return <CircleAlert className="mr-1" />;
-      case "SKIPPED":
-        return <CircleOff className="mr-1" />;
+      case 'PENDING':
+        return <CircleDashed className="mr-1" />
+      case 'COMPLETED':
+        return <CircleCheck className="mr-1" />
+      case 'MISSED':
+        return <CircleAlert className="mr-1" />
+      case 'SKIPPED':
+        return <CircleOff className="mr-1" />
       default:
-        return <CircleDashed className="mr-1" />;
+        return <CircleDashed className="mr-1" />
     }
-  }, [status]);
+  }, [status])
 
   return (
     <EventBadge
@@ -52,5 +47,5 @@ export const RepetitionStatus: FC<RepetitionStatusProps> = ({
       details={statusDescription}
       icon={statusIcon}
     />
-  );
-};
+  )
+}

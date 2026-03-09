@@ -1,1 +1,1 @@
-export { RepetitionList } from "./repetition-list";
+export { RepetitionList } from './repetition-list'
