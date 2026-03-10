@@ -1,6 +1,7 @@
-import { type FC } from "react";
-import { useFormatter, useTranslations } from "next-intl";
+import { useFormatter, useTranslations } from 'next-intl'
+import type { FC } from 'react'
 
+import { Badge } from '@/components/ui/badge'
 import {
   Stepper,
   StepperIndicator,
@@ -8,29 +9,29 @@ import {
   StepperSeparator,
   StepperTitle,
   StepperTrigger,
-} from "@/components/ui/stepper";
-import { Badge } from "@/components/ui/badge";
+} from '@/components/ui/stepper'
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from "@/components/ui/tooltip";
-import { createStepTimeline } from "@/entities/study-item";
+} from '@/components/ui/tooltip'
+
+import { createStepTimeline } from '@/entities/study-item'
 
 type BadgeContentProps = {
-  diff: string | null;
-};
+  diff: string | null
+}
 
 const BadgeContent: FC<BadgeContentProps> = ({ diff }) => {
-  const t = useTranslations("ProgressStepper");
-  if (!diff) return <>{t("start")}</>;
-  return <>{diff}</>;
-};
+  const t = useTranslations('ProgressStepper')
+  if (!diff) return <>{t('start')}</>
+  return <>{diff}</>
+}
 
 export const ProgressStepper = () => {
-  const format = useFormatter();
-  const t = useTranslations("Time");
-  const steps = createStepTimeline(format, t);
+  const format = useFormatter()
+  const t = useTranslations('Time')
+  const steps = createStepTimeline(format, t)
 
   return (
     <div className="w-full! space-y-8 text-start">
@@ -48,9 +49,7 @@ export const ProgressStepper = () => {
               <div className="flex w-full items-start gap-2">
                 <StepperIndicator />
                 <div className="mt-0.5 w-full px-2 text-left">
-                  <StepperTitle
-                    className="flex items-center justify-between gap-2"
-                  >
+                  <StepperTitle className="flex items-center justify-between gap-2">
                     <Tooltip>
                       <TooltipTrigger>{date}</TooltipTrigger>
                       <TooltipContent>{tooltip}</TooltipContent>
@@ -75,5 +74,5 @@ export const ProgressStepper = () => {
         ))}
       </Stepper>
     </div>
-  );
-};
+  )
+}

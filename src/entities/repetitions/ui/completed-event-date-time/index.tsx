@@ -1,1 +1,1 @@
-export { CompletedEventDateTime } from "./completed-event-date-time";
+export { CompletedEventDateTime } from './completed-event-date-time'

@@ -1,17 +1,17 @@
-import { useForm } from "react-hook-form";
-import type { FC, ReactNode } from "react";
-import { Form } from "@/components/ui/form";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { zodResolver } from '@hookform/resolvers/zod'
+import type { FC, ReactNode } from 'react'
+import { useForm } from 'react-hook-form'
 
+import { Form } from '@/components/ui/form'
 import {
-  ReadStudyItemsSchema,
   type ReadStudyItemInput,
-} from "@/shared/api/schemas";
+  ReadStudyItemsSchema,
+} from '@/shared/api/schemas'
+import type { ReadStudyItemsOutputSchemaType } from '@/shared/api/schemas/fg/study-item'
 
-import { StudyItemTableHeader } from "./table-header";
-import { StudyItemTableContent } from "./table-content";
-import { StudyItemTableFooter } from "./table-footer";
-import type { ReadStudyItemsOutputSchemaType } from "@/shared/api/schemas/fg/study-item";
+import { StudyItemTableContent } from './table-content'
+import { StudyItemTableFooter } from './table-footer'
+import { StudyItemTableHeader } from './table-header'
 
 // const filterSchema = z.object({
 //   search: z.string().optional(),
@@ -22,9 +22,9 @@ import type { ReadStudyItemsOutputSchemaType } from "@/shared/api/schemas/fg/stu
 // });
 
 interface StudyItemDataTableProps {
-  studyItems: ReadStudyItemsOutputSchemaType["items"];
+  studyItems: ReadStudyItemsOutputSchemaType['items']
   //   totalCount: number;
-  renderCreateButton?: ReactNode;
+  renderCreateButton?: ReactNode
   //   onFilterChange?: (filters: ReadStudyItemInput) => void;
 }
 
@@ -37,15 +37,15 @@ export const StudyItemDataTable: FC<StudyItemDataTableProps> = ({
   const form = useForm<ReadStudyItemInput>({
     resolver: zodResolver(ReadStudyItemsSchema),
     defaultValues: {
-      search: "",
+      search: '',
     },
-  });
+  })
 
   const handleFormChange = (values: ReadStudyItemInput) => {
-    console.log("Form values changed:", values);
+    console.log('Form values changed:', values)
 
     // onFilterChange?.(values);
-  };
+  }
 
   return (
     <Form {...form}>
@@ -60,9 +60,9 @@ export const StudyItemDataTable: FC<StudyItemDataTableProps> = ({
         <StudyItemTableFooter form={form} totalCount={10} />
       </div>
     </Form>
-  );
-};
+  )
+}
 
-export { StudyItemTableHeader } from "./table-header";
-export { StudyItemTableFooter } from "./table-footer";
-export { StudyItemTableContent } from "./table-content";
+export { StudyItemTableContent } from './table-content'
+export { StudyItemTableFooter } from './table-footer'
+export { StudyItemTableHeader } from './table-header'

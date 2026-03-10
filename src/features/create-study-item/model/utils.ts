@@ -1,7 +1,7 @@
-import { type CreateStudyItemInput } from "@/shared/api/schemas";
+import type { CreateStudyItemInput } from '@/shared/api/schemas'
 
 export const defaultStudyItemFormValues: Partial<CreateStudyItemInput> = {
-  title: "",
+  title: '',
   description: {
     root: {
       children: [
@@ -10,33 +10,33 @@ export const defaultStudyItemFormValues: Partial<CreateStudyItemInput> = {
             {
               detail: 0,
               format: 0,
-              mode: "normal",
-              style: "",
-              text: "Hello World 🚀",
-              type: "text",
+              mode: 'normal',
+              style: '',
+              text: 'Hello World 🚀',
+              type: 'text',
               version: 1,
             },
           ],
-          direction: "ltr",
-          format: "",
+          direction: 'ltr',
+          format: '',
           indent: 0,
-          type: "paragraph",
+          type: 'paragraph',
           version: 1,
         },
       ],
-      direction: "ltr",
-      format: "",
+      direction: 'ltr',
+      format: '',
       indent: 0,
-      type: "root",
+      type: 'root',
       version: 1,
     },
-  } as unknown as CreateStudyItemInput["description"],
+  } as unknown as CreateStudyItemInput['description'],
   tagIds: [],
-};
+}
 
 export type StepInfo = {
-  step: number;
-  date: string;
-  diff: string;
-  tooltip: string;
-};
+  step: number
+  date: string
+  diff: string
+  tooltip: string
+}

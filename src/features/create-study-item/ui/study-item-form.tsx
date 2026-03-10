@@ -1,30 +1,31 @@
-import type { ReactNode } from "react";
-import { useTranslations } from "next-intl";
-import type { UseFormReturn } from "react-hook-form";
+import { useTranslations } from 'next-intl'
+import type { ReactNode } from 'react'
+import type { UseFormReturn } from 'react-hook-form'
 
+import { Editor } from '@/components/blocks/editor-x/editor'
 import {
   Form,
+  FormControl,
+  FormField,
   FormItem,
   FormLabel,
-  FormField,
   FormMessage,
-  FormControl,
-} from "@/components/ui/form";
+} from '@/components/ui/form'
+import { Input } from '@/components/ui/input'
+import type { CreateStudyItemInput } from '@/shared/api/schemas'
+import type { CFC } from '@/shared/types'
+
 import {
-  TagsSelector,
   type RequiredCreateTagInput,
-} from "@/features/tag-selector";
-import type { CFC } from "@/shared/types";
-import { Input } from "@/components/ui/input";
-import type { CreateStudyItemInput } from "@/shared/api/schemas";
-import { Editor } from "@/components/blocks/editor-x/editor";
+  TagsSelector,
+} from '@/features/tag-selector'
 
 type StudyItemFormProps = {
-  isLoading?: boolean;
-  renderCreateTagButton: ReactNode;
-  defaultTags?: RequiredCreateTagInput[];
-  form: UseFormReturn<CreateStudyItemInput>;
-};
+  isLoading?: boolean
+  renderCreateTagButton: ReactNode
+  defaultTags?: RequiredCreateTagInput[]
+  form: UseFormReturn<CreateStudyItemInput>
+}
 
 export const StudyItemForm: CFC<StudyItemFormProps> = ({
   form,
@@ -32,7 +33,7 @@ export const StudyItemForm: CFC<StudyItemFormProps> = ({
   isLoading = false,
   renderCreateTagButton,
 }) => {
-  const t = useTranslations("StudyItemForm");
+  const t = useTranslations('StudyItemForm')
 
   return (
     <Form {...form}>
@@ -42,10 +43,10 @@ export const StudyItemForm: CFC<StudyItemFormProps> = ({
           name="title"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{t("titleLabel")}</FormLabel>
+              <FormLabel>{t('titleLabel')}</FormLabel>
               <FormControl>
                 <Input
-                  placeholder={t("titlePlaceholder")}
+                  placeholder={t('titlePlaceholder')}
                   disabled={isLoading}
                   {...field}
                 />
@@ -60,13 +61,13 @@ export const StudyItemForm: CFC<StudyItemFormProps> = ({
           name="description"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{t("descriptionLabel")}</FormLabel>
+              <FormLabel>{t('descriptionLabel')}</FormLabel>
               <FormControl>
                 <Editor
                   wrapperClassName="h-120"
-                  placeholder={t("descriptionPlaceholder")}
+                  placeholder={t('descriptionPlaceholder')}
                   onSerializedChange={(editorState) => {
-                    field.onChange(editorState);
+                    field.onChange(editorState)
                   }}
                 />
               </FormControl>
@@ -80,15 +81,15 @@ export const StudyItemForm: CFC<StudyItemFormProps> = ({
           name="tagIds"
           render={({ field: { ref, onBlur } }) => (
             <FormItem>
-              <FormLabel>{t("tagsLabel")}</FormLabel>
+              <FormLabel>{t('tagsLabel')}</FormLabel>
               <FormControl>
                 <TagsSelector
                   defaultTags={defaultTags}
                   onChange={(_, selectedTagIds) => {
                     form.setValue(
-                      "tagIds",
+                      'tagIds',
                       selectedTagIds.length > 0 ? selectedTagIds : undefined,
-                    );
+                    )
                   }}
                   ref={ref}
                   onBlur={onBlur}
@@ -101,5 +102,5 @@ export const StudyItemForm: CFC<StudyItemFormProps> = ({
         />
       </form>
     </Form>
-  );
-};
+  )
+}

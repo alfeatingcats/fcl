@@ -1,1 +1,1 @@
-export { RepetitionListRow } from "./repetition-list-row";
+export { RepetitionListRow } from './repetition-list-row'

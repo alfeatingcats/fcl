@@ -1,1 +1,1 @@
-export { useWaitRepetition, useWaitRepetitionForm } from "./model";
+export { useWaitRepetition, useWaitRepetitionForm } from './model'

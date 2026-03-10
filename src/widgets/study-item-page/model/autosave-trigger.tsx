@@ -1,14 +1,15 @@
-"use client";
+'use client'
 
-import { useWatch, useFormState, type Control } from "react-hook-form";
-import { useDebounceEffect } from "ahooks";
-import type { UpdateStudyItemInput } from "@/shared/api/schemas";
+import { useDebounceEffect } from 'ahooks'
+import { type Control, useFormState, useWatch } from 'react-hook-form'
+
+import type { UpdateStudyItemInput } from '@/shared/api/schemas'
 
 interface AutosaveTriggerProps {
-  control: Control<UpdateStudyItemInput>;
-  onSubmit: (data: UpdateStudyItemInput) => void;
-  isPending: boolean;
-  handleSubmit: (callback: (data: UpdateStudyItemInput) => void) => () => void;
+  control: Control<UpdateStudyItemInput>
+  onSubmit: (data: UpdateStudyItemInput) => void
+  isPending: boolean
+  handleSubmit: (callback: (data: UpdateStudyItemInput) => void) => () => void
 }
 
 export const AutosaveTrigger = ({
@@ -19,21 +20,21 @@ export const AutosaveTrigger = ({
 }: AutosaveTriggerProps) => {
   const [descriptionInputValue] = useWatch<UpdateStudyItemInput>({
     control,
-    name: ["description"],
-  });
+    name: ['description'],
+  })
 
   const [idInputValue, tagIdsInputValue, titleInputValue] =
     useWatch<UpdateStudyItemInput>({
       control,
-      name: ["id", "tagIds", "title"],
-    });
+      name: ['id', 'tagIds', 'title'],
+    })
 
-  const { isDirty, isValid } = useFormState({ control });
+  const { isDirty, isValid } = useFormState({ control })
 
   useDebounceEffect(
     () => {
       if (isDirty && isValid && !isPending) {
-        void handleSubmit(onSubmit)();
+        void handleSubmit(onSubmit)()
       }
     },
 
@@ -46,7 +47,7 @@ export const AutosaveTrigger = ({
       isValid,
     ],
     { wait: 1000 },
-  );
+  )
 
-  return null;
-};
+  return null
+}

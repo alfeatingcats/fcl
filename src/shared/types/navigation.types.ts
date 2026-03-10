@@ -1,13 +1,13 @@
-import type { LucideIcon } from "lucide-react";
+import type { LucideIcon } from 'lucide-react'
 
 export type NavMainItem = {
-  title: string;
-  url: string;
-  icon: LucideIcon;
-  isActive?: boolean;
+  title: string
+  url: string
+  icon: LucideIcon
+  isActive?: boolean
   items?: {
-    title: string;
-    url: string;
-    icon: LucideIcon;
-  }[];
-};
+    title: string
+    url: string
+    icon: LucideIcon
+  }[]
+}

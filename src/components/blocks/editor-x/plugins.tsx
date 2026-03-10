@@ -1,115 +1,114 @@
-"use client";
+'use client'
 
-import { useState, type FC } from "react";
-import { AutoFocusPlugin } from "@lexical/react/LexicalAutoFocusPlugin";
-import { CheckListPlugin } from "@lexical/react/LexicalCheckListPlugin";
-import { ClearEditorPlugin } from "@lexical/react/LexicalClearEditorPlugin";
-import { ClickableLinkPlugin } from "@lexical/react/LexicalClickableLinkPlugin";
-import { LexicalErrorBoundary } from "@lexical/react/LexicalErrorBoundary";
-import { HashtagPlugin } from "@lexical/react/LexicalHashtagPlugin";
-import { HistoryPlugin } from "@lexical/react/LexicalHistoryPlugin";
-import { HorizontalRulePlugin } from "@lexical/react/LexicalHorizontalRulePlugin";
-import { ListPlugin } from "@lexical/react/LexicalListPlugin";
-import { RichTextPlugin } from "@lexical/react/LexicalRichTextPlugin";
-import { TabIndentationPlugin } from "@lexical/react/LexicalTabIndentationPlugin";
-import { TablePlugin } from "@lexical/react/LexicalTablePlugin";
+import { AutoFocusPlugin } from '@lexical/react/LexicalAutoFocusPlugin'
+import { CheckListPlugin } from '@lexical/react/LexicalCheckListPlugin'
+import { ClearEditorPlugin } from '@lexical/react/LexicalClearEditorPlugin'
+import { ClickableLinkPlugin } from '@lexical/react/LexicalClickableLinkPlugin'
+import { LexicalErrorBoundary } from '@lexical/react/LexicalErrorBoundary'
+import { HashtagPlugin } from '@lexical/react/LexicalHashtagPlugin'
+import { HistoryPlugin } from '@lexical/react/LexicalHistoryPlugin'
+import { HorizontalRulePlugin } from '@lexical/react/LexicalHorizontalRulePlugin'
+import { ListPlugin } from '@lexical/react/LexicalListPlugin'
+import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin'
+import { TabIndentationPlugin } from '@lexical/react/LexicalTabIndentationPlugin'
+import { TablePlugin } from '@lexical/react/LexicalTablePlugin'
+import { type FC, useState } from 'react'
 
-import { ContentEditable } from "@/components/editor/editor-ui/content-editable";
-import { ActionsPlugin } from "@/components/editor/plugins/actions/actions-plugin";
-import { CharacterLimitPlugin } from "@/components/editor/plugins/actions/character-limit-plugin";
-import { ClearEditorActionPlugin } from "@/components/editor/plugins/actions/clear-editor-plugin";
-import { CounterCharacterPlugin } from "@/components/editor/plugins/actions/counter-character-plugin";
-import { EditModeTogglePlugin } from "@/components/editor/plugins/actions/edit-mode-toggle-plugin";
-import { MaxLengthPlugin } from "@/components/editor/plugins/actions/max-length-plugin";
-import { AutoLinkPlugin } from "@/components/editor/plugins/auto-link-plugin";
-import { CodeActionMenuPlugin } from "@/components/editor/plugins/code-action-menu-plugin";
-import { CodeHighlightPlugin } from "@/components/editor/plugins/code-highlight-plugin";
-import { ComponentPickerMenuPlugin } from "@/components/editor/plugins/component-picker-menu-plugin";
-import { ContextMenuPlugin } from "@/components/editor/plugins/context-menu-plugin";
-import { DragDropPastePlugin } from "@/components/editor/plugins/drag-drop-paste-plugin";
-import { DraggableBlockPlugin } from "@/components/editor/plugins/draggable-block-plugin";
-import { AutoEmbedPlugin } from "@/components/editor/plugins/embeds/auto-embed-plugin";
-import { YouTubePlugin } from "@/components/editor/plugins/embeds/youtube-plugin";
-import { EmojiPickerPlugin } from "@/components/editor/plugins/emoji-picker-plugin";
-import { EmojisPlugin } from "@/components/editor/plugins/emojis-plugin";
-import { FloatingLinkEditorPlugin } from "@/components/editor/plugins/floating-link-editor-plugin";
-import { FloatingTextFormatToolbarPlugin } from "@/components/editor/plugins/floating-text-format-plugin";
-import { ImagesPlugin } from "@/components/editor/plugins/images-plugin";
+import { ContentEditable } from '@/components/editor/editor-ui/content-editable'
+import { ActionsPlugin } from '@/components/editor/plugins/actions/actions-plugin'
+import { CharacterLimitPlugin } from '@/components/editor/plugins/actions/character-limit-plugin'
+import { ClearEditorActionPlugin } from '@/components/editor/plugins/actions/clear-editor-plugin'
+import { CounterCharacterPlugin } from '@/components/editor/plugins/actions/counter-character-plugin'
+import { EditModeTogglePlugin } from '@/components/editor/plugins/actions/edit-mode-toggle-plugin'
+import { MaxLengthPlugin } from '@/components/editor/plugins/actions/max-length-plugin'
+import { AutoLinkPlugin } from '@/components/editor/plugins/auto-link-plugin'
+import { CodeActionMenuPlugin } from '@/components/editor/plugins/code-action-menu-plugin'
+import { CodeHighlightPlugin } from '@/components/editor/plugins/code-highlight-plugin'
+import { ComponentPickerMenuPlugin } from '@/components/editor/plugins/component-picker-menu-plugin'
+import { ContextMenuPlugin } from '@/components/editor/plugins/context-menu-plugin'
+import { DragDropPastePlugin } from '@/components/editor/plugins/drag-drop-paste-plugin'
+import { DraggableBlockPlugin } from '@/components/editor/plugins/draggable-block-plugin'
+import { AutoEmbedPlugin } from '@/components/editor/plugins/embeds/auto-embed-plugin'
+import { YouTubePlugin } from '@/components/editor/plugins/embeds/youtube-plugin'
+import { EmojiPickerPlugin } from '@/components/editor/plugins/emoji-picker-plugin'
+import { EmojisPlugin } from '@/components/editor/plugins/emojis-plugin'
+import { FloatingLinkEditorPlugin } from '@/components/editor/plugins/floating-link-editor-plugin'
+import { FloatingTextFormatToolbarPlugin } from '@/components/editor/plugins/floating-text-format-plugin'
+import { ImagesPlugin } from '@/components/editor/plugins/images-plugin'
 // import { KeywordsPlugin } from "@/components/editor/plugins/keywords-plugin";
-import { LayoutPlugin } from "@/components/editor/plugins/layout-plugin";
-import { LinkPlugin } from "@/components/editor/plugins/link-plugin";
-import { ListMaxIndentLevelPlugin } from "@/components/editor/plugins/list-max-indent-level-plugin";
-import { MentionsPlugin } from "@/components/editor/plugins/mentions-plugin";
-import { AlignmentPickerPlugin } from "@/components/editor/plugins/picker/alignment-picker-plugin";
-import { BulletedListPickerPlugin } from "@/components/editor/plugins/picker/bulleted-list-picker-plugin";
-import { CheckListPickerPlugin } from "@/components/editor/plugins/picker/check-list-picker-plugin";
-import { CodePickerPlugin } from "@/components/editor/plugins/picker/code-picker-plugin";
-import { ColumnsLayoutPickerPlugin } from "@/components/editor/plugins/picker/columns-layout-picker-plugin";
-import { DividerPickerPlugin } from "@/components/editor/plugins/picker/divider-picker-plugin";
-import { EmbedsPickerPlugin } from "@/components/editor/plugins/picker/embeds-picker-plugin";
-import { HeadingPickerPlugin } from "@/components/editor/plugins/picker/heading-picker-plugin";
-import { ImagePickerPlugin } from "@/components/editor/plugins/picker/image-picker-plugin";
-import { NumberedListPickerPlugin } from "@/components/editor/plugins/picker/numbered-list-picker-plugin";
-import { ParagraphPickerPlugin } from "@/components/editor/plugins/picker/paragraph-picker-plugin";
-import { QuotePickerPlugin } from "@/components/editor/plugins/picker/quote-picker-plugin";
+import { LayoutPlugin } from '@/components/editor/plugins/layout-plugin'
+import { LinkPlugin } from '@/components/editor/plugins/link-plugin'
+import { ListMaxIndentLevelPlugin } from '@/components/editor/plugins/list-max-indent-level-plugin'
+import { MentionsPlugin } from '@/components/editor/plugins/mentions-plugin'
+import { AlignmentPickerPlugin } from '@/components/editor/plugins/picker/alignment-picker-plugin'
+import { BulletedListPickerPlugin } from '@/components/editor/plugins/picker/bulleted-list-picker-plugin'
+import { CheckListPickerPlugin } from '@/components/editor/plugins/picker/check-list-picker-plugin'
+import { CodePickerPlugin } from '@/components/editor/plugins/picker/code-picker-plugin'
+import { ColumnsLayoutPickerPlugin } from '@/components/editor/plugins/picker/columns-layout-picker-plugin'
+import { DividerPickerPlugin } from '@/components/editor/plugins/picker/divider-picker-plugin'
+import { EmbedsPickerPlugin } from '@/components/editor/plugins/picker/embeds-picker-plugin'
+import { HeadingPickerPlugin } from '@/components/editor/plugins/picker/heading-picker-plugin'
+import { ImagePickerPlugin } from '@/components/editor/plugins/picker/image-picker-plugin'
+import { NumberedListPickerPlugin } from '@/components/editor/plugins/picker/numbered-list-picker-plugin'
+import { ParagraphPickerPlugin } from '@/components/editor/plugins/picker/paragraph-picker-plugin'
+import { QuotePickerPlugin } from '@/components/editor/plugins/picker/quote-picker-plugin'
 import {
   DynamicTablePickerPlugin,
   TablePickerPlugin,
-} from "@/components/editor/plugins/picker/table-picker-plugin";
-import { TabFocusPlugin } from "@/components/editor/plugins/tab-focus-plugin";
-import { BlockFormatDropDown } from "@/components/editor/plugins/toolbar/block-format-toolbar-plugin";
-import { FormatBulletedList } from "@/components/editor/plugins/toolbar/block-format/format-bulleted-list";
-import { FormatCheckList } from "@/components/editor/plugins/toolbar/block-format/format-check-list";
-import { FormatCodeBlock } from "@/components/editor/plugins/toolbar/block-format/format-code-block";
-import { FormatHeading } from "@/components/editor/plugins/toolbar/block-format/format-heading";
-import { FormatNumberedList } from "@/components/editor/plugins/toolbar/block-format/format-numbered-list";
-import { FormatParagraph } from "@/components/editor/plugins/toolbar/block-format/format-paragraph";
-import { FormatQuote } from "@/components/editor/plugins/toolbar/block-format/format-quote";
-import { BlockInsertPlugin } from "@/components/editor/plugins/toolbar/block-insert-plugin";
-import { InsertColumnsLayout } from "@/components/editor/plugins/toolbar/block-insert/insert-columns-layout";
-import { InsertEmbeds } from "@/components/editor/plugins/toolbar/block-insert/insert-embeds";
-import { InsertHorizontalRule } from "@/components/editor/plugins/toolbar/block-insert/insert-horizontal-rule";
-import { InsertImage } from "@/components/editor/plugins/toolbar/block-insert/insert-image";
-import { InsertTable } from "@/components/editor/plugins/toolbar/block-insert/insert-table";
-import { ClearFormattingToolbarPlugin } from "@/components/editor/plugins/toolbar/clear-formatting-toolbar-plugin";
-import { CodeLanguageToolbarPlugin } from "@/components/editor/plugins/toolbar/code-language-toolbar-plugin";
-import { ElementFormatToolbarPlugin } from "@/components/editor/plugins/toolbar/element-format-toolbar-plugin";
-import { FontBackgroundToolbarPlugin } from "@/components/editor/plugins/toolbar/font-background-toolbar-plugin";
-import { FontColorToolbarPlugin } from "@/components/editor/plugins/toolbar/font-color-toolbar-plugin";
-import { FontFormatToolbarPlugin } from "@/components/editor/plugins/toolbar/font-format-toolbar-plugin";
-import { FontSizeToolbarPlugin } from "@/components/editor/plugins/toolbar/font-size-toolbar-plugin";
-import { HistoryToolbarPlugin } from "@/components/editor/plugins/toolbar/history-toolbar-plugin";
-import { LinkToolbarPlugin } from "@/components/editor/plugins/toolbar/link-toolbar-plugin";
-import { SubSuperToolbarPlugin } from "@/components/editor/plugins/toolbar/subsuper-toolbar-plugin";
-import { ToolbarPlugin } from "@/components/editor/plugins/toolbar/toolbar-plugin";
-import { Separator } from "@/components/ui/separator";
+} from '@/components/editor/plugins/picker/table-picker-plugin'
+import { TabFocusPlugin } from '@/components/editor/plugins/tab-focus-plugin'
+import { FormatBulletedList } from '@/components/editor/plugins/toolbar/block-format/format-bulleted-list'
+import { FormatCheckList } from '@/components/editor/plugins/toolbar/block-format/format-check-list'
+import { FormatCodeBlock } from '@/components/editor/plugins/toolbar/block-format/format-code-block'
+import { FormatHeading } from '@/components/editor/plugins/toolbar/block-format/format-heading'
+import { FormatNumberedList } from '@/components/editor/plugins/toolbar/block-format/format-numbered-list'
+import { FormatParagraph } from '@/components/editor/plugins/toolbar/block-format/format-paragraph'
+import { FormatQuote } from '@/components/editor/plugins/toolbar/block-format/format-quote'
+import { BlockFormatDropDown } from '@/components/editor/plugins/toolbar/block-format-toolbar-plugin'
+import { InsertColumnsLayout } from '@/components/editor/plugins/toolbar/block-insert/insert-columns-layout'
+import { InsertEmbeds } from '@/components/editor/plugins/toolbar/block-insert/insert-embeds'
+import { InsertHorizontalRule } from '@/components/editor/plugins/toolbar/block-insert/insert-horizontal-rule'
+import { InsertImage } from '@/components/editor/plugins/toolbar/block-insert/insert-image'
+import { InsertTable } from '@/components/editor/plugins/toolbar/block-insert/insert-table'
+import { BlockInsertPlugin } from '@/components/editor/plugins/toolbar/block-insert-plugin'
+import { ClearFormattingToolbarPlugin } from '@/components/editor/plugins/toolbar/clear-formatting-toolbar-plugin'
+import { CodeLanguageToolbarPlugin } from '@/components/editor/plugins/toolbar/code-language-toolbar-plugin'
+import { ElementFormatToolbarPlugin } from '@/components/editor/plugins/toolbar/element-format-toolbar-plugin'
+import { FontBackgroundToolbarPlugin } from '@/components/editor/plugins/toolbar/font-background-toolbar-plugin'
+import { FontColorToolbarPlugin } from '@/components/editor/plugins/toolbar/font-color-toolbar-plugin'
+import { FontFormatToolbarPlugin } from '@/components/editor/plugins/toolbar/font-format-toolbar-plugin'
+import { FontSizeToolbarPlugin } from '@/components/editor/plugins/toolbar/font-size-toolbar-plugin'
+import { HistoryToolbarPlugin } from '@/components/editor/plugins/toolbar/history-toolbar-plugin'
+import { LinkToolbarPlugin } from '@/components/editor/plugins/toolbar/link-toolbar-plugin'
+import { SubSuperToolbarPlugin } from '@/components/editor/plugins/toolbar/subsuper-toolbar-plugin'
+import { ToolbarPlugin } from '@/components/editor/plugins/toolbar/toolbar-plugin'
+import { Separator } from '@/components/ui/separator'
+import { cn } from '@/shared/lib/utils'
 
-import { cn } from "@/shared/lib/utils";
-
-const _placeholder = "Press / for commands...";
-const maxLength = 4000;
+const _placeholder = 'Press / for commands...'
+const maxLength = 4000
 
 export type PluginsProps = {
-  placeholder?: string;
-  wrapperClassName?: string;
-};
+  placeholder?: string
+  wrapperClassName?: string
+}
 
 export const Plugins: FC<PluginsProps> = ({
   placeholder = _placeholder,
   wrapperClassName,
 }) => {
   const [floatingAnchorElem, setFloatingAnchorElem] =
-    useState<HTMLDivElement | null>(null);
-  const [isLinkEditMode, setIsLinkEditMode] = useState<boolean>(false);
+    useState<HTMLDivElement | null>(null)
+  const [isLinkEditMode, setIsLinkEditMode] = useState<boolean>(false)
 
   const onRef = (_floatingAnchorElem: HTMLDivElement) => {
     if (_floatingAnchorElem !== null) {
-      setFloatingAnchorElem(_floatingAnchorElem);
+      setFloatingAnchorElem(_floatingAnchorElem)
     }
-  };
+  }
 
   return (
-    <div className={cn("relative", wrapperClassName)}>
+    <div className={cn('relative', wrapperClassName)}>
       <ToolbarPlugin>
         {({ blockType }) => (
           <div
@@ -120,14 +119,14 @@ export const Plugins: FC<PluginsProps> = ({
             <Separator orientation="vertical" className="h-7!" />
             <BlockFormatDropDown>
               <FormatParagraph />
-              <FormatHeading levels={["h1", "h2", "h3"]} />
+              <FormatHeading levels={['h1', 'h2', 'h3']} />
               <FormatNumberedList />
               <FormatBulletedList />
               <FormatCheckList />
               <FormatCodeBlock />
               <FormatQuote />
             </BlockFormatDropDown>
-            {blockType === "code" ? (
+            {blockType === 'code' ? (
               <CodeLanguageToolbarPlugin />
             ) : (
               <>
@@ -215,14 +214,14 @@ export const Plugins: FC<PluginsProps> = ({
             QuotePickerPlugin(),
             CodePickerPlugin(),
             DividerPickerPlugin(),
-            EmbedsPickerPlugin({ embed: "tweet" }),
-            EmbedsPickerPlugin({ embed: "youtube-video" }),
+            EmbedsPickerPlugin({ embed: 'tweet' }),
+            EmbedsPickerPlugin({ embed: 'youtube-video' }),
             ImagePickerPlugin(),
             ColumnsLayoutPickerPlugin(),
-            AlignmentPickerPlugin({ alignment: "left" }),
-            AlignmentPickerPlugin({ alignment: "center" }),
-            AlignmentPickerPlugin({ alignment: "right" }),
-            AlignmentPickerPlugin({ alignment: "justify" }),
+            AlignmentPickerPlugin({ alignment: 'left' }),
+            AlignmentPickerPlugin({ alignment: 'center' }),
+            AlignmentPickerPlugin({ alignment: 'right' }),
+            AlignmentPickerPlugin({ alignment: 'justify' }),
           ]}
           dynamicOptionsFn={DynamicTablePickerPlugin}
         />
@@ -258,13 +257,12 @@ export const Plugins: FC<PluginsProps> = ({
           <div className="flex flex-1 justify-end">
             {/* <ImportExportPlugin /> */}
             <EditModeTogglePlugin />
-            <>
-              <ClearEditorActionPlugin />
-              <ClearEditorPlugin />
-            </>
+
+            <ClearEditorActionPlugin />
+            <ClearEditorPlugin />
           </div>
         </div>
       </ActionsPlugin>
     </div>
-  );
-};
+  )
+}

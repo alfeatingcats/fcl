@@ -1,23 +1,24 @@
-"use client";
+'use client'
 
-import { api, type RouterOutputs } from "@/trpc/react";
-import { useQueryErrorHandler } from "@/shared/api";
+import { useQueryErrorHandler } from '@/shared/api'
+
+import { api, type RouterOutputs } from '@/trpc/react'
 
 export interface UseTagAutocompleteParams {
-  query: string;
-  maxTagResults?: number;
-  shouldFetchTags: boolean;
-  selectedTagIds?: string[];
+  query: string
+  maxTagResults?: number
+  shouldFetchTags: boolean
+  selectedTagIds?: string[]
 }
 
 export interface UseTagAutocompleteResult {
-  isPending: boolean;
-  autocompleteTags: RouterOutputs["tags"]["searchForAutocomplete"] | undefined;
+  isPending: boolean
+  autocompleteTags: RouterOutputs['tags']['searchForAutocomplete'] | undefined
 }
 
 export type UseTagAutocomplete = (
   params: UseTagAutocompleteParams,
-) => UseTagAutocompleteResult;
+) => UseTagAutocompleteResult
 
 export const useTagAutocomplete = ({
   query,
@@ -32,12 +33,12 @@ export const useTagAutocomplete = ({
   } = api.tags.searchForAutocomplete.useQuery(
     { excludeIds: selectedTagIds ?? [], query, limit: maxTagResults },
     { enabled: shouldFetchTags },
-  );
+  )
 
-  useQueryErrorHandler(error);
+  useQueryErrorHandler(error)
 
   return {
     autocompleteTags,
     isPending,
-  };
-};
+  }
+}

@@ -1,1 +1,1 @@
-export type { MutationResult, TrpcMutationHook } from "./trpc.types";
+export type { MutationResult, TrpcMutationHook } from './trpc.types'

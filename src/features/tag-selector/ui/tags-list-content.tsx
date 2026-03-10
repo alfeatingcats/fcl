@@ -1,25 +1,25 @@
-import { isNil, range } from "es-toolkit";
-import { CheckIcon } from "lucide-react";
-import { isEmpty } from "es-toolkit/compat";
-import { AnimatePresence, motion } from "motion/react";
+import { isNil, range } from 'es-toolkit'
+import { isEmpty } from 'es-toolkit/compat'
+import { CheckIcon } from 'lucide-react'
+import { AnimatePresence, motion } from 'motion/react'
 
 import {
-  TagsList,
-  TagsItem,
   TagsEmpty,
   TagsGroup,
-} from "@/components/ui/kibo-ui/tags";
-import { cn } from "@/shared/lib/utils";
-import { Skeleton } from "@/components/ui/skeleton";
+  TagsItem,
+  TagsList,
+} from '@/components/ui/kibo-ui/tags'
+import { Skeleton } from '@/components/ui/skeleton'
+import { cn } from '@/shared/lib/utils'
 
-import type { RequiredCreateTagInput } from "../model/types";
+import type { RequiredCreateTagInput } from '../model/types'
 
 type TagsListContentProps = {
-  isPending: boolean;
-  selectedTagIds: string[];
-  handleSelect: (tag: RequiredCreateTagInput) => void;
-  displayTags: RequiredCreateTagInput[] | undefined;
-};
+  isPending: boolean
+  selectedTagIds: string[]
+  handleSelect: (tag: RequiredCreateTagInput) => void
+  displayTags: RequiredCreateTagInput[] | undefined
+}
 
 export const TagsListContent = ({
   isPending,
@@ -49,7 +49,7 @@ export const TagsListContent = ({
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}
-            transition={{ type: "spring", stiffness: 250, damping: 20 }}
+            transition={{ type: 'spring', stiffness: 250, damping: 20 }}
             className="p-3"
           >
             <TagsEmpty />
@@ -64,7 +64,7 @@ export const TagsListContent = ({
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.95 }}
                 transition={{
-                  type: "spring",
+                  type: 'spring',
                   stiffness: 300,
                   damping: 24,
                   mass: 0.5,
@@ -81,7 +81,7 @@ export const TagsListContent = ({
                   value={tag.name}
                   className="hover:bg-accent/50 transition-colors"
                 >
-                  <div className={cn("mr-2 h-3 w-3 rounded-full", tag.color)} />
+                  <div className={cn('mr-2 h-3 w-3 rounded-full', tag.color)} />
                   <span className="flex-1 text-sm">{tag.name}</span>
                   {selectedTagIds.includes(tag.id) && (
                     <CheckIcon className="text-muted-foreground" size={14} />
@@ -93,5 +93,5 @@ export const TagsListContent = ({
         )}
       </AnimatePresence>
     </TagsList>
-  );
-};
+  )
+}

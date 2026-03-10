@@ -1,22 +1,22 @@
-import { useTranslations } from "next-intl";
+import { useTranslations } from 'next-intl'
 
-import { usePathname } from "@/i18n/routing";
+import { usePathname } from '@/i18n/routing'
 
-import type { NavMainItem } from "../types/navigation.types";
-import { sidebarRoutesMap } from "../config/sidebar";
+import { sidebarRoutesMap } from '../config/sidebar'
+import type { NavMainItem } from '../types/navigation.types'
 
 export const useSidebarData = (): NavMainItem[] => {
-  const t = useTranslations("Sidebar");
-  const pathname = usePathname();
+  const t = useTranslations('Sidebar')
+  const pathname = usePathname()
 
   const rootRoutes = Object.values(sidebarRoutesMap).filter(
     (r) => r.parent === null,
-  );
+  )
 
   return rootRoutes.map((route) => {
     const children = Object.values(sidebarRoutesMap).filter(
       (r) => r.parent === route.key,
-    );
+    )
 
     return {
       title: t(route.key),
@@ -32,6 +32,6 @@ export const useSidebarData = (): NavMainItem[] => {
               isActive: pathname === child.url,
             }))
           : undefined,
-    };
-  });
-};
+    }
+  })
+}

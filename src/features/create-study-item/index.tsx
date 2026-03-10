@@ -1,1 +1,1 @@
-export { useCreateStudyItem, useStudyItemForm } from "./model";
+export { useCreateStudyItem, useStudyItemForm } from './model'

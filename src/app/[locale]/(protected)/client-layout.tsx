@@ -1,17 +1,18 @@
-"use client";
+'use client'
 
-import { Header } from "@/widgets/header";
-import type { CFC } from "@/shared/types";
-import { AppSidebar } from "@/components/app-sidebar";
-import { SidebarInset } from "@/components/ui/sidebar";
-import { SidebarProvider } from "@/components/ui/sidebar";
-import type { StrictBasicUserInfo } from "@/shared/api/schemas";
-import { OverlayScrollbarsComponent } from "overlayscrollbars-react";
+import { OverlayScrollbarsComponent } from 'overlayscrollbars-react'
+
+import { AppSidebar } from '@/components/app-sidebar'
+import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar'
+import type { StrictBasicUserInfo } from '@/shared/api/schemas'
+import type { CFC } from '@/shared/types'
+
+import { Header } from '@/widgets/header'
 
 type ClientLayoutProps = {
-  user: StrictBasicUserInfo;
-  sidebarValue: boolean;
-};
+  user: StrictBasicUserInfo
+  sidebarValue: boolean
+}
 
 export const ClientLayout: CFC<ClientLayoutProps> = ({
   user,
@@ -24,7 +25,7 @@ export const ClientLayout: CFC<ClientLayoutProps> = ({
         defaultOpen={sidebarValue}
         style={
           {
-            "--sidebar-width": "18rem",
+            '--sidebar-width': '18rem',
           } as React.CSSProperties
         }
       >
@@ -34,8 +35,8 @@ export const ClientLayout: CFC<ClientLayoutProps> = ({
           <OverlayScrollbarsComponent
             element="div"
             options={{
-              scrollbars: { autoHide: "scroll" },
-              overflow: { x: "hidden", y: "scroll" },
+              scrollbars: { autoHide: 'scroll' },
+              overflow: { x: 'hidden', y: 'scroll' },
             }}
             defer
           >
@@ -47,5 +48,5 @@ export const ClientLayout: CFC<ClientLayoutProps> = ({
         </SidebarInset>
       </SidebarProvider>
     </div>
-  );
-};
+  )
+}

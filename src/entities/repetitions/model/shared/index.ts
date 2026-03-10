@@ -1,10 +1,10 @@
 export type {
+  ActionRepetitionModalProps,
   ChartPoint,
   CurrentPoint,
   RepetitionChartProps,
-  RepetitionsListRow,
-  ActionRepetitionModalProps,
-  RepetitionSummary,
   RepetitionListProps,
-} from "./types";
-export { getDefaultRepetitionDates } from "./utils";
+  RepetitionSummary,
+  RepetitionsListRow,
+} from './types'
+export { getDefaultRepetitionDates } from './utils'

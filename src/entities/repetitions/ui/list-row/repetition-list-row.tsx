@@ -1,26 +1,25 @@
-import type { FC } from "react";
+import type { FC } from 'react'
 
-import { Badge } from "@/components/ui/badge";
+import { Badge } from '@/components/ui/badge'
+import { cn } from '@/shared/lib/utils'
+import type { RepetitionActionType } from '@/shared/types'
 
-import { RepetitionStatus } from "../repetition-status";
-import { type RepetitionsListRow } from "../../model/shared";
-import { NextEventDateTime } from "../next-event-date-time";
-import { cn } from "@/shared/lib/utils";
-import { RepetitionStage } from "../repetition-stage";
-import { RepetitionActionDropdown } from "../card-dropdown";
-import type { RepetitionActionType } from "@/shared/types";
+import type { RepetitionsListRow } from '../../model/shared'
+import { RepetitionActionDropdown } from '../card-dropdown'
+import { NextEventDateTime } from '../next-event-date-time'
+import { RepetitionStage } from '../repetition-stage'
+import { RepetitionStatus } from '../repetition-status'
 
 type RepetitionListRowProps = RepetitionsListRow & {
-  onCompleteRepetition: (type: RepetitionActionType) => void;
-  onSkipRepetition: (type: RepetitionActionType) => void;
-  onWaitRepetition: (type: RepetitionActionType) => void;
-};
+  onCompleteRepetition: (type: RepetitionActionType) => void
+  onSkipRepetition: (type: RepetitionActionType) => void
+  onWaitRepetition: (type: RepetitionActionType) => void
+}
 
 export const RepetitionListRow: FC<RepetitionListRowProps> = ({
   title,
   scheduledAt,
   itemTags,
-  description,
   status,
   repetitionNumber,
   onCompleteRepetition,
@@ -29,15 +28,15 @@ export const RepetitionListRow: FC<RepetitionListRowProps> = ({
   descriptionText,
 }) => {
   return (
-    <div className="text-card-foreground bg-muted flex flex-col items-stretch !rounded-xl p-1">
-      <div className="bg-card flex h-full flex-col justify-start !rounded-xl p-4">
+    <div className="text-card-foreground bg-muted flex flex-col items-stretch rounded-xl! p-1">
+      <div className="bg-card flex h-full flex-col justify-start rounded-xl! p-4">
         <div className="flex gap-3">
           <span className="truncate font-medium">{title}</span>
           <span className="flex flex-row gap-2">
             {itemTags.map((tag) => (
               <Badge
                 key={tag.tagId}
-                className={cn(`${tag.tag.color}`, "h-[22px]")}
+                className={cn(`${tag.tag.color}`, 'h-5.5')}
               >
                 {tag.tag.name}
               </Badge>
@@ -64,5 +63,5 @@ export const RepetitionListRow: FC<RepetitionListRowProps> = ({
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
