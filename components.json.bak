@@ -1,7 +1,7 @@
 {
   "$schema": "https://ui.shadcn.com/schema.json",
-  "style": "radix-nova",
-  "rsc": true,
+  "style": "new-york",
+  "rsc": false,
   "tsx": true,
   "tailwind": {
     "config": "",
@@ -11,16 +11,13 @@
     "prefix": ""
   },
   "iconLibrary": "lucide",
-  "rtl": false,
   "aliases": {
     "components": "@/components",
-    "utils": "@/lib/utils",
+    "utils": "@/shared/lib/utils",
     "ui": "@/components/ui",
-    "lib": "@/lib",
-    "hooks": "@/hooks"
+    "lib": "@/shared/lib",
+    "hooks": "@/shared/hooks"
   },
-  "menuColor": "default",
-  "menuAccent": "subtle",
   "registries": {
     "@kibo-ui": "https://www.kibo-ui.com/r/{name}.json",
     "@reui": "https://reui.io/r/{style}/{name}.json",
