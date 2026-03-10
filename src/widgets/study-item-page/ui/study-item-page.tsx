@@ -1,7 +1,7 @@
 'use client'
 
 import { useTranslations } from 'next-intl'
-import { useCallback, useMemo } from 'react'
+import { useMemo } from 'react'
 
 import { Button } from '@/components/ui/button'
 import { useDynamicBreadcrumb, useIdParam } from '@/shared/hooks'
@@ -13,7 +13,7 @@ import {
 import { useStudyItem } from '@/entities/study-item'
 import { CompleteRepetitionForm } from '@/features/complete-repetition'
 import { TagCreateDrawer, TagForm } from '@/features/create-tag'
-import { DeleteStudyItemButton } from '@/features/delete-study-item'
+// import { DeleteStudyItemButton } from '@/features/delete-study-item'
 import { RepetitionsTableContent } from '@/features/repetitions-table'
 import {
   CreateTagButton,
@@ -39,18 +39,17 @@ export const StudyItemPage = () => {
 
   const t = useTranslations('Repetitions')
 
-  const { form, onSubmit, isLoading, deleteStudyItem, isDeleteLoading } =
-    useManageStudyItem({
-      description: studyItem?.description,
-      title: studyItem?.title,
-      id: studyItem?.id,
-      tagIds: studyItem?.itemTags.map((itemTag) => itemTag.tag.id),
-    })
+  const { form, onSubmit, isLoading } = useManageStudyItem({
+    description: studyItem?.description,
+    title: studyItem?.title,
+    id: studyItem?.id,
+    tagIds: studyItem?.itemTags.map((itemTag) => itemTag.tag.id),
+  })
 
-  const handleStudyItemDelete = useCallback(
-    () => deleteStudyItem({ id }),
-    [deleteStudyItem, id],
-  )
+  // const handleStudyItemDelete = useCallback(
+  //   () => deleteStudyItem({ id }),
+  //   [deleteStudyItem, id],
+  // )
 
   const mappedItemTags = useMemo<Array<RequiredCreateTagInput>>(
     () =>
@@ -106,11 +105,11 @@ export const StudyItemPage = () => {
 
   return (
     <div className="space-y-5">
-      <DeleteStudyItemButton
+      {/* <DeleteStudyItemButton
         isLoading={isDeleteLoading}
         onClick={handleStudyItemDelete}
         type="button"
-      />
+      /> */}
       {/* #region Study item form* */}
       <StudyItemForm
         form={form}

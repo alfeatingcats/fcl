@@ -59,6 +59,8 @@ export const useBreadcrumbs = (): React.ReactElement | null => {
     allRoutes.find((r) => normalize(r.url) === normalizedPath) ??
     allRoutes.find((r) => matchDynamicRoute(normalizedPath, r.url) && r.dynamic)
 
+  console.log({ current, normalizedPath })
+
   if (!current) return null
 
   // Build the parent chain
