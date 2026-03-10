@@ -1,6 +1,5 @@
 'use client"'
 import { useTranslations } from 'next-intl'
-import type { TagType } from 'prisma/generated/schemas/models/Tag.schema'
 import { useCallback } from 'react'
 import { toast } from 'sonner'
 
@@ -8,6 +7,8 @@ import {
   useDeleteTagModal,
   useDeleteTag as useDeleteTagMutation,
 } from '@/features/delete-tag'
+
+import type { TagType } from '$/prisma/generated/schemas/models/Tag.schema'
 
 export type DeleteTagModalState =
   | (Omit<TagType, 'createdAt'> & { usageCount: number })

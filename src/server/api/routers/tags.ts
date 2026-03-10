@@ -1,5 +1,3 @@
-// src/server/api/routers/tags.ts
-
 import { TRPCError } from '@trpc/server'
 import { z } from 'zod'
 
