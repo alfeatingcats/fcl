@@ -39,7 +39,7 @@ export const RepetitionActionDropdown: FC<RepetitionActionDropdownProps> = ({
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="xxs" className="">
+        <Button variant="ghost" size="xs" className="">
           <EllipsisVertical />
         </Button>
       </DropdownMenuTrigger>

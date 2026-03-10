@@ -7,7 +7,7 @@ import {
   URL_MATCHER,
 } from "@lexical/react/LexicalAutoEmbedPlugin";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
-import { PopoverPortal } from "@radix-ui/react-popover";
+import { Popover as PopoverPortal } from "radix-ui";
 import type { LexicalEditor } from "lexical";
 import { TwitterIcon, YoutubeIcon } from "lucide-react";
 
@@ -234,7 +234,7 @@ export function AutoEmbedPlugin(): JSX.Element {
         ) => {
           return anchorElementRef.current ? (
             <Popover open={true}>
-              <PopoverPortal container={anchorElementRef.current}>
+              <PopoverPortal.PopoverPortal container={anchorElementRef.current}>
                 <div className="-translate-y-full transform">
                   <PopoverTrigger />
                   <PopoverContent
@@ -262,7 +262,7 @@ export function AutoEmbedPlugin(): JSX.Element {
                     </Command>
                   </PopoverContent>
                 </div>
-              </PopoverPortal>
+              </PopoverPortal.PopoverPortal>
             </Popover>
           ) : null;
         }}
