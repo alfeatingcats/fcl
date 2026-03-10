@@ -1,34 +1,34 @@
-"use client";
+'use client'
 
 import {
+  BadgeCheck,
   Bell,
+  ChevronsUpDown,
+  CreditCard,
   LogOut,
   Sparkles,
-  BadgeCheck,
-  CreditCard,
-  ChevronsUpDown,
-} from "lucide-react";
+} from 'lucide-react'
 
-import {
-  useSidebar,
-  SidebarMenu,
-  SidebarMenuItem,
-  SidebarMenuButton,
-} from "@/components/ui/sidebar";
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import {
   DropdownMenu,
-  DropdownMenuItem,
-  DropdownMenuGroup,
-  DropdownMenuLabel,
   DropdownMenuContent,
-  DropdownMenuTrigger,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
   DropdownMenuSeparator,
-} from "@/components/ui/dropdown-menu";
-import type { StrictBasicUserInfo } from "@/shared/api/schemas";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
+import {
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  useSidebar,
+} from '@/components/ui/sidebar'
+import type { StrictBasicUserInfo } from '@/shared/api/schemas'
 
 export function NavUser({ user }: { user: StrictBasicUserInfo }) {
-  const { isMobile } = useSidebar();
+  const { isMobile } = useSidebar()
 
   return (
     <SidebarMenu>
@@ -52,7 +52,7 @@ export function NavUser({ user }: { user: StrictBasicUserInfo }) {
           </DropdownMenuTrigger>
           <DropdownMenuContent
             className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg"
-            side={isMobile ? "bottom" : "right"}
+            side={isMobile ? 'bottom' : 'right'}
             align="end"
             sideOffset={4}
           >
@@ -99,5 +99,5 @@ export function NavUser({ user }: { user: StrictBasicUserInfo }) {
         </DropdownMenu>
       </SidebarMenuItem>
     </SidebarMenu>
-  );
+  )
 }

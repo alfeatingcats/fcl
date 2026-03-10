@@ -1,11 +1,13 @@
-import { ErrorBoundary, Suspense } from "@suspensive/react";
+import { ErrorBoundary, Suspense } from '@suspensive/react'
 
-import { HydrateClient } from "@/trpc/server";
-import { protectedApiPrefetch } from "@/shared/api";
-import { TagsPage } from "@/widgets/tags-page";
+import { protectedApiPrefetch } from '@/shared/api'
+
+import { TagsPage } from '@/widgets/tags-page'
+
+import { HydrateClient } from '@/trpc/server'
 
 const StydyItemsTagsPage = async () => {
-  await protectedApiPrefetch((api) => api.tags.getAll.prefetch({}));
+  await protectedApiPrefetch((api) => api.tags.getAll.prefetch({}))
 
   return (
     <HydrateClient>
@@ -15,7 +17,7 @@ const StydyItemsTagsPage = async () => {
         </Suspense>
       </ErrorBoundary>
     </HydrateClient>
-  );
-};
+  )
+}
 
-export default StydyItemsTagsPage;
+export default StydyItemsTagsPage

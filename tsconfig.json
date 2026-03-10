@@ -27,8 +27,10 @@
     "incremental": true,
     /* Path Aliases */
     "baseUrl": ".",
+    "ignoreDeprecations": "6.0",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "$/*": ["./*"]
     },
     "allowArbitraryExtensions": true
   },

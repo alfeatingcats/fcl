@@ -1,1 +1,1 @@
-export { RepetitionsTableContent } from "./ui";
+export { RepetitionsTableContent } from './ui'

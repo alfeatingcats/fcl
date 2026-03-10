@@ -1,5 +1,6 @@
-import { StatusSchema, TagSchema } from "prisma/generated/schemas";
-import { z } from "zod";
+import { z } from 'zod'
+
+import { StatusSchema, TagSchema } from '$/prisma/generated/schemas'
 
 // 1. Schema for returning a list of tags with statistics (getAll)
 export const TagWithStatsOutputSchema = z.array(
@@ -17,23 +18,23 @@ export const TagWithStatsOutputSchema = z.array(
       }),
     ),
   }),
-);
+)
 
-export type TagWithStatsOutput = z.infer<typeof TagWithStatsOutputSchema>;
+export type TagWithStatsOutput = z.infer<typeof TagWithStatsOutputSchema>
 
 // 2. Schema for user tag statistics
 export const UserTagStatsOutputSchema = z.object({
   totalTags: z.number(),
   topTags: z.array(TagSchema.extend({ usageCount: z.number() })),
   recentTags: z.array(TagSchema.extend({ usageCount: z.number() })),
-});
+})
 
 // For getPopular
 export const PopularTagOutputSchema = z.array(
   TagSchema.extend({
     _count: z.object({ itemTags: z.number() }),
   }),
-);
+)
 
 // For searchForAutocomplete
 export const TagAutocompleteOutputSchema = z.array(
@@ -43,4 +44,4 @@ export const TagAutocompleteOutputSchema = z.array(
     color: z.string().nullable(),
     _count: z.object({ itemTags: z.number() }),
   }),
-);
+)

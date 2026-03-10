@@ -1,6 +1,6 @@
-import type { User } from "@prisma/client";
-import { type SetNonNullable } from "type-fest";
+import type { User } from '@prisma/client'
+import type { SetNonNullable } from 'type-fest'
 
-export type BasicUserInfo = Pick<User, "name" | "email" | "image">;
+export type BasicUserInfo = Pick<User, 'name' | 'email' | 'image'>
 
-export type StrictBasicUserInfo = SetNonNullable<BasicUserInfo>;
+export type StrictBasicUserInfo = SetNonNullable<BasicUserInfo>

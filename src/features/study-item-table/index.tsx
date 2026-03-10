@@ -1,6 +1,6 @@
 export {
-  StudyItemTableContent,
-  StudyItemTableHeader,
-  StudyItemTableFooter,
   StudyItemDataTable,
-} from "./ui";
+  StudyItemTableContent,
+  StudyItemTableFooter,
+  StudyItemTableHeader,
+} from './ui'

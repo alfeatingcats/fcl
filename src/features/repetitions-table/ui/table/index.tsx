@@ -1,4 +1,4 @@
-export { TableBody } from "./table-body";
-export { TableFooter } from "./table-footer";
-export { TableHeader } from "./table-header";
-export { RepetitionsTableContent } from "./table-content";
+export { TableBody } from './table-body'
+export { RepetitionsTableContent } from './table-content'
+export { TableFooter } from './table-footer'
+export { TableHeader } from './table-header'

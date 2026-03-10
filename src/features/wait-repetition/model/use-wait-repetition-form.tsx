@@ -1,14 +1,14 @@
-"use client";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+'use client'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useForm } from 'react-hook-form'
 
 import {
-  WaitRepetitionSchema,
   type WaitRepetitionInput,
-} from "@/shared/api/schemas";
+  WaitRepetitionSchema,
+} from '@/shared/api/schemas'
 
 export const useWaitRepetitionForm = (isLoading: boolean) =>
   useForm<WaitRepetitionInput>({
     resolver: zodResolver(WaitRepetitionSchema),
     disabled: isLoading,
-  });
+  })

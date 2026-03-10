@@ -1,21 +1,21 @@
-import type { FC } from "react";
+import { range } from 'es-toolkit'
 // import { useTranslations } from "next-intl";
-import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
+import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react'
+import type { FC } from 'react'
+import type { UseFormReturn } from 'react-hook-form'
 
-import { Button } from "@/components/ui/button";
-import type { UseFormReturn } from "react-hook-form";
-import type { ReadStudyItemInput } from "@/shared/api/schemas";
+import { Button } from '@/components/ui/button'
 import {
   Pagination,
   PaginationContent,
   PaginationItem,
-} from "@/components/ui/pagination";
-import { range } from "es-toolkit";
+} from '@/components/ui/pagination'
+import type { ReadStudyItemInput } from '@/shared/api/schemas'
 
 type StudyItemTableFooterProps = {
-  form: UseFormReturn<ReadStudyItemInput>;
-  totalCount?: number;
-};
+  form: UseFormReturn<ReadStudyItemInput>
+  totalCount?: number
+}
 
 export const StudyItemTableFooter: FC<StudyItemTableFooterProps> = () => {
   // const t = useTranslations("StudyItemTable");
@@ -52,20 +52,20 @@ export const StudyItemTableFooter: FC<StudyItemTableFooterProps> = () => {
           {/* Page number buttons */}
           {/* {pages.map((page) => { */}
           {range(10).map((page) => {
-            const isActive = page === 1;
+            const isActive = page === 1
             // const isActive = page === table.getState().pagination.pageIndex + 1;
             return (
               <PaginationItem key={page}>
                 <Button
                   size="icon"
-                  variant={`${isActive ? "outline" : "ghost"}`}
+                  variant={`${isActive ? 'outline' : 'ghost'}`}
                   // onClick={() => table.setPageIndex(page - 1)}
-                  aria-current={isActive ? "page" : undefined}
+                  aria-current={isActive ? 'page' : undefined}
                 >
                   {page}
                 </Button>
               </PaginationItem>
-            );
+            )
           })}
 
           {/* Right ellipsis (...) */}
@@ -91,5 +91,5 @@ export const StudyItemTableFooter: FC<StudyItemTableFooterProps> = () => {
         </PaginationContent>
       </Pagination>
     </div>
-  );
-};
+  )
+}

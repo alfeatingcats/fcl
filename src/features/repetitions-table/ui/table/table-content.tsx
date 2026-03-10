@@ -1,23 +1,24 @@
-import { type FC } from "react";
-import type { StudyRepetition } from "@prisma/client";
-import { OverlayScrollbarsComponent } from "overlayscrollbars-react";
-
-import { Table } from "@/components/ui/table";
-
-import { TableBody } from "./table-body";
-import { TableFooter } from "./table-footer";
-import { TableHeader } from "./table-header";
-import type { RepetitionListProps } from "@/entities/repetitions/model";
+import type { StudyRepetition } from '@prisma/client'
 import {
   getCoreRowModel,
   getExpandedRowModel,
   useReactTable,
-} from "@tanstack/react-table";
-import { useRepetitionColumns } from "../../model/use-repetition-columns";
+} from '@tanstack/react-table'
+import { OverlayScrollbarsComponent } from 'overlayscrollbars-react'
+import type { FC } from 'react'
+
+import { Table } from '@/components/ui/table'
+
+import type { RepetitionListProps } from '@/entities/repetitions/model'
+
+import { useRepetitionColumns } from '../../model/use-repetition-columns'
+import { TableBody } from './table-body'
+import { TableFooter } from './table-footer'
+import { TableHeader } from './table-header'
 
 interface RepetitionsTableContentProps
-  extends Omit<RepetitionListProps, "repetitions"> {
-  repetitions: Array<StudyRepetition>;
+  extends Omit<RepetitionListProps, 'repetitions'> {
+  repetitions: Array<StudyRepetition>
 }
 
 export const RepetitionsTableContent: FC<RepetitionsTableContentProps> = ({
@@ -31,14 +32,14 @@ export const RepetitionsTableContent: FC<RepetitionsTableContentProps> = ({
     onSkipRepetition,
     onWaitRepetition,
     onCompleteRepetition,
-  });
+  })
 
   const table = useReactTable({
     data: repetitions || [],
     columns,
     getCoreRowModel: getCoreRowModel(),
     getExpandedRowModel: getExpandedRowModel(),
-  });
+  })
 
   return (
     <div className="relative w-full overflow-hidden rounded-md border">
@@ -46,8 +47,8 @@ export const RepetitionsTableContent: FC<RepetitionsTableContentProps> = ({
         defer
         element="span"
         options={{
-          scrollbars: { autoHide: "scroll" },
-          overflow: { x: "scroll", y: "hidden" },
+          scrollbars: { autoHide: 'scroll' },
+          overflow: { x: 'scroll', y: 'hidden' },
         }}
       >
         <Table className="min-w-[700px]">
@@ -57,5 +58,5 @@ export const RepetitionsTableContent: FC<RepetitionsTableContentProps> = ({
         </Table>
       </OverlayScrollbarsComponent>
     </div>
-  );
-};
+  )
+}

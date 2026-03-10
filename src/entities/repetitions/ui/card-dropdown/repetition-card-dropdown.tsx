@@ -1,13 +1,15 @@
+import type { RepetitionStatus } from '@prisma/client'
 import {
   CheckCheck,
   EllipsisVertical,
   ExternalLink,
   TimerReset,
   UndoDot,
-} from "lucide-react";
-import type { FC } from "react";
-import { useTranslations } from "next-intl";
+} from 'lucide-react'
+import { useTranslations } from 'next-intl'
+import type { FC } from 'react'
 
+import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -16,17 +18,15 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Button } from "@/components/ui/button";
-import type { RepetitionActionType } from "@/shared/types";
-import type { RepetitionStatus } from "@prisma/client";
+} from '@/components/ui/dropdown-menu'
+import type { RepetitionActionType } from '@/shared/types'
 
 type RepetitionActionDropdownProps = {
-  onCompleteRepetition: (type: RepetitionActionType) => void;
-  onSkipRepetition: (type: RepetitionActionType) => void;
-  onWaitRepetition: (type: RepetitionActionType) => void;
-  status: RepetitionStatus;
-};
+  onCompleteRepetition: (type: RepetitionActionType) => void
+  onSkipRepetition: (type: RepetitionActionType) => void
+  onWaitRepetition: (type: RepetitionActionType) => void
+  status: RepetitionStatus
+}
 
 export const RepetitionActionDropdown: FC<RepetitionActionDropdownProps> = ({
   onCompleteRepetition,
@@ -34,8 +34,8 @@ export const RepetitionActionDropdown: FC<RepetitionActionDropdownProps> = ({
   onWaitRepetition,
   status,
 }) => {
-  const t = useTranslations("Repetitions");
-  const ts = useTranslations("StudyItem");
+  const t = useTranslations('Repetitions')
+  const ts = useTranslations('StudyItem')
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -44,36 +44,36 @@ export const RepetitionActionDropdown: FC<RepetitionActionDropdownProps> = ({
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56" align="start">
-        <DropdownMenuLabel>{t("repetition")}</DropdownMenuLabel>
+        <DropdownMenuLabel>{t('repetition')}</DropdownMenuLabel>
         <DropdownMenuGroup>
           <DropdownMenuItem
-            disabled={status === "COMPLETED"}
-            onClick={() => onCompleteRepetition("complete")}
+            disabled={status === 'COMPLETED'}
+            onClick={() => onCompleteRepetition('complete')}
           >
             <CheckCheck />
-            {t("completeButton")}
+            {t('completeButton')}
           </DropdownMenuItem>
           <DropdownMenuItem
-            disabled={status === "SKIPPED" || status === "COMPLETED"}
-            onClick={() => onSkipRepetition("skip")}
+            disabled={status === 'SKIPPED' || status === 'COMPLETED'}
+            onClick={() => onSkipRepetition('skip')}
           >
-            <UndoDot className="scale-x-[-1]" /> {t("skipButton")}
+            <UndoDot className="scale-x-[-1]" /> {t('skipButton')}
           </DropdownMenuItem>
           <DropdownMenuItem
-            disabled={status === "PENDING"}
-            onClick={() => onWaitRepetition("wait")}
+            disabled={status === 'PENDING'}
+            onClick={() => onWaitRepetition('wait')}
           >
-            <TimerReset className="scale-x-[-1]" /> {t("waitButton")}
+            <TimerReset className="scale-x-[-1]" /> {t('waitButton')}
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <DropdownMenuItem disabled>
             <ExternalLink />
-            {ts("getByIdTitle")}
+            {ts('getByIdTitle')}
           </DropdownMenuItem>
         </DropdownMenuGroup>
       </DropdownMenuContent>
     </DropdownMenu>
-  );
-};
+  )
+}

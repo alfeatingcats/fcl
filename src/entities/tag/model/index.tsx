@@ -1,12 +1,12 @@
+export type { TagItem, TagsListType } from './types'
 export {
-  useGetAllTags,
-  type UseGetAllTagsResult,
   type UseGetAllTagsParams,
-} from "./use-get-all-tags";
+  type UseGetAllTagsResult,
+  useGetAllTags,
+} from './use-get-all-tags'
+export { useSuspenseGetAllTags } from './use-suspence-get-all-tags'
 export {
-  useTagAutocomplete,
-  type UseTagAutocompleteResult,
   type UseTagAutocompleteParams,
-} from "./use-tag-autocomplete";
-export type { TagsListType, TagItem } from "./types";
-export { useSuspenseGetAllTags } from "./use-suspence-get-all-tags";
+  type UseTagAutocompleteResult,
+  useTagAutocomplete,
+} from './use-tag-autocomplete'

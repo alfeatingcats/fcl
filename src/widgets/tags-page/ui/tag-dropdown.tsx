@@ -1,25 +1,25 @@
-'use client";';
+'use client";'
 
-import type { FC } from "react";
-import { MoreHorizontalIcon } from "lucide-react";
+import { MoreHorizontalIcon } from 'lucide-react'
+import { useTranslations } from 'next-intl'
+import type { FC } from 'react'
 
+import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Button } from "@/components/ui/button";
-import { useTranslations } from "next-intl";
+} from '@/components/ui/dropdown-menu'
 
 type TagDropdownProps = {
-  onEdit: (id: string) => void;
-  onDelete: (id: string) => void;
-  id: string;
-};
+  onEdit: (id: string) => void
+  onDelete: (id: string) => void
+  id: string
+}
 export const TagDropdown: FC<TagDropdownProps> = ({ onEdit, onDelete, id }) => {
-  const t = useTranslations("UiActions");
+  const t = useTranslations('UiActions')
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -30,13 +30,13 @@ export const TagDropdown: FC<TagDropdownProps> = ({ onEdit, onDelete, id }) => {
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <DropdownMenuItem onClick={() => onEdit(id)}>
-          {t("edit")}
+          {t('edit')}
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem variant="destructive" onClick={() => onDelete(id)}>
-          {t("delete")}
+          {t('delete')}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
-  );
-};
+  )
+}

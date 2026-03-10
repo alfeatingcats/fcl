@@ -1,18 +1,18 @@
-"use client";
+'use client'
 
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useForm } from 'react-hook-form'
 
 import {
-  CreateStudyItemSchema,
   type CreateStudyItemInput,
-} from "@/shared/api/schemas";
+  CreateStudyItemSchema,
+} from '@/shared/api/schemas'
 
-import { defaultStudyItemFormValues } from "./utils";
+import { defaultStudyItemFormValues } from './utils'
 
 type UseStudyItemFormProps = {
-  defaultValues?: Partial<CreateStudyItemInput>;
-};
+  defaultValues?: Partial<CreateStudyItemInput>
+}
 
 export const useStudyItemForm = ({
   defaultValues = defaultStudyItemFormValues,
@@ -20,7 +20,7 @@ export const useStudyItemForm = ({
   const form = useForm<CreateStudyItemInput>({
     resolver: zodResolver(CreateStudyItemSchema),
     defaultValues,
-  });
+  })
 
-  return { form };
-};
+  return { form }
+}
