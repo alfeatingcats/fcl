@@ -1,13 +1,12 @@
-import type { TRPCClientErrorLike } from '@trpc/client'
-import type { UseTRPCMutationResult } from '@trpc/react-query/shared'
-import type { inferRouterInputs, inferRouterOutputs } from '@trpc/server'
+import type { TRPCClientErrorLike } from "@trpc/client";
+import type { UseTRPCMutationResult } from "@trpc/react-query/shared";
 
-import type { CallbackHandlers } from '@/shared/types'
+import type { AppRouter } from "@/server/api/root";
+import type { inferRouterInputs, inferRouterOutputs } from "@trpc/server";
+import type { CallbackHandlers } from "@/shared/types";
 
-import type { AppRouter } from '@/server/api/root'
-
-type RouterInputs = inferRouterInputs<AppRouter>
-type RouterOutputs = inferRouterOutputs<AppRouter>
+type RouterInputs = inferRouterInputs<AppRouter>;
+type RouterOutputs = inferRouterOutputs<AppRouter>;
 
 export type MutationResult<
   TPath extends keyof RouterInputs,
@@ -18,7 +17,7 @@ export type MutationResult<
   TRPCClientErrorLike<AppRouter>,
   RouterInputs[TPath][TKey],
   TContext
->
+>;
 
 /**
  * Universal generic for useMutation hooks
@@ -32,4 +31,4 @@ export type TrpcMutationHook<
   S = { name: string },
   E = { name: string },
   TContext = unknown,
-> = (handlers: CallbackHandlers<S, E>) => MutationResult<TPath, TKey, TContext>
+> = (handlers: CallbackHandlers<S, E>) => MutationResult<TPath, TKey, TContext>;

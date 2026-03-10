@@ -1,6 +1,5 @@
-import type { FullRepetitionListType } from '@/shared/api/schemas/fg/repetitions'
-
-import type { RepetitionsListRow } from '@/entities/repetitions'
+import type { RepetitionsListRow } from "@/entities/repetitions";
+import { type FullRepetitionListType } from "@/shared/api/schemas/fg/repetitions";
 
 export const mapTodayRepetitionsToListData = (
   repetitions: FullRepetitionListType,
@@ -13,7 +12,7 @@ export const mapTodayRepetitionsToListData = (
     studyItemId: repetition.studyItemId,
     title: repetition.studyItem.title,
     description: repetition.studyItem.description,
-    descriptionText: repetition.studyItem.descriptionText ?? '',
+    descriptionText: repetition.studyItem.descriptionText ?? "",
     itemTags: repetition.studyItem.itemTags,
     repetitionNumber: repetition.repetitionNumber,
-  }))
+  }));

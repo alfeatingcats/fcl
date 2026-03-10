@@ -1,15 +1,12 @@
-import { useResetState } from 'ahooks'
-import { isNil } from 'es-toolkit'
-import { useTranslations } from 'next-intl'
+import { useTranslations } from "next-intl";
 import {
   cloneElement,
-  type FC,
-  type ReactElement,
   useCallback,
   useEffect,
-} from 'react'
+  type FC,
+  type ReactElement,
+} from "react";
 
-import { Button } from '@/components/ui/button'
 import {
   Dialog,
   DialogClose,
@@ -18,19 +15,22 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from '@/components/ui/dialog'
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+
 import {
   Item,
   ItemContent,
   ItemDescription,
   ItemMedia,
   ItemTitle,
-} from '@/components/ui/item'
-
+} from "@/components/ui/item";
+import { useResetState } from "ahooks";
+import { isNil } from "es-toolkit";
 import type {
   ActionRepetitionModalProps,
   RepetitionSummary,
-} from '../../model/shared/types'
+} from "../../model/shared/types";
 
 export const ActionRepetitionModal: FC<ActionRepetitionModalProps> = ({
   isOpen,
@@ -41,13 +41,13 @@ export const ActionRepetitionModal: FC<ActionRepetitionModalProps> = ({
   renderSubmitButton,
   onClear,
 }) => {
-  const t = useTranslations('UiActions')
+  const t = useTranslations("UiActions");
 
-  const [state, setState] = useResetState<RepetitionSummary>({
+  const [state, setState, resetState] = useResetState<RepetitionSummary>({
     repetitionNumber: 1,
     description: null,
-    title: '',
-  })
+    title: "",
+  });
 
   useEffect(() => {
     if (!isNil(entity?.title)) {
@@ -55,18 +55,18 @@ export const ActionRepetitionModal: FC<ActionRepetitionModalProps> = ({
         repetitionNumber,
         title: entity.title,
         description: entity?.description,
-      })
+      });
     }
-  }, [entity, repetitionNumber, setState])
+  }, [entity, isOpen, repetitionNumber, resetState, setState]);
 
   const handleOpenChange = useCallback(
     (open: boolean) => {
       if (!open) {
-        onClear()
+        onClear();
       }
     },
     [onClear],
-  )
+  );
   return (
     <Dialog open={isOpen} onOpenChange={handleOpenChange}>
       <DialogContent className="sm:max-w-106.25">
@@ -86,7 +86,9 @@ export const ActionRepetitionModal: FC<ActionRepetitionModalProps> = ({
           </ItemMedia>
           <ItemContent>
             <ItemTitle className="line-clamp-1">{state.title}</ItemTitle>
-            <ItemDescription className="line-clamp-3 overflow-wrap-anywhere break-all">
+            <ItemDescription
+              className="line-clamp-3 overflow-wrap-anywhere break-all"
+            >
               {state.description}
             </ItemDescription>
           </ItemContent>
@@ -97,21 +99,21 @@ export const ActionRepetitionModal: FC<ActionRepetitionModalProps> = ({
         <DialogFooter>
           <DialogClose asChild>
             <Button className="flex-1/2" type="button" variant="outline">
-              {t('cancel')}
+              {t("cancel")}
             </Button>
           </DialogClose>
           {cloneElement(
             renderSubmitButton as ReactElement<{
-              className?: string
-              type?: 'button'
+              className?: string;
+              type?: "button";
             }>,
             {
-              className: 'flex-1/2',
-              type: 'button',
+              className: "flex-1/2",
+              type: "button",
             },
           )}
         </DialogFooter>
       </DialogContent>
     </Dialog>
-  )
-}
+  );
+};

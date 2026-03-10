@@ -1,76 +1,77 @@
-'use client'
+"use client";
 
-import { compact, last } from 'es-toolkit'
-import { useLocale, useTranslations } from 'next-intl'
-import React from 'react'
-
-import { Link, type routing, usePathname } from '@/i18n/routing'
+import React from "react";
+import { compact, last } from "es-toolkit";
+import { useLocale, useTranslations } from "next-intl";
+import { Link, type routing, usePathname } from "@/i18n/routing";
 
 import {
   Breadcrumb,
+  BreadcrumbList,
   BreadcrumbItem,
   BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
   BreadcrumbSeparator,
-} from '@/components/ui/breadcrumb'
-import { breadcrumbRoutesMap } from '@/shared/config/routes'
-import { useDynamicBreadcrumbStore } from '@/shared/stores'
-import type { SidebarTKey } from '@/shared/types'
+  BreadcrumbPage,
+} from "@/components/ui/breadcrumb";
+import { useDynamicBreadcrumbStore } from "@/shared/stores";
+import { breadcrumbRoutesMap } from "@/shared/config/routes";
+import type { SidebarTKey } from "@/shared/types";
 
 /** Remove trailing slashes */
 const normalize = (u: string | undefined | null) =>
-  !u ? '/' : u === '/' || u === '#' ? u : u.replace(/\/$/, '')
+  !u ? "/" : u === "/" || u === "#" ? u : u.replace(/\/$/, "");
 
-const supportedLocales: Array<(typeof routing.locales)[number]> = ['en', 'uk']
+const supportedLocales: Array<(typeof routing.locales)[number]> = ["en", "uk"];
 
 /** Check if the path matches a template like /my-skills/[id] */
 const matchDynamicRoute = (path: string, routeUrl: string): boolean => {
-  const pathParts = compact(path.split('/'))
-  const routeParts = compact(routeUrl.split('/'))
+  const pathParts = compact(path.split("/"));
+  const routeParts = compact(routeUrl.split("/"));
 
-  if (pathParts.length !== routeParts.length) return false
+  if (pathParts.length !== routeParts.length) return false;
 
   return routeParts.every(
     (part, i) =>
-      (part.startsWith('[') && part.endsWith(']')) || part === pathParts[i],
-  )
-}
+      (part.startsWith("[") && part.endsWith("]")) || part === pathParts[i],
+  );
+};
 
 export const useBreadcrumbs = (): React.ReactElement | null => {
-  const locale = useLocale()
-  const t = useTranslations('Sidebar')
-  const pathname = usePathname() || '/'
-  const entries = useDynamicBreadcrumbStore((s) => s.entries)
+  const locale = useLocale();
+  const t = useTranslations("Sidebar");
+  const pathname = usePathname() || "/";
+  const entries = useDynamicBreadcrumbStore((s) => s.entries);
 
   // Remove locale from the path
-  const segments = compact(pathname.split('/'))
+  const segments = compact(pathname.split("/"));
   const pathNoLocale =
     segments.length > 0 &&
     supportedLocales.includes(segments[0] as (typeof supportedLocales)[number])
-      ? `/${segments.slice(1).join('/')}`
-      : pathname
+      ? "/" + segments.slice(1).join("/")
+      : pathname;
 
-  const normalizedPath = normalize(pathNoLocale)
-  const allRoutes = Object.values(breadcrumbRoutesMap)
+  const normalizedPath = normalize(pathNoLocale);
+  const allRoutes = Object.values(breadcrumbRoutesMap);
 
   // Exact or dynamic match
   const current =
     allRoutes.find((r) => normalize(r.url) === normalizedPath) ??
-    allRoutes.find((r) => matchDynamicRoute(normalizedPath, r.url) && r.dynamic)
+    allRoutes.find(
+      (r) => matchDynamicRoute(normalizedPath, r.url) && r.dynamic,
+    );
 
-  if (!current) return null
+  if (!current) return null;
 
   // Build the parent chain
-  const crumbs: (typeof current)[] = []
+  const crumbs: (typeof current)[] = [];
   for (let route: typeof current | undefined = current; route; ) {
-    crumbs.unshift(route)
-    route = route.parent ? breadcrumbRoutesMap[route.parent] : undefined
+    crumbs.unshift(route);
+    route = route.parent ? breadcrumbRoutesMap[route.parent] : undefined;
   }
 
   // Check if there is a title for the dynamic segment
-  const lastSegment = last(segments)
-  const dynamicTitle = lastSegment ? entries[lastSegment] : undefined
+  const lastSegment = last(segments);
+  const dynamicTitle = lastSegment ? entries[lastSegment] : undefined;
 
   return (
     <Breadcrumb>
@@ -79,7 +80,7 @@ export const useBreadcrumbs = (): React.ReactElement | null => {
         <BreadcrumbItem>
           <BreadcrumbLink asChild>
             <Link locale={locale} href="/">
-              {t('home')}
+              {t("home")}
             </Link>
           </BreadcrumbLink>
         </BreadcrumbItem>
@@ -87,21 +88,21 @@ export const useBreadcrumbs = (): React.ReactElement | null => {
         <BreadcrumbSeparator />
 
         {crumbs.map((crumb, idx) => {
-          const isLastCrumb = idx === crumbs.length - 1
-          const isDynamic = crumb.dynamic
+          const isLastCrumb = idx === crumbs.length - 1;
+          const isDynamic = crumb.dynamic;
 
           // If dynamic route
           if (isDynamic) {
             return (
               <React.Fragment key={crumb.key}>
                 <BreadcrumbItem>
-                  <BreadcrumbPage>{dynamicTitle ?? '…'}</BreadcrumbPage>
+                  <BreadcrumbPage>{dynamicTitle ?? "…"}</BreadcrumbPage>
                 </BreadcrumbItem>
               </React.Fragment>
-            )
+            );
           }
 
-          const isLast = isLastCrumb
+          const isLast = isLastCrumb;
 
           return (
             <BreadcrumbItem key={crumb.key}>
@@ -116,9 +117,9 @@ export const useBreadcrumbs = (): React.ReactElement | null => {
               )}
               {!isLast && <BreadcrumbSeparator />}
             </BreadcrumbItem>
-          )
+          );
         })}
       </BreadcrumbList>
     </Breadcrumb>
-  )
-}
+  );
+};

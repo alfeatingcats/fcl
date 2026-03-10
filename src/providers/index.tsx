@@ -1,1 +1,1 @@
-export { IntlProviderWrapper } from './Intl-provider-wrapper'
+export { IntlProviderWrapper } from "./Intl-provider-wrapper";

@@ -1,25 +1,24 @@
-import { noop } from 'es-toolkit'
+import { api } from "@/trpc/react";
 
-import { useMutationErrorHandler } from '@/shared/api'
-import type { TrpcMutationHook } from '@/shared/api/types'
-
-import { api } from '@/trpc/react'
+import { noop } from "es-toolkit";
+import { useMutationErrorHandler } from "@/shared/api";
+import type { TrpcMutationHook } from "@/shared/api/types";
 
 export const useDeleteStudyItem: TrpcMutationHook<
-  'studyItem',
-  'delete',
+  "studyItem",
+  "delete",
   void,
   void
 > = ({ onError = noop, onSuccess }) => {
-  const handleError = useMutationErrorHandler()
+  const handleError = useMutationErrorHandler();
 
   return api.studyItem.delete.useMutation({
     onSuccess: async () => {
-      onSuccess()
+      onSuccess();
     },
     onError: (error) => {
-      onError()
-      handleError(error)
+      onError();
+      handleError(error);
     },
-  })
-}
+  });
+};

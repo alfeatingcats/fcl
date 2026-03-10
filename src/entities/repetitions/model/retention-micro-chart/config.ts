@@ -1,4 +1,4 @@
-import type { ChartConfig } from '@/components/ui/chart'
+import type { ChartConfig } from "@/components/ui/chart";
 
 export const MICRO_CHART_CONFIG = {
   pointsCount: 100,
@@ -7,14 +7,14 @@ export const MICRO_CHART_CONFIG = {
   dotRadius: 6,
   strokeWidth: 2,
   msPerDay: 24 * 60 * 60 * 1000,
-} as const
+} as const;
 
 export const microChartConfig = {
   retention: {
-    label: 'Retention',
+    label: "Retention",
     theme: {
-      light: 'oklch(0.488 0.243 264.376)',
-      dark: 'oklch(0.769 0.188 70.08)',
+      light: "oklch(0.488 0.243 264.376)",
+      dark: "oklch(0.769 0.188 70.08)",
     },
   },
-} satisfies ChartConfig
+} satisfies ChartConfig;

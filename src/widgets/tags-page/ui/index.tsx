@@ -1,1 +1,1 @@
-export { TagsPage } from './tags-page'
+export { TagsPage } from "./tags-page";

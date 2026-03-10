@@ -1,29 +1,29 @@
-import { Prisma } from '@prisma/client'
-import { TRPCError } from '@trpc/server'
-import { isNil } from 'es-toolkit'
+import { isNil } from "es-toolkit";
+import { TRPCError } from "@trpc/server";
+import { Prisma } from "@prisma/client";
+
+import { StudyItemSchema } from "prisma/generated/schemas";
+import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";
+
+import { EBBINGHAUS_INTERVALS } from "@/shared/lib/const";
 
 import {
   CreateStudyItemSchema,
   DeleteStudyItemSchema,
-  type GetStudyItemByIdInfer,
-  GetStudyItemByIdOutputSchema,
   ReadStudyItemsSchema,
   StudyItemIdSchema,
+  GetStudyItemByIdOutputSchema,
   UpdateStudyItemSchema,
-} from '@/shared/api/schemas'
-import { ReadStudyItemsOutputSchema } from '@/shared/api/schemas/fg/study-item'
-import { EBBINGHAUS_INTERVALS } from '@/shared/lib/const'
-import { extractTextFromLexicalJSON2 } from '@/shared/lib/utils'
-
-import { createTRPCRouter, protectedProcedure } from '@/server/api/trpc'
-
-import { StudyItemSchema } from '$/prisma/generated/schemas'
+  type GetStudyItemByIdInfer,
+} from "@/shared/api/schemas";
+import { extractTextFromLexicalJSON2 } from "@/shared/lib/utils";
+import { ReadStudyItemsOutputSchema } from "@/shared/api/schemas/fg/study-item";
 
 export const studyItemsRouter = createTRPCRouter({
   create: protectedProcedure
     .input(CreateStudyItemSchema)
     .mutation(async ({ ctx, input }) => {
-      const now = new Date()
+      const now = new Date();
 
       return await ctx.db.$transaction(async (tx) => {
         const studyItem = await tx.studyItem.create({
@@ -36,7 +36,7 @@ export const studyItemsRouter = createTRPCRouter({
               : null,
             createdById: ctx.session.user.id,
           },
-        })
+        });
 
         const repetitions = EBBINGHAUS_INTERVALS.map(
           (intervalMinutes, index) => ({
@@ -44,21 +44,21 @@ export const studyItemsRouter = createTRPCRouter({
             repetitionNumber: index + 1,
             scheduledAt: new Date(now.getTime() + intervalMinutes * 60 * 1000),
           }),
-        )
+        );
 
         await tx.studyRepetition.createMany({
           data: repetitions,
-        })
+        });
 
         if (input.tagIds?.length) {
           const tagConnections = input.tagIds.map((tagId) => ({
             studyItemId: studyItem.id,
             tagId,
-          }))
+          }));
 
           await tx.studyItemTag.createMany({
             data: tagConnections,
-          })
+          });
         }
 
         return await tx.studyItem.findUnique({
@@ -68,7 +68,7 @@ export const studyItemsRouter = createTRPCRouter({
           include: {
             repetitions: {
               orderBy: {
-                repetitionNumber: 'asc',
+                repetitionNumber: "asc",
               },
             },
             itemTags: {
@@ -81,25 +81,25 @@ export const studyItemsRouter = createTRPCRouter({
               },
             },
           },
-        })
-      })
+        });
+      });
     }),
   getAll: protectedProcedure
     .input(ReadStudyItemsSchema)
     .output(ReadStudyItemsOutputSchema)
     .query(async ({ ctx, input }) => {
-      const { status, tagIds, search, limit, cursor } = input
+      const { status, tagIds, search, limit, cursor } = input;
 
       const where = {
         createdById: ctx.session.user.id,
         ...(status && { status }),
         ...(search && {
           OR: [
-            { title: { contains: search, mode: 'insensitive' as const } },
+            { title: { contains: search, mode: "insensitive" as const } },
             {
               descriptionText: {
                 contains: search,
-                mode: 'insensitive' as const,
+                mode: "insensitive" as const,
               },
             },
           ],
@@ -112,17 +112,17 @@ export const studyItemsRouter = createTRPCRouter({
               },
             },
           }),
-      }
+      };
 
       const items = await ctx.db.studyItem.findMany({
         where,
         take: limit + 1,
         cursor: cursor ? { id: cursor } : undefined,
-        orderBy: { createdAt: 'desc' },
+        orderBy: { createdAt: "desc" },
         include: {
           repetitions: {
             // where: { status: "PENDING" },
-            orderBy: { scheduledAt: 'asc' },
+            orderBy: { scheduledAt: "asc" },
             // take: 1,
           },
           itemTags: {
@@ -136,18 +136,18 @@ export const studyItemsRouter = createTRPCRouter({
           //   },
           // },
         },
-      })
+      });
 
-      let nextCursor: typeof cursor | undefined
+      let nextCursor: typeof cursor | undefined = undefined;
       if (items.length > limit) {
-        const nextItem = items.pop()
-        nextCursor = nextItem?.id
+        const nextItem = items.pop();
+        nextCursor = nextItem!.id;
       }
 
       return {
         items,
         nextCursor,
-      }
+      };
     }),
 
   // Update study item
@@ -161,28 +161,28 @@ export const studyItemsRouter = createTRPCRouter({
             id: input.id,
             createdById: ctx.session.user.id,
           },
-        })
+        });
 
         if (!existingItem) {
           throw new TRPCError({
-            code: 'NOT_FOUND',
-            message: 'Study item not found',
-          })
+            code: "NOT_FOUND",
+            message: "Study item not found",
+          });
         }
 
         // Prepare update data for the study item
-        const updateData: Record<string, unknown> = {}
-        if (!isNil(input.title)) updateData.title = input.title
+        const updateData: Record<string, unknown> = {};
+        if (!isNil(input.title)) updateData.title = input.title;
         if (!isNil(input.description)) {
-          updateData.description = input.description
+          updateData.description = input.description;
           updateData.descriptionText = extractTextFromLexicalJSON2(
             input.description,
-          )
+          );
         }
         if (!isNil(input.status)) {
-          updateData.status = input.status
-          if (input.status === 'COMPLETED') {
-            updateData.completedAt = new Date()
+          updateData.status = input.status;
+          if (input.status === "COMPLETED") {
+            updateData.completedAt = new Date();
           }
         }
 
@@ -191,7 +191,7 @@ export const studyItemsRouter = createTRPCRouter({
           await tx.studyItem.update({
             where: { id: input.id },
             data: updateData,
-          })
+          });
         }
 
         // Handle tags synchronization if tagIds provided
@@ -201,18 +201,18 @@ export const studyItemsRouter = createTRPCRouter({
             where: {
               studyItemId: input.id,
             },
-          })
+          });
 
           // Create new tag connections
           if (input.tagIds.length > 0) {
             const tagConnections = input.tagIds.map((tagId) => ({
               studyItemId: input.id,
               tagId,
-            }))
+            }));
 
             await tx.studyItemTag.createMany({
               data: tagConnections,
-            })
+            });
           }
         }
 
@@ -221,7 +221,7 @@ export const studyItemsRouter = createTRPCRouter({
           where: { id: input.id },
           include: {
             repetitions: {
-              orderBy: { repetitionNumber: 'asc' },
+              orderBy: { repetitionNumber: "asc" },
             },
             itemTags: {
               include: { tag: true },
@@ -233,8 +233,8 @@ export const studyItemsRouter = createTRPCRouter({
               },
             },
           },
-        })
-      })
+        });
+      });
     }),
 
   // Delete study item
@@ -248,13 +248,13 @@ export const studyItemsRouter = createTRPCRouter({
           id: input.id,
           createdById: ctx.session.user.id,
         },
-      })
+      });
 
       if (!existingItem) {
         throw new TRPCError({
-          code: 'NOT_FOUND',
-          message: 'Study item not found',
-        })
+          code: "NOT_FOUND",
+          message: "Study item not found",
+        });
       }
 
       // Cascade delete will automatically remove:
@@ -262,7 +262,7 @@ export const studyItemsRouter = createTRPCRouter({
       // - StudyItemTag (onDelete: Cascade)
       return await ctx.db.studyItem.delete({
         where: { id: input.id },
-      })
+      });
     }),
 
   getById: protectedProcedure
@@ -272,19 +272,19 @@ export const studyItemsRouter = createTRPCRouter({
       const item = await ctx.db.studyItem.findFirst({
         where: { id: input.id, createdById: ctx.session.user.id },
         include: {
-          repetitions: { orderBy: { repetitionNumber: 'asc' } },
+          repetitions: { orderBy: { repetitionNumber: "asc" } },
           itemTags: { include: { tag: true } },
         },
-      })
+      });
 
       if (!item) {
         throw new TRPCError({
-          code: 'NOT_FOUND',
-          message: 'Study item not found',
-        })
+          code: "NOT_FOUND",
+          message: "Study item not found",
+        });
       }
 
-      return item as GetStudyItemByIdInfer
+      return item as GetStudyItemByIdInfer;
     }),
 
   resetRepetitions: protectedProcedure
@@ -292,34 +292,34 @@ export const studyItemsRouter = createTRPCRouter({
     .mutation(async ({ ctx, input }) => {
       const item = await ctx.db.studyItem.findFirst({
         where: { id: input.id, createdById: ctx.session.user.id },
-      })
+      });
       if (!item) {
         throw new TRPCError({
-          code: 'NOT_FOUND',
-          message: 'Study item not found',
-        })
+          code: "NOT_FOUND",
+          message: "Study item not found",
+        });
       }
 
       return await ctx.db.$transaction(async (tx) => {
         await tx.studyRepetition.deleteMany({
           where: { studyItemId: input.id },
-        })
+        });
 
-        const now = new Date()
+        const now = new Date();
         const repetitions = EBBINGHAUS_INTERVALS.map(
           (intervalMinutes, index) => ({
             studyItemId: input.id,
             repetitionNumber: index + 1,
             scheduledAt: new Date(now.getTime() + intervalMinutes * 60 * 1000),
           }),
-        )
+        );
 
-        await tx.studyRepetition.createMany({ data: repetitions })
+        await tx.studyRepetition.createMany({ data: repetitions });
 
         return await tx.studyItem.findUnique({
           where: { id: input.id },
           include: { repetitions: true },
-        })
-      })
+        });
+      });
     }),
-})
+});

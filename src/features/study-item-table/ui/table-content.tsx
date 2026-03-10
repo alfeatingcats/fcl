@@ -1,7 +1,6 @@
-import { flexRender } from '@tanstack/react-table'
-import { useTranslations } from 'next-intl'
-import { OverlayScrollbarsComponent } from 'overlayscrollbars-react'
-import { type FC, Fragment } from 'react'
+import { Fragment, type FC } from "react";
+import { useTranslations } from "next-intl";
+import { flexRender } from "@tanstack/react-table";
 
 import {
   Table,
@@ -10,28 +9,29 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table'
-import type { ReadStudyItemsOutputSchemaType } from '@/shared/api/schemas/fg/study-item'
+} from "@/components/ui/table";
 
-import { useStudyItemTable } from '../model/use-table'
+import { useStudyItemTable } from "../model/use-table";
+import { OverlayScrollbarsComponent } from "overlayscrollbars-react";
+import type { ReadStudyItemsOutputSchemaType } from "@/shared/api/schemas/fg/study-item";
 
 interface StudyItemTableContentProps {
-  studyItems: ReadStudyItemsOutputSchemaType['items']
+  studyItems: ReadStudyItemsOutputSchemaType["items"];
 }
 export const StudyItemTableContent: FC<StudyItemTableContentProps> = ({
   studyItems = [],
 }) => {
-  const t = useTranslations('StudyItemTable')
+  const t = useTranslations("StudyItemTable");
 
-  const { table } = useStudyItemTable(studyItems)
+  const { table } = useStudyItemTable(studyItems);
 
   return (
     <OverlayScrollbarsComponent
       className="rounded-md border"
       element="span"
       options={{
-        scrollbars: { autoHide: 'scroll' },
-        overflow: { x: 'scroll', y: 'hidden' },
+        scrollbars: { autoHide: "scroll" },
+        overflow: { x: "scroll", y: "hidden" },
       }}
       defer
     >
@@ -52,7 +52,7 @@ export const StudyItemTableContent: FC<StudyItemTableContentProps> = ({
                           header.getContext(),
                         )}
                   </TableHead>
-                )
+                );
               })}
             </TableRow>
           ))}
@@ -63,7 +63,7 @@ export const StudyItemTableContent: FC<StudyItemTableContentProps> = ({
               <Fragment key={row.id}>
                 <TableRow
                   key={row.id}
-                  data-state={row.getIsSelected() && 'selected'}
+                  data-state={row.getIsSelected() && "selected"}
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell
@@ -88,12 +88,12 @@ export const StudyItemTableContent: FC<StudyItemTableContentProps> = ({
                 colSpan={table.getAllColumns().length}
                 className="h-24 text-center"
               >
-                {t('noResults')}
+                {t("noResults")}
               </TableCell>
             </TableRow>
           )}
         </TableBody>
       </Table>
     </OverlayScrollbarsComponent>
-  )
-}
+  );
+};

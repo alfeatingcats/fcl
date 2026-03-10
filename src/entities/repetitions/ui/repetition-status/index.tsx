@@ -1,1 +1,1 @@
-export { RepetitionStatus } from './repetition-status'
+export { RepetitionStatus } from "./repetition-status";

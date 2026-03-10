@@ -1,6 +1,6 @@
-'use client'
+"use client";
 
-import { api } from '@/trpc/react'
+import { api } from "@/trpc/react";
 
 export const useTodayRepetitions = () =>
-  api.repetitions.getTodayRepetitions.useSuspenseQuery()
+  api.repetitions.getTodayRepetitions.useSuspenseQuery();

@@ -1,63 +1,63 @@
 import {
-  BookOpenCheck,
-  LayoutDashboard,
-  LifeBuoy,
-  type LucideIcon,
   Route,
+  LifeBuoy,
   Settings2,
+  BookOpenCheck,
+  type LucideIcon,
+  LayoutDashboard,
   Tags,
-} from 'lucide-react'
+} from "lucide-react";
 
-import type { SidebarTKey } from '../types'
+import type { SidebarTKey } from "../types";
 
-export type SidebarRouteRoot = Record<SidebarTKey, SidebarRoute>
+export type SidebarRouteRoot = Record<SidebarTKey, SidebarRoute>;
 
 export type SidebarRoute = {
-  url: string
-  icon: LucideIcon
-  parent: SidebarTKey | null
-  key: SidebarTKey
-}
+  url: string;
+  icon: LucideIcon;
+  parent: SidebarTKey | null;
+  key: SidebarTKey;
+};
 
 export const sidebarRoutesMap: SidebarRouteRoot = {
   dashboard: {
-    key: 'dashboard',
-    url: '/dashboard',
+    key: "dashboard",
+    url: "/dashboard",
     icon: LayoutDashboard,
     parent: null,
   },
   mySkills: {
-    key: 'mySkills',
-    url: '/my-skills',
+    key: "mySkills",
+    url: "/my-skills",
     icon: BookOpenCheck,
     parent: null,
   },
   reviewCycle: {
-    key: 'reviewCycle',
-    url: '/review-cycle',
+    key: "reviewCycle",
+    url: "/review-cycle",
     icon: Route,
-    parent: 'mySkills',
+    parent: "mySkills",
   },
   tags: {
-    key: 'tags',
-    url: '/tags',
+    key: "tags",
+    url: "/tags",
     icon: Tags,
-    parent: 'mySkills',
+    parent: "mySkills",
   },
   settings: {
-    key: 'settings',
-    url: '/settings',
+    key: "settings",
+    url: "/settings",
     icon: Settings2,
     parent: null,
   },
   support: {
-    key: 'support',
-    url: '#',
+    key: "support",
+    url: "#",
     icon: LifeBuoy,
     parent: null,
   },
-} as const
+} as const;
 
-export type SidebarRouteKey = keyof typeof sidebarRoutesMap
+export type SidebarRouteKey = keyof typeof sidebarRoutesMap;
 
-export const sidebarNavigationRoutes = Object.values(sidebarRoutesMap)
+export const sidebarNavigationRoutes = Object.values(sidebarRoutesMap);

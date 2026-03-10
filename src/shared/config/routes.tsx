@@ -1,78 +1,78 @@
 import {
-  BookOpenCheck,
-  LayoutDashboard,
-  LifeBuoy,
-  type LucideIcon,
   Route,
+  LifeBuoy,
   Settings2,
+  BookOpenCheck,
+  type LucideIcon,
+  LayoutDashboard,
   Tags,
-} from 'lucide-react'
+} from "lucide-react";
 
-import type { SidebarTKey } from '../types'
+import type { SidebarTKey } from "../types";
 
-type RouteBreadcrumbProperties = SidebarTKey | DynamicRouteKeys
+type RouteBreadcrumbProperties = SidebarTKey | DynamicRouteKeys;
 
-export type DynamicRouteKeys = 'skillDetails'
+export type DynamicRouteKeys = "skillDetails";
 
 export type BreadcrumbsRouteRoot = Record<
   RouteBreadcrumbProperties,
   BreadcrumbRoute
->
+>;
 
 export type BreadcrumbRoute = {
-  url: string
-  icon: LucideIcon
-  parent: SidebarTKey | null
-  key: RouteBreadcrumbProperties
-  dynamic?: boolean
-}
+  url: string;
+  icon: LucideIcon;
+  parent: SidebarTKey | null;
+  key: RouteBreadcrumbProperties;
+  dynamic?: boolean;
+};
 
 export const breadcrumbRoutesMap: BreadcrumbsRouteRoot = {
   dashboard: {
-    key: 'dashboard',
-    url: '/dashboard',
+    key: "dashboard",
+    url: "/dashboard",
     icon: LayoutDashboard,
     parent: null,
   },
   mySkills: {
-    key: 'mySkills',
-    url: '/my-skills',
+    key: "mySkills",
+    url: "/my-skills",
     icon: BookOpenCheck,
     parent: null,
   },
   skillDetails: {
-    key: 'skillDetails',
-    url: '/my-skills/[id]',
+    key: "skillDetails",
+    url: "/my-skills/[id]",
     icon: BookOpenCheck,
-    parent: 'mySkills',
+    parent: "mySkills",
     dynamic: true,
   },
   reviewCycle: {
-    key: 'reviewCycle',
-    url: '/review-cycle',
+    key: "reviewCycle",
+    url: "/review-cycle",
     icon: Route,
-    parent: 'mySkills',
+    parent: "mySkills",
   },
   tags: {
-    key: 'tags',
-    url: '/tags',
+    key: "tags",
+    url: "/tags",
     icon: Tags,
-    parent: 'mySkills',
+    parent: "mySkills",
   },
   settings: {
-    key: 'settings',
-    url: '/settings',
+    key: "settings",
+    url: "/settings",
     icon: Settings2,
     parent: null,
   },
   support: {
-    key: 'support',
-    url: '#',
+    key: "support",
+    url: "#",
     icon: LifeBuoy,
     parent: null,
   },
-} as const
+} as const;
 
-export type RouteKey = keyof typeof breadcrumbRoutesMap
+export type RouteKey = keyof typeof breadcrumbRoutesMap;
 
-export const routesList = Object.values(breadcrumbRoutesMap)
+export const routesList = Object.values(breadcrumbRoutesMap);

@@ -1,32 +1,31 @@
-'use client'
+"use client";
 
-import { WaypointsIcon } from 'lucide-react'
-import { useTranslations } from 'next-intl'
-import type { ComponentProps } from 'react'
+import { useTranslations } from "next-intl";
+import type { ComponentProps } from "react";
+import { WaypointsIcon } from "lucide-react";
 
-import { Link } from '@/i18n/routing'
-
-import { NavMain } from '@/components/nav-main'
-import { NavUser } from '@/components/nav-user'
+import { Link } from "@/i18n/routing";
+import { NavMain } from "@/components/nav-main";
+import { NavUser } from "@/components/nav-user";
 import {
   Sidebar,
-  SidebarContent,
+  SidebarMenu,
   SidebarFooter,
   SidebarHeader,
-  SidebarMenu,
-  SidebarMenuButton,
+  SidebarContent,
   SidebarMenuItem,
-} from '@/components/ui/sidebar'
-import type { StrictBasicUserInfo } from '@/shared/api/schemas'
-import { useSidebarData } from '@/shared/hooks/use-sidebar-data'
+  SidebarMenuButton,
+} from "@/components/ui/sidebar";
+import type { StrictBasicUserInfo } from "@/shared/api/schemas";
+import { useSidebarData } from "@/shared/hooks/use-sidebar-data";
 
 type AppSidebarProps = ComponentProps<typeof Sidebar> & {
-  user: StrictBasicUserInfo
-}
+  user: StrictBasicUserInfo;
+};
 
 export const AppSidebar = ({ user, ...props }: AppSidebarProps) => {
-  const sidebarData = useSidebarData()
-  const t = useTranslations('StudyPage')
+  const sidebarData = useSidebarData();
+  const t = useTranslations("StudyPage");
   return (
     <Sidebar variant="inset" {...props}>
       <SidebarHeader>
@@ -39,7 +38,7 @@ export const AppSidebar = ({ user, ...props }: AppSidebarProps) => {
                 </div>
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-bold">Focu</span>
-                  <span className="truncate text-xs">{t('subtitleShort')}</span>
+                  <span className="truncate text-xs">{t("subtitleShort")}</span>
                 </div>
               </Link>
             </SidebarMenuButton>
@@ -53,5 +52,5 @@ export const AppSidebar = ({ user, ...props }: AppSidebarProps) => {
         <NavUser user={user} />
       </SidebarFooter>
     </Sidebar>
-  )
-}
+  );
+};

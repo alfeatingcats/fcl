@@ -1,1 +1,1 @@
-export { DeleteTagModal } from './delete-tag-modal'
+export { DeleteTagModal } from "./delete-tag-modal";

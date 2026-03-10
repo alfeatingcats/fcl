@@ -1,6 +1,5 @@
-import type { GetStudyItemByIdInfer } from '@/shared/api/schemas'
-
-import type { RepetitionsListRow } from '@/entities/repetitions'
+import type { RepetitionsListRow } from "@/entities/repetitions";
+import type { GetStudyItemByIdInfer } from "@/shared/api/schemas";
 
 export const mapStudyItemToRepetitionList = (
   studyItem: GetStudyItemByIdInfer,
@@ -15,8 +14,8 @@ export const mapStudyItemToRepetitionList = (
       title: studyItem.title,
       description: studyItem.description,
       itemTags: studyItem.itemTags,
-      descriptionText: studyItem.descriptionText ?? '',
+      descriptionText: studyItem.descriptionText ?? "",
       repetitionNumber: repetition.repetitionNumber,
-    }
-  })
-}
+    };
+  });
+};

@@ -1,17 +1,17 @@
-import type { StudyItemTag, Tag } from '@prisma/client'
-import { isEmpty } from 'es-toolkit/compat'
-import { Minus } from 'lucide-react'
+import { Minus } from "lucide-react";
+import { isEmpty } from "es-toolkit/compat";
 
-import { Badge } from '@/components/ui/badge'
-import { cn } from '@/shared/lib/utils'
+import { Badge } from "@/components/ui/badge";
+import type { StudyItemTag, Tag } from "@prisma/client";
+import { cn } from "@/shared/lib/utils";
 
 export interface TagsCellProps {
-  tags: Array<StudyItemTag & { tag: Tag }>
+  tags: Array<StudyItemTag & { tag: Tag }>;
 }
 
 export const TagsCell = ({ tags }: TagsCellProps) => {
   if (isEmpty(tags)) {
-    return <Minus className="h-4 w-4 opacity-50" />
+    return <Minus className="h-4 w-4 opacity-50" />;
   }
 
   return (
@@ -22,5 +22,5 @@ export const TagsCell = ({ tags }: TagsCellProps) => {
         </Badge>
       ))}
     </div>
-  )
-}
+  );
+};

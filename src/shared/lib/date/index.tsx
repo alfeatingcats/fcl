@@ -1,1 +1,1 @@
-export { useDateFnsConfig, useDetectTimeZone, useRelativeTime } from './hooks'
+export { useDateFnsConfig, useDetectTimeZone, useRelativeTime } from "./hooks";

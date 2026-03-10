@@ -1,23 +1,22 @@
-import type { VariantProps } from 'class-variance-authority'
-import { useTranslations } from 'next-intl'
+import { Button, type buttonVariants } from "@/components/ui/button";
+import { useTranslations } from "next-intl";
+import { type VariantProps } from "class-variance-authority";
 
-import { Button, type buttonVariants } from '@/components/ui/button'
-
-type DeleteStudyItemButtonProps = React.ComponentProps<'button'> &
+type DeleteStudyItemButtonProps = React.ComponentProps<"button"> &
   VariantProps<typeof buttonVariants> & {
-    asChild?: boolean
+    asChild?: boolean;
   } & {
-    isLoading?: boolean
-  }
+    isLoading?: boolean;
+  };
 
 export const DeleteStudyItemButton = ({
   isLoading,
   ...props
 }: DeleteStudyItemButtonProps) => {
-  const t = useTranslations('StudyItem')
+  const t = useTranslations("StudyItem");
   return (
     <Button disabled={isLoading} {...props}>
-      {t('deleteButton')}
+      {t("deleteButton")}
     </Button>
-  )
-}
+  );
+};
