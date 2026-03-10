@@ -1,6 +1,6 @@
 import * as React from "react";
-import * as SliderPrimitive from "@radix-ui/react-slider";
-import { Slot } from "@radix-ui/react-slot";
+import {Slider as SliderPrimitive} from "radix-ui";
+import { Slot } from 'radix-ui'
 import { cva, type VariantProps } from "class-variance-authority";
 import { PipetteIcon } from "lucide-react";
 import { noop } from "es-toolkit/function";
@@ -947,7 +947,7 @@ function ColorPickerRootImpl(props: ColorPickerRootImplProps) {
     [store.setOpen, onOpenChange],
   );
 
-  const RootPrimitive = asChild ? Slot : "div";
+  const RootPrimitive = asChild ? Slot.Slot : "div";
 
   if (inline) {
     return (
@@ -999,7 +999,7 @@ function ColorPickerTrigger(props: ColorPickerTriggerProps) {
   const { asChild, ...triggerProps } = props;
   const context = useColorPickerContext("ColorPickerTrigger");
 
-  const TriggerPrimitive = asChild ? Slot : Button;
+  const TriggerPrimitive = asChild ? Slot.Slot : Button;
 
   return (
     <PopoverTrigger asChild disabled={context.disabled}>
@@ -1015,7 +1015,7 @@ function ColorPickerContent(props: ColorPickerContentProps) {
   const context = useColorPickerContext("ColorPickerContent");
 
   if (context.inline) {
-    const ContentPrimitive = asChild ? Slot : "div";
+    const ContentPrimitive = asChild ? Slot.Slot : "div";
 
     return (
       <ContentPrimitive
@@ -1107,7 +1107,7 @@ function ColorPickerArea(props: ColorPickerAreaProps) {
   const hue = hsv?.h ?? 0;
   const backgroundHue = hsvToRgb({ h: hue, s: 100, v: 100, a: 1 });
 
-  const AreaPrimitive = asChild ? Slot : "div";
+  const AreaPrimitive = asChild ? Slot.Slot : "div";
 
   return (
     <AreaPrimitive
@@ -1298,7 +1298,7 @@ function ColorPickerSwatch(props: ColorPickerSwatchProps) {
     ? "No color selected"
     : `Current color: ${colorToString(color, format)}`;
 
-  const SwatchPrimitive = asChild ? Slot : "div";
+  const SwatchPrimitive = asChild ? Slot.Slot : "div";
 
   return (
     <SwatchPrimitive

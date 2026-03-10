@@ -66,7 +66,7 @@ export const DeleteTagModal: FC<DeleteTagModalProps> = ({
           <DialogDescription>{tt('description')}</DialogDescription>
         </DialogHeader>
         <section>
-          <Alert variant={tagHasUsage ? 'warning' : 'info'} className="mb-2">
+          <Alert variant={tagHasUsage ? 'warning' : 'info'} className="mb-1">
             {tagHasUsage ? <AlertTriangleIcon /> : <CheckCircle2Icon />}
             <AlertTitle>{tt('usage', { count: usageCount })}</AlertTitle>
             {tagHasUsage && (

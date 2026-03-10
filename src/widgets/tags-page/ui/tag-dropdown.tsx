@@ -1,5 +1,6 @@
 'use client";'
 
+import { useDebounceFn } from 'ahooks'
 import { MoreHorizontalIcon } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import type { FC } from 'react'
@@ -20,6 +21,14 @@ type TagDropdownProps = {
 }
 export const TagDropdown: FC<TagDropdownProps> = ({ onEdit, onDelete, id }) => {
   const t = useTranslations('UiActions')
+
+  const { run: handleEdit } = useDebounceFn(() => onEdit(id), {
+    wait: 10,
+  })
+  const { run: handleDelete } = useDebounceFn(() => onDelete(id), {
+    wait: 10,
+  })
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -29,11 +38,9 @@ export const TagDropdown: FC<TagDropdownProps> = ({ onEdit, onDelete, id }) => {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuItem onClick={() => onEdit(id)}>
-          {t('edit')}
-        </DropdownMenuItem>
+        <DropdownMenuItem onClick={handleEdit}>{t('edit')}</DropdownMenuItem>
         <DropdownMenuSeparator />
-        <DropdownMenuItem variant="destructive" onClick={() => onDelete(id)}>
+        <DropdownMenuItem variant="destructive" onClick={handleDelete}>
           {t('delete')}
         </DropdownMenuItem>
       </DropdownMenuContent>
