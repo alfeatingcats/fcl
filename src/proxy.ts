@@ -7,7 +7,7 @@ import { isPublicPage } from './shared/lib/middleware-utils'
 
 const handleI18nRouting = createMiddleware(routing)
 
-export default function middleware(
+export default function proxy(
   req: NextRequest,
   event: NextFetchEvent,
 ):
