@@ -1,21 +1,22 @@
-'use client'
+"use client";
 
 import {
+  NextIntlClientProvider,
   type AbstractIntlMessages,
   type Locale,
-  NextIntlClientProvider,
-} from 'next-intl'
+} from "next-intl";
+import React from "react";
 
-import { useDetectTimeZone } from '@/shared/lib/date'
-import { useUserStore } from '@/shared/stores'
-import type { CFC } from '@/shared/types'
+import type { CFC } from "@/shared/types";
+import { useUserStore } from "@/shared/stores";
+import { useDetectTimeZone } from "@/shared/lib/date";
 
 export const IntlProviderWrapper: CFC<{
-  locale: Locale
-  messages: AbstractIntlMessages
+  locale: Locale;
+  messages: AbstractIntlMessages;
 }> = ({ children, locale, messages }) => {
-  useDetectTimeZone()
-  const { timeZone } = useUserStore()
+  useDetectTimeZone();
+  const { timeZone } = useUserStore();
 
   return (
     <NextIntlClientProvider
@@ -25,5 +26,5 @@ export const IntlProviderWrapper: CFC<{
     >
       {children}
     </NextIntlClientProvider>
-  )
-}
+  );
+};

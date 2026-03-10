@@ -1,15 +1,13 @@
-import { ErrorBoundary, Suspense } from '@suspensive/react'
+import { ErrorBoundary, Suspense } from "@suspensive/react";
 
-import { protectedApiPrefetch } from '@/shared/api'
+import { HydrateClient } from "@/trpc/server";
+import { StudyItemPage } from "@/widgets/study-item-page";
+import { protectedApiPrefetch } from "@/shared/api";
 
-import { StudyItemPage } from '@/widgets/study-item-page'
+const MySkillsPage = async (props: PageProps<"/[locale]/my-skills/[id]">) => {
+  const { id } = await props.params;
 
-import { HydrateClient } from '@/trpc/server'
-
-const MySkillsPage = async (props: PageProps<'/[locale]/my-skills/[id]'>) => {
-  const { id } = await props.params
-
-  await protectedApiPrefetch((api) => api.studyItem.getById.prefetch({ id }))
+  await protectedApiPrefetch((api) => api.studyItem.getById.prefetch({ id }));
 
   return (
     <HydrateClient>
@@ -19,7 +17,7 @@ const MySkillsPage = async (props: PageProps<'/[locale]/my-skills/[id]'>) => {
         </Suspense>
       </ErrorBoundary>
     </HydrateClient>
-  )
-}
+  );
+};
 
-export default MySkillsPage
+export default MySkillsPage;

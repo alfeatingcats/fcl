@@ -1,15 +1,13 @@
-import { isNil, pick } from 'es-toolkit'
-import { isEmpty } from 'es-toolkit/compat'
-
-import type { RepetitionOverlayPayload, Repetitions } from '@/shared/types'
-import type { RepetitionOverlayActionConfig } from '@/shared/types/repetition/repetitions-overlay.types'
-
-import type { RepetitionsListRow } from '@/entities/repetitions'
+import type { RepetitionsListRow } from "@/entities/repetitions";
+import type { RepetitionOverlayPayload, Repetitions } from "@/shared/types";
+import type { RepetitionOverlayActionConfig } from "@/shared/types/repetition/repetitions-overlay.types";
+import { isNil, pick } from "es-toolkit";
+import { isEmpty } from "es-toolkit/compat";
 
 export const defaultRepetitionActionState = {
   repetitionId: null,
   action: null,
-}
+};
 
 export const getRepetitionOverlayConfig = (
   t: Repetitions,
@@ -17,39 +15,39 @@ export const getRepetitionOverlayConfig = (
   return {
     complete: {
       overlay: {
-        title: t('completeButton'),
-        description: t('completeRepetitionDescription'),
+        title: t("completeButton"),
+        description: t("completeRepetitionDescription"),
       },
     },
     skip: {
       overlay: {
-        title: t('skipOverlayTitle'),
-        description: t('skipRepetitionDescription'),
+        title: t("skipOverlayTitle"),
+        description: t("skipRepetitionDescription"),
       },
     },
     wait: {
       overlay: {
-        title: t('waitOverlayTitle'),
-        description: t('waitRepetitionDescription'),
+        title: t("waitOverlayTitle"),
+        description: t("waitRepetitionDescription"),
       },
     },
-  }
-}
+  };
+};
 
 export const getActiveRepetitionDetails = (
   repetitions: Array<RepetitionsListRow>,
   activeRepetitionId: RepetitionOverlayPayload,
 ): Pick<
   RepetitionsListRow,
-  'title' | 'description' | 'repetitionNumber' | 'descriptionText'
+  "title" | "description" | "repetitionNumber" | "descriptionText"
 > | null => {
   if (isNil(activeRepetitionId) || isEmpty(repetitions) || isNil(repetitions)) {
-    return null
+    return null;
   }
-  return pick(
-    repetitions.find(
-      ({ id }) => id === activeRepetitionId,
-    ) as RepetitionsListRow,
-    ['title', 'description', 'repetitionNumber', 'descriptionText'],
-  )
-}
+  return pick(repetitions.find(({ id }) => id === activeRepetitionId)!, [
+    "title",
+    "description",
+    "repetitionNumber",
+    "descriptionText",
+  ]);
+};

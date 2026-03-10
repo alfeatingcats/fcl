@@ -1,7 +1,7 @@
-'use client'
+"use client";
 
-import { useParams } from 'next/navigation'
+import { useParams } from "next/navigation";
 
 export const useIdParam = () => {
-  return useParams<{ id: string }>().id
-}
+  return useParams<{ id: string }>().id;
+};

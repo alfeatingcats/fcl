@@ -1,2 +1,2 @@
-export type { RequiredCreateTagInput } from './model/types'
-export { CreateTagButton, TagsSelector } from './ui'
+export { TagsSelector, CreateTagButton } from "./ui";
+export type { RequiredCreateTagInput } from "./model/types";

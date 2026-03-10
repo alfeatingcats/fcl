@@ -1,1 +1,1 @@
-export { TagItem, TagItemIcon } from './tag-item'
+export { TagItem, TagItemIcon } from "./tag-item";

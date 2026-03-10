@@ -1,12 +1,11 @@
-'use client'
+"use client";
 
-import { useTranslations } from 'next-intl'
+import { useTranslations } from "next-intl";
 
-import { FormDrawer } from '@/components/ui/custom'
-import type { CreateStudyItemInput } from '@/shared/api/schemas'
-import type { CFC, OverlayFormProps } from '@/shared/types'
-
-import { StudyItemProgressCard } from '@/entities/study-item'
+import { FormDrawer } from "@/components/ui/custom";
+import type { CFC, OverlayFormProps } from "@/shared/types";
+import type { CreateStudyItemInput } from "@/shared/api/schemas";
+import { StudyItemProgressCard } from "@/entities/study-item";
 
 export const StudyItemDrawer: CFC<OverlayFormProps<CreateStudyItemInput>> = ({
   isOpen,
@@ -15,22 +14,24 @@ export const StudyItemDrawer: CFC<OverlayFormProps<CreateStudyItemInput>> = ({
   onOpenChange,
   isLoading = false,
 }) => {
-  const t = useTranslations('StudyItemDrawer')
-  const ta = useTranslations('UiActions')
+  const t = useTranslations("StudyItemDrawer");
+  const ta = useTranslations("UiActions");
   return (
     <FormDrawer
-      title={t('title')}
+      title={t("title")}
       isLoading={isLoading}
       isOpen={isOpen}
-      description={t('description')}
+      description={t("description")}
       submitButtonProps={{
         onClick: () => void onSubmit(),
-        children: ta('create'),
+        children: ta("create"),
       }}
       onOpenChange={onOpenChange}
     >
-      {children}
-      <StudyItemProgressCard />
+      <>
+        {children}
+        <StudyItemProgressCard />
+      </>
     </FormDrawer>
-  )
-}
+  );
+};

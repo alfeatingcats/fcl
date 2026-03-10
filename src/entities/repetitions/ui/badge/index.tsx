@@ -1,1 +1,1 @@
-export { DefaultBadge, EventBadge } from './repetition-badge'
+export { EventBadge, DefaultBadge } from "./repetition-badge";

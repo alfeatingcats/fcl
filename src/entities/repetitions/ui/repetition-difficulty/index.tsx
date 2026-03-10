@@ -1,1 +1,1 @@
-export { RepetitionDifficulty } from './repetition-difficulty'
+export { RepetitionDifficulty } from "./repetition-difficulty";

@@ -1,1 +1,1 @@
-export { ActionRepetitionModal } from './action-repetition-modal'
+export { ActionRepetitionModal } from "./action-repetition-modal";

@@ -1,27 +1,26 @@
-import { useTranslations } from 'next-intl'
-import type { UseFormReturn } from 'react-hook-form'
+import { useTranslations } from "next-intl";
+import type { UseFormReturn } from "react-hook-form";
 
 import {
   Form,
-  FormControl,
-  FormField,
   FormItem,
   FormLabel,
+  FormField,
   FormMessage,
-} from '@/components/ui/form'
-import type { CompleteRepetitionInput } from '@/shared/api/schemas'
-import type { CFC } from '@/shared/types'
-
-import { RadioGroupDifficulty } from '@/entities/repetitions'
+  FormControl,
+} from "@/components/ui/form";
+import type { CFC } from "@/shared/types";
+import { RadioGroupDifficulty } from "@/entities/repetitions";
+import type { CompleteRepetitionInput } from "@/shared/api/schemas";
 
 type CompleteRepetitionFormProps = {
-  form: UseFormReturn<CompleteRepetitionInput>
-}
+  form: UseFormReturn<CompleteRepetitionInput>;
+};
 
 export const CompleteRepetitionForm: CFC<CompleteRepetitionFormProps> = ({
   form,
 }) => {
-  const t = useTranslations('Repetitions')
+  const t = useTranslations("Repetitions");
   return (
     <Form {...form}>
       <form className="space-y-5">
@@ -30,7 +29,7 @@ export const CompleteRepetitionForm: CFC<CompleteRepetitionFormProps> = ({
           name="difficulty"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{t('difficultyLabel')}</FormLabel>
+              <FormLabel>{t("difficultyLabel")}</FormLabel>
               <FormControl>
                 <RadioGroupDifficulty {...field} />
               </FormControl>
@@ -40,5 +39,5 @@ export const CompleteRepetitionForm: CFC<CompleteRepetitionFormProps> = ({
         />
       </form>
     </Form>
-  )
-}
+  );
+};

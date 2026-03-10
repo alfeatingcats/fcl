@@ -1,4 +1,4 @@
-import { HydrateClient } from '@/trpc/server'
+import { HydrateClient } from "@/trpc/server";
 
 const HomePage = async () => {
   return (
@@ -8,7 +8,7 @@ const HomePage = async () => {
         <p>Your personal productivity assistant.</p>
       </main>
     </HydrateClient>
-  )
-}
+  );
+};
 
-export default HomePage
+export default HomePage;

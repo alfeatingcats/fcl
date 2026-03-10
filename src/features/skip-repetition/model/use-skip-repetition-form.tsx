@@ -1,14 +1,14 @@
-'use client'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { useForm } from 'react-hook-form'
+"use client";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 import {
-  type SkipRepetitionInput,
   SkipRepetitionSchema,
-} from '@/shared/api/schemas'
+  type SkipRepetitionInput,
+} from "@/shared/api/schemas";
 
 export const useSkipRepetitionForm = (isLoading: boolean) =>
   useForm<SkipRepetitionInput>({
     resolver: zodResolver(SkipRepetitionSchema),
     disabled: isLoading,
-  })
+  });

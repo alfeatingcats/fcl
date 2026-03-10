@@ -1,10 +1,10 @@
-import { create } from 'zustand'
+import { create } from "zustand";
 
 type DynamicBreadcrumbStore = {
-  entries: Record<string, string>
-  setEntry: (id: string, title: string) => void
-  clearEntry: (id: string) => void
-}
+  entries: Record<string, string>;
+  setEntry: (id: string, title: string) => void;
+  clearEntry: (id: string) => void;
+};
 
 export const useDynamicBreadcrumbStore = create<DynamicBreadcrumbStore>(
   (set) => ({
@@ -15,9 +15,9 @@ export const useDynamicBreadcrumbStore = create<DynamicBreadcrumbStore>(
       })),
     clearEntry: (id) =>
       set((state) => {
-        const next = { ...state.entries }
-        delete next[id]
-        return { entries: next }
+        const next = { ...state.entries };
+        delete next[id];
+        return { entries: next };
       }),
   }),
-)
+);

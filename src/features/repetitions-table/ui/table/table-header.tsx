@@ -1,17 +1,18 @@
-import type { StudyRepetition } from '@prisma/client'
-import { flexRender, type Table } from '@tanstack/react-table'
-import type { FC } from 'react'
+import type { FC } from "react";
+import { flexRender, type Table } from "@tanstack/react-table";
+
+import type { StudyRepetition } from "@prisma/client";
 
 import {
-  TableHeader as Header,
   TableHead,
   TableRow,
-} from '@/components/ui/table'
-import { cn } from '@/shared/lib/utils'
+  TableHeader as Header,
+} from "@/components/ui/table";
+import { cn } from "@/shared/lib/utils";
 
 type TableHeaderProps = {
-  table: Table<StudyRepetition>
-}
+  table: Table<StudyRepetition>;
+};
 
 export const TableHeader: FC<TableHeaderProps> = ({ table }) => {
   return (
@@ -23,7 +24,7 @@ export const TableHeader: FC<TableHeaderProps> = ({ table }) => {
               <TableHead
                 key={header.id}
                 className={cn(
-                  'text-muted-foreground !py-3',
+                  "text-muted-foreground !py-3",
                   header.column.columnDef.meta,
                 )}
               >
@@ -34,10 +35,10 @@ export const TableHeader: FC<TableHeaderProps> = ({ table }) => {
                       header.getContext(),
                     )}
               </TableHead>
-            )
+            );
           })}
         </TableRow>
       ))}
     </Header>
-  )
-}
+  );
+};

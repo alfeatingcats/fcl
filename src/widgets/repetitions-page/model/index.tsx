@@ -1,1 +1,1 @@
-export { mapTodayRepetitionsToListData } from './utils'
+export { mapTodayRepetitionsToListData } from "./utils";

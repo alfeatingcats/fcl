@@ -1,10 +1,10 @@
 import {
-  TableFooter as Footer,
   TableCell,
+  TableFooter as Footer,
   TableRow,
-} from '@/components/ui/table'
+} from "@/components/ui/table";
 
-import { TableLabel } from '../table-label'
+import { TableLabel } from "../table-label";
 
 export const TableFooter = () => {
   return (
@@ -17,5 +17,5 @@ export const TableFooter = () => {
         </TableCell>
       </TableRow>
     </Footer>
-  )
-}
+  );
+};
