@@ -1,5 +1,3 @@
-import type { StudyItemType } from 'prisma/generated/schemas/models/StudyItem.schema'
-import type { StudyRepetitionType } from 'prisma/generated/schemas/models/StudyRepetition.schema'
 import type { ReactElement, ReactNode } from 'react'
 
 import type { FullRepetitionType } from '@/shared/api/schemas/fg/repetitions'
@@ -7,6 +5,9 @@ import type {
   OverlayEntityContent,
   RepetitionActionState,
 } from '@/shared/types'
+
+import type { StudyItemType } from '$/prisma/generated/schemas/models/StudyItem.schema'
+import type { StudyRepetitionType } from '$/prisma/generated/schemas/models/StudyRepetition.schema'
 
 export interface ChartPoint {
   x: number

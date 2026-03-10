@@ -1,6 +1,5 @@
 {
   "prisma.pinToPrisma6": true,
-  //  "prettier.configPath": "prettier.config.mjs",
   "editor.defaultFormatter": "biomejs.biome",
   "[javascript]": {
     "editor.defaultFormatter": "biomejs.biome"
