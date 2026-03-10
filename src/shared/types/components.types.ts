@@ -1,7 +1,7 @@
-import type { FC, PropsWithChildren, ReactNode } from "react";
+import type { FC, PropsWithChildren, ReactNode } from 'react'
 
-export type CFC<P = object> = FC<PropsWithChildren<P>>;
+export type CFC<P = object> = FC<PropsWithChildren<P>>
 
-export type LabeledComponentProps = { withLabel?: boolean };
+export type LabeledComponentProps = { withLabel?: boolean }
 
-export type LabeledIconProps = { icon: ReactNode; text: string };
+export type LabeledIconProps = { icon: ReactNode; text: string }

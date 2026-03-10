@@ -1,1 +1,1 @@
-export { RadioGroupDifficulty } from "./radio-group-difficulty";
+export { RadioGroupDifficulty } from './radio-group-difficulty'

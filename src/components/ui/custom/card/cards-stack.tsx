@@ -1,43 +1,45 @@
-"use client";
-import { useEffect, useState } from "react";
-import { motion } from "motion/react";
+'use client'
+import { motion } from 'motion/react'
+import { useEffect, useState } from 'react'
 
-let interval: string | number | NodeJS.Timeout | undefined;
+let interval: string | number | NodeJS.Timeout | undefined
 
 type Card = {
-  id: number;
-  name: string;
-  designation: string;
-  content: React.ReactNode;
-};
+  id: number
+  name: string
+  designation: string
+  content: React.ReactNode
+}
 
 export const CardStack = ({
   items,
   offset,
   scaleFactor,
 }: {
-  items: Card[];
-  offset?: number;
-  scaleFactor?: number;
+  items: Card[]
+  offset?: number
+  scaleFactor?: number
 }) => {
-  const CARD_OFFSET = offset ?? 10;
-  const SCALE_FACTOR = scaleFactor ?? 0.06;
-  const [cards, setCards] = useState<Card[]>(items);
+  const CARD_OFFSET = offset ?? 10
+  const SCALE_FACTOR = scaleFactor ?? 0.06
+  const [cards, setCards] = useState<Card[]>(items)
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <_explanation>
   useEffect(() => {
-    startFlipping();
+    startFlipping()
 
-    return () => clearInterval(interval);
-  }, []);
+    return () => clearInterval(interval)
+  }, [])
   const startFlipping = () => {
     interval = setInterval(() => {
       setCards((prevCards: Card[]) => {
-        const newArray = [...prevCards]; // create a copy of the array
-        newArray.unshift(newArray.pop()!); // move the last element to the front
-        return newArray;
-      });
-    }, 5000);
-  };
+        const newArray = [...prevCards] // create a copy of the array
+        // biome-ignore lint/style/noNonNullAssertion: <_explanation>
+        newArray.unshift(newArray.pop()!) // move the last element to the front
+        return newArray
+      })
+    }, 5000)
+  }
 
   return (
     <div className="relative h-60 w-60 md:h-60 md:w-96">
@@ -45,9 +47,9 @@ export const CardStack = ({
         return (
           <motion.div
             key={card.id}
-            className="absolute flex h-60 w-60 flex-col justify-between rounded-3xl border border-neutral-200 bg-white p-4 shadow-xl shadow-black/[0.1] md:h-60 md:w-96 dark:border-white/[0.1] dark:bg-black dark:shadow-white/[0.05]"
+            className="absolute flex h-60 w-60 flex-col justify-between rounded-3xl border border-neutral-200 bg-white p-4 shadow-xl shadow-black/10 md:h-60 md:w-96 dark:border-white/10 dark:bg-black dark:shadow-white/5"
             style={{
-              transformOrigin: "top center",
+              transformOrigin: 'top center',
             }}
             animate={{
               top: index * -CARD_OFFSET,
@@ -67,8 +69,8 @@ export const CardStack = ({
               </p>
             </div>
           </motion.div>
-        );
+        )
       })}
     </div>
-  );
-};
+  )
+}

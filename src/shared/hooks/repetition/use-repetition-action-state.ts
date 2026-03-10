@@ -1,8 +1,8 @@
-import { useEffect } from "react";
-import { isNull } from "es-toolkit";
-import type { UseFormReturn, FieldValues, Path } from "react-hook-form";
+import { isNull } from 'es-toolkit'
+import { useEffect } from 'react'
+import type { FieldValues, Path, UseFormReturn } from 'react-hook-form'
 
-type FormWithRepetitionId = FieldValues & { repetitionId: string };
+type FormWithRepetitionId = FieldValues & { repetitionId: string }
 
 export const useRepetitionActionState = <
   TFormData extends FormWithRepetitionId,
@@ -12,11 +12,11 @@ export const useRepetitionActionState = <
 ) => {
   useEffect(() => {
     if (isNull(repetitionId)) {
-      form.reset();
+      form.reset()
     } else {
-      const field = "repetitionId" as Path<TFormData>;
-      const value = repetitionId as TFormData[typeof field];
-      form.setValue(field, value);
+      const field = 'repetitionId' as Path<TFormData>
+      const value = repetitionId as TFormData[typeof field]
+      form.setValue(field, value)
     }
-  }, [form, repetitionId]);
-};
+  }, [form, repetitionId])
+}

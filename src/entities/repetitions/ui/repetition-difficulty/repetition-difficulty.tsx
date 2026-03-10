@@ -1,45 +1,45 @@
-import { useMemo, type FC } from "react";
-import { useTranslations } from "next-intl";
-import { Brain } from "lucide-react";
+import { isNil } from 'es-toolkit'
+import { Brain } from 'lucide-react'
+import { useTranslations } from 'next-intl'
+import { type FC, useMemo } from 'react'
 
-import { EventBadge } from "../badge";
-import { isNil } from "es-toolkit";
-import type { RepetitionBadgeVariants } from "../badge/repetition-badge";
+import { EventBadge } from '../badge'
+import type { RepetitionBadgeVariants } from '../badge/repetition-badge'
 
 type RepetitionDifficultyProps = {
-  difficulty?: number | null;
-} & RepetitionBadgeVariants;
+  difficulty?: number | null
+} & RepetitionBadgeVariants
 
 export const RepetitionDifficulty: FC<RepetitionDifficultyProps> = ({
   difficulty,
   wVariant,
 }) => {
-  const t = useTranslations("Repetitions");
+  const t = useTranslations('Repetitions')
 
   const difficultyDescription = useMemo(() => {
     switch (true) {
       case isNil(difficulty):
-        return t("unsetDifficulty");
+        return t('unsetDifficulty')
 
       case Number(difficulty) <= 1:
-        return t("veryEasy");
+        return t('veryEasy')
 
       case Number(difficulty) === 2:
-        return t("easy");
+        return t('easy')
 
       case Number(difficulty) === 3:
-        return t("medium");
+        return t('medium')
 
       case Number(difficulty) === 4:
-        return t("difficult");
+        return t('difficult')
 
       case Number(difficulty) >= 5:
-        return t("veryDifficult");
+        return t('veryDifficult')
 
       default:
-        return t("unsetDifficulty");
+        return t('unsetDifficulty')
     }
-  }, [difficulty, t]);
+  }, [difficulty, t])
 
   return (
     <EventBadge
@@ -48,5 +48,5 @@ export const RepetitionDifficulty: FC<RepetitionDifficultyProps> = ({
       icon={<Brain className="mr-1" />}
       wVariant={wVariant}
     />
-  );
-};
+  )
+}

@@ -1,12 +1,13 @@
-import { cn } from "@/shared/lib/utils";
-import type { LucideIcon } from "lucide-react";
-import { type FC, type ReactElement } from "react";
+import type { LucideIcon } from 'lucide-react'
+import type { FC, ReactElement } from 'react'
+
+import { cn } from '@/shared/lib/utils'
 
 type HeaderCellProps = {
-  title: string;
-  icon: LucideIcon | ReactElement;
-  className?: string;
-};
+  title: string
+  icon: LucideIcon | ReactElement
+  className?: string
+}
 
 export const HeaderCell: FC<HeaderCellProps> = ({ title, className }) => {
   // const iconElement = isValidElement(icon)
@@ -18,9 +19,9 @@ export const HeaderCell: FC<HeaderCellProps> = ({ title, className }) => {
   //     });
 
   return (
-    <div className={cn("flex items-center gap-2", className)}>
+    <div className={cn('flex items-center gap-2', className)}>
       {/* <span className="">{iconElement}</span> */}
       <span className="font-normal text-black dark:text-white">{title}</span>
     </div>
-  );
-};
+  )
+}

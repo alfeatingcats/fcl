@@ -1,26 +1,27 @@
+import { useTranslations } from 'next-intl'
+import type { UseFormReturn } from 'react-hook-form'
+
 import {
   Form,
+  FormControl,
+  FormField,
   FormItem,
   FormLabel,
-  FormField,
   FormMessage,
-  FormControl,
-} from "@/components/ui/form";
-import type { CFC } from "@/shared/types";
-import { useTranslations } from "next-intl";
-import { Input } from "@/components/ui/input";
-import type { UseFormReturn } from "react-hook-form";
+} from '@/components/ui/form'
+import { Input } from '@/components/ui/input'
+import type { CreateTagInput } from '@/shared/api/schemas'
+import type { CFC } from '@/shared/types'
 
-import type { CreateTagInput } from "@/shared/api/schemas";
-import { TagColorRadioGroup } from "@/entities/tag/ui/tag-color-radio-group";
+import { TagColorRadioGroup } from '@/entities/tag/ui/tag-color-radio-group'
 
 type TagFormProps = {
-  isPending?: boolean;
-  form: UseFormReturn<CreateTagInput>;
-};
+  isPending?: boolean
+  form: UseFormReturn<CreateTagInput>
+}
 
 export const TagForm: CFC<TagFormProps> = ({ form }) => {
-  const t = useTranslations("TagForm");
+  const t = useTranslations('TagForm')
   return (
     <Form {...form}>
       <form className="space-y-5">
@@ -29,9 +30,9 @@ export const TagForm: CFC<TagFormProps> = ({ form }) => {
           name="name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{t("titleLabel")}</FormLabel>
+              <FormLabel>{t('titleLabel')}</FormLabel>
               <FormControl>
-                <Input placeholder={t("titlePlaceholder")} {...field} />
+                <Input placeholder={t('titlePlaceholder')} {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -43,7 +44,7 @@ export const TagForm: CFC<TagFormProps> = ({ form }) => {
           name="color"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{t("colorLabel")}</FormLabel>
+              <FormLabel>{t('colorLabel')}</FormLabel>
               <FormControl>
                 <TagColorRadioGroup
                   value={field.value}
@@ -56,5 +57,5 @@ export const TagForm: CFC<TagFormProps> = ({ form }) => {
         />
       </form>
     </Form>
-  );
-};
+  )
+}
