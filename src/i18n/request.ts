@@ -1,39 +1,38 @@
-import { cookies } from 'next/headers'
-import { type Formats, hasLocale } from 'next-intl'
-import { getRequestConfig } from 'next-intl/server'
-import type { StorageValue } from 'zustand/middleware/persist'
-
+import { cookies } from "next/headers";
 import {
   USER_STORE_LOCAL_STORAGE_KEY,
   type UserStore,
-} from '@/shared/stores/timezone-store'
+} from "@/shared/stores/timezone-store";
+import { getRequestConfig } from "next-intl/server";
+import { hasLocale, type Formats } from "next-intl";
+import type { StorageValue } from "zustand/middleware/persist";
 
-import { routing } from './routing'
+import { routing } from "./routing";
 
 export default getRequestConfig(async ({ requestLocale }) => {
-  const cookieStore = await cookies()
-  const requested = await requestLocale
+  const cookieStore = await cookies();
+  const requested = await requestLocale;
 
-  let tz = 'UTC'
+  let tz = "UTC";
   try {
-    const zustandCookie = cookieStore.get(USER_STORE_LOCAL_STORAGE_KEY)?.value
+    const zustandCookie = cookieStore.get(USER_STORE_LOCAL_STORAGE_KEY)?.value;
 
     if (zustandCookie) {
       const parsed = JSON.parse(
         decodeURIComponent(zustandCookie),
-      ) as StorageValue<Partial<UserStore>>
+      ) as StorageValue<Partial<UserStore>>;
 
       if (parsed.state?.timeZone) {
-        tz = parsed.state.timeZone
+        tz = parsed.state.timeZone;
       }
     }
   } catch (e) {
-    console.warn('[i18n] Failed to parse timeZone from zustand cookie', e)
+    console.warn("[i18n] Failed to parse timeZone from zustand cookie", e);
   }
 
   const locale = hasLocale(routing.locales, requested)
     ? requested
-    : routing.defaultLocale
+    : routing.defaultLocale;
 
   return {
     locale,
@@ -41,17 +40,17 @@ export default getRequestConfig(async ({ requestLocale }) => {
     messages: (await import(`../../messages/${locale}.json`)).default,
     formats,
     timeZone: tz,
-  }
-})
+  };
+});
 
 export const formats = {
   dateTime: {
-    short: { day: 'numeric', month: 'short', year: 'numeric' },
-    long: { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' },
+    short: { day: "numeric", month: "short", year: "numeric" },
+    long: { weekday: "long", day: "numeric", month: "long", year: "numeric" },
     dateOnly: {
-      day: 'numeric',
-      month: 'short',
-      year: 'numeric',
+      day: "numeric",
+      month: "short",
+      year: "numeric",
     },
   },
   number: {
@@ -61,8 +60,8 @@ export const formats = {
   },
   list: {
     enumeration: {
-      style: 'long',
-      type: 'conjunction',
+      style: "long",
+      type: "conjunction",
     },
   },
-} satisfies Formats
+} satisfies Formats;

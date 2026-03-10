@@ -1,43 +1,42 @@
-'use client'
+"use client";
 
-import { useTranslations } from 'next-intl'
-import { useCallback, useMemo } from 'react'
-
-import { Button } from '@/components/ui/button'
-import { useDynamicBreadcrumb, useIdParam } from '@/shared/hooks'
+import { useCallback, useMemo } from "react";
+import { useTranslations } from "next-intl";
 
 import {
   ActionRepetitionModal,
   type RepetitionsListRow,
-} from '@/entities/repetitions'
-import { useStudyItem } from '@/entities/study-item'
-import { CompleteRepetitionForm } from '@/features/complete-repetition'
-import { TagCreateDrawer, TagForm } from '@/features/create-tag'
-import { DeleteStudyItemButton } from '@/features/delete-study-item'
-import { RepetitionsTableContent } from '@/features/repetitions-table'
+} from "@/entities/repetitions";
 import {
   CreateTagButton,
   type RequiredCreateTagInput,
-} from '@/features/tag-selector'
+} from "@/features/tag-selector";
+import { Button } from "@/components/ui/button";
+import { useStudyItem } from "@/entities/study-item";
+import { TagCreateDrawer, TagForm } from "@/features/create-tag";
+import { useDynamicBreadcrumb, useIdParam } from "@/shared/hooks";
+import { RepetitionsTableContent } from "@/features/repetitions-table";
+import { CompleteRepetitionForm } from "@/features/complete-repetition";
 
-import { AutosaveTrigger } from '../model/autosave-trigger'
 import {
-  useCompleteRepetitionAction,
-  useRepetitionsOverlayEntityContent,
   useSkipRepetitionAction,
   useWaitRepetitionAction,
-} from '../model/hooks'
-import { useManageStudyItem } from '../model/use-manage-study-item'
-import { useManageTag } from '../model/use-manage-tag'
-import { mapStudyItemToRepetitionList } from '../model/utils'
-import { StudyItemForm } from './study-item-form'
+  useCompleteRepetitionAction,
+  useRepetitionsOverlayEntityContent,
+} from "../model/hooks";
+import { StudyItemForm } from "./study-item-form";
+import { useManageTag } from "../model/use-manage-tag";
+import { mapStudyItemToRepetitionList } from "../model/utils";
+import { useManageStudyItem } from "../model/use-manage-study-item";
+import { AutosaveTrigger } from "../model/autosave-trigger";
+import { DeleteStudyItemButton } from "@/features/delete-study-item";
 
 export const StudyItemPage = () => {
-  const id = useIdParam()
-  const studyItem = useStudyItem(id)
-  useDynamicBreadcrumb(studyItem?.title, id)
+  const id = useIdParam();
+  const studyItem = useStudyItem(id);
+  useDynamicBreadcrumb(studyItem?.title, id);
 
-  const t = useTranslations('Repetitions')
+  const t = useTranslations("Repetitions");
 
   const { form, onSubmit, isLoading, deleteStudyItem, isDeleteLoading } =
     useManageStudyItem({
@@ -45,12 +44,12 @@ export const StudyItemPage = () => {
       title: studyItem?.title,
       id: studyItem?.id,
       tagIds: studyItem?.itemTags.map((itemTag) => itemTag.tag.id),
-    })
+    });
 
   const handleStudyItemDelete = useCallback(
     () => deleteStudyItem({ id }),
     [deleteStudyItem, id],
-  )
+  );
 
   const mappedItemTags = useMemo<Array<RequiredCreateTagInput>>(
     () =>
@@ -60,7 +59,7 @@ export const StudyItemPage = () => {
         name: itemTag.tag.name,
       })),
     [studyItem?.itemTags],
-  )
+  );
 
   const {
     form: formTag,
@@ -69,12 +68,12 @@ export const StudyItemPage = () => {
     isOpen: isCreateTagDrawerOpen,
     toggleVisibility: toggleCreateTagDrawer,
     handleOpenChange: handleTagDrawerChange,
-  } = useManageTag()
+  } = useManageTag();
 
   const repetitionsListData = useMemo<Array<RepetitionsListRow>>(
     () => mapStudyItemToRepetitionList(studyItem),
     [studyItem],
-  )
+  );
 
   const {
     skip,
@@ -86,23 +85,23 @@ export const StudyItemPage = () => {
     repetitionNumber,
     setActiveRepetition,
     descriptionText,
-  } = useRepetitionsOverlayEntityContent(repetitionsListData)
+  } = useRepetitionsOverlayEntityContent(repetitionsListData);
 
   const {
     form: completeForm,
     isLoading: isCompleteLoading,
     onSubmit: onCompleteSubmit,
-  } = useCompleteRepetitionAction(activeRepetition, onClear)
+  } = useCompleteRepetitionAction(activeRepetition, onClear);
   const {
     form: skipForm,
     isLoading: isSkipLoading,
     onSubmit: onSkipSubmit,
-  } = useSkipRepetitionAction(activeRepetition, onClear)
+  } = useSkipRepetitionAction(activeRepetition, onClear);
   const {
     form: waitForm,
     isLoading: isWaitLoading,
     onSubmit: onWaitSubmit,
-  } = useWaitRepetitionAction(activeRepetition, onClear)
+  } = useWaitRepetitionAction(activeRepetition, onClear);
 
   return (
     <div className="space-y-5">
@@ -147,19 +146,19 @@ export const StudyItemPage = () => {
           title: title,
           description: descriptionText,
         }}
-        repetitionNumber={repetitionNumber || ''}
+        repetitionNumber={repetitionNumber || ""}
         overlay={{
           title: complete.overlay.title,
           description: complete.overlay.description,
         }}
-        isOpen={activeRepetition.action === 'complete'}
+        isOpen={activeRepetition.action === "complete"}
         renderContent={<CompleteRepetitionForm form={completeForm} />}
         renderSubmitButton={
           <Button
             onClick={completeForm.handleSubmit(onCompleteSubmit)}
             disabled={isCompleteLoading}
           >
-            {t('completeLabel')}
+            {t("completeLabel")}
           </Button>
         }
       />
@@ -169,19 +168,19 @@ export const StudyItemPage = () => {
           title: title,
           description: descriptionText,
         }}
-        repetitionNumber={repetitionNumber || ''}
+        repetitionNumber={repetitionNumber || ""}
         overlay={{
           title: skip.overlay.title,
           description: skip.overlay.description,
         }}
-        isOpen={activeRepetition.action === 'skip'}
+        isOpen={activeRepetition.action === "skip"}
         renderContent={null}
         renderSubmitButton={
           <Button
             onClick={skipForm.handleSubmit(onSkipSubmit)}
             disabled={isSkipLoading}
           >
-            {t('skipLabel')}
+            {t("skipLabel")}
           </Button>
         }
       />
@@ -191,22 +190,22 @@ export const StudyItemPage = () => {
           title: title,
           description: descriptionText,
         }}
-        repetitionNumber={repetitionNumber || ''}
+        repetitionNumber={repetitionNumber || ""}
         overlay={{
           title: wait.overlay.title,
           description: wait.overlay.description,
         }}
-        isOpen={activeRepetition.action === 'wait'}
+        isOpen={activeRepetition.action === "wait"}
         renderContent={null}
         renderSubmitButton={
           <Button
             onClick={waitForm.handleSubmit(onWaitSubmit)}
             disabled={isWaitLoading}
           >
-            {t('waitLabel')}
+            {t("waitLabel")}
           </Button>
         }
       />
     </div>
-  )
-}
+  );
+};

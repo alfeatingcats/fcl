@@ -1,1 +1,1 @@
-export { TagsPage } from './ui'
+export { TagsPage } from "./ui";

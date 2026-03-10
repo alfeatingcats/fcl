@@ -1,7 +1,7 @@
 export {
-  type UpdateTagFormInput,
-  UpdateTagFormSchema,
   useUpdateTag,
   useUpdateTagForm,
-} from './model'
-export { UpdateTagDrawer, UpdateTagForm } from './ui'
+  type UpdateTagFormInput,
+  UpdateTagFormSchema,
+} from "./model";
+export { UpdateTagDrawer, UpdateTagForm } from "./ui";

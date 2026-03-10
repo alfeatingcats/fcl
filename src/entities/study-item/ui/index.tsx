@@ -1,9 +1,10 @@
-export { ProgressStepper, StudyItemProgressCard } from './progress-steps'
 export {
-  CreatedCell,
-  HeaderCell,
-  RepetitionsCell,
   StatusCell,
-  TagsCell,
   TitleCell,
-} from './study-item-cell'
+  CreatedCell,
+  TagsCell,
+  RepetitionsCell,
+  HeaderCell,
+} from "./study-item-cell";
+
+export { ProgressStepper, StudyItemProgressCard } from "./progress-steps";

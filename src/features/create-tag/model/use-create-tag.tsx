@@ -1,26 +1,25 @@
-import { noop } from 'es-toolkit'
+import { api } from "@/trpc/react";
 
-import { useMutationErrorHandler } from '@/shared/api'
-import type { TrpcMutationHook } from '@/shared/api/types'
+import { noop } from "es-toolkit";
+import { useMutationErrorHandler } from "@/shared/api";
+import type { TrpcMutationHook } from "@/shared/api/types";
 
-import { api } from '@/trpc/react'
-
-export const useCreateTag: TrpcMutationHook<'tags', 'create'> = ({
+export const useCreateTag: TrpcMutationHook<"tags", "create"> = ({
   onError = noop,
   onSuccess,
 }) => {
-  const utils = api.useUtils()
-  const handleError = useMutationErrorHandler()
+  const utils = api.useUtils();
+  const handleError = useMutationErrorHandler();
 
   return api.tags.create.useMutation({
     onSuccess: async ({ name }) => {
-      await utils.tags.invalidate()
-      await utils.studyItem.invalidate()
-      onSuccess({ name })
+      await utils.tags.invalidate();
+      await utils.studyItem.invalidate();
+      onSuccess({ name });
     },
     onError: (error, { name }) => {
-      onError({ name })
-      handleError(error)
+      onError({ name });
+      handleError(error);
     },
-  })
-}
+  });
+};

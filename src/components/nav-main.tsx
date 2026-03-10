@@ -1,16 +1,9 @@
-'use client'
+"use client";
 
-import { ChevronRight } from 'lucide-react'
-import { useTranslations } from 'next-intl'
-import type { FC } from 'react'
+import type { FC } from "react";
+import { ChevronRight } from "lucide-react";
+import { useTranslations } from "next-intl";
 
-import { Link } from '@/i18n/routing'
-
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from '@/components/ui/collapsible'
 import {
   SidebarGroup,
   SidebarGroupLabel,
@@ -21,14 +14,20 @@ import {
   SidebarMenuSub,
   SidebarMenuSubButton,
   SidebarMenuSubItem,
-} from '@/components/ui/sidebar'
-import type { NavMainItem } from '@/shared/types/navigation.types'
+} from "@/components/ui/sidebar";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
+import { Link } from "@/i18n/routing";
+import type { NavMainItem } from "@/shared/types/navigation.types";
 
 export const NavMain: FC<{ items: Array<NavMainItem> }> = ({ items }) => {
-  const t = useTranslations('NavMain')
+  const t = useTranslations("NavMain");
   return (
     <SidebarGroup>
-      <SidebarGroupLabel>{t('platform')}</SidebarGroupLabel>
+      <SidebarGroupLabel>{t("platform")}</SidebarGroupLabel>
       <SidebarMenu>
         {items.map((item) => (
           <Collapsible key={item.title} asChild defaultOpen={item.isActive}>
@@ -68,5 +67,5 @@ export const NavMain: FC<{ items: Array<NavMainItem> }> = ({ items }) => {
         ))}
       </SidebarMenu>
     </SidebarGroup>
-  )
-}
+  );
+};

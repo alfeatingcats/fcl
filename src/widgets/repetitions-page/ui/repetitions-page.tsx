@@ -1,36 +1,35 @@
-'use client'
+"use client";
 
-import { useTranslations } from 'next-intl'
-import { type FC, useMemo } from 'react'
-
-import { Button } from '@/components/ui/button'
+import { useMemo, type FC } from "react";
+import { useTranslations } from "next-intl";
 
 import {
   ActionRepetitionModal,
   RepetitionList,
   type RepetitionsListRow,
-  useTodayRepetitions,
-} from '@/entities/repetitions'
-import { CompleteRepetitionForm } from '@/features/complete-repetition'
+} from "@/entities/repetitions";
+import { Button } from "@/components/ui/button";
+import { useTodayRepetitions } from "@/entities/repetitions";
+import { CompleteRepetitionForm } from "@/features/complete-repetition";
 
-import { mapTodayRepetitionsToListData } from '../model'
 import {
+  useWaitRepetitionAction,
+  useSkipRepetitionAction,
   useCompleteRepetitionAction,
   useRepetitionsOverlayEntityContent,
-  useSkipRepetitionAction,
-  useWaitRepetitionAction,
-} from '../model/hooks'
+} from "../model/hooks";
+import { mapTodayRepetitionsToListData } from "../model";
 
 export const RepetitionsPage: FC = () => {
-  const t = useTranslations('Repetitions')
-  const tp = useTranslations('ReviewCyclePage')
+  const t = useTranslations("Repetitions");
+  const tp = useTranslations("ReviewCyclePage");
 
-  const [todayRepetitions] = useTodayRepetitions()
+  const [todayRepetitions] = useTodayRepetitions();
 
   const repetitionsListData = useMemo<Array<RepetitionsListRow>>(
     () => mapTodayRepetitionsToListData(todayRepetitions),
     [todayRepetitions],
-  )
+  );
 
   const {
     skip,
@@ -43,28 +42,28 @@ export const RepetitionsPage: FC = () => {
     repetitionNumber,
     setActiveRepetition,
     descriptionText,
-  } = useRepetitionsOverlayEntityContent(repetitionsListData)
+  } = useRepetitionsOverlayEntityContent(repetitionsListData);
 
   const {
     form: completeForm,
     isLoading: isCompleteLoading,
     onSubmit: onCompleteSubmit,
-  } = useCompleteRepetitionAction(activeRepetition, onClear)
+  } = useCompleteRepetitionAction(activeRepetition, onClear);
   const {
     form: skipForm,
     isLoading: isSkipLoading,
     onSubmit: onSkipSubmit,
-  } = useSkipRepetitionAction(activeRepetition, onClear)
+  } = useSkipRepetitionAction(activeRepetition, onClear);
   const {
     form: waitForm,
     isLoading: isWaitLoading,
     onSubmit: onWaitSubmit,
-  } = useWaitRepetitionAction(activeRepetition, onClear)
+  } = useWaitRepetitionAction(activeRepetition, onClear);
 
   return (
     <div className="flex flex-col gap-4">
       <h3 className="scroll-m-20 text-2xl font-semibold tracking-tight">
-        {tp('title')}
+        {tp("title")}
       </h3>
       <RepetitionList
         repetitions={repetitionsListData}
@@ -79,19 +78,19 @@ export const RepetitionsPage: FC = () => {
           title: title,
           description: descriptionText,
         }}
-        repetitionNumber={repetitionNumber || ''}
+        repetitionNumber={repetitionNumber || ""}
         overlay={{
           title: complete.overlay.title,
           description: complete.overlay.description,
         }}
-        isOpen={activeRepetition.action === 'complete'}
+        isOpen={activeRepetition.action === "complete"}
         renderContent={<CompleteRepetitionForm form={completeForm} />}
         renderSubmitButton={
           <Button
             onClick={completeForm.handleSubmit(onCompleteSubmit)}
             disabled={isCompleteLoading}
           >
-            {t('completeLabel')}
+            {t("completeLabel")}
           </Button>
         }
       />
@@ -101,19 +100,19 @@ export const RepetitionsPage: FC = () => {
           title: title,
           description: descriptionText,
         }}
-        repetitionNumber={repetitionNumber || ''}
+        repetitionNumber={repetitionNumber || ""}
         overlay={{
           title: skip.overlay.title,
           description: skip.overlay.description,
         }}
-        isOpen={activeRepetition.action === 'skip'}
+        isOpen={activeRepetition.action === "skip"}
         renderContent={null}
         renderSubmitButton={
           <Button
             onClick={skipForm.handleSubmit(onSkipSubmit)}
             disabled={isSkipLoading}
           >
-            {t('skipLabel')}
+            {t("skipLabel")}
           </Button>
         }
       />
@@ -123,22 +122,22 @@ export const RepetitionsPage: FC = () => {
           title: title,
           description: descriptionText,
         }}
-        repetitionNumber={repetitionNumber || ''}
+        repetitionNumber={repetitionNumber || ""}
         overlay={{
           title: wait.overlay.title,
           description: wait.overlay.description,
         }}
-        isOpen={activeRepetition.action === 'wait'}
+        isOpen={activeRepetition.action === "wait"}
         renderContent={null}
         renderSubmitButton={
           <Button
             onClick={waitForm.handleSubmit(onWaitSubmit)}
             disabled={isWaitLoading}
           >
-            {t('waitLabel')}
+            {t("waitLabel")}
           </Button>
         }
       />
     </div>
-  )
-}
+  );
+};

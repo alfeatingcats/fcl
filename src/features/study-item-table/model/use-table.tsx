@@ -1,25 +1,24 @@
 import {
+  useReactTable,
   getCoreRowModel,
   getExpandedRowModel,
-  useReactTable,
-} from '@tanstack/react-table'
+} from "@tanstack/react-table";
 
-import type { ReadStudyItemsOutputSchemaType } from '@/shared/api/schemas/fg/study-item'
-
-import { useStudyItemColumns } from './use-study-item-columns'
+import { useStudyItemColumns } from "./use-study-item-columns";
+import type { ReadStudyItemsOutputSchemaType } from "@/shared/api/schemas/fg/study-item";
 
 export const useStudyItemTable = (
-  studyItems: ReadStudyItemsOutputSchemaType['items'],
+  studyItems: ReadStudyItemsOutputSchemaType["items"],
 ) => {
-  const columns = useStudyItemColumns()
+  const columns = useStudyItemColumns();
 
-  const table = useReactTable<ReadStudyItemsOutputSchemaType['items'][number]>({
+  const table = useReactTable<ReadStudyItemsOutputSchemaType["items"][number]>({
     data: studyItems,
     columns,
     getCoreRowModel: getCoreRowModel(),
     getExpandedRowModel: getExpandedRowModel(),
     getRowCanExpand: (row) => Boolean(row.original.description),
-  })
+  });
 
-  return { table }
-}
+  return { table };
+};

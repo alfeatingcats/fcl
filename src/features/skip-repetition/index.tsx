@@ -1,1 +1,1 @@
-export { useSkipRepetition, useSkipRepetitionForm } from './model'
+export { useSkipRepetition, useSkipRepetitionForm } from "./model";

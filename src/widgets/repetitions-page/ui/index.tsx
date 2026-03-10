@@ -1,1 +1,1 @@
-export { RepetitionsPage } from './repetitions-page'
+export { RepetitionsPage } from "./repetitions-page";

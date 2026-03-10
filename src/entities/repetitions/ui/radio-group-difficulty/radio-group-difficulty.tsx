@@ -1,15 +1,15 @@
-import { useTranslations } from 'next-intl'
-import type { FC } from 'react'
-import type { ControllerRenderProps } from 'react-hook-form'
+import type { FC } from "react";
+import { useTranslations } from "next-intl";
+import type { ControllerRenderProps } from "react-hook-form";
 
-import { Label } from '@/components/ui/label'
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
-import type { CompleteRepetitionInput } from '@/shared/api/schemas'
+import { Label } from "@/components/ui/label";
+import type { CompleteRepetitionInput } from "@/shared/api/schemas";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
 type RadioGroupDifficultyProps = ControllerRenderProps<
   CompleteRepetitionInput,
-  'difficulty'
->
+  "difficulty"
+>;
 
 export const RadioGroupDifficulty: FC<RadioGroupDifficultyProps> = ({
   name,
@@ -18,14 +18,14 @@ export const RadioGroupDifficulty: FC<RadioGroupDifficultyProps> = ({
   onChange,
   disabled,
 }) => {
-  const t = useTranslations('Repetitions')
+  const t = useTranslations("Repetitions");
   return (
     <div>
       <div className="space-y-4">
         <RadioGroup
           className="flex gap-0 -space-x-px rounded-md shadow-xs"
           onValueChange={(val) => onChange(Number(val))}
-          value={value?.toString() ?? ''}
+          value={value?.toString() ?? ""}
           name={name}
           onBlur={onBlur}
           disabled={disabled}
@@ -47,9 +47,9 @@ export const RadioGroupDifficulty: FC<RadioGroupDifficultyProps> = ({
         </RadioGroup>
       </div>
       <div className="text-muted-foreground mt-2 flex justify-between text-xs">
-        <p>{t('veryEasy')}</p>
-        <p>{t('veryDifficult')}</p>
+        <p>{t("veryEasy")}</p>
+        <p>{t("veryDifficult")}</p>
       </div>
     </div>
-  )
-}
+  );
+};

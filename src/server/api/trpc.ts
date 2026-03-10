@@ -7,16 +7,15 @@
  * need to use are documented accordingly near the end.
  */
 
-import { initTRPC, TRPCError } from '@trpc/server'
-import superjson from 'superjson'
-import { ZodError } from 'zod'
-import type { StorageValue } from 'zustand/middleware'
+import { ZodError } from "zod";
+import superjson from "superjson";
+import type { StorageValue } from "zustand/middleware";
 
-import { USER_STORE_LOCAL_STORAGE_KEY } from '@/shared/stores'
-import type { UserStore } from '@/shared/stores/timezone-store'
-
-import { auth } from '@/server/auth'
-import { db } from '@/server/db'
+import { db } from "@/server/db";
+import { auth } from "@/server/auth";
+import { initTRPC, TRPCError } from "@trpc/server";
+import { USER_STORE_LOCAL_STORAGE_KEY } from "@/shared/stores";
+import type { UserStore } from "@/shared/stores/timezone-store";
 
 /**
  * 1. CONTEXT
@@ -31,39 +30,41 @@ import { db } from '@/server/db'
  * @see https://trpc.io/docs/server/context
  */
 export const createTRPCContext = async (opts: { headers: Headers }) => {
-  const session = await auth()
-  let timeZone = 'UTC'
+  const session = await auth();
+  let timeZone = "UTC";
 
   try {
-    const cookieHeader = opts.headers.get('cookie')
+    const cookieHeader = opts.headers.get("cookie");
 
     if (cookieHeader) {
       const cookieMatch = cookieHeader
-        .split('; ')
-        .find((row) => row.startsWith(`${USER_STORE_LOCAL_STORAGE_KEY}=`))
+        .split("; ")
+        .find((row) => row.startsWith(`${USER_STORE_LOCAL_STORAGE_KEY}=`));
 
       if (cookieMatch) {
         const value = decodeURIComponent(
-          cookieMatch.split('=')[1] as unknown as string,
-        )
+          cookieMatch.split("=")[1] as unknown as string,
+        );
 
-        const parsed = JSON.parse(value) as StorageValue<Partial<UserStore>>
+        const parsed = JSON.parse(value) as StorageValue<
+          Partial<UserStore>
+        >;
 
         if (parsed.state?.timeZone) {
-          timeZone = parsed.state.timeZone
+          timeZone = parsed.state.timeZone;
         }
       }
     }
   } catch (err) {
-    console.warn('[TRPC] Failed to parse timeZone from cookies', err)
+    console.warn("[TRPC] Failed to parse timeZone from cookies", err);
   }
   return {
     db,
     session,
     timeZone,
     ...opts,
-  }
-}
+  };
+};
 
 /**
  * 2. INITIALIZATION
@@ -82,16 +83,16 @@ const t = initTRPC.context<typeof createTRPCContext>().create({
         zodError:
           error.cause instanceof ZodError ? error.cause.flatten() : null,
       },
-    }
+    };
   },
-})
+});
 
 /**
  * Create a server-side caller.
  *
  * @see https://trpc.io/docs/server/server-side-calls
  */
-export const createCallerFactory = t.createCallerFactory
+export const createCallerFactory = t.createCallerFactory;
 
 /**
  * 3. ROUTER & PROCEDURE (THE IMPORTANT BIT)
@@ -105,7 +106,7 @@ export const createCallerFactory = t.createCallerFactory
  *
  * @see https://trpc.io/docs/router
  */
-export const createTRPCRouter = t.router
+export const createTRPCRouter = t.router;
 
 /**
  * Middleware for timing procedure execution and adding an artificial delay in development.
@@ -114,21 +115,21 @@ export const createTRPCRouter = t.router
  * network latency that would occur in production but not in local development.
  */
 const timingMiddleware = t.middleware(async ({ next, path }) => {
-  const start = Date.now()
+  const start = Date.now();
 
   if (t._config.isDev) {
     // artificial delay in dev
-    const waitMs = Math.floor(Math.random() * 400) + 100
-    await new Promise((resolve) => setTimeout(resolve, waitMs))
+    const waitMs = Math.floor(Math.random() * 400) + 100;
+    await new Promise((resolve) => setTimeout(resolve, waitMs));
   }
 
-  const result = await next()
+  const result = await next();
 
-  const end = Date.now()
-  console.log(`[TRPC] ${path} took ${end - start}ms to execute`)
+  const end = Date.now();
+  console.log(`[TRPC] ${path} took ${end - start}ms to execute`);
 
-  return result
-})
+  return result;
+});
 
 /**
  * Public (unauthenticated) procedure
@@ -137,7 +138,7 @@ const timingMiddleware = t.middleware(async ({ next, path }) => {
  * guarantee that a user querying is authorized, but you can still access user session data if they
  * are logged in.
  */
-export const publicProcedure = t.procedure.use(timingMiddleware)
+export const publicProcedure = t.procedure.use(timingMiddleware);
 
 /**
  * Protected (authenticated) procedure
@@ -151,12 +152,12 @@ export const protectedProcedure = t.procedure
   .use(timingMiddleware)
   .use(({ ctx, next }) => {
     if (!ctx.session?.user) {
-      throw new TRPCError({ code: 'UNAUTHORIZED' })
+      throw new TRPCError({ code: "UNAUTHORIZED" });
     }
     return next({
       ctx: {
         // infers the `session` as non-nullable
         session: { ...ctx.session, user: ctx.session.user },
       },
-    })
-  })
+    });
+  });

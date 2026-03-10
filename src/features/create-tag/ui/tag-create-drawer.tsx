@@ -1,10 +1,10 @@
-import { useTranslations } from 'next-intl'
+import { useTranslations } from "next-intl";
 
-import { FormDrawer } from '@/components/ui/custom'
-import type { CreateTagInput } from '@/shared/api/schemas'
-import type { CFC, OverlayFormProps } from '@/shared/types'
+import { FormDrawer } from "@/components/ui/custom";
+import type { CreateTagInput } from "@/shared/api/schemas";
+import type { CFC, OverlayFormProps } from "@/shared/types";
 
-type TagCreateDrawerProps = OverlayFormProps<CreateTagInput>
+type TagCreateDrawerProps = OverlayFormProps<CreateTagInput>;
 
 export const TagCreateDrawer: CFC<TagCreateDrawerProps> = ({
   isOpen,
@@ -13,24 +13,24 @@ export const TagCreateDrawer: CFC<TagCreateDrawerProps> = ({
   isLoading,
   onOpenChange,
 }) => {
-  const t = useTranslations('TagDrawer')
-  const ta = useTranslations('UiActions')
+  const t = useTranslations("TagDrawer");
+  const ta = useTranslations("UiActions");
 
   return (
     <FormDrawer
       contentCN="!max-w-sm"
       isNestedDrawer
-      title={t('title')}
+      title={t("title")}
       isOpen={isOpen}
-      description={t('description')}
+      description={t("description")}
       submitButtonProps={{
         onClick: () => void onSubmit(),
         disabled: isLoading,
-        children: ta('create'),
+        children: ta("create"),
       }}
       onOpenChange={onOpenChange}
     >
       {children}
     </FormDrawer>
-  )
-}
+  );
+};

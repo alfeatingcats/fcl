@@ -1,21 +1,21 @@
-'use client'
+"use client";
 
-import { type FC, useMemo } from 'react'
-import { Area, AreaChart, Label, ReferenceDot } from 'recharts'
+import React, { useMemo, type FC } from "react";
+import { AreaChart, Area, ReferenceDot, Label } from "recharts";
 
-import { ChartContainer } from '@/components/ui/chart'
+import { ChartContainer } from "@/components/ui/chart";
 
+import {
+  getDefaultRepetitionDates,
+  type CurrentPoint,
+  type RepetitionChartProps,
+} from "../../model/shared";
 import {
   generateCurveData,
   getCurrentPointX,
   MICRO_CHART_CONFIG,
   microChartConfig,
-} from '../../model/retention-micro-chart'
-import {
-  type CurrentPoint,
-  getDefaultRepetitionDates,
-  type RepetitionChartProps,
-} from '../../model/shared'
+} from "../../model/retention-micro-chart";
 
 export const RepetitionMicroChart: FC<RepetitionChartProps> = ({
   repetitionDates = getDefaultRepetitionDates(),
@@ -24,12 +24,12 @@ export const RepetitionMicroChart: FC<RepetitionChartProps> = ({
   const curveData = useMemo(
     () => generateCurveData({ currentRepetition, repetitionDates }),
     [currentRepetition, repetitionDates],
-  )
+  );
 
   const currentPointX = useMemo(
     () => getCurrentPointX({ currentRepetition, repetitionDates }),
     [currentRepetition, repetitionDates],
-  )
+  );
 
   const currentPoint: CurrentPoint | null = useMemo(
     () =>
@@ -37,12 +37,12 @@ export const RepetitionMicroChart: FC<RepetitionChartProps> = ({
         ? { x: currentPointX, retention: MICRO_CHART_CONFIG.maxRetention }
         : null,
     [currentPointX],
-  )
+  );
 
   return (
     <ChartContainer
       config={microChartConfig}
-      className="max-h-9.5 min-h-9.5 w-40"
+      className="max-h-[38px] min-h-[38px] w-[160px]"
     >
       <AreaChart
         accessibilityLayer
@@ -104,5 +104,5 @@ export const RepetitionMicroChart: FC<RepetitionChartProps> = ({
         )}
       </AreaChart>
     </ChartContainer>
-  )
-}
+  );
+};

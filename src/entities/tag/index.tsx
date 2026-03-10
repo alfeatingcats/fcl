@@ -1,12 +1,13 @@
 export {
+  useGetAllTags,
+  useTagAutocomplete,
+  useSuspenseGetAllTags,
   type TagItem as TTagItem,
   type TagsListType,
-  type UseGetAllTagsParams,
   type UseGetAllTagsResult,
-  type UseTagAutocompleteParams,
+  type UseGetAllTagsParams,
   type UseTagAutocompleteResult,
-  useGetAllTags,
-  useSuspenseGetAllTags,
-  useTagAutocomplete,
-} from './model'
-export { TagItem, TagItemIcon } from './ui'
+  type UseTagAutocompleteParams,
+} from "./model";
+
+export { TagItem, TagItemIcon } from "./ui";
