@@ -2,6 +2,8 @@ import type { GetStudyItemByIdInfer } from '@/shared/api/schemas'
 
 import type { RepetitionsListRow } from '@/entities/repetitions'
 
+export { StudyItemForm } from './study-item-form'
+
 export const mapStudyItemToRepetitionList = (
   studyItem: GetStudyItemByIdInfer,
 ): Array<RepetitionsListRow> => {

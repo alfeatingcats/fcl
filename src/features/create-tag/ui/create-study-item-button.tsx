@@ -1,7 +1,13 @@
+import { CirclePlus } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import type { ButtonHTMLAttributes } from 'react'
 
 import { Button } from '@/components/ui/button'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '@/components/ui/tooltip'
 
 interface CreateStudyItemButtonProps
   extends ButtonHTMLAttributes<HTMLButtonElement> {
@@ -14,8 +20,13 @@ export const CreateStudyItemButton = ({
 }: CreateStudyItemButtonProps) => {
   const t = useTranslations('StudyItemDrawer')
   return (
-    <Button disabled={isCreating} {...props}>
-      {t('createButton')}
-    </Button>
+    <Tooltip>
+      <TooltipTrigger asChild>
+        <Button variant="outline" disabled={isCreating} {...props}>
+          <CirclePlus />
+        </Button>
+      </TooltipTrigger>
+      <TooltipContent>{t('createButton')}</TooltipContent>
+    </Tooltip>
   )
 }

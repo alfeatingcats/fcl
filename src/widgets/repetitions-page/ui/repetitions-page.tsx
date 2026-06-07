@@ -4,6 +4,7 @@ import { useTranslations } from 'next-intl'
 import { type FC, useMemo } from 'react'
 
 import { Button } from '@/components/ui/button'
+import { useRepetitionsOverlayEntityContent } from '@/shared/hooks/repetition'
 
 import {
   ActionRepetitionModal,
@@ -16,7 +17,6 @@ import { CompleteRepetitionForm } from '@/features/complete-repetition'
 import { mapTodayRepetitionsToListData } from '../model'
 import {
   useCompleteRepetitionAction,
-  useRepetitionsOverlayEntityContent,
   useSkipRepetitionAction,
   useWaitRepetitionAction,
 } from '../model/hooks'

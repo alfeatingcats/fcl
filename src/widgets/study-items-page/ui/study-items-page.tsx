@@ -1,20 +1,27 @@
 'use client'
 
+import { useState } from 'react'
+
+import { StudyItemList } from '@/entities/study-item'
 import { StudyItemDrawer, StudyItemForm } from '@/features/create-study-item/ui'
 import {
   CreateStudyItemButton,
   TagCreateDrawer,
   TagForm,
 } from '@/features/create-tag'
-import { StudyItemDataTable } from '@/features/study-item-table'
 import { CreateTagButton } from '@/features/tag-selector'
 
 import { api } from '@/trpc/react'
 
 import { useManageStudyItem, useManageTag } from '../model'
+import { StudyItemView } from './study-item-view'
+import { StudyItemsPageLayout } from './study-items-page-layout'
 
 export const StudyItemsPage = () => {
   const [studyItems] = api.studyItem.getAll.useSuspenseQuery({ limit: 10 })
+  const [selectedStudyItemId, setSelectedStudyItemId] = useState<string | null>(
+    null,
+  )
 
   const {
     form,
@@ -36,12 +43,18 @@ export const StudyItemsPage = () => {
 
   return (
     <>
-      <StudyItemDataTable
-        studyItems={studyItems.items}
-        renderCreateButton={
+      <StudyItemsPageLayout
+        createStudyItemButton={
           <CreateStudyItemButton
             isCreating={isCreating}
             onClick={toggleStudyItemCreation}
+          />
+        }
+        content={<StudyItemView id={selectedStudyItemId} />}
+        list={
+          <StudyItemList
+            selectStudyItem={setSelectedStudyItemId}
+            studyItems={studyItems}
           />
         }
       />

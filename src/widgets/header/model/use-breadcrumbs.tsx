@@ -1,10 +1,10 @@
 'use client'
 
-import { compact, last } from 'es-toolkit'
+import { last } from 'es-toolkit'
 import { useLocale, useTranslations } from 'next-intl'
 import React from 'react'
 
-import { Link, type routing, usePathname } from '@/i18n/routing'
+import { Link } from '@/i18n/routing'
 
 import {
   Breadcrumb,
@@ -18,48 +18,14 @@ import { breadcrumbRoutesMap } from '@/shared/config/routes'
 import { useDynamicBreadcrumbStore } from '@/shared/stores'
 import type { SidebarTKey } from '@/shared/types'
 
-/** Remove trailing slashes */
-const normalize = (u: string | undefined | null) =>
-  !u ? '/' : u === '/' || u === '#' ? u : u.replace(/\/$/, '')
-
-const supportedLocales: Array<(typeof routing.locales)[number]> = ['en', 'uk']
-
-/** Check if the path matches a template like /my-skills/[id] */
-const matchDynamicRoute = (path: string, routeUrl: string): boolean => {
-  const pathParts = compact(path.split('/'))
-  const routeParts = compact(routeUrl.split('/'))
-
-  if (pathParts.length !== routeParts.length) return false
-
-  return routeParts.every(
-    (part, i) =>
-      (part.startsWith('[') && part.endsWith(']')) || part === pathParts[i],
-  )
-}
+import { useCurrentRouteInfo } from './use-current-route-info'
 
 export const useBreadcrumbs = (): React.ReactElement | null => {
   const locale = useLocale()
   const t = useTranslations('Sidebar')
-  const pathname = usePathname() || '/'
   const entries = useDynamicBreadcrumbStore((s) => s.entries)
 
-  // Remove locale from the path
-  const segments = compact(pathname.split('/'))
-  const pathNoLocale =
-    segments.length > 0 &&
-    supportedLocales.includes(segments[0] as (typeof supportedLocales)[number])
-      ? `/${segments.slice(1).join('/')}`
-      : pathname
-
-  const normalizedPath = normalize(pathNoLocale)
-  const allRoutes = Object.values(breadcrumbRoutesMap)
-
-  // Exact or dynamic match
-  const current =
-    allRoutes.find((r) => normalize(r.url) === normalizedPath) ??
-    allRoutes.find((r) => matchDynamicRoute(normalizedPath, r.url) && r.dynamic)
-
-  console.log({ current, normalizedPath })
+  const { current, segments } = useCurrentRouteInfo()
 
   if (!current) return null
 
