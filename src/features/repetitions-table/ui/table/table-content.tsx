@@ -51,7 +51,7 @@ export const RepetitionsTableContent: FC<RepetitionsTableContentProps> = ({
           overflow: { x: 'scroll', y: 'hidden' },
         }}
       >
-        <Table className="min-w-[700px]">
+        <Table className="min-w-175">
           <TableHeader table={table} />
           <TableBody table={table} />
           <TableFooter />

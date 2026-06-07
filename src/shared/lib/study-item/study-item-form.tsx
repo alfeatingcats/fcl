@@ -1,10 +1,13 @@
 import { useDebounceFn } from 'ahooks'
+import { noop } from 'es-toolkit'
 import type { SerializedEditorState } from 'lexical'
+import { Save } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import type { FC, ReactNode } from 'react'
 import type { UseFormReturn } from 'react-hook-form'
 
 import { Editor } from '@/components/blocks/editor-x/editor'
+import { Button } from '@/components/ui/button'
 import {
   Form,
   FormControl,
@@ -31,6 +34,8 @@ type StudyItemFormProps = {
   renderCreateTagButton: ReactNode
   defaultTags?: RequiredCreateTagInput[]
   form: UseFormReturn<TForm>
+  onSave: (data: UpdateStudyItemInput) => void
+  handleSubmit?: (callback: (data: UpdateStudyItemInput) => void) => () => void
 }
 
 export const StudyItemForm: FC<StudyItemFormProps> = ({
@@ -38,6 +43,8 @@ export const StudyItemForm: FC<StudyItemFormProps> = ({
   defaultTags,
   isLoading = false,
   renderCreateTagButton,
+  onSave,
+  handleSubmit,
 }) => {
   const t = useTranslations('StudyItemForm')
 
@@ -60,15 +67,19 @@ export const StudyItemForm: FC<StudyItemFormProps> = ({
           control={form.control}
           name="title"
           render={({ field }) => (
-            <FormItem className="w-100">
+            <FormItem className="w-full">
               <FormControl>
-                <div className="flex flex-row">
-                  <Input
-                    placeholder={t('titlePlaceholder')}
-                    disabled={isLoading}
-                    className="hover:cursor-pointer"
-                    {...field}
-                  />
+                <div className="flex flex-row gap-2 items-center">
+                  <Input placeholder={t('titlePlaceholder')} {...field} />
+                  <Button
+                    isLoading={isLoading}
+                    size="lg"
+                    variant="outline"
+                    onClick={handleSubmit?.(onSave) ?? noop}
+                  >
+                    <Save />
+                    Save
+                  </Button>
                 </div>
               </FormControl>
               <FormMessage />
@@ -96,6 +107,7 @@ export const StudyItemForm: FC<StudyItemFormProps> = ({
                     )
                   }}
                   ref={ref}
+                  key={form.getValues('id')}
                   onBlur={onBlur}
                   renderCreateTagButton={renderCreateTagButton}
                   tagsWrapperClassName="!max-w-sm"
@@ -114,8 +126,8 @@ export const StudyItemForm: FC<StudyItemFormProps> = ({
               <FormLabel>{t('descriptionLabel')}</FormLabel>
               <FormControl>
                 <Editor
+                  key={form.getValues('id')}
                   // wrapperClassName="h-160"
-                  // disabled={isLoading}
                   // editorSerializedState={
                   //   studyItem?.description as unknown as SerializedEditorState
                   // }

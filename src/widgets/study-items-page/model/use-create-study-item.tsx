@@ -8,11 +8,11 @@ import { useDrawerState } from '@/shared/hooks'
 import type { UseFormOverlayReturn } from '@/shared/types'
 
 import {
-  useCreateStudyItem,
+  useCreateStudyItem as useCreateStudyItemMutation,
   useStudyItemForm,
 } from '@/features/create-study-item'
 
-export const useManageStudyItem =
+export const useCreateStudyItem =
   (): UseFormOverlayReturn<CreateStudyItemInput> => {
     const t = useTranslations('StudyItemMessages')
 
@@ -22,7 +22,7 @@ export const useManageStudyItem =
       onClose: () => form.reset(),
     })
 
-    const { mutate, isPending } = useCreateStudyItem({
+    const { mutate, isPending } = useCreateStudyItemMutation({
       onSuccess: ({ name }) => {
         toast.success(t('createSuccess', { name }))
         drawer.handleChange(false)

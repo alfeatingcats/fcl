@@ -1,21 +1,19 @@
 'use client'
 
+import { ErrorBoundary, Suspense } from '@suspensive/react'
 import { useTranslations } from 'next-intl'
-import { useMemo } from 'react'
+import { type FC, useEffect, useMemo } from 'react'
 
 import { Button } from '@/components/ui/button'
-import { useDynamicBreadcrumb, useIdParam } from '@/shared/hooks'
 import { useRepetitionsOverlayEntityContent } from '@/shared/hooks/repetition'
-import {
-  mapStudyItemToRepetitionList,
-  StudyItemForm,
-} from '@/shared/lib/study-item'
+import { mapStudyItemToRepetitionList } from '@/shared/lib/study-item'
+import { StudyItemForm } from '@/shared/lib/study-item/study-item-form'
 
 import {
   ActionRepetitionModal,
   type RepetitionsListRow,
 } from '@/entities/repetitions'
-import { useSuspenseStudyItem } from '@/entities/study-item'
+import { EmptyStudyItem, useSuspenseStudyItem } from '@/entities/study-item'
 import { CompleteRepetitionForm } from '@/features/complete-repetition'
 import { TagCreateDrawer, TagForm } from '@/features/create-tag'
 // import { DeleteStudyItemButton } from '@/features/delete-study-item'
@@ -24,34 +22,65 @@ import {
   CreateTagButton,
   type RequiredCreateTagInput,
 } from '@/features/tag-selector'
-import { AutosaveTrigger } from '@/features/update-study-item'
-
 import {
   useCompleteRepetitionAction,
   useSkipRepetitionAction,
   useWaitRepetitionAction,
-} from '../model/hooks'
-import { useManageStudyItem } from '../model/use-manage-study-item'
-import { useManageTag } from '../model/use-manage-tag'
+} from '@/widgets/study-item-page/model/hooks'
 
-export const StudyItemPage = () => {
-  const id = useIdParam()
+import { useManageTag } from '../model/use-manage-tag'
+import { useUpdateStudyItem } from '../model/use-update-study-item'
+
+export function StudyItemView({ id }: { id: string | null }) {
+  if (!id)
+    return (
+      <div className="flex items-center-safe justify-center p-4 min-w-full h-full">
+        <EmptyStudyItem />
+      </div>
+    )
+  return (
+    <ErrorBoundary fallback={({ error }) => <>{error.message}</>}>
+      <Suspense fallback="loading...">
+        <StudyItemPage studyItemId={id} />
+      </Suspense>
+    </ErrorBoundary>
+  )
+}
+
+type StudyItemPageProps = {
+  studyItemId: string
+}
+
+export const StudyItemPage: FC<StudyItemPageProps> = ({ studyItemId: id }) => {
   const studyItem = useSuspenseStudyItem(id)
-  useDynamicBreadcrumb(studyItem?.title, id)
 
   const t = useTranslations('Repetitions')
 
-  const { form, onSubmit, isLoading } = useManageStudyItem({
+  const { form, onSubmit, isLoading } = useUpdateStudyItem({
     description: studyItem?.description,
     title: studyItem?.title,
     id: studyItem?.id,
     tagIds: studyItem?.itemTags.map((itemTag) => itemTag.tag.id),
   })
-
-  // const handleStudyItemDelete = useCallback(
-  //   () => deleteStudyItem({ id }),
-  //   [deleteStudyItem, id],
-  // )
+  useEffect(() => {
+    form.reset(
+      {
+        description: studyItem?.description,
+        title: studyItem?.title,
+        id: studyItem?.id,
+        tagIds: studyItem?.itemTags.map((itemTag) => itemTag.tag.id),
+      },
+      {
+        keepDirty: false,
+      },
+    )
+  }, [
+    form.reset,
+    studyItem?.description,
+    studyItem?.id,
+    studyItem?.itemTags.map,
+    studyItem?.title,
+  ])
 
   const mappedItemTags = useMemo<Array<RequiredCreateTagInput>>(
     () =>
@@ -89,16 +118,19 @@ export const StudyItemPage = () => {
     descriptionText,
   } = useRepetitionsOverlayEntityContent(repetitionsListData)
 
+  // move to ??
   const {
     form: completeForm,
     isLoading: isCompleteLoading,
     onSubmit: onCompleteSubmit,
   } = useCompleteRepetitionAction(activeRepetition, onClear)
+  // move to ??
   const {
     form: skipForm,
     isLoading: isSkipLoading,
     onSubmit: onSkipSubmit,
   } = useSkipRepetitionAction(activeRepetition, onClear)
+  // move to ??
   const {
     form: waitForm,
     isLoading: isWaitLoading,
@@ -107,29 +139,16 @@ export const StudyItemPage = () => {
 
   return (
     <div className="space-y-5">
-      {/* <DeleteStudyItemButton
-        isLoading={isDeleteLoading}
-        onClick={handleStudyItemDelete}
-        type="button"
-      /> */}
-      {/* #region Study item form* */}
       <StudyItemForm
         form={form}
-        onSave={onSubmit}
         isLoading={isLoading}
-        handleSubmit={form.handleSubmit}
         defaultTags={mappedItemTags}
         renderCreateTagButton={
           <CreateTagButton onClick={toggleCreateTagDrawer} />
         }
-      />
-      {/* <AutosaveTrigger
-        control={form.control}
-        onSubmit={onSubmit}
-        isPending={isLoading}
+        onSave={onSubmit}
         handleSubmit={form.handleSubmit}
-      /> */}
-      {/* #endregion  */}
+      />
 
       <RepetitionsTableContent
         repetitions={studyItem?.repetitions}
@@ -137,6 +156,7 @@ export const StudyItemPage = () => {
         onWaitRepetition={setActiveRepetition}
         onCompleteRepetition={setActiveRepetition}
       />
+      <div className="h-px"></div>
       <TagCreateDrawer
         isLoading={isCreatingTag}
         isOpen={isCreateTagDrawerOpen}

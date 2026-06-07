@@ -13,7 +13,7 @@ import {
   getRepetitionOverlayConfig,
 } from '@/shared/lib/repetition'
 import type { RepetitionActionState } from '@/shared/types'
-import type { UseRepetitionsOverlayEntityContentReturn } from '@/shared/types/repetition/repetitions-overlay.types'
+import type { UseRepetitionsOverlayEntityContentReturn } from '@/shared/types/repetition'
 
 import type { RepetitionsListRow } from '@/entities/repetitions'
 
