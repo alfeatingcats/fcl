@@ -1,17 +1,21 @@
-import { ArrowDownWideNarrow, CirclePlus, SearchIcon } from 'lucide-react'
+import { ArrowDownWideNarrow, SearchIcon } from 'lucide-react'
 import { useTranslations } from 'next-intl'
-import type { FC, ReactNode } from 'react'
+import type { FC } from 'react'
 
 import { Button } from '@/components/ui/button'
 import { Kbd } from '@/components/ui/kbd'
 
+import { CreateStudyItemTrigger } from '@/entities/study-item'
+
 import { DialogNoCloseButton } from './filters-dialog'
 
 type StudyItemsListHeaderProps = {
-  createStudyItemButton: ReactNode
+  isCreating?: boolean
+  toggleStudyItemCreation?: () => void
 }
 export const StudyItemsListHeader: FC<StudyItemsListHeaderProps> = ({
-  createStudyItemButton,
+  isCreating,
+  toggleStudyItemCreation,
 }) => {
   const t = useTranslations('StudyItemTable')
   return (
@@ -39,10 +43,10 @@ export const StudyItemsListHeader: FC<StudyItemsListHeaderProps> = ({
       <Button variant="outline">
         <ArrowDownWideNarrow />
       </Button>
-      {createStudyItemButton}
-      {/* <Button variant="outline">
-        <CirclePlus />
-      </Button> */}
+      <CreateStudyItemTrigger
+        isCreating={isCreating}
+        onClick={toggleStudyItemCreation}
+      />
     </div>
   )
 }

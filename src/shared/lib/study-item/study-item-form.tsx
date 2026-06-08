@@ -1,7 +1,7 @@
 import { useDebounceFn } from 'ahooks'
 import { noop } from 'es-toolkit'
 import type { SerializedEditorState } from 'lexical'
-import { Save } from 'lucide-react'
+import { Trash2 } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import type { FC, ReactNode } from 'react'
 import type { UseFormReturn } from 'react-hook-form'
@@ -20,6 +20,10 @@ import { Input } from '@/components/ui/input'
 import type { UpdateStudyItemInput } from '@/shared/api/schemas'
 
 import {
+  DeleteStudyItemTrigger,
+  SaveStudyItemTrigger,
+} from '@/entities/study-item'
+import {
   type RequiredCreateTagInput,
   TagsSelector,
 } from '@/features/tag-selector'
@@ -36,6 +40,8 @@ type StudyItemFormProps = {
   form: UseFormReturn<TForm>
   onSave: (data: UpdateStudyItemInput) => void
   handleSubmit?: (callback: (data: UpdateStudyItemInput) => void) => () => void
+  studyItemOnDelete: (studyItemId: string) => void
+  studyItemId: string
 }
 
 export const StudyItemForm: FC<StudyItemFormProps> = ({
@@ -45,6 +51,8 @@ export const StudyItemForm: FC<StudyItemFormProps> = ({
   renderCreateTagButton,
   onSave,
   handleSubmit,
+  studyItemOnDelete,
+  studyItemId,
 }) => {
   const t = useTranslations('StudyItemForm')
 
@@ -63,29 +71,37 @@ export const StudyItemForm: FC<StudyItemFormProps> = ({
   return (
     <Form {...form}>
       <form className="space-y-6">
-        <FormField
-          control={form.control}
-          name="title"
-          render={({ field }) => (
-            <FormItem className="w-full">
-              <FormControl>
-                <div className="flex flex-row gap-2 items-center">
+        <div className="w-full flex flex-row gap-2 items-center">
+          <FormField
+            control={form.control}
+            name="title"
+            render={({ field }) => (
+              <FormItem className="w-full">
+                <FormControl>
                   <Input placeholder={t('titlePlaceholder')} {...field} />
-                  <Button
-                    isLoading={isLoading}
-                    size="lg"
-                    variant="outline"
-                    onClick={handleSubmit?.(onSave) ?? noop}
-                  >
-                    <Save />
-                    Save
-                  </Button>
-                </div>
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <SaveStudyItemTrigger
+            onClick={handleSubmit?.(onSave) ?? noop}
+            isLoading={isLoading}
+          />
+          <DeleteStudyItemTrigger
+            button={
+              <Button
+                onClick={() => studyItemOnDelete(studyItemId)}
+                variant="destructive"
+                size="lg"
+                type="button"
+              >
+                <Trash2 />
+              </Button>
+            }
+          />
+        </div>
 
         <FormField
           control={form.control}

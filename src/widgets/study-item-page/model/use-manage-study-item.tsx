@@ -7,7 +7,7 @@ import { useRouter } from '@/i18n/routing'
 
 import type { UpdateStudyItemInput } from '@/shared/api/schemas'
 
-import { useDeleteStudyItem } from '@/features/delete-study-item'
+import { useDeleteStudyItemMutation } from '@/features/delete-study-item'
 import {
   useUpdateStudyItem,
   useUpdateStudyItemForm,
@@ -36,7 +36,7 @@ export const useManageStudyItem = (formInitValues: FormFields) => {
   })
 
   const { mutate: deleteStudyItem, isPending: isDeleteLoading } =
-    useDeleteStudyItem({
+    useDeleteStudyItemMutation({
       onSuccess: () => {
         toast.success(t('deleteSuccess', { name: formInitValues?.title ?? '' }))
         router.replace('/my-skills', { locale })

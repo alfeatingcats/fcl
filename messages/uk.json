@@ -123,6 +123,7 @@
   },
   "StudyItem": {
     "getByIdTitle": "Деталі навички",
+    "saveButton": "Зберегти навичку",
     "title": "Навичка",
     "deleteButton": "Видалити навичку",
     "deleteConfirmTitle": "Видалити цю навичку?",

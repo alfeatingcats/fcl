@@ -1,11 +1,4 @@
 export { useTodayRepetitions } from './model'
-export {
-  calculateRetention,
-  generateCurveData,
-  getCurrentPointX,
-  MICRO_CHART_CONFIG,
-  microChartConfig,
-} from './model/retention-micro-chart'
 export type {
   ChartPoint,
   CurrentPoint,
@@ -20,5 +13,4 @@ export {
   RadioGroupDifficulty,
   RepetitionDifficulty,
   RepetitionList,
-  RepetitionMicroChart,
 } from './ui'

@@ -2,19 +2,17 @@
 
 import { useState } from 'react'
 
-import { StudyItemList } from '@/entities/study-item'
 import { StudyItemDrawer, StudyItemForm } from '@/features/create-study-item/ui'
+import { TagCreateDrawer, TagForm } from '@/features/create-tag'
 import {
-  CreateStudyItemButton,
-  TagCreateDrawer,
-  TagForm,
-} from '@/features/create-tag'
+  DeleteStudyItemDialog,
+  useDeleteStudyItem,
+} from '@/features/delete-study-item'
 import { CreateTagButton } from '@/features/tag-selector'
 
 import { api } from '@/trpc/react'
 
-import { useManageStudyItem, useManageTag } from '../model'
-import { StudyItemView } from './study-item-view'
+import { useCreateStudyItem, useManageTag } from '../model'
 import { StudyItemsPageLayout } from './study-items-page-layout'
 
 export const StudyItemsPage = () => {
@@ -30,7 +28,16 @@ export const StudyItemsPage = () => {
     handleOpenChange: handleDrawerChange,
     isOpen: isStudyItemCreationOpen,
     toggleVisibility: toggleStudyItemCreation,
-  } = useManageStudyItem()
+  } = useCreateStudyItem()
+
+  const {
+    deleteStudyItem,
+    isDeleteLoading,
+    setStudyItemToDelete,
+    studyItemToDelete,
+  } = useDeleteStudyItem({
+    studyItems: studyItems.items,
+  })
 
   const {
     form: formTag,
@@ -44,19 +51,12 @@ export const StudyItemsPage = () => {
   return (
     <>
       <StudyItemsPageLayout
-        createStudyItemButton={
-          <CreateStudyItemButton
-            isCreating={isCreating}
-            onClick={toggleStudyItemCreation}
-          />
-        }
-        content={<StudyItemView id={selectedStudyItemId} />}
-        list={
-          <StudyItemList
-            selectStudyItem={setSelectedStudyItemId}
-            studyItems={studyItems}
-          />
-        }
+        isCreating={isCreating}
+        studyItems={studyItems}
+        selectStudyItem={setSelectedStudyItemId}
+        studyItemOnDelete={setStudyItemToDelete}
+        selectedStudyItemId={selectedStudyItemId}
+        toggleStudyItemCreation={toggleStudyItemCreation}
       />
 
       <StudyItemDrawer
@@ -81,6 +81,17 @@ export const StudyItemsPage = () => {
           <TagForm form={formTag} />
         </TagCreateDrawer>
       </StudyItemDrawer>
+      <DeleteStudyItemDialog
+        isOpen={!!studyItemToDelete}
+        onClose={() => setStudyItemToDelete(null)}
+        onDelete={() => {
+          if (studyItemToDelete) {
+            deleteStudyItem({ id: studyItemToDelete.id })
+          }
+        }}
+        isLoading={isDeleteLoading}
+        title={studyItemToDelete?.title ?? ''}
+      />
     </>
   )
 }

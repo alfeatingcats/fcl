@@ -19,7 +19,8 @@
     "db:migrate": "prisma migrate deploy",
     "db:reset": "prisma migrate reset",
     "db:push": "prisma db push",
-    "db:studio": "prisma studio"
+    "db:studio": "prisma studio",
+    "knip": "knip"
   },
   "dependencies": {
     "@auth/prisma-adapter": "2.7.2",
@@ -91,12 +92,13 @@
     "@biomejs/biome": "2.4.6",
     "@tailwindcss/postcss": "4.2.1",
     "@types/lodash": "^4.17.24",
-    "@types/node": "20.14.10",
+    "@types/node": "^25.9.2",
     "@types/react": "19.2.14",
     "@types/react-dom": "19.2.3",
+    "knip": "^6.16.1",
     "postcss": "8.5.3",
     "tailwindcss": "4.2.1",
-    "typescript": "5.9.2"
+    "typescript": "^6.0.3"
   },
   "ct3aMetadata": {
     "initVersion": "7.39.3"

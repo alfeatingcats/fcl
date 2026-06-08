@@ -1,26 +1,39 @@
 'use client'
 
-import { useTranslations } from 'next-intl'
 import { OverlayScrollbarsComponent } from 'overlayscrollbars-react'
-import type { FC, ReactNode } from 'react'
+import type { FC } from 'react'
 
+import type { ReadStudyItemsOutputSchemaType } from '@/shared/api/schemas/fg/study-item'
+
+import { StudyItemList } from '@/entities/study-item'
+
+import { StudyItemView } from './study-item-view'
 import { StudyItemsListHeader } from './study-items-list-header'
 
 type StudyItemsPageLayoutProps = {
-  list: ReactNode
-  content: ReactNode
-  createStudyItemButton: ReactNode
+  isCreating?: boolean
+  toggleStudyItemCreation?: () => void
+  selectedStudyItemId: string | null
+  studyItems: ReadStudyItemsOutputSchemaType
+  selectStudyItem: (studyItemId: string | null) => void
+  studyItemOnDelete: (studyItemId: string) => void
 }
 
 export const StudyItemsPageLayout: FC<StudyItemsPageLayoutProps> = ({
-  content,
-  list,
-  createStudyItemButton,
+  isCreating,
+  toggleStudyItemCreation,
+  selectedStudyItemId,
+  studyItems,
+  selectStudyItem,
+  studyItemOnDelete,
 }) => {
   return (
     <article className="flex max-h-[calc(100vh-16px)] h-full">
       <div className="w-90 min-w-90 max-w-90 border-r">
-        <StudyItemsListHeader createStudyItemButton={createStudyItemButton} />
+        <StudyItemsListHeader
+          isCreating={isCreating}
+          toggleStudyItemCreation={toggleStudyItemCreation}
+        />
 
         <OverlayScrollbarsComponent
           className="max-h-[calc(100vh-16px-60px)]"
@@ -31,7 +44,11 @@ export const StudyItemsPageLayout: FC<StudyItemsPageLayoutProps> = ({
           }}
           defer
         >
-          {list}
+          <StudyItemList
+            selectStudyItem={selectStudyItem}
+            studyItems={studyItems}
+            studyItemOnDelete={studyItemOnDelete}
+          />
         </OverlayScrollbarsComponent>
       </div>
 
@@ -44,7 +61,9 @@ export const StudyItemsPageLayout: FC<StudyItemsPageLayoutProps> = ({
         }}
         defer
       >
-        <section className="p-3 min-w-full h-full">{content}</section>
+        <section className="p-3 min-w-full h-full">
+          <StudyItemView id={selectedStudyItemId} />
+        </section>
       </OverlayScrollbarsComponent>
     </article>
   )

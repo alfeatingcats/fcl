@@ -1,7 +1,5 @@
-import { useTranslations } from 'next-intl'
 import type { FC, ReactNode } from 'react'
 
-import { Editor } from '@/components/blocks/editor-x/editor'
 import {
   Dialog,
   DialogContent,
@@ -10,17 +8,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/components/ui/form'
-import { Input } from '@/components/ui/input'
-
-import { TagsSelector } from '@/features/tag-selector'
 
 type DialogNoCloseButtonProps = {
   button: ReactNode
@@ -29,8 +16,6 @@ type DialogNoCloseButtonProps = {
 export const DialogNoCloseButton: FC<DialogNoCloseButtonProps> = ({
   button,
 }) => {
-  const t = useTranslations('StudyItemTable')
-  //   t('searchPlaceholder')
   return (
     <Dialog>
       <DialogTrigger asChild>{button}</DialogTrigger>

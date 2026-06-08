@@ -1,10 +1,11 @@
 import type { StudyRepetition } from '@prisma/client'
 import type { ColumnDef } from '@tanstack/react-table'
-import { HeadingIcon, Waypoints } from 'lucide-react'
+import { HeadingIcon, type LucideIcon, Waypoints } from 'lucide-react'
 import { useTranslations } from 'next-intl'
-import { useCallback, useMemo } from 'react'
+import { type FC, type ReactElement, useCallback, useMemo } from 'react'
 
 import { PillIndicator } from '@/components/kibo-ui/pill'
+import { cn } from '@/shared/lib/utils'
 import type {
   RepetitionActionType,
   RepetitionOverlayPayload,
@@ -19,7 +20,29 @@ import type { RepetitionListProps } from '@/entities/repetitions/model'
 import { RepetitionActionDropdown } from '@/entities/repetitions/ui/card-dropdown'
 import { RepetitionStage } from '@/entities/repetitions/ui/repetition-stage'
 import { RepetitionStatus } from '@/entities/repetitions/ui/repetition-status'
-import { HeaderCell } from '@/entities/study-item/ui'
+
+type HeaderCellProps = {
+  title: string
+  icon: LucideIcon | ReactElement
+  className?: string
+}
+
+export const HeaderCell: FC<HeaderCellProps> = ({ title, className }) => {
+  // const iconElement = isValidElement(icon)
+  //   ? cloneElement(icon as ReactElement<{ className?: string }>, {
+  //       className: "size-3 text-black dark:text-white",
+  //     })
+  //   : createElement(icon, {
+  //       className: "size-3 text-black dark:text-white",
+  //     });
+
+  return (
+    <div className={cn('flex items-center gap-2', className)}>
+      {/* <span className="">{iconElement}</span> */}
+      <span className="font-normal text-black dark:text-white">{title}</span>
+    </div>
+  )
+}
 
 function parseTime(v: string | Date | undefined | null): number | null {
   if (v == null) return null
@@ -91,7 +114,7 @@ export const useRepetitionColumns = ({
       accessorKey: 'id',
       header() {
         return (
-          <div className="ml-1 !max-w-[50%]">
+          <div className="ml-1 max-w-[50%]!">
             <Waypoints size={15} />
           </div>
         )

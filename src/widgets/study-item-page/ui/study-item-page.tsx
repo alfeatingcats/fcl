@@ -18,13 +18,15 @@ import {
 import { useSuspenseStudyItem } from '@/entities/study-item'
 import { CompleteRepetitionForm } from '@/features/complete-repetition'
 import { TagCreateDrawer, TagForm } from '@/features/create-tag'
-// import { DeleteStudyItemButton } from '@/features/delete-study-item'
+import {
+  DeleteStudyItemDialog,
+  useDeleteStudyItem,
+} from '@/features/delete-study-item'
 import { RepetitionsTableContent } from '@/features/repetitions-table'
 import {
   CreateTagButton,
   type RequiredCreateTagInput,
 } from '@/features/tag-selector'
-import { AutosaveTrigger } from '@/features/update-study-item'
 
 import {
   useCompleteRepetitionAction,
@@ -47,11 +49,6 @@ export const StudyItemPage = () => {
     id: studyItem?.id,
     tagIds: studyItem?.itemTags.map((itemTag) => itemTag.tag.id),
   })
-
-  // const handleStudyItemDelete = useCallback(
-  //   () => deleteStudyItem({ id }),
-  //   [deleteStudyItem, id],
-  // )
 
   const mappedItemTags = useMemo<Array<RequiredCreateTagInput>>(
     () =>
@@ -105,15 +102,20 @@ export const StudyItemPage = () => {
     onSubmit: onWaitSubmit,
   } = useWaitRepetitionAction(activeRepetition, onClear)
 
+  const {
+    deleteStudyItem,
+    isDeleteLoading,
+    setStudyItemToDelete,
+    studyItemToDelete,
+  } = useDeleteStudyItem({
+    studyItems: [studyItem],
+  })
+
   return (
     <div className="space-y-5">
-      {/* <DeleteStudyItemButton
-        isLoading={isDeleteLoading}
-        onClick={handleStudyItemDelete}
-        type="button"
-      /> */}
       {/* #region Study item form* */}
       <StudyItemForm
+        studyItemId={id}
         form={form}
         onSave={onSubmit}
         isLoading={isLoading}
@@ -122,13 +124,8 @@ export const StudyItemPage = () => {
         renderCreateTagButton={
           <CreateTagButton onClick={toggleCreateTagDrawer} />
         }
+        studyItemOnDelete={setStudyItemToDelete}
       />
-      {/* <AutosaveTrigger
-        control={form.control}
-        onSubmit={onSubmit}
-        isPending={isLoading}
-        handleSubmit={form.handleSubmit}
-      /> */}
       {/* #endregion  */}
 
       <RepetitionsTableContent
@@ -210,6 +207,18 @@ export const StudyItemPage = () => {
             {t('waitLabel')}
           </Button>
         }
+      />
+
+      <DeleteStudyItemDialog
+        isOpen={!!studyItemToDelete}
+        onClose={() => setStudyItemToDelete(null)}
+        onDelete={() => {
+          if (studyItemToDelete) {
+            deleteStudyItem({ id: studyItemToDelete.id })
+          }
+        }}
+        isLoading={isDeleteLoading}
+        title={studyItemToDelete?.title ?? ''}
       />
     </div>
   )

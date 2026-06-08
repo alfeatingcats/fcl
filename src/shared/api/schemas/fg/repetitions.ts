@@ -34,4 +34,5 @@ export const RepetitionStatsOutputSchema = z.object({
   completed: z.number(),
   missed: z.number(),
   skipped: z.number(),
+  pending: z.number(),
 })
