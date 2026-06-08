@@ -123,6 +123,7 @@
   },
   "StudyItem": {
     "getByIdTitle": "Skill details",
+    "saveButton": "Save skill",
     "title": "Skill",
     "deleteButton": "Delete skill",
     "deleteConfirmTitle": "Delete this skill?",

@@ -1,6 +1,6 @@
 import { CirclePlus } from 'lucide-react'
 import { useTranslations } from 'next-intl'
-import type { ButtonHTMLAttributes } from 'react'
+import type { ButtonHTMLAttributes, FC, ReactNode } from 'react'
 
 import { Button } from '@/components/ui/button'
 import {
@@ -9,22 +9,26 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip'
 
-interface CreateStudyItemButtonProps
+interface CreateStudyItemTriggerProps
   extends ButtonHTMLAttributes<HTMLButtonElement> {
   isCreating?: boolean
+  button?: ReactNode
 }
 
-export const CreateStudyItemButton = ({
+export const CreateStudyItemTrigger: FC<CreateStudyItemTriggerProps> = ({
   isCreating,
+  button,
   ...props
-}: CreateStudyItemButtonProps) => {
+}) => {
   const t = useTranslations('StudyItemDrawer')
   return (
     <Tooltip>
       <TooltipTrigger asChild>
-        <Button variant="outline" disabled={isCreating} {...props}>
-          <CirclePlus />
-        </Button>
+        {button ?? (
+          <Button variant="outline" disabled={isCreating} {...props}>
+            <CirclePlus />
+          </Button>
+        )}
       </TooltipTrigger>
       <TooltipContent>{t('createButton')}</TooltipContent>
     </Tooltip>

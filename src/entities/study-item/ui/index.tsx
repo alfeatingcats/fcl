@@ -1,13 +1,10 @@
 export { EmptyStudyItem } from './empty'
 export { ProgressStepper, StudyItemProgressCard } from './progress-steps'
 export {
-  CreatedCell,
-  HeaderCell,
-  RepetitionsCell,
-  StatusCell,
-  TagsCell,
-  TitleCell,
-} from './study-item-cell'
+  CreateStudyItemTrigger,
+  DeleteStudyItemTrigger,
+  SaveStudyItemTrigger,
+} from './study-item-actions'
 export {
   StudyItemList,
   StudyItemListItem,

@@ -5,7 +5,7 @@ import type { TrpcMutationHook } from '@/shared/api/types'
 
 import { api } from '@/trpc/react'
 
-export const useDeleteStudyItem: TrpcMutationHook<
+export const useDeleteStudyItemMutation: TrpcMutationHook<
   'studyItem',
   'delete',
   void,

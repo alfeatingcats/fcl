@@ -17,15 +17,19 @@ import type { ReadStudyItemsOutputSchemaType } from '@/shared/api/schemas/fg/stu
 import { cn } from '@/shared/lib/utils'
 
 import { formatCreatedDate } from '../../model'
+import { DeleteStudyItemTrigger } from '../study-item-actions'
 import { StudyItemStatus } from './study-item-status'
 
 type StudyItemListItemProps = {
   studyItem: ReadStudyItemsOutputSchemaType['items'][number]
   selectStudyItem: (studyItemId: string | null) => void
+  onDelete: (studyItemId: string) => void
 }
+
 export const StudyItemListItem: FC<StudyItemListItemProps> = ({
   studyItem: { title, descriptionText, createdAt, status, itemTags, id },
   selectStudyItem,
+  onDelete,
 }) => {
   const format = useFormatter()
 
@@ -77,9 +81,22 @@ export const StudyItemListItem: FC<StudyItemListItemProps> = ({
 
       <CardFooter className="border-dashed py-1.5! justify-between rounded-none! dark:bg-transparent">
         <StudyItemStatus status={status} />
-        <Button type="button" size="icon-xs" variant="ghost" className="size-6">
-          <Trash2 />
-        </Button>
+        <DeleteStudyItemTrigger
+          button={
+            <Button
+              type="button"
+              size="icon-xs"
+              variant="ghost"
+              className="size-6"
+              onClick={(e) => {
+                e.stopPropagation()
+                onDelete(id)
+              }}
+            >
+              <Trash2 />
+            </Button>
+          }
+        />
       </CardFooter>
     </Card>
   )

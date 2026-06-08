@@ -7,11 +7,13 @@ import { StudyItemListItem } from './study-item-list-item'
 type StudyItemListProps = {
   studyItems: ReadStudyItemsOutputSchemaType
   selectStudyItem: (studyItemId: string | null) => void
+  studyItemOnDelete: (studyItemId: string) => void
 }
 
 export const StudyItemList: FC<StudyItemListProps> = ({
   studyItems,
   selectStudyItem,
+  studyItemOnDelete,
 }) => {
   return (
     <div className="flex flex-col gap-0">
@@ -21,6 +23,7 @@ export const StudyItemList: FC<StudyItemListProps> = ({
             selectStudyItem={selectStudyItem}
             key={studyItem.id}
             studyItem={studyItem}
+            onDelete={studyItemOnDelete}
           />
         )
       })}

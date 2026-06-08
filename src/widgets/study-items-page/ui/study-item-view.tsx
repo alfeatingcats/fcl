@@ -16,7 +16,10 @@ import {
 import { EmptyStudyItem, useSuspenseStudyItem } from '@/entities/study-item'
 import { CompleteRepetitionForm } from '@/features/complete-repetition'
 import { TagCreateDrawer, TagForm } from '@/features/create-tag'
-// import { DeleteStudyItemButton } from '@/features/delete-study-item'
+import {
+  DeleteStudyItemDialog,
+  useDeleteStudyItem,
+} from '@/features/delete-study-item'
 import { RepetitionsTableContent } from '@/features/repetitions-table'
 import {
   CreateTagButton,
@@ -137,9 +140,20 @@ export const StudyItemPage: FC<StudyItemPageProps> = ({ studyItemId: id }) => {
     onSubmit: onWaitSubmit,
   } = useWaitRepetitionAction(activeRepetition, onClear)
 
+  const {
+    deleteStudyItem,
+    isDeleteLoading,
+    setStudyItemToDelete,
+    studyItemToDelete,
+  } = useDeleteStudyItem({
+    studyItems: [studyItem],
+  })
+
   return (
     <div className="space-y-5">
       <StudyItemForm
+        studyItemId={id}
+        studyItemOnDelete={setStudyItemToDelete}
         form={form}
         isLoading={isLoading}
         defaultTags={mappedItemTags}
@@ -230,6 +244,18 @@ export const StudyItemPage: FC<StudyItemPageProps> = ({ studyItemId: id }) => {
             {t('waitLabel')}
           </Button>
         }
+      />
+
+      <DeleteStudyItemDialog
+        isOpen={!!studyItemToDelete}
+        onClose={() => setStudyItemToDelete(null)}
+        onDelete={() => {
+          if (studyItemToDelete) {
+            deleteStudyItem({ id: studyItemToDelete.id })
+          }
+        }}
+        isLoading={isDeleteLoading}
+        title={studyItemToDelete?.title ?? ''}
       />
     </div>
   )

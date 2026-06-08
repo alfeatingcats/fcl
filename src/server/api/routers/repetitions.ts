@@ -166,8 +166,11 @@ export const repetitionsRouter = createTRPCRouter({
       const skipped = await ctx.db.studyRepetition.count({
         where: { studyItem: { createdById: userId }, status: 'SKIPPED' },
       })
+      const pending = await ctx.db.studyRepetition.count({
+        where: { studyItem: { createdById: userId }, status: 'PENDING' },
+      })
 
-      return { total, completed, missed, skipped }
+      return { total, completed, missed, skipped, pending }
     }),
 
   //TODO: pagination, timezone
