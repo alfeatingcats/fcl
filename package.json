@@ -43,7 +43,7 @@
     "@prisma/client": "6.5.0",
     "@suspensive/react": "3.19.2",
     "@t3-oss/env-nextjs": "0.12.0",
-    "@tanstack/react-query": "5.69.0",
+    "@tanstack/react-query": "5.101.0",
     "@tanstack/react-table": "8.21.3",
     "@trpc/client": "11.1.1",
     "@trpc/react-query": "11.1.1",
