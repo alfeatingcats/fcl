@@ -250,7 +250,9 @@
     "UNSUPPORTED_MEDIA_TYPE": "Unsupported file or data format",
     "UNPROCESSABLE_CONTENT": "The data could not be processed",
     "TOO_MANY_REQUESTS": "Too many requests. Please wait a moment",
-    "CLIENT_CLOSED_REQUEST": "Request was cancelled by the client"
+    "CLIENT_CLOSED_REQUEST": "Request was cancelled by the client",
+    "PAYMENT_REQUIRED": "Payment required",
+    "PRECONDITION_REQUIRED": "Required condition is missing"
   },
   "ConfirmDialogs": {
     "confirmTitle": "Are you sure?",
