@@ -49,7 +49,7 @@
         "overlayscrollbars": "^2.14.0",
         "overlayscrollbars-react": "^0.5.6",
         "prisma": "6.5.0",
-        "prisma-zod-generator": "1.31.1",
+        "prisma-zod-generator": "1.32.1",
         "radix-ui": "^1.4.3",
         "react": "19.2.4",
         "react-day-picker": "^9.14.0",
@@ -1434,7 +1434,7 @@
 
     "prisma": ["prisma@6.5.0", "", { "dependencies": { "@prisma/config": "6.5.0", "@prisma/engines": "6.5.0" }, "optionalDependencies": { "fsevents": "2.3.3" }, "peerDependencies": { "typescript": ">=5.1.0" }, "optionalPeers": ["typescript"], "bin": { "prisma": "build/index.js" } }, "sha512-yUGXmWqv5F4PByMSNbYFxke/WbnyTLjnJ5bKr8fLkcnY7U5rU9rUTh/+Fja+gOrRxEgtCbCtca94IeITj4j/pg=="],
 
-    "prisma-zod-generator": ["prisma-zod-generator@1.31.1", "", { "dependencies": { "@prisma/client": "^6.18.0", "@prisma/generator-helper": "^6.18.0", "@prisma/internals": "^6.18.0", "@types/cors": "^2.8.19", "@types/express": "^5.0.3", "ajv": "^8.17.1", "ajv-formats": "^3.0.1", "cors": "^2.8.5", "express": "^5.1.0", "js-yaml": "^4.1.0", "node-fetch": "^3.3.2", "prettier": "^3.6.2", "tslib": "^2.8.1" }, "peerDependencies": { "zod": ">=3.25.0 <5" }, "bin": { "pzg-pro": "lib/cli/pzg-pro.js", "prisma-zod-generator": "lib/generator.js" } }, "sha512-pImMXI8W1rMQUqWwZ380b8nWbsriHOIR2fTKueIzjslPsyf7UwuX1QOSwyCOCry+1iLboSnnaAVWiFwtqNRzaw=="],
+    "prisma-zod-generator": ["prisma-zod-generator@1.32.1", "", { "dependencies": { "@prisma/client": "^6.19.0", "@prisma/generator-helper": "^6.19.0", "@prisma/internals": "^6.19.0", "@types/cors": "^2.8.19", "@types/express": "^5.0.5", "ajv": "^8.17.1", "ajv-formats": "^3.0.1", "cors": "^2.8.5", "express": "^5.1.0", "js-yaml": "^4.1.0", "node-fetch": "^3.3.2", "prettier": "^3.6.2", "tslib": "^2.8.1" }, "peerDependencies": { "zod": ">=3.25.0 <5" }, "bin": { "pzg-pro": "lib/cli/pzg-pro.js", "prisma-zod-generator": "lib/generator.js" } }, "sha512-3LrvaQoIs+HQ6/IMaNpUctaVa/BjMJK+rGfLh5Qn8NI9te2Ig1sxBOmBQM9Q73qExPTDyGUZhBWpP30IB5HEIw=="],
 
     "prismjs": ["prismjs@1.30.0", "", {}, "sha512-DEvV2ZF2r2/63V+tK8hQvrR2ZGn10srHbXviTlcv7Kpzw8jWiNTqbVgjO3IY8RxrrOUF8VPMQQFysYYYv0YZxw=="],
 
