@@ -16,6 +16,7 @@ export const RepetitionWithItemSchema = StudyRepetitionSchema.extend({
 // We go deeper: Repetition -> StudyItem -> StudyItemTag -> Tag
 export const FullRepetitionSchema = StudyRepetitionSchema.extend({
   studyItem: StudyItemSchema.extend({
+    description: z.any().nullable(),
     itemTags: z.array(
       StudyItemTagSchema.extend({
         tag: TagSchema,
