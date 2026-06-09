@@ -96,7 +96,7 @@
     "@types/react": "19.2.14",
     "@types/react-dom": "19.2.3",
     "knip": "^6.16.1",
-    "postcss": "8.5.3",
+    "postcss": "8.5.10",
     "tailwindcss": "4.2.1",
     "typescript": "^6.0.3"
   },
