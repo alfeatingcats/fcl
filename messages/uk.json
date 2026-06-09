@@ -250,7 +250,9 @@
     "UNSUPPORTED_MEDIA_TYPE": "Непідтримуваний формат файлу або даних",
     "UNPROCESSABLE_CONTENT": "Не вдалося обробити дані",
     "TOO_MANY_REQUESTS": "Забагато запитів. Спробуйте пізніше",
-    "CLIENT_CLOSED_REQUEST": "Запит було скасовано користувачем"
+    "CLIENT_CLOSED_REQUEST": "Запит було скасовано користувачем",
+    "PAYMENT_REQUIRED": "Потрібна оплата",
+    "PRECONDITION_REQUIRED": "Відсутня необхідна умова"
   },
   "ConfirmDialogs": {
     "confirmTitle": "Ви впевнені?",
