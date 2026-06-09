@@ -23,7 +23,7 @@
     "knip": "knip"
   },
   "dependencies": {
-    "@auth/prisma-adapter": "2.7.2",
+    "@auth/prisma-adapter": "2.11.2",
     "@date-fns/tz": "^1.4.1",
     "@hookform/resolvers": "5.2.1",
     "@js-temporal/polyfill": "^0.5.1",
