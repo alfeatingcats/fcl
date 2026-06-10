@@ -27,6 +27,8 @@ import {
 } from '@/components/ui/sidebar'
 import type { StrictBasicUserInfo } from '@/shared/api/schemas'
 
+import { authClient } from '@/lib/auth-client'
+
 export function NavUser({ user }: { user: StrictBasicUserInfo }) {
   const { isMobile } = useSidebar()
 
@@ -91,7 +93,7 @@ export function NavUser({ user }: { user: StrictBasicUserInfo }) {
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
+            <DropdownMenuItem onClick={() => authClient.signOut()}>
               <LogOut />
               Log out
             </DropdownMenuItem>

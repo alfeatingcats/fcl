@@ -7,7 +7,7 @@ import { redirect, type routing } from '@/i18n/routing'
 import type { StrictBasicUserInfo } from '@/shared/api/schemas'
 import { publicPaths, SIDEBAR_COOKIE_NAME } from '@/shared/lib/const'
 
-import { auth } from '@/server/auth'
+import { getServerSession } from '@/server/auth'
 
 import { ClientLayout } from './client-layout'
 
@@ -19,7 +19,7 @@ const ProtectedRootLayout = async ({
   children,
   params,
 }: PropsWithChildren<ProtectedRootLayoutProps>) => {
-  const userSession = await auth()
+  const userSession = await getServerSession()
 
   const { locale } = await params
   const cookieStore = await cookies()

@@ -1,4 +1,20 @@
 {
+  "Auth": {
+    "signIn": "Sign In",
+    "signUp": "Sign Up",
+    "nameLabel": "Name",
+    "namePlaceholder": "Your name",
+    "emailLabel": "Email",
+    "emailPlaceholder": "email@example.com",
+    "passwordLabel": "Password",
+    "passwordPlaceholder": "password",
+    "signInWithDiscord": "Sign in with Discord",
+    "or": "or",
+    "noAccount": "Don't have an account?",
+    "hasAccount": "Already have an account?",
+    "signUpLink": "Sign up",
+    "signInLink": "Sign in"
+  },
   "UiActions": {
     "create": "Create",
     "submit": "Save",

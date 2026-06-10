@@ -15,7 +15,7 @@ import type { StorageValue } from 'zustand/middleware'
 import { USER_STORE_LOCAL_STORAGE_KEY } from '@/shared/stores'
 import type { UserStore } from '@/shared/stores/timezone-store'
 
-import { auth } from '@/server/auth'
+import { getServerSession } from '@/server/auth'
 import { db } from '@/server/db'
 
 /**
@@ -31,7 +31,7 @@ import { db } from '@/server/db'
  * @see https://trpc.io/docs/server/context
  */
 export const createTRPCContext = async (opts: { headers: Headers }) => {
-  const session = await auth()
+  const session = await getServerSession()
   let timeZone = 'UTC'
 
   try {
