@@ -28,9 +28,9 @@ export const RepetitionListRow: FC<RepetitionListRowProps> = ({
   descriptionText,
 }) => {
   return (
-    <div className="text-card-foreground bg-muted flex flex-col items-stretch rounded-xl! p-1">
+    <div className="text-card-foreground bg-muted flex flex-col items-stretch rounded-xl! p-1 max-w-sm min-w-sm w-sm">
       <div className="bg-card flex h-full flex-col justify-start rounded-xl! p-4">
-        <div className="flex gap-3">
+        <div className="flex gap-3 mb-2">
           <span className="truncate font-medium">{title}</span>
           <span className="flex flex-row gap-2">
             {itemTags.map((tag) => (
@@ -43,9 +43,9 @@ export const RepetitionListRow: FC<RepetitionListRowProps> = ({
             ))}
           </span>
         </div>
-        <div className="text-muted-foreground line-clamp-2 text-sm">
+        <p className="text-muted-foreground line-clamp-2 text-sm truncate break-all">
           {descriptionText}
-        </div>
+        </p>
       </div>
       <div className="flex flex-row items-center">
         <div className="flex flex-1 flex-wrap gap-4 gap-y-1 px-2 pt-2 pb-1">
