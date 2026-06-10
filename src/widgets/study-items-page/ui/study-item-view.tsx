@@ -5,6 +5,7 @@ import { useTranslations } from 'next-intl'
 import { type FC, useEffect, useMemo } from 'react'
 
 import { Button } from '@/components/ui/button'
+import { Skeleton } from '@/components/ui/skeleton'
 import { useRepetitionsOverlayEntityContent } from '@/shared/hooks/repetition'
 import { mapStudyItemToRepetitionList } from '@/shared/lib/study-item'
 import { StudyItemForm } from '@/shared/lib/study-item/study-item-form'
@@ -34,6 +35,18 @@ import {
 import { useManageTag } from '../model/use-manage-tag'
 import { useUpdateStudyItem } from '../model/use-update-study-item'
 
+const Asd = () => {
+  return (
+    <div className="flex h-full w-full flex-col gap-6 items-center">
+      <Skeleton className="h-10 w-3/4" />
+      <Skeleton className="h-4 w-2/4 mb-2" />
+      <Skeleton className="h-17 w-full" />
+      <Skeleton className="h-40 w-full" />
+      <Skeleton className="h-60 w-full" />
+    </div>
+  )
+}
+
 export function StudyItemView({ id }: { id: string | null }) {
   if (!id)
     return (
@@ -43,7 +56,7 @@ export function StudyItemView({ id }: { id: string | null }) {
     )
   return (
     <ErrorBoundary fallback={({ error }) => <>{error.message}</>}>
-      <Suspense fallback="loading...">
+      <Suspense fallback={<Asd />}>
         <StudyItemPage studyItemId={id} />
       </Suspense>
     </ErrorBoundary>
