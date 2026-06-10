@@ -1,4 +1,20 @@
 {
+  "Auth": {
+    "signIn": "Увійти",
+    "signUp": "Зареєструватися",
+    "nameLabel": "Ім'я",
+    "namePlaceholder": "Ваше ім'я",
+    "emailLabel": "Емейл",
+    "emailPlaceholder": "email@example.com",
+    "passwordLabel": "Пароль",
+    "passwordPlaceholder": "пароль",
+    "signInWithDiscord": "Увійти через Discord",
+    "or": "або",
+    "noAccount": "Немає акаунту?",
+    "hasAccount": "Вже є акаунт?",
+    "signUpLink": "Зареєструватися",
+    "signInLink": "Увійти"
+  },
   "UiActions": {
     "create": "Створити",
     "submit": "Зберегти",
