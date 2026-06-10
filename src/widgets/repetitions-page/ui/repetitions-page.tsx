@@ -1,5 +1,7 @@
 'use client'
 
+import { compareAsc } from 'date-fns'
+import { cloneDeep } from 'es-toolkit'
 import { useTranslations } from 'next-intl'
 import { type FC, useMemo } from 'react'
 
@@ -28,7 +30,10 @@ export const RepetitionsPage: FC = () => {
   const [todayRepetitions] = useTodayRepetitions()
 
   const repetitionsListData = useMemo<Array<RepetitionsListRow>>(
-    () => mapTodayRepetitionsToListData(todayRepetitions),
+    () =>
+      cloneDeep(mapTodayRepetitionsToListData(todayRepetitions)).sort((a, b) =>
+        compareAsc(a?.scheduledAt, b?.scheduledAt),
+      ),
     [todayRepetitions],
   )
 

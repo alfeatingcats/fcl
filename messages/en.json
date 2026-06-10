@@ -268,5 +268,10 @@
     "resetTitle": "Reset data?",
     "resetDescription": "This will reset all progress and start from the beginning. This action cannot be undone.",
     "bulkActionWarning": "You are about to perform a bulk action on {count} items."
+  },
+  "Landing": {
+    "headline": "Master knowledge through repetition",
+    "subheadline": "Build lasting knowledge with a modern spaced repetition system. Organize skills, review smarter, and track your progress.",
+    "getStarted": "Get started"
   }
 }
