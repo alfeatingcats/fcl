@@ -1,11 +1,13 @@
 'use client'
 
 import { ColorPanels } from '@paper-design/shaders-react'
-import { ArrowRight, Github } from 'lucide-react'
+import { ArrowRight, Github, WaypointsIcon } from 'lucide-react'
 import { useLocale, useTranslations } from 'next-intl'
 
 import { Link } from '@/i18n/routing'
 
+import { Badge } from '@/components/reui/badge'
+import { AuroraText } from '@/components/ui/aurora-text'
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
 
@@ -21,9 +23,20 @@ export const LandngPage = () => {
             FOCU
           </p>
 
-          <h1 className="text-5xl font-extrabold tracking-tight lg:text-7xl z-50">
-            {t('headline')}
+          <h1 className="text-5xl font-extrabold tracking-tight lg:text-7xl z-50 mb-6">
+            {t('headline')} <AuroraText>{t('repetition')}</AuroraText>
           </h1>
+
+          <div className="flex items-center gap-4">
+            <Separator className=" flex-1 bg-transparent bg-linear-to-r from-transparent via-primary/50 to-transparent" />
+            <Badge
+              variant="focus"
+              className="h-6 shrink-0 rounded-full px-4 text-xs font-medium"
+            >
+              <WaypointsIcon />
+            </Badge>
+            <Separator className="flex-1 bg-transparent bg-linear-to-r from-transparent via-primary/50 to-transparent" />
+          </div>
 
           <p className="mt-6 text-lg text-muted-foreground lg:text-xl z-50">
             {t('subheadline')}
