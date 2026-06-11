@@ -41,11 +41,15 @@ export const GetStudyItemByIdOutputSchema = z.object({
     z
       .object({
         id: z.string(),
-        repetitionNumber: z.number().int(),
-        scheduledAt: z.date(),
+        due: z.date(),
         completedAt: z.date().nullable(),
         status: z.nativeEnum(RepetitionStatus),
-        difficulty: z.number().int().nullable(),
+        difficulty: z.number(),
+        state: z.enum(['NEW', 'LEARNING', 'REVIEW', 'RELEARNING']),
+        stability: z.number(),
+        reps: z.number().int(),
+        lapses: z.number().int(),
+        lastReview: z.date().nullable(),
         studyItemId: z.string(),
         createdAt: z.date(),
         updatedAt: z.date(),

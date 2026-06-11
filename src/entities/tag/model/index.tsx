@@ -1,4 +1,4 @@
-export type { TagItem, TagsListType } from './types'
+export type { TagsListType } from './types'
 export {
   type UseGetAllTagsParams,
   type UseGetAllTagsResult,

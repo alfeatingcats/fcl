@@ -99,14 +99,27 @@ enum Status {
     ARCHIVED
 }
 
-model StudyRepetition {
-    id               String           @id @default(cuid())
-    repetitionNumber Int
-    scheduledAt      DateTime
-    completedAt      DateTime?
-    status           RepetitionStatus @default(PENDING)
+enum FSRSState {
+    NEW
+    LEARNING
+    REVIEW
+    RELEARNING
+}
 
-    difficulty Int?
+model StudyRepetition {
+    id         String           @id @default(cuid())
+
+    // FSRS parameters
+    state      FSRSState        @default(NEW)
+    stability  Float            @default(0.0)
+    difficulty Float            @default(0.0)
+    due        DateTime
+    lastReview DateTime?
+    lapses     Int              @default(0)
+    reps       Int              @default(0)
+
+    completedAt DateTime?
+    status      RepetitionStatus @default(PENDING)
 
     studyItem   StudyItem @relation(fields: [studyItemId], references: [id], onDelete: Cascade)
     studyItemId String
@@ -114,9 +127,8 @@ model StudyRepetition {
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 
-    @@unique([studyItemId, repetitionNumber])
     @@index([studyItemId])
-    @@index([scheduledAt])
+    @@index([due])
     @@index([status])
 }
 

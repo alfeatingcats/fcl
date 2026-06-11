@@ -7,9 +7,9 @@ import type { TrpcMutationHook } from '@/shared/api/types'
 
 import { api } from '@/trpc/react'
 
-export const useCompleteRepetition: TrpcMutationHook<
+export const useReviewRepetition: TrpcMutationHook<
   'repetitions',
-  'complete',
+  'review',
   void,
   void
 > = ({ onSuccess, onError = noop }) => {
@@ -17,7 +17,7 @@ export const useCompleteRepetition: TrpcMutationHook<
   const handleError = useMutationErrorHandler()
   const t = useTranslations('RepetitionsMessages')
 
-  return api.repetitions.complete.useMutation({
+  return api.repetitions.review.useMutation({
     onSuccess: async () => {
       toast.success(t('completeSuccess'))
       onSuccess()

@@ -1,11 +1,5 @@
-export { useTodayRepetitions } from './model'
-export type {
-  ChartPoint,
-  CurrentPoint,
-  RepetitionChartProps,
-  RepetitionsListRow,
-} from './model/shared'
-export { getDefaultRepetitionDates } from './model/shared'
+export { useRepetitionStats, useTodayRepetitions } from './model'
+export type { RepetitionsListRow } from './model/shared'
 export {
   ActionRepetitionModal,
   CompletedEventDateTime,

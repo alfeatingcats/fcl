@@ -1,18 +1,13 @@
 import { type ClassValue, clsx } from 'clsx'
 import { twMerge } from 'tailwind-merge'
-
-import { EBBINGHAUS_INTERVALS } from './const'
+import { createEmptyCard } from 'ts-fsrs'
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
-export const generateRepetitionSchedule = () => {
-  const now = new Date()
-  return EBBINGHAUS_INTERVALS.map((intervalMinutes, index) => ({
-    repetitionNumber: index + 1,
-    scheduledAt: new Date(now.getTime() + intervalMinutes * 60 * 1000),
-  }))
+export const createFSRSCard = (now: Date = new Date()) => {
+  return createEmptyCard(now)
 }
 
 // export const extractTextFromLexicalJSON = (lexicalJSON: unknown): string => {

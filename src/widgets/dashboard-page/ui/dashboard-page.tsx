@@ -1,6 +1,6 @@
 'use client'
 
-import { omit } from 'es-toolkit'
+import { pick } from 'es-toolkit'
 import { upperCase } from 'es-toolkit/string'
 import { TrendingUp } from 'lucide-react'
 import { useTranslations } from 'next-intl'
@@ -45,7 +45,9 @@ export function DashboardPage() {
   const [stats] = api.repetitions.getStats.useSuspenseQuery()
 
   const chartData2 = useMemo(() => {
-    return Object.entries(omit(stats, ['total'])).map(([key, value]) => ({
+    return Object.entries(
+      pick(stats, ['pending', 'completed', 'missed', 'skipped']),
+    ).map(([key, value]) => ({
       status: key,
       repetitions: value,
       total: stats.total - value,

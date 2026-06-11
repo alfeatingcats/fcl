@@ -1,13 +1,13 @@
 import type {
-  CompleteRepetitionInput,
+  ReviewRepetitionInput,
   SkipRepetitionInput,
   WaitRepetitionInput,
 } from '@/shared/api/schemas'
 import { createRepetitionAction } from '@/shared/hooks/repetition'
 
 import {
-  useCompleteRepetition,
-  useCompleteRepetitionForm,
+  useReviewRepetition,
+  useReviewRepetitionForm,
 } from '@/features/complete-repetition'
 import {
   useSkipRepetition,
@@ -19,10 +19,10 @@ import {
 } from '@/features/wait-repetition'
 
 export const useCompleteRepetitionAction = createRepetitionAction<
-  CompleteRepetitionInput,
+  ReviewRepetitionInput,
   'repetitions',
-  'complete'
->(useCompleteRepetition, useCompleteRepetitionForm)
+  'review'
+>(useReviewRepetition, useReviewRepetitionForm)
 
 export const useSkipRepetitionAction = createRepetitionAction<
   SkipRepetitionInput,

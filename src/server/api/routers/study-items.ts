@@ -1,6 +1,7 @@
 import { Prisma } from '@prisma/client'
 import { TRPCError } from '@trpc/server'
 import { isNil } from 'es-toolkit'
+import { createEmptyCard } from 'ts-fsrs'
 
 import {
   CreateStudyItemSchema,
@@ -12,7 +13,6 @@ import {
   UpdateStudyItemSchema,
 } from '@/shared/api/schemas'
 import { ReadStudyItemsOutputSchema } from '@/shared/api/schemas/fg/study-item'
-import { EBBINGHAUS_INTERVALS } from '@/shared/lib/const'
 import { extractTextFromLexicalJSON2 } from '@/shared/lib/utils'
 
 import { createTRPCRouter, protectedProcedure } from '@/server/api/trpc'
@@ -24,6 +24,7 @@ export const studyItemsRouter = createTRPCRouter({
     .input(CreateStudyItemSchema)
     .mutation(async ({ ctx, input }) => {
       const now = new Date()
+      const fsrsCard = createEmptyCard(now)
 
       return await ctx.db.$transaction(async (tx) => {
         const studyItem = await tx.studyItem.create({
@@ -38,16 +39,16 @@ export const studyItemsRouter = createTRPCRouter({
           },
         })
 
-        const repetitions = EBBINGHAUS_INTERVALS.map(
-          (intervalMinutes, index) => ({
+        await tx.studyRepetition.create({
+          data: {
             studyItemId: studyItem.id,
-            repetitionNumber: index + 1,
-            scheduledAt: new Date(now.getTime() + intervalMinutes * 60 * 1000),
-          }),
-        )
-
-        await tx.studyRepetition.createMany({
-          data: repetitions,
+            state: 'NEW',
+            stability: fsrsCard.stability,
+            difficulty: fsrsCard.difficulty,
+            due: fsrsCard.due,
+            reps: fsrsCard.reps,
+            lapses: fsrsCard.lapses,
+          },
         })
 
         if (input.tagIds?.length) {
@@ -68,7 +69,7 @@ export const studyItemsRouter = createTRPCRouter({
           include: {
             repetitions: {
               orderBy: {
-                repetitionNumber: 'asc',
+                due: 'asc',
               },
             },
             itemTags: {
@@ -121,9 +122,7 @@ export const studyItemsRouter = createTRPCRouter({
         orderBy: { createdAt: 'desc' },
         include: {
           repetitions: {
-            // where: { status: "PENDING" },
-            orderBy: { scheduledAt: 'asc' },
-            // take: 1,
+            orderBy: { due: 'asc' },
           },
           itemTags: {
             include: { tag: true },
@@ -221,7 +220,7 @@ export const studyItemsRouter = createTRPCRouter({
           where: { id: input.id },
           include: {
             repetitions: {
-              orderBy: { repetitionNumber: 'asc' },
+              orderBy: { due: 'asc' },
             },
             itemTags: {
               include: { tag: true },
@@ -272,7 +271,7 @@ export const studyItemsRouter = createTRPCRouter({
       const item = await ctx.db.studyItem.findFirst({
         where: { id: input.id, createdById: ctx.session.user.id },
         include: {
-          repetitions: { orderBy: { repetitionNumber: 'asc' } },
+          repetitions: { orderBy: { due: 'asc' } },
           itemTags: { include: { tag: true } },
         },
       })
@@ -306,15 +305,19 @@ export const studyItemsRouter = createTRPCRouter({
         })
 
         const now = new Date()
-        const repetitions = EBBINGHAUS_INTERVALS.map(
-          (intervalMinutes, index) => ({
-            studyItemId: input.id,
-            repetitionNumber: index + 1,
-            scheduledAt: new Date(now.getTime() + intervalMinutes * 60 * 1000),
-          }),
-        )
+        const fsrsCard = createEmptyCard(now)
 
-        await tx.studyRepetition.createMany({ data: repetitions })
+        await tx.studyRepetition.create({
+          data: {
+            studyItemId: input.id,
+            state: 'NEW',
+            stability: fsrsCard.stability,
+            difficulty: fsrsCard.difficulty,
+            due: fsrsCard.due,
+            reps: fsrsCard.reps,
+            lapses: fsrsCard.lapses,
+          },
+        })
 
         return await tx.studyItem.findUnique({
           where: { id: input.id },

@@ -25,13 +25,13 @@ export const RepetitionsTableContent: FC<RepetitionsTableContentProps> = ({
   repetitions = [],
   onSkipRepetition,
   onWaitRepetition,
-  onCompleteRepetition,
+  onReviewRepetition,
 }) => {
   const columns = useRepetitionColumns({
     data: repetitions,
     onSkipRepetition,
     onWaitRepetition,
-    onCompleteRepetition,
+    onReviewRepetition,
   })
 
   const table = useReactTable({

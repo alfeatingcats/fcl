@@ -3,15 +3,15 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 
 import {
-  type CompleteRepetitionInput,
-  CompleteRepetitionSchema,
+  type ReviewRepetitionInput,
+  ReviewRepetitionSchema,
 } from '@/shared/api/schemas'
 
-export const useCompleteRepetitionForm = (isLoading: boolean) =>
-  useForm<CompleteRepetitionInput>({
-    resolver: zodResolver(CompleteRepetitionSchema),
+export const useReviewRepetitionForm = (isLoading: boolean) =>
+  useForm<ReviewRepetitionInput>({
+    resolver: zodResolver(ReviewRepetitionSchema),
     defaultValues: {
-      difficulty: 1,
+      rating: 1,
     },
     disabled: isLoading,
   })

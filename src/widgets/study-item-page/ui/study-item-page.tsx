@@ -16,7 +16,7 @@ import {
   type RepetitionsListRow,
 } from '@/entities/repetitions'
 import { useSuspenseStudyItem } from '@/entities/study-item'
-import { CompleteRepetitionForm } from '@/features/complete-repetition'
+import { ReviewRepetitionForm } from '@/features/complete-repetition'
 import { TagCreateDrawer, TagForm } from '@/features/create-tag'
 import {
   DeleteStudyItemDialog,
@@ -81,7 +81,6 @@ export const StudyItemPage = () => {
     onClear,
     complete,
     activeRepetition,
-    repetitionNumber,
     setActiveRepetition,
     descriptionText,
   } = useRepetitionsOverlayEntityContent(repetitionsListData)
@@ -132,7 +131,7 @@ export const StudyItemPage = () => {
         repetitions={studyItem?.repetitions}
         onSkipRepetition={setActiveRepetition}
         onWaitRepetition={setActiveRepetition}
-        onCompleteRepetition={setActiveRepetition}
+        onReviewRepetition={setActiveRepetition}
       />
       <TagCreateDrawer
         isLoading={isCreatingTag}
@@ -148,13 +147,12 @@ export const StudyItemPage = () => {
           title: title,
           description: descriptionText,
         }}
-        repetitionNumber={repetitionNumber || ''}
         overlay={{
           title: complete.overlay.title,
           description: complete.overlay.description,
         }}
         isOpen={activeRepetition.action === 'complete'}
-        renderContent={<CompleteRepetitionForm form={completeForm} />}
+        renderContent={<ReviewRepetitionForm form={completeForm} />}
         renderSubmitButton={
           <Button
             onClick={completeForm.handleSubmit(onCompleteSubmit)}
@@ -170,7 +168,6 @@ export const StudyItemPage = () => {
           title: title,
           description: descriptionText,
         }}
-        repetitionNumber={repetitionNumber || ''}
         overlay={{
           title: skip.overlay.title,
           description: skip.overlay.description,
@@ -192,7 +189,6 @@ export const StudyItemPage = () => {
           title: title,
           description: descriptionText,
         }}
-        repetitionNumber={repetitionNumber || ''}
         overlay={{
           title: wait.overlay.title,
           description: wait.overlay.description,

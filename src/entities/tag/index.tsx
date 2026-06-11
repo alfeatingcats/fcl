@@ -1,5 +1,4 @@
 export {
-  type TagItem as TTagItem,
   type TagsListType,
   type UseGetAllTagsParams,
   type UseGetAllTagsResult,

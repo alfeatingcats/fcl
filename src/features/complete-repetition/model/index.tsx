@@ -1,2 +1,2 @@
-export { useCompleteRepetition } from './use-complete-repetition'
-export { useCompleteRepetitionForm } from './use-complete-repetition-form'
+export { useReviewRepetition } from './use-complete-repetition'
+export { useReviewRepetitionForm } from './use-complete-repetition-form'

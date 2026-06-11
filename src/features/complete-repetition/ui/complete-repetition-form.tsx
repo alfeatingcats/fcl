@@ -9,16 +9,16 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form'
-import type { CompleteRepetitionInput } from '@/shared/api/schemas'
+import type { ReviewRepetitionInput } from '@/shared/api/schemas'
 import type { CFC } from '@/shared/types'
 
 import { RadioGroupDifficulty } from '@/entities/repetitions'
 
-type CompleteRepetitionFormProps = {
-  form: UseFormReturn<CompleteRepetitionInput>
+type ReviewRepetitionFormProps = {
+  form: UseFormReturn<ReviewRepetitionInput>
 }
 
-export const CompleteRepetitionForm: CFC<CompleteRepetitionFormProps> = ({
+export const ReviewRepetitionForm: CFC<ReviewRepetitionFormProps> = ({
   form,
 }) => {
   const t = useTranslations('Repetitions')
@@ -27,7 +27,7 @@ export const CompleteRepetitionForm: CFC<CompleteRepetitionFormProps> = ({
       <form className="space-y-5">
         <FormField
           control={form.control}
-          name="difficulty"
+          name="rating"
           render={({ field }) => (
             <FormItem>
               <FormLabel>{t('difficultyLabel')}</FormLabel>

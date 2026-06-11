@@ -7,9 +7,12 @@ import { RepetitionsPage } from '@/widgets/repetitions-page'
 import { HydrateClient } from '@/trpc/server'
 
 const ReviewCyclePage = async () => {
-  await protectedApiPrefetch((api) =>
-    api.repetitions.getTodayRepetitions.prefetch(),
-  )
+  await protectedApiPrefetch(async (api) => {
+    await Promise.all([
+      api.repetitions.getTodayRepetitions.prefetch(),
+      api.repetitions.getStats.prefetch(undefined),
+    ])
+  })
 
   return (
     <HydrateClient>

@@ -42,7 +42,7 @@ export const EventBadge: FC<EventBadgeProps> = ({
   )
 }
 
-export const DefaultBadge: FC<
+const DefaultBadge: FC<
   React.ComponentProps<'span'> &
     VariantProps<typeof badgeVariants> &
     RepetitionBadgeVariants & { asChild?: boolean }

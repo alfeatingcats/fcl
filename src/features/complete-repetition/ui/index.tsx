@@ -1,1 +1,1 @@
-export { CompleteRepetitionForm } from './complete-repetition-form'
+export { ReviewRepetitionForm } from './complete-repetition-form'

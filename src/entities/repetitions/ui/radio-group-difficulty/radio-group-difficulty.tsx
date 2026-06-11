@@ -6,7 +6,7 @@ import type { ControllerRenderProps } from 'react-hook-form'
 
 import { Label } from '@/components/ui/label'
 import { RadioGroup } from '@/components/ui/radio-group'
-import type { CompleteRepetitionInput } from '@/shared/api/schemas'
+import type { ReviewRepetitionInput } from '@/shared/api/schemas'
 import { cn } from '@/shared/lib/utils'
 
 function RadioGroupItem({
@@ -33,8 +33,8 @@ function RadioGroupItem({
 }
 
 type RadioGroupDifficultyProps = ControllerRenderProps<
-  CompleteRepetitionInput,
-  'difficulty'
+  ReviewRepetitionInput,
+  'rating'
 >
 
 export const RadioGroupDifficulty: FC<RadioGroupDifficultyProps> = ({
@@ -56,7 +56,7 @@ export const RadioGroupDifficulty: FC<RadioGroupDifficultyProps> = ({
           onBlur={onBlur}
           disabled={disabled}
         >
-          {[1, 2, 3, 4, 5].map((number) => (
+          {[1, 2, 3, 4].map((number) => (
             <Label
               key={number}
               id={number.toString()}

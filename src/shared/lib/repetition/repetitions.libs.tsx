@@ -41,7 +41,7 @@ export const getActiveRepetitionDetails = (
   activeRepetitionId: RepetitionOverlayPayload,
 ): Pick<
   RepetitionsListRow,
-  'title' | 'description' | 'repetitionNumber' | 'descriptionText'
+  'title' | 'description' | 'reps' | 'descriptionText'
 > | null => {
   if (isNil(activeRepetitionId) || isEmpty(repetitions) || isNil(repetitions)) {
     return null
@@ -50,6 +50,6 @@ export const getActiveRepetitionDetails = (
     repetitions.find(
       ({ id }) => id === activeRepetitionId,
     ) as RepetitionsListRow,
-    ['title', 'description', 'repetitionNumber', 'descriptionText'],
+    ['title', 'description', 'reps', 'descriptionText'],
   )
 }

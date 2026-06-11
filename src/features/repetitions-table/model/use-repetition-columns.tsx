@@ -72,7 +72,7 @@ export function getNextRepetition(
   for (const r of reps) {
     if (excludeCompleted && r.status === 'COMPLETED') continue
 
-    const t = parseTime(r.scheduledAt)
+    const t = parseTime(r.due)
     if (t === null) continue // invalid date or null
     if (t <= now) continue // in the past or now — skip
 
@@ -93,7 +93,7 @@ type UseRepetitionColumnsParams = Omit<RepetitionListProps, 'repetitions'> & {
 
 export const useRepetitionColumns = ({
   data,
-  onCompleteRepetition,
+  onReviewRepetition,
 }: UseRepetitionColumnsParams) => {
   const t = useTranslations('Repetitions')
   const tst = useTranslations('StudyItemTable')
@@ -105,8 +105,8 @@ export const useRepetitionColumns = ({
 
   const onRepetitionAction = useCallback(
     (repetitionId: RepetitionOverlayPayload) => (type: RepetitionActionType) =>
-      onCompleteRepetition({ repetitionId, action: type }),
-    [onCompleteRepetition],
+      onReviewRepetition({ repetitionId, action: type }),
+    [onReviewRepetition],
   )
 
   const columns: ColumnDef<StudyRepetition>[] = [
@@ -146,12 +146,12 @@ export const useRepetitionColumns = ({
       size: 180,
       maxSize: 200,
       minSize: 100,
-      accessorKey: 'repetitionNumber',
+      accessorKey: 'reps',
       cell: ({ row }) => {
         return (
           <RepetitionStage
             wVariant="simple"
-            currentStage={row.getValue('repetitionNumber')}
+            currentStage={row.getValue('reps')}
             withLabel={false}
             icon={null}
           />
@@ -196,12 +196,12 @@ export const useRepetitionColumns = ({
       size: 180,
       maxSize: 200,
       minSize: 100,
-      accessorKey: 'scheduledAt',
+      accessorKey: 'due',
       cell: ({ row }) => {
         return (
           <NextEventDateTime
             withLabel={false}
-            scheduledAt={row.getValue('scheduledAt')}
+            scheduledAt={row.getValue('due')}
             wVariant="simple"
           />
         )

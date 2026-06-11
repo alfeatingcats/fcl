@@ -39,8 +39,8 @@ export const TagsListContent = ({
             transition={{ duration: 0.25 }}
             className="flex flex-col gap-3 p-3"
           >
-            {range(4).map((_, i) => (
-              <Skeleton key={i} className="h-8 w-full rounded-xl" />
+            {range(4).map((_) => (
+              <Skeleton key={_} className="h-8 w-full rounded-xl" />
             ))}
           </motion.div>
         ) : isNil(displayTags) || isEmpty(displayTags) ? (

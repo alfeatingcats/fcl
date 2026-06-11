@@ -11,18 +11,18 @@ import { RepetitionStage } from '../repetition-stage'
 import { RepetitionStatus } from '../repetition-status'
 
 type RepetitionListRowProps = RepetitionsListRow & {
-  onCompleteRepetition: (type: RepetitionActionType) => void
+  onReviewRepetition: (type: RepetitionActionType) => void
   onSkipRepetition: (type: RepetitionActionType) => void
   onWaitRepetition: (type: RepetitionActionType) => void
 }
 
 export const RepetitionListRow: FC<RepetitionListRowProps> = ({
   title,
-  scheduledAt,
+  due,
   itemTags,
   status,
-  repetitionNumber,
-  onCompleteRepetition,
+  reps,
+  onReviewRepetition,
   onSkipRepetition,
   onWaitRepetition,
   descriptionText,
@@ -49,14 +49,14 @@ export const RepetitionListRow: FC<RepetitionListRowProps> = ({
       </div>
       <div className="flex flex-row items-center">
         <div className="flex flex-1 flex-wrap gap-4 gap-y-1 px-2 pt-2 pb-1">
-          <RepetitionStage currentStage={repetitionNumber} />
+          <RepetitionStage currentStage={reps} />
           <RepetitionStatus status={status} />
-          <NextEventDateTime scheduledAt={scheduledAt} />
+          <NextEventDateTime scheduledAt={due} />
         </div>
         <div className="flex h-full items-start pt-2 pr-2">
           <RepetitionActionDropdown
             status={status}
-            onCompleteRepetition={onCompleteRepetition}
+            onCompleteRepetition={onReviewRepetition}
             onSkipRepetition={onSkipRepetition}
             onWaitRepetition={onWaitRepetition}
           />
