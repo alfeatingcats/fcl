@@ -30,8 +30,7 @@ const BadgeContent: FC<BadgeContentProps> = ({ diff }) => {
 
 export const ProgressStepper = () => {
   const format = useFormatter()
-  const t = useTranslations('Time')
-  const steps = createStepTimeline(format, t)
+  const steps = createStepTimeline(format)
 
   return (
     <div className="w-full! space-y-8 text-start">

@@ -206,6 +206,7 @@ function ChartTooltipContent({
 
             return (
               <div
+                // biome-ignore lint/suspicious/noArrayIndexKey: <_explanation>
                 key={index}
                 className={cn(
                   'flex w-full flex-wrap items-stretch gap-2 [&>svg]:h-2.5 [&>svg]:w-2.5 [&>svg]:text-muted-foreground',
@@ -365,9 +366,9 @@ function getPayloadConfigFromPayload(
 
 export {
   ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
   ChartLegend,
   ChartLegendContent,
   ChartStyle,
+  ChartTooltip,
+  ChartTooltipContent,
 }

@@ -1,96 +1,96 @@
 'use client'
 
-import { compareAsc } from 'date-fns'
-import { cloneDeep } from 'es-toolkit'
 import { useTranslations } from 'next-intl'
-import { type FC, useMemo } from 'react'
+import { type FC, useCallback, useState } from 'react'
 
 import { Button } from '@/components/ui/button'
-import { useRepetitionsOverlayEntityContent } from '@/shared/hooks/repetition'
 
-import {
-  ActionRepetitionModal,
-  RepetitionList,
-  type RepetitionsListRow,
-  useTodayRepetitions,
-} from '@/entities/repetitions'
-import { CompleteRepetitionForm } from '@/features/complete-repetition'
+import type { RepetitionsListRow } from '@/entities/repetitions'
+import { ActionRepetitionModal } from '@/entities/repetitions'
+import { ReviewRepetitionForm } from '@/features/complete-repetition'
 
-import { mapTodayRepetitionsToListData } from '../model'
 import {
   useCompleteRepetitionAction,
   useSkipRepetitionAction,
   useWaitRepetitionAction,
 } from '../model/hooks'
+import { StatsHeader } from './stats-header'
+import { TodayList } from './today-list'
+
+type ActiveRepState = {
+  repetitionId: string | null
+  action: 'complete' | 'skip' | 'wait' | null
+  title: string
+  description: string | null
+  descriptionText: string
+}
+
+const defaultActiveRep: ActiveRepState = {
+  repetitionId: null,
+  action: null,
+  title: '',
+  description: null,
+  descriptionText: '',
+}
 
 export const RepetitionsPage: FC = () => {
   const t = useTranslations('Repetitions')
-  const tp = useTranslations('ReviewCyclePage')
 
-  const [todayRepetitions] = useTodayRepetitions()
+  const [activeRep, setActiveRep] = useState<ActiveRepState>(defaultActiveRep)
 
-  const repetitionsListData = useMemo<Array<RepetitionsListRow>>(
-    () =>
-      cloneDeep(mapTodayRepetitionsToListData(todayRepetitions)).sort((a, b) =>
-        compareAsc(a?.scheduledAt, b?.scheduledAt),
-      ),
-    [todayRepetitions],
-  )
-
-  const {
-    skip,
-    wait,
-    title,
-    onClear,
-    complete,
-    // description,
-    activeRepetition,
-    repetitionNumber,
-    setActiveRepetition,
-    descriptionText,
-  } = useRepetitionsOverlayEntityContent(repetitionsListData)
+  const onClear = useCallback(() => setActiveRep(defaultActiveRep), [])
 
   const {
     form: completeForm,
     isLoading: isCompleteLoading,
     onSubmit: onCompleteSubmit,
-  } = useCompleteRepetitionAction(activeRepetition, onClear)
+  } = useCompleteRepetitionAction(activeRep, onClear)
   const {
     form: skipForm,
     isLoading: isSkipLoading,
     onSubmit: onSkipSubmit,
-  } = useSkipRepetitionAction(activeRepetition, onClear)
+  } = useSkipRepetitionAction(activeRep, onClear)
   const {
     form: waitForm,
     isLoading: isWaitLoading,
     onSubmit: onWaitSubmit,
-  } = useWaitRepetitionAction(activeRepetition, onClear)
+  } = useWaitRepetitionAction(activeRep, onClear)
+
+  const handleRepAction = useCallback(
+    (action: 'complete' | 'skip' | 'wait', row: RepetitionsListRow) => {
+      setActiveRep({
+        repetitionId: row.id,
+        action,
+        title: row.title,
+        description: row.description as string | null,
+        descriptionText: row.descriptionText ?? '',
+      })
+    },
+    [],
+  )
 
   return (
-    <div className="flex flex-col gap-4">
-      <h3 className="scroll-m-20 text-2xl font-semibold tracking-tight">
-        {tp('title')}
-      </h3>
-      <RepetitionList
-        repetitions={repetitionsListData}
-        onCompleteRepetition={setActiveRepetition}
-        onSkipRepetition={setActiveRepetition}
-        onWaitRepetition={setActiveRepetition}
+    <div className="flex flex-col gap-6">
+      <StatsHeader />
+
+      <TodayList
+        onCompleteRepetition={(row) => handleRepAction('complete', row)}
+        onSkipRepetition={(row) => handleRepAction('skip', row)}
+        onWaitRepetition={(row) => handleRepAction('wait', row)}
       />
 
       <ActionRepetitionModal
         onClear={onClear}
         entity={{
-          title: title,
-          description: descriptionText,
+          title: activeRep.title,
+          description: activeRep.descriptionText,
         }}
-        repetitionNumber={repetitionNumber || ''}
         overlay={{
-          title: complete.overlay.title,
-          description: complete.overlay.description,
+          title: t('completeButton'),
+          description: t('completeRepetitionDescription'),
         }}
-        isOpen={activeRepetition.action === 'complete'}
-        renderContent={<CompleteRepetitionForm form={completeForm} />}
+        isOpen={activeRep.action === 'complete'}
+        renderContent={<ReviewRepetitionForm form={completeForm} />}
         renderSubmitButton={
           <Button
             onClick={completeForm.handleSubmit(onCompleteSubmit)}
@@ -103,15 +103,14 @@ export const RepetitionsPage: FC = () => {
       <ActionRepetitionModal
         onClear={onClear}
         entity={{
-          title: title,
-          description: descriptionText,
+          title: activeRep.title,
+          description: activeRep.descriptionText,
         }}
-        repetitionNumber={repetitionNumber || ''}
         overlay={{
-          title: skip.overlay.title,
-          description: skip.overlay.description,
+          title: t('skipOverlayTitle'),
+          description: t('skipRepetitionDescription'),
         }}
-        isOpen={activeRepetition.action === 'skip'}
+        isOpen={activeRep.action === 'skip'}
         renderContent={null}
         renderSubmitButton={
           <Button
@@ -125,15 +124,14 @@ export const RepetitionsPage: FC = () => {
       <ActionRepetitionModal
         onClear={onClear}
         entity={{
-          title: title,
-          description: descriptionText,
+          title: activeRep.title,
+          description: activeRep.descriptionText,
         }}
-        repetitionNumber={repetitionNumber || ''}
         overlay={{
-          title: wait.overlay.title,
-          description: wait.overlay.description,
+          title: t('waitOverlayTitle'),
+          description: t('waitRepetitionDescription'),
         }}
-        isOpen={activeRepetition.action === 'wait'}
+        isOpen={activeRep.action === 'wait'}
         renderContent={null}
         renderSubmitButton={
           <Button

@@ -1,12 +1,10 @@
 import type { StudyItem } from '@prisma/client'
 import type { createFormatter } from 'next-intl'
 
-import { generateRepetitionSchedule } from '@/shared/lib/utils'
+import { createFSRSCard } from '@/shared/lib/utils'
 import type { IntlFormatter, TimeTranslations } from '@/shared/types'
 
 export const canRowExpand = (item: StudyItem) => Boolean(item.description)
-
-export type Locale = string | undefined
 
 /**
  * Formats the difference between two dates.
@@ -40,7 +38,7 @@ export function formatCreatedDate(
   return format.dateTime(date, { dateStyle: 'short' })
 }
 
-export function createStepTimeline(format: IntlFormatter, t: TimeTranslations) {
+export function createStepTimeline(format: IntlFormatter) {
   const formatStepDate = (date: Date): string => {
     return format.dateTime(date, {
       hour: '2-digit',
@@ -63,13 +61,13 @@ export function createStepTimeline(format: IntlFormatter, t: TimeTranslations) {
     })
   }
 
-  return generateRepetitionSchedule().map((rep, idx, arr) => {
-    const prev = idx > 0 ? arr[idx - 1]?.scheduledAt : null
-    return {
-      step: rep.repetitionNumber,
-      date: formatStepDate(rep.scheduledAt),
-      diff: prev ? formatDiff(t, prev, rep.scheduledAt) : '',
-      tooltip: formatStepDateTooltip(rep.scheduledAt),
-    }
-  })
+  const card = createFSRSCard(new Date())
+  return [
+    {
+      step: 1,
+      date: formatStepDate(card.due),
+      diff: '',
+      tooltip: formatStepDateTooltip(card.due),
+    },
+  ]
 }

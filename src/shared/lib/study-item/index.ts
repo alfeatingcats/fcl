@@ -9,16 +9,20 @@ export const mapStudyItemToRepetitionList = (
 ): Array<RepetitionsListRow> => {
   return studyItem.repetitions.map((repetition) => {
     return {
-      scheduledAt: repetition.scheduledAt,
+      due: repetition.due,
       status: repetition.status,
       difficulty: repetition.difficulty,
       id: repetition.id,
       studyItemId: repetition.studyItemId,
+      state: repetition.state,
+      stability: repetition.stability,
+      reps: repetition.reps,
+      lapses: repetition.lapses,
+      lastReview: repetition.lastReview,
       title: studyItem.title,
       description: studyItem.description,
       itemTags: studyItem.itemTags,
       descriptionText: studyItem.descriptionText ?? '',
-      repetitionNumber: repetition.repetitionNumber,
     }
   })
 }

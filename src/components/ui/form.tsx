@@ -170,6 +170,7 @@ function FormMessage({ className, ...props }: React.ComponentProps<'p'>) {
     <>
       {messages.map((msg, idx) => (
         <p
+          // biome-ignore lint/suspicious/noArrayIndexKey: <_explanation>
           key={idx}
           data-slot="form-message"
           id={idx === 0 ? formMessageId : undefined}
@@ -184,12 +185,12 @@ function FormMessage({ className, ...props }: React.ComponentProps<'p'>) {
 }
 
 export {
-  useFormField,
   Form,
-  FormItem,
-  FormLabel,
   FormControl,
   FormDescription,
-  FormMessage,
   FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+  useFormField,
 }

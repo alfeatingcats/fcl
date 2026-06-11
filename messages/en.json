@@ -59,7 +59,14 @@
   },
   "ReviewCyclePage": {
     "repetitions": "{count, plural, =0 {No repetitions scheduled for this day} one {# repetition scheduled for this day} other {# repetitions scheduled for this day}}",
-    "title": "Manage your review cycle"
+    "title": "Manage your review cycle",
+    "searchPlaceholder": "Search by title...",
+    "todayProgress": "Today's progress",
+    "streak": "Streak",
+    "overdue": "Overdue",
+    "today": "Today",
+    "upcoming": "Upcoming",
+    "history": "History"
   },
   "ProgressStepper": {
     "start": "Start"
@@ -221,7 +228,11 @@
     "difficult": "Difficult",
     "veryDifficult": "Very difficult",
     "scheduledAt": "Review Time",
-    "completedAt": "Completed At"
+    "completedAt": "Completed At",
+    "noRepetitionsToday": "All caught up! No repetitions for today.",
+    "noOverdue": "No overdue repetitions.",
+    "noUpcoming": "No upcoming repetitions.",
+    "noHistory": "No history yet."
   },
   "RepetitionsMessages": {
     "completeSuccess": "Repetition marked as completed",

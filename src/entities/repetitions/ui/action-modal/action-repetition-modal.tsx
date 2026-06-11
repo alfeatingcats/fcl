@@ -1,13 +1,5 @@
-import { useResetState } from 'ahooks'
-import { isNil } from 'es-toolkit'
 import { useTranslations } from 'next-intl'
-import {
-  cloneElement,
-  type FC,
-  type ReactElement,
-  useCallback,
-  useEffect,
-} from 'react'
+import { cloneElement, type FC, type ReactElement, useCallback } from 'react'
 
 import { Button } from '@/components/ui/button'
 import {
@@ -19,45 +11,18 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog'
-import {
-  Item,
-  ItemContent,
-  ItemDescription,
-  ItemMedia,
-  ItemTitle,
-} from '@/components/ui/item'
 
-import type {
-  ActionRepetitionModalProps,
-  RepetitionSummary,
-} from '../../model/shared/types'
+import type { ActionRepetitionModalProps } from '../../model/shared'
 
 export const ActionRepetitionModal: FC<ActionRepetitionModalProps> = ({
   isOpen,
   entity,
   overlay,
   renderContent,
-  repetitionNumber,
   renderSubmitButton,
   onClear,
 }) => {
   const t = useTranslations('UiActions')
-
-  const [state, setState] = useResetState<RepetitionSummary>({
-    repetitionNumber: 1,
-    description: null,
-    title: '',
-  })
-
-  useEffect(() => {
-    if (!isNil(entity?.title)) {
-      setState({
-        repetitionNumber,
-        title: entity.title,
-        description: entity?.description,
-      })
-    }
-  }, [entity, repetitionNumber, setState])
 
   const handleOpenChange = useCallback(
     (open: boolean) => {
@@ -77,20 +42,14 @@ export const ActionRepetitionModal: FC<ActionRepetitionModalProps> = ({
           )}
         </DialogHeader>
 
-        <Item variant="outline" size="sm">
-          <ItemMedia
-            className="text-accent bg-accent-foreground flex shrink-0
-              items-center justify-center rounded-md border p-3 leading-none"
-          >
-            {`${state.repetitionNumber}/7`}
-          </ItemMedia>
-          <ItemContent>
-            <ItemTitle className="line-clamp-1">{state.title}</ItemTitle>
-            <ItemDescription className="line-clamp-3 overflow-wrap-anywhere break-all">
-              {state.description}
-            </ItemDescription>
-          </ItemContent>
-        </Item>
+        <div className="bg-card flex flex-col gap-1 rounded-xl border p-4">
+          <span className="truncate font-medium">{entity.title}</span>
+          {entity.description && (
+            <p className="text-muted-foreground line-clamp-3 text-sm">
+              {entity.description}
+            </p>
+          )}
+        </div>
 
         {renderContent}
 

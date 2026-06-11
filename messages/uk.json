@@ -59,7 +59,14 @@
   },
   "ReviewCyclePage": {
     "repetitions": "{count, plural, =0 {На цей день ще немає повторень} one {На цей день заплановано # повторення} few {На цей день заплановано # повторення} many {На цей день заплановано # повторень} other {На цей день заплановано # повторення}}",
-    "title": "Керуйте циклом повторень"
+    "title": "Керуйте циклом повторень",
+    "searchPlaceholder": "Пошук за назвою...",
+    "todayProgress": "Прогрес сьогодні",
+    "streak": "Стрік",
+    "overdue": "Прострочені",
+    "today": "Сьогодні",
+    "upcoming": "Найближчі",
+    "history": "Історія"
   },
   "ProgressStepper": {
     "start": "Старт"
@@ -221,7 +228,11 @@
     "difficult": "Складно",
     "veryDifficult": "Дуже складно",
     "scheduledAt": "Час повторення",
-    "completedAt": "Час завершення"
+    "completedAt": "Час завершення",
+    "noRepetitionsToday": "На сьогодні все! Немає повторень.",
+    "noOverdue": "Немає прострочених повторень.",
+    "noUpcoming": "Немає найближчих повторень.",
+    "noHistory": "Історія порожня."
   },
   "RepetitionsMessages": {
     "completeSuccess": "Повторення позначено як виконане",

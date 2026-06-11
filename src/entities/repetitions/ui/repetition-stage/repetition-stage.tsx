@@ -2,14 +2,13 @@ import { Waypoints } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import type { FC, ReactNode } from 'react'
 
-import { EBBINGHAUS_INTERVALS } from '@/shared/lib/const'
 import type { LabeledComponentProps } from '@/shared/types'
 
 import { EventBadge } from '../badge'
 import type { RepetitionBadgeVariants } from '../badge/repetition-badge'
 
 type RepetitionStageProps = {
-  currentStage: number | string
+  currentStage: number
   icon?: ReactNode | null
 } & LabeledComponentProps &
   RepetitionBadgeVariants
@@ -26,8 +25,8 @@ export const RepetitionStage: FC<RepetitionStageProps> = ({
       wVariant={wVariant}
       label={withLabel ? t('stageLabel') : null}
       details={t('stageCount', {
-        current: `${currentStage}`,
-        total: `${EBBINGHAUS_INTERVALS.length}`,
+        current: String(currentStage),
+        total: '7',
       })}
       icon={icon && <Waypoints className="mr-1" />}
     />

@@ -9,52 +9,33 @@ import type {
 import type { StudyItemType } from '$/prisma/generated/schemas/models/StudyItem.schema'
 import type { StudyRepetitionType } from '$/prisma/generated/schemas/models/StudyRepetition.schema'
 
-export interface ChartPoint {
-  x: number
-  time: number
-  retention: number
-}
-
-export interface CurrentPoint {
-  x: number
-  retention: number
-}
-
-export interface RepetitionChartProps {
-  repetitionDates?: Date[]
-  currentRepetition?: number
-}
-
 export type RepetitionsListRow = Pick<
   StudyRepetitionType,
-  | 'scheduledAt'
+  | 'due'
   | 'status'
   | 'difficulty'
   | 'id'
   | 'studyItemId'
-  | 'repetitionNumber'
+  | 'state'
+  | 'stability'
+  | 'reps'
+  | 'lapses'
+  | 'lastReview'
 > &
   Pick<StudyItemType, 'title' | 'description' | 'descriptionText'> &
   Pick<FullRepetitionType['studyItem'], 'itemTags'>
-
-export type RepetitionSummary = {
-  title?: string
-  description?: string | null
-  repetitionNumber?: number | string
-}
 
 export type ActionRepetitionModalProps = {
   onClear: () => void
   isOpen: boolean
 } & OverlayEntityContent & {
     renderContent: ReactNode
-    repetitionNumber: string | number
     renderSubmitButton: ReactElement
   }
 
 export type RepetitionListProps = {
   repetitions: Array<RepetitionsListRow>
-  onCompleteRepetition: (state: RepetitionActionState) => void
+  onReviewRepetition: (state: RepetitionActionState) => void
   onSkipRepetition: (state: RepetitionActionState) => void
   onWaitRepetition: (state: RepetitionActionState) => void
 }

@@ -13,14 +13,14 @@ import { RepetitionListRow } from '../list-row'
 
 export const RepetitionList: FC<RepetitionListProps> = ({
   repetitions,
-  onCompleteRepetition,
+  onReviewRepetition,
 }) => {
   const format = useFormatter()
   const { withTZ } = useDateFnsConfig()
 
-  const formattedScheduledTime = useCallback(
-    (scheduledAt: Date) => {
-      return format.dateTime(withTZ(scheduledAt), {
+  const formattedDueTime = useCallback(
+    (due: Date) => {
+      return format.dateTime(withTZ(due), {
         hour: 'numeric',
         minute: 'numeric',
       })
@@ -29,8 +29,8 @@ export const RepetitionList: FC<RepetitionListProps> = ({
   )
   const onRepetitionAction = useCallback(
     (repetitionId: RepetitionOverlayPayload) => (type: RepetitionActionType) =>
-      onCompleteRepetition({ repetitionId, action: type }),
-    [onCompleteRepetition],
+      onReviewRepetition({ repetitionId, action: type }),
+    [onReviewRepetition],
   )
 
   return (
@@ -42,13 +42,13 @@ export const RepetitionList: FC<RepetitionListProps> = ({
         >
           <RepetitionListRow
             {...repetitionData}
-            onCompleteRepetition={onRepetitionAction(repetitionData.id)}
+            onReviewRepetition={onRepetitionAction(repetitionData.id)}
             onSkipRepetition={onRepetitionAction(repetitionData.id)}
             onWaitRepetition={onRepetitionAction(repetitionData.id)}
           />
           <TimeLite />
           <Badge variant="secondary" className="mt-2">
-            {formattedScheduledTime(repetitionData.scheduledAt)}
+            {formattedDueTime(repetitionData.due)}
           </Badge>
         </div>
       ))}
