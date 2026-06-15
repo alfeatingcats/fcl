@@ -1,4 +1,4 @@
-# FCL TRPC [![Netlify Status](https://api.netlify.com/api/v1/badges/955897cb-0c9e-4a7d-9958-589b95c1760d/deploy-status?branch=stage)](https://app.netlify.com/projects/focu-lite/deploys)
+# FCL TRPC - [![Netlify Status](https://api.netlify.com/api/v1/badges/955897cb-0c9e-4a7d-9958-589b95c1760d/deploy-status?branch=stage)](https://app.netlify.com/projects/focu-lite/deploys)
 
 FCL TRPC is a modern web application designed to help users master knowledge through a spaced repetition system. The app leverages advanced technologies to provide an efficient, customizable, and user-friendly learning experience.
 
