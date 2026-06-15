@@ -110,6 +110,18 @@ const SignInPage = () => {
             {t('signInWithDiscord')}
           </Button>
 
+          <Button
+            variant="outline"
+            className="w-full"
+            onClick={() =>
+              authClient.signIn.social({
+                provider: 'google',
+              })
+            }
+          >
+            {t('signInWithGoogle')}
+          </Button>
+
           <p className="text-center text-sm text-muted-foreground">
             {mode === 'signin' ? (
               <>

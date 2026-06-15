@@ -21,6 +21,10 @@ export const auth = betterAuth({
       clientId: env.AUTH_DISCORD_ID,
       clientSecret: env.AUTH_DISCORD_SECRET,
     },
+    google: {
+      clientId: env.AUTH_GOOGLE_ID,
+      clientSecret: env.AUTH_GOOGLE_SECRET,
+    },
   },
   rateLimit: {
     enabled: true,
