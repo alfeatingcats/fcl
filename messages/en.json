@@ -9,6 +9,7 @@
     "passwordLabel": "Password",
     "passwordPlaceholder": "password",
     "signInWithDiscord": "Sign in with Discord",
+    "signInWithGoogle": "Sign in with Google",
     "or": "or",
     "noAccount": "Don't have an account?",
     "hasAccount": "Already have an account?",
