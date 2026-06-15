@@ -33,6 +33,7 @@ const SignInPage = () => {
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
               {mode === 'signup' && (
                 <FormField
+                  disabled
                   control={form.control}
                   name="name"
                   render={({ field }) => (
@@ -47,6 +48,7 @@ const SignInPage = () => {
                 />
               )}
               <FormField
+                disabled
                 control={form.control}
                 name="email"
                 render={({ field }) => (
@@ -66,6 +68,7 @@ const SignInPage = () => {
               <FormField
                 control={form.control}
                 name="password"
+                disabled
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>{t('passwordLabel')}</FormLabel>
@@ -81,7 +84,7 @@ const SignInPage = () => {
                 )}
               />
               {error && <p className="text-sm text-destructive">{error}</p>}
-              <Button type="submit" className="w-full">
+              <Button disabled type="submit" className="w-full">
                 {mode === 'signin' ? t('signIn') : t('signUp')}
               </Button>
             </form>
